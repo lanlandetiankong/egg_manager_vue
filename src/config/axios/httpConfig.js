@@ -106,14 +106,14 @@ instance.interceptors.response.use(
 http.get = function (url, options) {
     let loadingInstance;
     if (!options || options.isShowLoading !== false) {
-        loadingInstance = Loading.service({fullscreen: true});
+        //loadingInstance = Spin.prototype ;
     }
     return new Promise((resolve, reject) => {
         instance
             .get(url, options)
             .then(response => {
                 if (!options || options.isShowLoading !== false) {
-                    loadingInstance.close();
+                    //loadingInstance.close();
                 }
                 if (response.code === 1) {
                     resolve(response.data)
@@ -134,13 +134,13 @@ http.get = function (url, options) {
 http.post = function (url, data, options) {
     let loadingInstance
     if (!options || options.isShowLoading !== false) {
-        loadingInstance = Loading.service({fullscreen: true});
+        //loadingInstance = Spin.service({fullscreen: true});
     }
     return new Promise((resolve, reject) => {
         instance
             .post(url, data, options)
             .then(response => {
-                loadingInstance.close();
+                //loadingInstance.close();
                 //对返回结果的预先处理
                 if (response) {
                     let tempRespHasError = response.hasError;
@@ -162,7 +162,7 @@ http.post = function (url, data, options) {
                 }
             })
             .catch(e => {
-                loadingInstance.close();
+                //loadingInstance.close();
                 console.log(e);
             })
 

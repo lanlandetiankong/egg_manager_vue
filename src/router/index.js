@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import IndexPage from '~Pages/IndexPage'
+import IndexPage from '~Pages/index/IndexPage'
 
 import LoginRouter from './login/index'
-
 Vue.use(Router)
 
 export default new Router({

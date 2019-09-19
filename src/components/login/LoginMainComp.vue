@@ -7,11 +7,13 @@
                 @submit="handleLoginSubmit"
             >
                 <a-form-item
-                    label="账号"
                     :label-col="loginFormConf.labelCol"
                     :wrapper-col="loginFormConf.wrapperCol"
                     v-model="loginForm.userAccount"
                 >
+                    <template slot="label">
+                        <span class="formBaseCls">账号</span>
+                    </template>
                     <a-input
                         placeholder="请输入用户账号"
                     >
@@ -23,11 +25,13 @@
                     </a-input>
                 </a-form-item>
                 <a-form-item
-                    label="密码"
                     :label-col="loginFormConf.labelCol"
                     :wrapper-col="loginFormConf.wrapperCol"
                     v-model="loginForm.password"
                 >
+                    <template slot="label">
+                        <span class="formBaseCls">密码</span>
+                    </template>
                     <a-input
                         type="password"
                         placeholder="请输入用户密码"
@@ -43,10 +47,12 @@
                     :label-col="loginFormConf.labelCol"
                     :wrapper-col="loginFormConf.wrapperCol"
                 >
-                    <span style="float:right">
-                        <a-checkbox>
-                            记住我
-                        </a-checkbox>
+                    <span style="float:right;color: #ffffff">
+                        <a-switch
+                            checkedChildren="记住我"
+                            unCheckedChildren="不记住账号"
+                        >
+                        </a-switch>
                         <a-button type="link" >
                             注册账号
                         </a-button>
@@ -61,7 +67,7 @@
                     :label-col="loginFormConf.labelCol"
                     :wrapper-col="loginFormConf.wrapperCol"
                 >
-                    <a-button
+                    <a-button block
                         icon="login"
                         type="primary"
                         html-type="submit"
@@ -95,7 +101,7 @@
         },
         methods: {
             handleLoginSubmit() {
-                this.$router.push("/");
+                //this.$router.push("/");
             },
             hasLoginFormError() {
                 //判断loginForm是否有错误

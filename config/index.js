@@ -10,7 +10,17 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+      proxyTable: {
+          '/egg_manager': {
+              // 测试环境
+              target: 'http://www.localhost:8083',  // 接口域名
+              changeOrigin: true,  //是否跨域
+              pathRewrite: {
+                  //需要rewrite重写的,
+                  '^/egg_manager': ''
+              }
+          }
+      },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -20,7 +30,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
@@ -44,6 +54,7 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+
 
     /**
      * Source Maps
