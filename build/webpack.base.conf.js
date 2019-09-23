@@ -13,7 +13,7 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js'
+    app: ["babel-polyfill", "./src/main.js"]
   },
   output: {
     path: config.build.assetsRoot,
@@ -30,7 +30,8 @@ module.exports = {
        '~Components': resolve('src/components'),
       '~Pages': resolve('src/pages'),
       '~Assets': resolve('src/assets'),
-      '~Config': resolve('src/config')
+      '~Config': resolve('src/config'),
+      '~Apis': resolve('src/apis'),
 
     }
   },
@@ -73,7 +74,11 @@ module.exports = {
         {
             test: /\.styl$/,
             loader: "style-loader!css-loader!stylus-loader",
-        }
+        },
+        {
+            test: /\.less$/,
+            loader: "style-loader!css-loader!less-loader",
+        },
     ]
   },
   node: {

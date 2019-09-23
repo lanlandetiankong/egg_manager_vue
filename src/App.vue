@@ -17,7 +17,7 @@
             }
         },
         mounted() {
-            this.initHeight();
+            //this.initHeight();        //触发高度计算
         },
         methods: {
             changeFixed(clientHeight) {
@@ -40,7 +40,7 @@
     }
 </script>
 <style>
-    html, body, #app {
+    html, body ,#app {
         height: 100%;
     }
 </style>

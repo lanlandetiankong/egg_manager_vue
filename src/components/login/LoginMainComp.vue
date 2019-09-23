@@ -111,6 +111,8 @@
     }
 </script>
 
-<style lang="stylus" scoped>
-    @import "./_LoginMainComp.styl";
+<style lang="less" scoped>
+   @import "_LoginMainComp.less";
+
+
 </style>

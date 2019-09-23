@@ -1,81 +1,115 @@
 <template>
     <div class="index-page-root">
-        <a-layout>
-            <a-affix>
-                <a-layout-header class="header">
-                    <div class="logo"/>
-                    <a-menu
-                        theme="dark"
-                        mode="horizontal"
-                        :defaultSelectedKeys="['2']"
-                        :style="{ lineHeight: '64px' }"
-                    >
-                        <a-menu-item key="1">nav 1</a-menu-item>
-                    </a-menu>
-                </a-layout-header>
-            </a-affix>
-
-            <a-layout :style="{ marginLeft: '200px' }">
-                <a-layout-sider
-                    :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }"
-                    v-model="siderConf.collapsed"
+        <a-layout id="index-layout-root">
+            <a-layout-sider
+                v-model="siderConf.collapsed"
+            >
+                <div :class="sideBarLogoCls">Egg Manager</div>
+                <a-menu
+                    mode="inline"
+                    theme="dark"
+                    class="index-menu"
+                    @click="dealMenuClick"
                 >
-                    <a-menu
-                        mode="inline"
-                        theme="dark"
-                    >
-                        <template v-for="item in menuList">
-                            <a-menu-item v-if="!item.children" :key="item.key">
-                                <a-icon type="pie-chart" />
-                                <span>{{item.name}}</span>
-                            </a-menu-item>
-                            <sub-menu-comp v-else :menu-info="item" :key="item.key"/>
-                        </template>
-                    </a-menu>
-                </a-layout-sider>
-                <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
-                    <div :style="{ padding: '24px', background: '#fff', textAlign: 'center' }">
-                        ...
-                        <br/>
-                        Really
-                        <br/>...<br/>...<br/>...<br/>
-                        long
-                        <br/>...<br/>...<br/>...<br/>...<br/>...<br/>...
-                        <br/>...<br/>...<br/>...<br/>...<br/>...<br/>...
-                        <br/>...<br/>...<br/>...<br/>...<br/>...<br/>...
-                        <br/>...<br/>...<br/>...<br/>...<br/>...<br/>...
-                        <br/>...<br/>...<br/>...<br/>...<br/>...<br/>...
-                        <br/>...<br/>...<br/>...<br/>...<br/>...<br/>...
-                        <br/>...<br/>...<br/>...<br/>...<br/>...<br/>
-                        content
+                    <template v-for="item in menuList">
+                        <a-menu-item v-if="!item.children" :key="item.key">
+                            <a-icon type="pie-chart"/>
+                            <span>{{item.name}}</span>
+                        </a-menu-item>
+                        <sub-menu-comp v-else :menu-info="item" :key="item.key"/>
+                    </template>
+                </a-menu>
+            </a-layout-sider>
+            <a-layout>
+                <a-layout-header style="background: #fff; padding: 0;">
+                    <a-icon
+                        class="trigger"
+                        :type="siderConf.collapsed ? 'menu-unfold' : 'menu-fold'"
+                        @click="()=> siderConf.collapsed = !siderConf.collapsed"
+                    />
+                </a-layout-header>
+                <a-layout-content
+                    class="index-layout-content">
+                    <div>
+                        <a-tabs
+                            v-model="tabsConf.activityKey"
+                            type="editable-card"
+                            :tabPosition="tabsConf.mode"
+                            :hideAdd=true
+                            @change="dealTabsChange"
+                            @edit="dealTabsEdit"
+                            @tabClick="dealTabsClick"
+                        >
+                            <template v-for="tabItem of tabsList">
+                                <a-tab-pane :tab="tabItem.name" :key="tabItem.id" style="width: 100%">
+                                    <div :style="{ padding: '24px', background: '#fff', textAlign: 'center',height:'100%'}">
+                                        {{tabItem.name}} + {{tabItem.id}}
+                                        <component is="Error404Comp"></component>
+                                    </div>
+                                </a-tab-pane>
+                            </template>
+                        </a-tabs>
                     </div>
                 </a-layout-content>
+                <a-layout-footer :style="{ textAlign: 'center'}">
+                    @eggegg Egg Manager For Open
+                </a-layout-footer>
             </a-layout>
-            <a-layout-footer :style="{ textAlign: 'center'}">
-                @eggegg Egg Manager For Open
-            </a-layout-footer>
+
         </a-layout>
     </div>
 </template>
 <script>
-    import IndexMainComp from '~Components/index/IndexMainComp'
+
+    import ARadioButton from "ant-design-vue/es/radio/RadioButton";
     import ALayoutSider from "ant-design-vue/es/layout/Sider";
+
     import SubMenuComp from '~Components/menu/SubMenuComp' ;
+    import IndexMainComp from '~Components/index/IndexMainComp';
+
+    import Error404Comp from '~Components/error/4xx/Error404Comp';
+
+
     import {IndexPageApi} from './_IndexPage.js' ;
+
 
     export default {
         name: "IndexPage",
         components: {
+            ARadioButton,
             ALayoutSider,
             IndexMainComp,
-            SubMenuComp
+            SubMenuComp,
+            Error404Comp
         },
         data() {
             return {
                 siderConf: {
-                    collapsed: false
+                    collapsed: false,
                 },
-                menuList: []
+                menuList: [],
+                tabsList:[
+                    {
+                        id:'1000001',
+                        name:'第一个'
+                    },{
+                        id:'1000002',
+                        name:'第2个'
+                    },{
+                        id:'1000003',
+                        name:'第3个'
+                    }
+                ] ,
+                tabsConf: {
+                    activityKey: '',
+                    mode: 'top',
+                    defaultOpen:[],
+                }
+            }
+        },
+        computed: {
+            sideBarLogoCls(){
+                return this.siderConf.collapsed ? "logo-collapsed" : "logo"
             }
         },
         methods: {
@@ -85,6 +119,18 @@
                     _this.menuList = res.resultList;
                     console.log(_this.menuList);
                 });
+            },
+            dealMenuClick(obj) {
+                console.log(obj);
+            },
+
+            dealTabsChange(activeKey) {
+
+            },
+            dealTabsEdit(targetKey, action) {
+
+            },
+            dealTabsClick(activeKey) {
 
             }
         },
@@ -95,8 +141,8 @@
     }
 </script>
 
-<style lang="stylus" scoped>
-    @import "_IndexPage.styl"
+<style lang="less" scoped>
+    @import "./_IndexPage.less";
 </style>
 <style>
     #index-layout .logo {

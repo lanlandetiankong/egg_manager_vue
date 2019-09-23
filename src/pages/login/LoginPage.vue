@@ -22,6 +22,8 @@
     }
 </script>
 
-<style lang="stylus" scoped>
-    @import "./_LoginPage.styl" ;
+<style lang="less" scoped>
+    @import "./_LoginPage.less";
+
+
 </style>
