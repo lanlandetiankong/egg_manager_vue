@@ -55,7 +55,6 @@
                     @eggegg Egg Manager For Open
                 </a-layout-footer>
             </a-layout>
-
         </a-layout>
     </div>
 </template>

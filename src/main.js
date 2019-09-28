@@ -7,9 +7,11 @@ import store from '@/store/index'
 
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
+
 import axios from './config/axios/httpConfig'
 
-
+import VueScroll from 'vuescroll'
+import VueScrollConf from '~Config/vuescroll/vuescroll.conf.js'
 
 //---------------------------------------------------------------------------->>>>>>css
 import '~Assets/styles/reset.css'
@@ -20,6 +22,7 @@ Vue.config.productionTip = false
 
 //use
 Vue.use(Antd)
+Vue.use(VueScroll,VueScrollConf)
 
 new Vue({
   el: '#app',

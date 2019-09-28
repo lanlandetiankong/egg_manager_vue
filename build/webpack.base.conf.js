@@ -32,6 +32,7 @@ module.exports = {
       '~Assets': resolve('src/assets'),
       '~Config': resolve('src/config'),
       '~Apis': resolve('src/apis'),
+      '~Layout': resolve('src/layout'),
 
     }
   },
