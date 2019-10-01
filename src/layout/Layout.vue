@@ -8,7 +8,7 @@
                     class="sidebar-container"
                     :menuList="siderbar.menuList"
                     :siderCollapsed="siderbar.conf.collapsed"
-                    @open-menu="doSiderbarMenuOpen"
+                    @siderbar-menu-open="doSiderbarMenuOpen"
                 >
                 </sidebar>
             </a-layout-sider>
@@ -25,7 +25,9 @@
                     :style="{ margin: '10px 0', overflow: 'initial' }"
                 >
                     <tags-view
-                        :tagArray="tagsConf.tagsArray"
+                        :tagsArray="tagsConf.tagsArray"
+                        :selectedTag="tagsConf.selectedTag"
+                        @tag-item-native-click="doTagItemNativeClick"
                         :style="{paddingBottom:'10px'}"
                     >
                     </tags-view>
@@ -75,7 +77,8 @@
                     defaultOpen:[],
                 },
                 tagsConf: {
-                    tagsArray:[]
+                    tagsArray:[],
+                    selectedTag:{}
                 }
             }
         },
@@ -87,26 +90,29 @@
                 var _this = this;
                 LayoutApi.doGetAllMenu().then(res => {
                     _this.siderbar.menuList = res.resultList;
-                    console.log(_this.siderbar.menuList);
                 });
             },
             doSiderbarMenuOpen(item,key,keypath) {
                 var _this = this ;
-                var tempTagsArr = _this.tagsConf.tagsArray ;
-                //console.log(_this.tagsConf.tagsArray) ;
-                //console.log(_this.siderbar.menuList) ;
                 var tagsOpendFlag = LayoutFunc.handleCheckMenuIsOpen(_this,_this.tagsConf.tagsArray,key);
                 if(tagsOpendFlag == false) {
                     var addTagObj = LayoutFunc.handleGetMenuToTagObj(_this,_this.siderbar.menuList,key);
                     if(addTagObj != null){
-                        console.log("存在:"+key) ;
-                        //_this.tagsConf.tagsArray.push(addTagObj);
+                        _this.tagsConf.tagsArray.push(addTagObj);
+                        _this.tagsConf.selectedTag = addTagObj ;
+                        this.$store.dispatch('doSetContextMenuPosition',{
+                            visible:false,
+                            left:0,
+                            top:0
+                        });
                     }   else {
-                        console.log("添加菜单失败！不存在:"+key) ;
+                        console.log("添加菜单失败!") ;
                     }
+                    console.log(("selectedTag",_this.tagsConf.selectedTag));
                 }
-
-
+            },
+            doTagItemNativeClick(e,clickTag) {
+                this.tagsConf.selectedTag = clickTag ;
             },
             dealMenuClick(obj) {
                 console.log(obj);

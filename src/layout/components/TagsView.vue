@@ -2,19 +2,20 @@
     <div class="tags-view-container">
         <vue-scroll class="tags-view-wrapper">
             <router-link ref='tagsRef'
-                         v-for="tag in tagArray"
+                         v-for="tag in tagsArray"
                          class="tags-view-item"
                          :class="isActive(tag)?'active':''"
-                         :to="tag.path"
+                         :to="tag.routerUrl"
                          :key="tag.id"
-                         @contextmenu.prevent.native="openMenu(tag,$event)"
+                         @click.native="handleTagItemNativeClick(tag,$event)"
+                         @contextmenu.prevent.native="handleOpenContextMenu(tag,$event)"
             >
-                {{tag.title}}  &nbsp;
+                {{tag.name}}  &nbsp;
                 <a-icon type="close"/>
             </router-link>
         </vue-scroll>
-        <ul class='contextmenu' v-show="tagMenuConf.visible" :style="{left:tagMenuConf.left+'px',top:tagMenuConf.top+'px'}">
-            <li @click="closeSelectedTag(tagMenuConf.selectedTag)">关闭</li>
+        <ul class='contextmenu' v-show="contextMenuConf.visible" :style="{left:contextMenuConf.left+'px',top:contextMenuConf.top+'px'}">
+            <li @click="closeSelectedTag(selectedTag)">关闭</li>
             <li @click="closeOthersTags">关闭其他</li>
             <li @click="closeAllTags">关闭所有</li>
         </ul>
@@ -26,28 +27,35 @@
     export default {
         components: {},
         props: {
-            tagArray: {
+            tagsArray: {
                 type: Array,
                 required: true
-            }
+            },
+            selectedTag: {}
         },
         data() {
             return {
-                tagMenuConf:{
-                    visible: false,
-                    top: 0,
-                    left: 0,
-                    selectedTag: {}
-                }
+
             }
         },
-        computed: {},
-        watch: {},
+        computed: {
+            contextMenuConf() {
+                return this.$store.state.tagsView.contextMenuBaseConf ;
+            },
+            tagIsActiveComp(){
+
+            }
+        },
+        watch: {
+
+        },
         mounted() {
         },
         methods: {
-            isActive(route) {
-                return route.path === this.$route.path || route.name === this.$route.name
+            isActive(tag) {
+                //当前tag跟所选的tag相同时修改样式
+                var selectedTagTemp = this.selectedTag ;
+                return tag.routerUrl === selectedTagTemp.routerUrl ;
             },
             closeSelectedTag(selectedTag){
 
@@ -58,14 +66,17 @@
             closeAllTags(){
 
             },
-            openMenu(tag, e) {
-                this.tagMenuConf = {
+            handleOpenContextMenu(tag, e) {
+                console.log("handleOpenContextMenu",tag);
+                this.$store.dispatch('doSetContextMenuPosition',{
                     visible:true,
-                    selectedTag:tag,
                     left:e.clientX,
                     top:e.clientY
-                }
+                }) ;
             },
+            handleTagItemNativeClick(tag,e){
+                this.$emit('tag-item-native-click',e,tag);
+            }
         }
     }
 </script>

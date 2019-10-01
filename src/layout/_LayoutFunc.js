@@ -21,38 +21,49 @@ export const LayoutFunc = {
     handleGetMenuToTagObj(_this,tempMenuList,key) {
         var tempAddMenuObj = null ;
         if(tempMenuList.length > 0){
-            tempAddMenuObj = LayoutFunc.dealGetNextMenu(tempMenuList,key,tempAddMenuObj);
-            console.log("tempAddMenuObj =>" ,tempAddMenuObj);
+            var tempMenuMap = PrivateFunc.doMenuListToMap(tempMenuList);
+            if(tempMenuMap && tempMenuMap.size > 0) {
+                tempAddMenuObj = tempMenuMap.get(key)
+            }
         }
         if(typeof tempAddMenuObj != "undefined" && tempAddMenuObj != null) {
             return {
-                id:'test'
+                id:tempAddMenuObj.id,
+                iconName:tempAddMenuObj.iconName,
+                routerUrl:tempAddMenuObj.routerUrl,
+                name:tempAddMenuObj.name,
             }
         }   else {
-
+            return null ;
         }
     },
 
-    dealGetNextMenu(tempMenuList,key,tempAddMenuObj) {
-        if(tempMenuList.length > 0){
-            $.each(tempMenuList,function (idx,val) {
-                if(key == val.id){
-                    tempAddMenuObj = val ;
-                    console.log("match",tempAddMenuObj) ;
-                    return false ;
-                }   else {
-                    if(val.children && val.children.length > 0){
-                        tempAddMenuObj =  LayoutFunc.dealGetNextMenu(val.children,key,tempAddMenuObj);
-                    }   else {
-                        return false ;
-                    }
+
+
+
+}
+
+/**
+ * 内部使用的方法,别导出
+ * @type {{doMenuListToMap(*=): *}}
+ */
+const PrivateFunc = {
+    doMenuListToMap(tempList) {
+        var tempMap = new Map() ;
+        if(typeof tempList == "undefined" || tempList.length  == 0){
+            return tempMap ;
+        }   else {
+            $.each(tempList,function (idx,val) {
+                tempMap.set(val.id,val);
+                if(val.children && val.children.length > 0){
+                    var childrenList = val.children ;
+                    $.each(childrenList,function (i,v) {
+                        tempMap.set(v.id,v);
+                    })
                 }
             })
         }
-        if(tempAddMenuObj != null){
-            return tempAddMenuObj ;
-        }
+        //console.log(tempMap) ;
+        return tempMap ;
     }
-
-
 }

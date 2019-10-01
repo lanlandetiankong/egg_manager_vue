@@ -27,6 +27,7 @@ Vue.use(VueScroll,VueScrollConf)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

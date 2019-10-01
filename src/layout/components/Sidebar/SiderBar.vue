@@ -48,7 +48,7 @@
         },
         methods: {
             dealMenuClick(obj) {
-                this.$emit('open-menu',obj.item,obj.key,obj.keyPath);
+                this.$emit('siderbar-menu-open',obj.item,obj.key,obj.keyPath);
             },
         },
         mounted() {

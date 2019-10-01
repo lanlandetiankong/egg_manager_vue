@@ -1,19 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-import state from './state'
-import getters from './getters'
-import modules from './modules'
-import actions from './actions'
-import mutations from './mutations'
+import getters  from  './getters.js'
+import tagsView from './modules/tags/tagsView.js'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
-    state,
-    getters,
-    mutations,
-    actions,
-    modules
+    modules:{
+        tagsView
+    },
+    getters
 })
+export default store;
