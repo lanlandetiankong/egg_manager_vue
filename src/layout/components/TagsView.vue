@@ -16,8 +16,9 @@
         </vue-scroll>
         <ul class='contextmenu' v-show="contextMenuConf.visible" :style="{left:contextMenuConf.left+'px',top:contextMenuConf.top+'px'}">
             <li @click="handleSelectedTagItemClose(selectedTag,$event)">关闭</li>
-            <li @click="closeOthersTags">关闭其他</li>
-            <li @click="closeAllTags">关闭所有</li>
+            <li @click="handleOthersTagItemClose">关闭其他</li>
+            <li @click="handleAllTagItemClose">关闭所有</li>
+            <li @click="dealHiddentContextMenu">取消操作</li>
         </ul>
     </div>
 </template>
@@ -41,8 +42,7 @@
         computed: {
             contextMenuConf() {
                 return this.$store.state.tagsView.contextMenuBaseConf ;
-            },
-
+            }
         },
         watch: {
             $route() {
@@ -63,27 +63,36 @@
             doMoveToCurrentTag() {
                 const tags = this.$refs.tagsRef;
                 if(!tags){
-                    return;
-                }
-                this.$nextTick(() => {
-                    for (const tag of tags) {
-                        if (tag.to === this.$route.path) {
-                            this.$emit("toggle-current-tag",this.$route);
-                            break;
-                        }
+                    var tagsArrayTemp = this.tagsArray ;
+                    if(tagsArrayTemp.length > 0) {
+                        this.$emit("toggle-current-tag",tagsArrayTemp[0]);
                     }
-                })
-
+                }   else {
+                    this.$nextTick(() => {
+                        for (const tag of tags) {
+                            if (tag.to === this.$route.path) {
+                                this.$emit("toggle-current-tag",this.$route);
+                                break;
+                            }
+                        }
+                    })
+                }
             },
             handleSelectedTagItemClose(selectedTag,e){
-                console.log("handleSelectedTagItemClose",selectedTag);
                 this.$emit('tag-item-selected-close',e,selectedTag,this.checkIsTagActive(selectedTag)) ;
+                this.dealHiddentContextMenu();
             },
-            closeOthersTags(){
-
+            handleOthersTagItemClose(selectedTag,e){
+                this.$emit('tag-item-others-close',e,selectedTag,this.checkIsTagActive(selectedTag)) ;
+                this.dealHiddentContextMenu();
             },
-            closeAllTags(){
-
+            handleAllTagItemClose(e){
+                this.$emit('tag-item-all-close') ;
+                this.dealHiddentContextMenu();
+            },
+            dealHiddentContextMenu(){
+                //隐藏 右键关闭 菜单
+                this.$store.dispatch('doSetHiddenContextMenuPosition');
             },
             dealGenerateRoute() {
                 if (this.$route.name) {

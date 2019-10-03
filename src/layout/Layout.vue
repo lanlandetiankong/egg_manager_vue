@@ -29,6 +29,8 @@
                         :selectedTag="tagsConf.selectedTag"
                         @tag-item-native-click="doTagItemNativeClick"
                         @tag-item-selected-close="doTagItemSelectedClose"
+                        @tag-item-others-close="doTagItemOthersClose"
+                        @tag-item-all-close="doTagItemAllClose"
                         @toggle-current-tag="doToggleCurrentTag"
                         :style="{paddingBottom:'10px'}"
                     >
@@ -118,7 +120,7 @@
                 this.tagsConf.selectedTag = tag ;
             },
             doTagItemSelectedClose(e,selectedTag,isTagActive){
-                console.log("doTagItemSelectedClose",selectedTag) ;
+                //关闭当前所选标签
                 this.$store.dispatch('doDelVisitedViews',selectedTag).then((views) => {
                     if(isTagActive == true){
                         const latestView = views.slice(-1)[0] ;
@@ -129,6 +131,28 @@
                         }
                     }
                 })
+            },
+            doTagItemOthersClose(e){
+                //关闭其他标签
+                this.$router.push(this.tagsConf.selectedTag.path);
+                this.$store.dispatch('doDelOthersViews',this.tagsConf.selectedTag).then((views) => {
+                    if(isTagActive == true){
+                        const latestView = views.slice(-1)[0] ;
+                        if(latestView) {
+                            this.$router.push(latestView.path) ;
+                        }   else {
+                            this.$router.push('/') ;
+                        }
+                    }
+                })
+            },
+            doTagItemAllClose(e){
+                //关闭所有标签
+                this.$store.dispatch('doDelAllViews').then((views) => {
+                    //do something
+                });
+                //切换到主页
+                this.$router.push("/");
             },
             dealMenuClick(obj) {
                 console.log("dealMenuClick",obj);

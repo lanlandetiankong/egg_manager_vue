@@ -10,6 +10,11 @@ const tagsView = {
             let data = Object.assign({},state.contextMenuBaseConf,contextMenuPositionObj) ;
             state.contextMenuBaseConf = data ;
         },
+        SET_HIDDEN_CONTEXT_MENU_POSITION: (state) => {
+            let data = JSON.parse(JSON.stringify(state.contextMenuBaseConf)) ;
+            data.visible = false;
+            state.contextMenuBaseConf = data ;
+        },
         ADD_VISITED_VIEWS:(state,view) => {
             if(state.visitedViews.some(v => v.path === view.path)) {
                 return ;
@@ -66,6 +71,9 @@ const tagsView = {
     actions: {
         doSetContextMenuPosition({commit},contextMenuPositionObj){
             commit('SET_CONTEXT_MENU_POSITION',contextMenuPositionObj);
+        },
+        doSetHiddenContextMenuPosition({commit}){
+            commit('SET_HIDDEN_CONTEXT_MENU_POSITION');
         },
         doAddVisitedViews({ commit }, view) {
             commit('ADD_VISITED_VIEWS', view)

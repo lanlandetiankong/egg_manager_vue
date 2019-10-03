@@ -1,7 +1,7 @@
 <template>
     <div id="sider-bar-root">
-        <div :class="sideBarLogoCls">
-            Egg Manager
+        <div :class="sideBarLogoCls" >
+            <span @click="() => {this.$router.push('/')}">Egg Manager</span>
         </div>
         <a-menu
             mode="inline"
