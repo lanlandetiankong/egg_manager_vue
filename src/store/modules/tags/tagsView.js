@@ -80,19 +80,19 @@ const tagsView = {
         },
         doDelVisitedViews({ commit, state }, view) {
             return new Promise((resolve) => {
-                commit('DEL_VISITED_VIEWS', view)
+                commit('DEL_VISITED_VIEWS', view) ;
                 resolve([...state.visitedViews])
             })
         },
         doDelOthersViews({ commit, state }, view) {
             return new Promise((resolve) => {
-                commit('DEL_OTHERS_VIEWS', view)
+                commit('DEL_OTHERS_VIEWS', view) ;
                 resolve([...state.visitedViews])
             })
         },
         doDelAllViews({ commit, state }) {
             return new Promise((resolve) => {
-                commit('DEL_ALL_VIEWS')
+                commit('DEL_ALL_VIEWS') ;
                 resolve([...state.visitedViews])
             })
         }

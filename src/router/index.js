@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-const _import = require('./_import_' + process.env.NODE_ENV)
+const _import = require('~Router/_import_' + process.env.NODE_ENV)
 
-import IndexPage from '~Pages/index/IndexPage'
 import Layout from '@/layout/Layout'
 
 
+import EmployeeRouter from './main/employee/index'
+import PermissionRouter from './main/permission/index'
+
+//错误页面
+import Error4XXRouter from  './error/error4xx/index'
 
 
 Vue.use(Router)
@@ -24,27 +28,11 @@ export const constantRouterMap = [
                 name:'dashboard',
                 meta:{title:'首页',icon:"dashboard",noCache:true}
             },
-            {
-                path:'employee',
-                component:_import('index/employee/EmployeePage'),
-                name:'employee',
-                children:[
-                    {
-                        path:'info',
-                        component:_import('index/employee/info/EmpInfoView'),
-                        name:'employee-emp_info',
-                        meta:{title:'用户信息',icon:"user",noCache:true}
-                    },
-                    {
-                        path:'job',
-                        component:_import('index/employee/job/EmpJobManagerView'),
-                        name:'employee-emp_job',
-                        meta:{title:'职务管理',icon:"user",noCache:true}
-                    }
-                ]
-            },
+            EmployeeRouter,
+            PermissionRouter
         ]
-    }
+    },
+    Error4XXRouter
 ]
 
 

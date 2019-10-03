@@ -134,17 +134,15 @@
             },
             doTagItemOthersClose(e){
                 //关闭其他标签
-                this.$router.push(this.tagsConf.selectedTag.path);
-                this.$store.dispatch('doDelOthersViews',this.tagsConf.selectedTag).then((views) => {
-                    if(isTagActive == true){
-                        const latestView = views.slice(-1)[0] ;
-                        if(latestView) {
-                            this.$router.push(latestView.path) ;
-                        }   else {
-                            this.$router.push('/') ;
-                        }
+                var _this = this ;
+                _this.$store.dispatch('doDelOthersViews',_this.tagsConf.selectedTag).then((views) => {
+                    const latestView = views.slice(-1)[0] ;
+                    if(!latestView) {
+                        _this.$router.push('/') ;
                     }
                 })
+
+
             },
             doTagItemAllClose(e){
                 //关闭所有标签
@@ -157,7 +155,6 @@
             dealMenuClick(obj) {
                 console.log("dealMenuClick",obj);
             },
-
             dealTabsChange(activeKey) {
 
             },

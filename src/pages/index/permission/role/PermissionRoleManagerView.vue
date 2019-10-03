@@ -1,14 +1,15 @@
 <template>
     <div>
-        Page Not Found 404
+        角色管理
     </div>
 </template>
 
 <script>
     export default {
-        name: "Error404Comp"
+        name: "PermissionRoleManagerView"
     }
 </script>
+
 <style scoped>
 
 </style>

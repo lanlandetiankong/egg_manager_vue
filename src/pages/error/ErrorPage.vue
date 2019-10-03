@@ -1,14 +1,13 @@
 <template>
     <div>
-        用户信息
+        Error Page
     </div>
 </template>
 <script>
     export default {
-        name: "UserInfoView"
+        name: ""
     }
 </script>
-
-<style scoped>
+<style>
 
 </style>

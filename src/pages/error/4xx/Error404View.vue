@@ -1,15 +1,14 @@
 <template>
     <div>
-        职务管理
+        Page Not Found 404
     </div>
 </template>
 
 <script>
     export default {
-        name: "UserJobManager"
+        name: "Error404Page"
     }
 </script>
-
 <style scoped>
 
 </style>
