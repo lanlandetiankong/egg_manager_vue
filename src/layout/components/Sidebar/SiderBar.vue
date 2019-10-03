@@ -13,7 +13,7 @@
                 <a-menu-item v-if="!item.children"
                              :key="item.key">
                     <a-icon type="pie-chart"/>
-                    <span>{{item.name}}</span>
+                    <span>{{item.title}}</span>
                 </a-menu-item>
                 <sub-menu-comp v-else
                                :menu-info="item"

@@ -8,7 +8,7 @@
                     class="sidebar-container"
                     :menuList="siderbar.menuList"
                     :siderCollapsed="siderbar.conf.collapsed"
-                    @siderbar-menu-open="doSiderbarMenuOpen"
+                    @siderbar-menu-open="doSiderbarMenuOpenView"
                 >
                 </sidebar>
             </a-layout-sider>
@@ -25,9 +25,11 @@
                     :style="{ margin: '10px 0', overflow: 'initial' }"
                 >
                     <tags-view
-                        :tagsArray="tagsConf.tagsArray"
+                        :tagsArray="tagViewOpendArray"
                         :selectedTag="tagsConf.selectedTag"
                         @tag-item-native-click="doTagItemNativeClick"
+                        @tag-item-selected-close="doTagItemSelectedClose"
+                        @toggle-current-tag="doToggleCurrentTag"
                         :style="{paddingBottom:'10px'}"
                     >
                     </tags-view>
@@ -71,11 +73,6 @@
                     },
                     menuList: [],
                 },
-                tabsConf: {
-                    activityKey: '',
-                    mode: 'top',
-                    defaultOpen:[],
-                },
                 tagsConf: {
                     tagsArray:[],
                     selectedTag:{}
@@ -83,6 +80,11 @@
             }
         },
         computed: {
+            tagViewOpendArray() {
+                return this.$store.state.tagsView.visitedViews ;
+            },
+        },
+        watch: {
 
         },
         methods: {
@@ -92,30 +94,44 @@
                     _this.siderbar.menuList = res.resultList;
                 });
             },
-            doSiderbarMenuOpen(item,key,keypath) {
+            doSiderbarMenuOpenView(item,key,keypath) {
                 var _this = this ;
-                var tagsOpendFlag = LayoutFunc.handleCheckMenuIsOpen(_this,_this.tagsConf.tagsArray,key);
-                if(tagsOpendFlag == false) {
-                    var addTagObj = LayoutFunc.handleGetMenuToTagObj(_this,_this.siderbar.menuList,key);
-                    if(addTagObj != null){
-                        _this.tagsConf.tagsArray.push(addTagObj);
-                        _this.tagsConf.selectedTag = addTagObj ;
-                        this.$store.dispatch('doSetContextMenuPosition',{
-                            visible:false,
-                            left:0,
-                            top:0
-                        });
-                    }   else {
-                        console.log("添加菜单失败!") ;
-                    }
-                    console.log(("selectedTag",_this.tagsConf.selectedTag));
+                var addTagObj = LayoutFunc.handleGetMenuToTagObj(_this,_this.siderbar.menuList,key);
+                //console.log("addTagObj",addTagObj);
+                if(addTagObj != null){
+                    //_this.tagsConf.tagsArray.push(addTagObj);
+                    _this.tagsConf.selectedTag = addTagObj ;
+                    this.$store.dispatch('doSetContextMenuPosition',{
+                        visible:false,
+                        left:0,
+                        top:0
+                    });
+                }   else {
+                    console.log("添加菜单失败!") ;
                 }
             },
             doTagItemNativeClick(e,clickTag) {
-                this.tagsConf.selectedTag = clickTag ;
+                this.doToggleCurrentTag(clickTag) ;
+            },
+            doToggleCurrentTag(tag) {
+                console.log("doToggleCurrentTag",tag);
+                this.tagsConf.selectedTag = tag ;
+            },
+            doTagItemSelectedClose(e,selectedTag,isTagActive){
+                console.log("doTagItemSelectedClose",selectedTag) ;
+                this.$store.dispatch('doDelVisitedViews',selectedTag).then((views) => {
+                    if(isTagActive == true){
+                        const latestView = views.slice(-1)[0] ;
+                        if(latestView) {
+                            this.$router.push(latestView.path) ;
+                        }   else {
+                            this.$router.push('/') ;
+                        }
+                    }
+                })
             },
             dealMenuClick(obj) {
-                console.log(obj);
+                console.log("dealMenuClick",obj);
             },
 
             dealTabsChange(activeKey) {

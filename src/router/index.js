@@ -39,7 +39,7 @@ export const constantRouterMap = [
                         path:'job',
                         component:_import('index/employee/job/EmpJobManagerView'),
                         name:'employee-emp_job',
-                        meta:{title:'用户信息',icon:"user",noCache:true}
+                        meta:{title:'职务管理',icon:"user",noCache:true}
                     }
                 ]
             },
@@ -51,5 +51,7 @@ export const constantRouterMap = [
 
 export  default new Router({
     mode:'history',
+    scrollBehavior: () => ({ y: 0 }),
     routes: constantRouterMap
+
 })

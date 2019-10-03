@@ -4,18 +4,18 @@
             <router-link ref='tagsRef'
                          v-for="tag in tagsArray"
                          class="tags-view-item"
-                         :class="isActive(tag)?'active':''"
-                         :to="tag.routerUrl"
+                         :class="checkIsTagActive(tag)?'active':''"
+                         :to="tag.path"
                          :key="tag.id"
                          @click.native="handleTagItemNativeClick(tag,$event)"
                          @contextmenu.prevent.native="handleOpenContextMenu(tag,$event)"
             >
-                {{tag.name}}  &nbsp;
-                <a-icon type="close"/>
+                {{tag.title}}  &nbsp;
+                <a-icon type="close" @click.prevent.stop="handleSelectedTagItemClose(tag,$event)"/>
             </router-link>
         </vue-scroll>
         <ul class='contextmenu' v-show="contextMenuConf.visible" :style="{left:contextMenuConf.left+'px',top:contextMenuConf.top+'px'}">
-            <li @click="closeSelectedTag(selectedTag)">关闭</li>
+            <li @click="handleSelectedTagItemClose(selectedTag,$event)">关闭</li>
             <li @click="closeOthersTags">关闭其他</li>
             <li @click="closeAllTags">关闭所有</li>
         </ul>
@@ -42,29 +42,65 @@
             contextMenuConf() {
                 return this.$store.state.tagsView.contextMenuBaseConf ;
             },
-            tagIsActiveComp(){
 
-            }
         },
         watch: {
-
+            $route() {
+                this.doAddViewTags() ;
+                this.doMoveToCurrentTag();
+            },
         },
         mounted() {
+            this.doAddViewTags() ;
+            this.doMoveToCurrentTag();
         },
         methods: {
-            isActive(tag) {
+            checkIsTagActive(tag) {
                 //当前tag跟所选的tag相同时修改样式
                 var selectedTagTemp = this.selectedTag ;
-                return tag.routerUrl === selectedTagTemp.routerUrl ;
+                return tag.path === selectedTagTemp.path ;
             },
-            closeSelectedTag(selectedTag){
+            doMoveToCurrentTag() {
+                const tags = this.$refs.tagsRef;
+                if(!tags){
+                    return;
+                }
+                this.$nextTick(() => {
+                    for (const tag of tags) {
+                        if (tag.to === this.$route.path) {
+                            this.$emit("toggle-current-tag",this.$route);
+                            break;
+                        }
+                    }
+                })
 
+            },
+            handleSelectedTagItemClose(selectedTag,e){
+                console.log("handleSelectedTagItemClose",selectedTag);
+                this.$emit('tag-item-selected-close',e,selectedTag,this.checkIsTagActive(selectedTag)) ;
             },
             closeOthersTags(){
 
             },
             closeAllTags(){
 
+            },
+            dealGenerateRoute() {
+                if (this.$route.name) {
+                    return this.$route
+                }
+                return false
+            },
+            doAddViewTags() {
+                console.log("doAddViewTags");
+                const route = this.dealGenerateRoute()
+                if (!route) {
+                    return false ;
+                }
+                if(route.meta.hiddenTag){
+                    return false ;
+                }
+                this.$store.dispatch('doAddVisitedViews', route);
             },
             handleOpenContextMenu(tag, e) {
                 console.log("handleOpenContextMenu",tag);

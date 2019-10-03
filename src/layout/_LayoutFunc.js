@@ -30,7 +30,7 @@ export const LayoutFunc = {
             return {
                 id:tempAddMenuObj.id,
                 iconName:tempAddMenuObj.iconName,
-                routerUrl:tempAddMenuObj.routerUrl,
+                path:tempAddMenuObj.path,
                 name:tempAddMenuObj.name,
             }
         }   else {
