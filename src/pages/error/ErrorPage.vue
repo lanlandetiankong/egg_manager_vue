@@ -1,6 +1,6 @@
 <template>
     <div>
-        Error Page
+        <router-view />
     </div>
 </template>
 <script>

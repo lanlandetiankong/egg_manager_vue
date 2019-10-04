@@ -2,6 +2,7 @@
     <div class="layout-page-root" >
         <a-layout id="index-layout-root">
             <a-layout-sider
+                collapsible
                 v-model="siderbar.conf.collapsed"
             >
                 <sidebar
@@ -17,8 +18,7 @@
                     style="background: #fff; padding: 0;"
                 >
                     <navbar
-                        :collapsed="siderbar.conf.collapsed"
-                        @siderbar-toggle="()=> siderbar.conf.collapsed = !siderbar.conf.collapsed"
+                        :userInfo="navbarConf.userInfo"
                     ></navbar>
                 </a-layout-header>
                 <a-layout-content
@@ -78,6 +78,11 @@
                 tagsConf: {
                     tagsArray:[],
                     selectedTag:{}
+                },
+                navbarConf:{
+                    userInfo:{
+                        imgSrc: '~UserImgPath/panda-egg.jpg'
+                    }
                 }
             }
         },
@@ -141,8 +146,6 @@
                         _this.$router.push('/') ;
                     }
                 })
-
-
             },
             doTagItemAllClose(e){
                 //关闭所有标签
