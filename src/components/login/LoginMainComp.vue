@@ -1,8 +1,7 @@
 <template>
     <div class="login-main-comp-root">
-        <div>
+        <div class="login-box">
             <a-form
-                class="login-box"
                 :form="loginForm"
                 @submit="handleLoginSubmit"
             >
@@ -16,6 +15,7 @@
                     </template>
                     <a-input
                         placeholder="请输入用户账号"
+                        v-model="loginForm.userAccount"
                     >
                         <a-icon
                             slot="prefix"
@@ -35,6 +35,7 @@
                     <a-input
                         type="password"
                         placeholder="请输入用户密码"
+                        v-model="loginForm.password"
                     >
                         <a-icon
                             slot="prefix"
@@ -44,54 +45,74 @@
                     </a-input>
                 </a-form-item>
                 <a-form-item
-                    :label-col="loginFormConf.labelCol"
-                    :wrapper-col="loginFormConf.wrapperCol"
-                >
-                    <span style="float:right;color: #ffffff">
-                        <a-switch
-                            checkedChildren="记住我"
-                            unCheckedChildren="不记住账号"
-                        >
-                        </a-switch>
-                        <a-button type="link" >
-                            注册账号
-                        </a-button>
-                        <a-button type="link" >
-                            忘记密码
-                        </a-button>
-                    </span>
-                </a-form-item>
-                <a-form-item
                     label=" "
                     :colon=false
                     :label-col="loginFormConf.labelCol"
                     :wrapper-col="loginFormConf.wrapperCol"
                 >
-                    <a-button block
-                        icon="login"
-                        type="primary"
-                        html-type="submit"
-                        :disabled="hasLoginFormError()"
-                    >
-                        登陆
-                    </a-button>
+                    <a-row>
+                        <a-col :span=6>
+                            <a-switch
+                                checkedChildren="记住我"
+                                unCheckedChildren=""
+                            >
+                            </a-switch>
+                        </a-col>
+                        <a-col :span=18>
+                            <a-button block
+                                      icon="login"
+                                      type="primary"
+                                      html-type="submit"
+                                      :disabled="hasLoginFormError()"
+                            >
+                                登陆
+                            </a-button>
+                        </a-col>
+                    </a-row>
                 </a-form-item>
             </a-form>
+            <a-row type="flex" align="middle" justify="end">
+                <a-col :span=6>
+                    <router-link :to="othersRouters.register.to">注册账号</router-link>
+                </a-col>
+                <a-col :span=6>
+                    <router-link :to="othersRouters.forgetPassword.to">忘记密码</router-link>
+                </a-col>
+            </a-row>
         </div>
     </div>
 </template>
 
 <script>
     import AFormItem from "ant-design-vue/es/form/FormItem";
+    import ARow from "ant-design-vue/es/grid/Row";
+    import ACol from "ant-design-vue/es/grid/Col";
+
+    import {LoginMainCompApi} from './_LoginMainCompApi'
 
     export default {
         name: "LoginMainComp",
-        components: {AFormItem},
+        components: {ACol, ARow, AFormItem},
+        props:{
+            othersRouters:{
+                type:Object,
+                default:function () {
+                    return {
+                        register:{
+                            to:'/member/register'
+                        },
+                        forgetPassword:{
+                            to:'/member/password/forget'
+                        }
+                    }
+                }
+            }
+        },
         data() {
             return {
                 loginForm: {
-                    userAccount: '',
-                    password: ''
+                    userAccount: 'SuperRoot',
+                    password: '123456'
                 },
                 loginFormConf: {
                     labelCol: {span: 4},
@@ -100,8 +121,13 @@
             }
         },
         methods: {
-            handleLoginSubmit() {
-                //this.$router.push("/");
+            handleLoginSubmit(e) {
+                e.preventDefault(); //拦截form提交的默认事件
+                console.log(this.loginForm);
+                LoginMainCompApi.submitLoginFormByAccount(this.loginForm).then((res) => {
+                    console.log(res);
+                });
+                this.$emit('login-form-submit',e,this.loginForm);
             },
             hasLoginFormError() {
                 //判断loginForm是否有错误

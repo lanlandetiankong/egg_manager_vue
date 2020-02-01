@@ -1,15 +1,14 @@
 <template>
-    <div  :style="{textAlign:'center'}">
-        Egg Manager
+    <div :style="{height:'100%'}">
+        <router-view />
     </div>
 </template>
 
 <script>
     export default {
-        name: "BaseFooter"
+        name: "MemberPage"
     }
 </script>
-
 <style scoped>
 
 </style>

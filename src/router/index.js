@@ -9,16 +9,24 @@ import Layout from '@/layout/Layout'
 import EmployeeRouter from './main/employee/index'
 import PermissionRouter from './main/permission/index'
 
+
+//登录、注册
+import MemberRouter from './member/index.js'
+import MemberPage from '~Pages/member/MemberPage'
 //错误页面
 import Error4XXRouter from  './error/error4xx/index'
 
 
-Vue.use(Router)
+Vue.use(Router);
 
 
 export const constantRouterMap = [
     {
         path:'',
+        redirect:'/index',
+    },
+    {
+        path:'/index',
         component:Layout,
         redirect:'main',
         children:[
@@ -32,12 +40,12 @@ export const constantRouterMap = [
             PermissionRouter
         ]
     },
+    MemberRouter,
     Error4XXRouter
 ]
 
 
-
-export  default new Router({
+export default new Router({
     mode:'history',
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRouterMap

@@ -40,6 +40,7 @@
                     ></app-main>
                 </a-layout-content>
                 <a-layout-footer
+                    :style="{maxHeight:'10px'}"
                 >
                     <base-footer></base-footer>
                 </a-layout-footer>
