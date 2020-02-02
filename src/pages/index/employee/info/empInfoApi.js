@@ -19,12 +19,15 @@ export const EmpInfoApi = {
         //查询所有用户信息
         return axios.post('/user/user_account/getAllUserAccounts',qs.stringify(obj)).then(res => res);
     },
+    getUserAccountById(userAccountId){  //根据用户id查询用户信息
+        return axios.post("/user/user_account/getUserAccountById",qs.stringify(userAccountId)).then(res => res) ;
+    },
     addUserAccountByForm(formObj) {
         //新增用户
-        return axios.post("/user/user_account/doAddUserAccount",qs.stringify(formObj)).then(res => res) ;
+        return axios.post("/user/user_account/doAddUserAccount",qs.stringify(formObj));
     },
     updateUserAccountByForm(formObj) {
-        //新增用户
+        //更新用户
         return axios.post("/user/user_account/doUpdateUserAccount",qs.stringify(formObj)).then(res => res) ;
     },
     batchDelUserAccount(ids) {

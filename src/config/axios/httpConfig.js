@@ -18,25 +18,25 @@ var instance = axios.create({
     validateStatus(status) {
         switch (status) {
             case 400:
-                Message.error('请求出错')
+                message.error('请求出错')
                 break
             case 401:
-                Message.warning({
+                message.warning({
                     message: '授权失败，请重新登录'
                 })
                 return;
             case 403:
-                Message.warning({
+                message.warning({
                     message: '拒绝访问'
                 })
                 break
             case 404:
-                Message.warning({
+                message.warning({
                     message: '请求错误,未找到该资源'
                 })
                 break
             case 500:
-                Message.warning({
+                message.warning({
                     message: '服务端错误'
                 })
                 break
@@ -146,10 +146,14 @@ http.post = function (url, data, options) {
                     let tempRespHasError = response.hasError;
                     //Error:不放行
                     if (typeof(tempRespHasError) != "undefined" && tempRespHasError != null && tempRespHasError === true) {
-                        let tempRespInfo = response.info;
-                        if (typeof(tempRespInfo) != "undefined" && tempRespInfo != null && tempRespInfo.replace(/(^s*)|(s*$)/g, "").length != 0) {
-                            Message.error(tempRespInfo);
+                        let tempRespInfo = response.errorMsg;
+                        if(!tempRespInfo){
+                            tempRespInfo = response.info ;
                         }
+                        if (typeof(tempRespInfo) != "undefined" && tempRespInfo != null && tempRespInfo.replace(/(^s*)|(s*$)/g, "").length != 0) {
+                            message.error(tempRespInfo);
+                        }
+                        resolve(response);
                     } else {
                         let respHasWarning = response.hasWarning;
                         if (typeof(respHasWarning) == "undefined" || respHasWarning == null) {

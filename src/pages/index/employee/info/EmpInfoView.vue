@@ -53,12 +53,12 @@
                     type="flex"
                 >
                     <a-col>
-                        <a-button type="primary" >
+                        <a-button type="primary" @click="handleAddUserAccountBtnClick">
                             新增
                         </a-button>
                     </a-col>
                     <a-col>
-                        <a-button type="primary">
+                        <a-button type="primary" @click="handleUpdateUserAccountBtnClick">
                             更新
                         </a-button>
                     </a-col>
@@ -98,17 +98,29 @@
             </span>
             </a-table>
         </div>
+        <div>
+            <employee-info-create-form-comp
+                ref="employeeInfoCreateFormRef"
+                :visible="dialogFormConf.visible"
+                :formObj="dialogFormObj"
+                :actionType="dialogFormConf.actionType"
+                @createFormCancel="handleEmployeeInfoCreateFormCancel"
+                @createFormSubmit="handleEmployeeInfoCreateFormSubmit"
+            />
+        </div>
     </div>
 </template>
 <script>
     import {tableColumns} from './param_conf.js'
     import {EmpInfoApi} from './EmpInfoApi'
+    import EmployeeInfoCreateFormComp from '~Components/user/employee/info/EmployeeInfoCreateFormComp'
+
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
 
     export default {
         name: "EmpInfoView",
-        components: {AFormItem, ACol},
+        components: {AFormItem, ACol,EmployeeInfoCreateFormComp},
         data() {
             return {
                 searchConf:{
@@ -119,13 +131,12 @@
                         account:["account",{rules:[]}],
                         nickName:["nickName",{rules:[]}],
                         email:["email",{rules:[]}],
-                        userType:["userType",{rules:[]}],
-                        operation:["operation",{rules:[]}]
+                        userType:["userType",{rules:[]}]
                     }
                 },
                 searchParams: {
-                    userName: '',
-                    userAccount: '',
+                    nickName: '',
+                    account: '',
                     email: '',
                     userType: ''
                 },
@@ -134,8 +145,18 @@
                     data: [],
                     columns: tableColumns,
                     loading: false
-
                 },
+                tableCheckList:[],
+                dialogFormConf:{
+                    visible:false,
+                    actionType:"create"
+                },
+                dialogFormObj:{
+                    nickName: '',
+                    account: '',
+                    email: '',
+                    userType: ''
+                }
             }
         },
         methods: {
@@ -153,20 +174,6 @@
                     }
                 })
             },
-            dealAddUserAccountByForm() {     //新增用户
-                EmpInfoApi.addUserAccountByForm().then((res) => {
-                    if (res) {
-                        console.log(res);
-                    }
-                })
-            },
-            dealUpdateUserAccountByForm() {      //更新用户
-                EmpInfoApi.updateUserAccountByForm().then((res) => {
-                    if (res) {
-                        console.log(res);
-                    }
-                })
-            },
             dealBatchDelUserAccount() {  //批量删除
                 EmpInfoApi.batchDelUserAccount().then((res) => {
                     if (res) {
@@ -174,18 +181,76 @@
                     }
                 })
             },
-            handleSearchFormQuery(e){
+            handleSearchFormQuery(e){   //表格搜索
+                if(e){
+                    e.preventDefault();
+                }
                 var _this = this ;
-                e.preventDefault();
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         _this.dealQueryUserAccounts(values);
-                        console.log('Received values of form: ', values);
                     }
                 });
             },
             handleSearchFormReset(){
                 this.searchForm.resetFields();
+            },
+            handleAddUserAccountBtnClick(){     //新增用户按钮-点击
+                var _this = this ;
+                _this.dialogFormConf.visible = true ;   //显示弹窗
+                _this.dialogFormConf.actionType = "create" ;
+                _this.dialogFormObj = {} ;
+            },
+            handleUpdateUserAccountBtnClick(){  //更新用户按钮-点击
+                var _this = this ;
+                _this.dialogFormConf.visible = true ;   //显示弹窗
+                _this.dialogFormConf.actionType = "update" ;
+
+                console.log(_this.rowSelection.getCheckboxProps());
+                console.log("_this.rowSelection");
+
+                _this.dialogFormObj = {
+                    fid:''
+                } ;
+            },
+            handleEmployeeInfoCreateFormCancel(e){  // 创建/更新 用户表单->取消
+                var _this = this ;
+                _this.dialogFormConf.visible = false ;
+            },
+            handleEmployeeInfoCreateFormSubmit(e){   // 创建/更新 用户表单->提交
+                var _this = this ;
+                const dialogFormObj = _this.dealGetDialogRefFormObj();
+                dialogFormObj.validateFields((err, values) => {
+                    if (err) {
+                        return;
+                    }
+                    if(_this.dialogFormConf.actionType == "create"){
+                        EmpInfoApi.addUserAccountByForm(values).then((res) => {
+                            if (res) {
+                                if(res.hasError == false){  //异常已经有预处理了
+                                    this.$message.success(res.info);
+                                    _this.handleSearchFormQuery() ; //表格重新搜索
+                                }
+                            }
+                        })
+                    }   else if(_this.dialogFormConf.actionType == "update"){
+                        EmpInfoApi.updateUserAccountByForm(values).then((res) => {
+                            debugger;
+                            if (res) {
+                                console.log(res);
+                            }
+                        })
+                    }
+                    dialogFormObj.resetFields();
+                });
+                _this.dialogFormConf.visible = false ;
+            },
+            dealTableSelectChange(selectedRowKeys){ //表格勾选修改事件
+                console.log('selectedRowKeys changed: ', selectedRowKeys);
+                this.tableCheckList = selectedRowKeys;
+            },
+            dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
+                return this.$refs.employeeInfoCreateFormRef.employeeInfoCreateForm ;
             }
         },
         computed: {
@@ -197,7 +262,7 @@
                     },
                     getCheckboxProps: record => ({  //选择框的默认属性配置
                         props: {
-                            disabled: record.nickName === 'Disabled User' // 配置是否禁用
+
                         },
                     }),
                 };
@@ -205,6 +270,9 @@
         },
         mounted() {
             this.dealGetAllUserAccounts();
+        },
+        watch:{
+
         }
     }
 </script>
