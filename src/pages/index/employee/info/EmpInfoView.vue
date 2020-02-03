@@ -63,7 +63,7 @@
                         </a-button>
                     </a-col>
                     <a-col>
-                        <a-button type="danger">
+                        <a-button type="danger" @click="handleEmployeeInfoBatchDeleteByIds">
                             删除
                         </a-button>
                     </a-col>
@@ -71,6 +71,7 @@
                         <a-switch
                             checkedChildren="展示搜索"
                             unCheckedChildren="隐藏搜索"
+                            size="large"
                             v-model="searchConf.showListFlag"
                         ></a-switch>
                     </a-col>
@@ -89,12 +90,8 @@
             <span slot="userType" slot-scope="record">
                 <a-tag color="blue" :key="record.userType">{{record.userType}}</a-tag>
             </span>
-                <span slot="action" slot-scope="text,record">
-                  <a-button type="danger" size="small">删除</a-button>
-                  <br/>
-                  <a href="javascript:;" class="ant-dropdown-link">
-                    更多...<a-icon type="down"/>
-                  </a>
+            <span slot="action" slot-scope="text,record">
+                <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
             </span>
             </a-table>
         </div>
@@ -146,7 +143,7 @@
                     columns: tableColumns,
                     loading: false
                 },
-                tableCheckList:[],
+                tableCheckIdList:[],
                 dialogFormConf:{
                     visible:false,
                     actionType:"create"
@@ -167,7 +164,7 @@
                     }
                 })
             },
-            dealQueryUserAccounts(queryObj){
+            dealQueryUserAccounts(queryObj){    //带查询条件 检索用户列表
                 EmpInfoApi.getAllUserAccounts(queryObj).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
@@ -175,13 +172,29 @@
                 })
             },
             dealBatchDelUserAccount() {  //批量删除
-                EmpInfoApi.batchDelUserAccount().then((res) => {
+                var _this = this;
+                var delIds = _this.tableCheckIdList ;
+                EmpInfoApi.batchDelUserAccount(delIds).then((res) => {
                     if (res) {
-                        console.log(res);
+                        if(res.hasError == false){  //已经有对错误进行预处理
+                            this.$message.success(res.info);
+                            _this.handleSearchFormQuery() ; //表格重新搜索
+                        }
                     }
                 })
             },
-            handleSearchFormQuery(e){   //表格搜索
+            dealDelOneRowById(delId){   //根据id 删除
+                var _this = this;
+                EmpInfoApi.delOneUserAccount(delId).then((res) => {
+                    if (res) {
+                        if(res.hasError == false){  //已经有对错误进行预处理
+                            _this.$message.success(res.info);
+                            _this.handleSearchFormQuery() ; //表格重新搜索
+                        }
+                    }
+                })
+            },
+            handleSearchFormQuery(e){   //表格-搜索
                 if(e){
                     e.preventDefault();
                 }
@@ -192,7 +205,7 @@
                     }
                 });
             },
-            handleSearchFormReset(){
+            handleSearchFormReset(){    //重置 搜索列表 的值
                 this.searchForm.resetFields();
             },
             handleAddUserAccountBtnClick(){     //新增用户按钮-点击
@@ -203,15 +216,27 @@
             },
             handleUpdateUserAccountBtnClick(){  //更新用户按钮-点击
                 var _this = this ;
-                _this.dialogFormConf.visible = true ;   //显示弹窗
-                _this.dialogFormConf.actionType = "update" ;
-
-                console.log(_this.rowSelection.getCheckboxProps());
-                console.log("_this.rowSelection");
-
-                _this.dialogFormObj = {
-                    fid:''
-                } ;
+                if(_this.tableCheckIdList.length < 1){
+                    this.$message.warning('请选择一行要更新的数据！');
+                }   else if(_this.tableCheckIdList.length > 1){
+                    this.$message.warning('请选择至多一行要更新的数据！');
+                }   else {
+                    var selectRowId = _this.tableCheckIdList[0] ;
+                    if(selectRowId){
+                        EmpInfoApi.getUserAccountById(selectRowId).then((res) =>{
+                            var selectUserBean = res.bean ;
+                            debugger;
+                            if(selectUserBean){
+                                _this.dialogFormConf.visible = true ;   //显示弹窗
+                                _this.dialogFormConf.actionType = "update" ;
+                                _this.dialogFormObj = selectUserBean ;
+                                console.log(_this.dialogFormObj);
+                            }
+                        })
+                    }   else {
+                        this.$message.warning('操作失败！未取得有效的用户id！');
+                    }
+                }
             },
             handleEmployeeInfoCreateFormCancel(e){  // 创建/更新 用户表单->取消
                 var _this = this ;
@@ -224,30 +249,77 @@
                     if (err) {
                         return;
                     }
-                    if(_this.dialogFormConf.actionType == "create"){
+                    var closeDialogFlag = true;
+                    if(_this.dialogFormConf.actionType == "create"){        //新建-提交
                         EmpInfoApi.addUserAccountByForm(values).then((res) => {
                             if (res) {
                                 if(res.hasError == false){  //异常已经有预处理了
                                     this.$message.success(res.info);
                                     _this.handleSearchFormQuery() ; //表格重新搜索
+                                }   else {
+                                    closeDialogFlag = false ;
                                 }
+                            }   else {
+                                closeDialogFlag = false ;
                             }
                         })
-                    }   else if(_this.dialogFormConf.actionType == "update"){
+                    }   else if(_this.dialogFormConf.actionType == "update"){   //更新-提交
+                        values['fid'] = _this.dialogFormObj.fid ;   //提交时，回填fid值
                         EmpInfoApi.updateUserAccountByForm(values).then((res) => {
-                            debugger;
                             if (res) {
-                                console.log(res);
+                                if(res.hasError == false){  //异常已经有预处理了
+                                    this.$message.success(res.info);
+                                    _this.handleSearchFormQuery() ; //表格重新搜索
+                                }   else {
+                                    closeDialogFlag = false ;
+                                }
+                            }   else {
+                                closeDialogFlag = false ;
                             }
                         })
                     }
-                    dialogFormObj.resetFields();
+                    if(closeDialogFlag == true){    //关闭弹窗
+                        dialogFormObj.resetFields();
+                    }
                 });
                 _this.dialogFormConf.visible = false ;
             },
-            dealTableSelectChange(selectedRowKeys){ //表格勾选修改事件
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.tableCheckList = selectedRowKeys;
+            handleEmployeeInfoBatchDeleteByIds(e){  // 批量删除
+                var _this = this ;
+                var selectDelIds = _this.tableCheckIdList ;
+                if(selectDelIds.length < 1){
+                    _this.$message.warning("请选择至少一条要删除的数据！");
+                }   else {
+                    _this.$confirm({
+                        content:'是否确认删除所选的'+selectDelIds.length+"条数据？",
+                        okText:'确认',
+                        cancelText:'取消',
+                        onOk(){
+                            _this.dealBatchDelUserAccount();
+                        },
+                        onCancel(){
+                            _this.$message.info("操作：取消删除");
+                        }
+                    })
+                }
+            },
+            handleDeleteOneById(delId){     //删除指定行
+                var _this = this ;
+                if(delId){
+                    _this.$confirm({
+                        content:'是否确认删除所选行？',
+                        okText:'确认',
+                        cancelText:'取消',
+                        onOk(){
+                            _this.dealDelOneRowById(delId);
+                        },
+                        onCancel(){
+                            _this.$message.info("操作：取消删除");
+                        }
+                    })
+                }   else{
+                    _this.$message.warning("无效删除操作！");
+                }
             },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.employeeInfoCreateFormRef.employeeInfoCreateForm ;
@@ -257,8 +329,8 @@
             rowSelection() {    //行选择
                 const {selectedRowKeys} = this;
                 return {
-                    onChange: (selectedRowKeys, selectedRows) => {
-                        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                    onChange: (selectedRowKeys, selectedRows) => {  //勾选 修改事件
+                        this.tableCheckIdList = selectedRowKeys;
                     },
                     getCheckboxProps: record => ({  //选择框的默认属性配置
                         props: {

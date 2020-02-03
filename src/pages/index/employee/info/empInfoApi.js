@@ -20,21 +20,27 @@ export const EmpInfoApi = {
         return axios.post('/user/user_account/getAllUserAccounts',qs.stringify(obj)).then(res => res);
     },
     getUserAccountById(userAccountId){  //根据用户id查询用户信息
-        return axios.post("/user/user_account/getUserAccountById",qs.stringify(userAccountId)).then(res => res) ;
+        var params = {
+            accountId:userAccountId
+        }
+        return axios.post("/user/user_account/getUserAccountById",qs.stringify(params)).then(res => res) ;
     },
-    addUserAccountByForm(formObj) {
-        //新增用户
+    addUserAccountByForm(formObj) {     //新增用户
         return axios.post("/user/user_account/doAddUserAccount",qs.stringify(formObj));
     },
-    updateUserAccountByForm(formObj) {
-        //更新用户
+    updateUserAccountByForm(formObj) {  //更新用户
         return axios.post("/user/user_account/doUpdateUserAccount",qs.stringify(formObj)).then(res => res) ;
     },
-    batchDelUserAccount(ids) {
+    batchDelUserAccount(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
-        //新增用户
-        return axios.post("/user/user_account/doUpdateUserAccount",qs.stringify(obj)).then(res => res) ;
+        return axios.post("/user/user_account/batchDelUserAccountByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
+    },
+    delOneUserAccount(delId) {  //批量删除
+        var obj = {
+            delId:delId
+        }
+        return axios.post("/user/user_account/delOneUserAccountByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
     }
 }

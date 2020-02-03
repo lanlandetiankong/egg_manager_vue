@@ -3,8 +3,8 @@
         <a-modal
             :visible="visible"
             :maskClosable=false
-            title="创建新用户"
-            okText="创建"
+            :title="modalCompTitle"
+            :okText="modalCompOkTest"
             cancelText="取消"
             @cancel="() => { $emit('createFormCancel')}"
             @ok="() => { $emit('createFormSubmit')}"
@@ -36,6 +36,7 @@
         components: {AFormItem},
         props:{
             visible:Boolean,
+            actionType:String,
             formObj:Object
         },
         data(){
@@ -72,6 +73,14 @@
                        })
                    });
                }
+            }
+        },
+        computed:{
+            modalCompTitle() {
+                return "create" == this.actionType ?  "创建新用户" : "更新用户信息" ;
+            },
+            modalCompOkTest(){
+                return "create" == this.actionType ?  "创建" : "更新" ;
             }
         },
         beforeCreate(){
