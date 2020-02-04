@@ -39,11 +39,6 @@
                         :style="{ padding: '5px', background: '#fff', textAlign: 'center' }"
                     ></app-main>
                 </a-layout-content>
-                <a-layout-footer
-                    :style="{maxHeight:'10px'}"
-                >
-                    <base-footer></base-footer>
-                </a-layout-footer>
             </a-layout>
         </a-layout>
     </div>

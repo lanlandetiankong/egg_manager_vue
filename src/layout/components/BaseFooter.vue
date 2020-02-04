@@ -1,6 +1,5 @@
 <template>
-    <div  :style="{textAlign:'center'}">
-        Egg Manager
+    <div>
     </div>
 </template>
 

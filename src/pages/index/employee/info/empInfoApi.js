@@ -6,7 +6,7 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const EmpInfoApi = {
-    getAllUserAccounts(query) {
+    getAllUserAccounts(query,pagination) {
         var queryObj = new Object();
         if(query){
             for (var key in query){
@@ -14,7 +14,8 @@ export const EmpInfoApi = {
             }
         }
         var obj = {
-            queryObj:JSON.stringify(queryObj)
+            queryObj:JSON.stringify(queryObj),
+            paginationObj:JSON.stringify(pagination)
         }
         //查询所有用户信息
         return axios.post('/user/user_account/getAllUserAccounts',qs.stringify(obj)).then(res => res);
