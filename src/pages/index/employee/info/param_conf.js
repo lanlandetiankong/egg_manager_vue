@@ -19,8 +19,8 @@ const columns = [{
 }, {
     title: '类型',
     align:textAlignDefault,
-    key: 'userType',
-    scopedSlots: { customRender: 'userType' },
+    key: 'userTypeStr',
+    scopedSlots: { customRender: 'userTypeStr' },
 }, {
     title:'操作',
     align:textAlignDefault,

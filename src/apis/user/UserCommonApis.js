@@ -5,6 +5,8 @@ import qs from 'qs'
 
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
-export const UserApis = {
-
+export const UserCommonApis = {
+    getAllUserType() {
+        return axios.post('/common_api/user/getAllUserTypeEnumList').then((res) => res) ;
+    }
 }

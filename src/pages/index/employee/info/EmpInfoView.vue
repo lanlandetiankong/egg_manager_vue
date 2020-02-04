@@ -26,7 +26,15 @@
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="类型">
-                                    <a-input v-decorator="searchConf.paramConf.userType"/>
+                                    <a-select showSearch allowClear
+                                        placeholder="请选择"
+                                        style="width: 180px"
+                                        optionFilterProp="children"
+                                        :options="searchConf.binding.userTypes"
+                                        :filterOption="getFilterOption"
+                                        v-decorator="searchConf.paramConf.userType"
+                                    >
+                                    </a-select>
                                 </a-form-item>
                             </a-col>
                         </a-row>
@@ -90,8 +98,10 @@
                 :rowSelection="rowSelection"
                 @change="handleTableChange"
             >
-            <span slot="userType" slot-scope="record">
-                <a-tag color="blue" :key="record.userType">{{record.userType}}</a-tag>
+            <span slot="userTypeStr" slot-scope="record">
+                <a-tag color="blue" :key="record.userTypeStr">
+                    {{record.userTypeStr}}
+                </a-tag>
             </span>
                 <span slot="action" slot-scope="text,record">
                 <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
@@ -113,6 +123,7 @@
 <script>
     import {tableColumns} from './param_conf.js'
     import {EmpInfoApi} from './EmpInfoApi'
+    import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import EmployeeInfoCreateFormComp from '~Components/user/employee/info/EmployeeInfoCreateFormComp'
 
     import ACol from "ant-design-vue/es/grid/Col";
@@ -132,6 +143,9 @@
                         nickName: ["nickName", {rules: []}],
                         email: ["email", {rules: []}],
                         userType: ["userType", {rules: []}]
+                    },
+                    binding:{
+                        userTypes:[]
                     }
                 },
                 searchParams: {
@@ -216,14 +230,22 @@
                     }
                 })
             },
+            dealGetUserTypeEnumList(){  //取得 用户类型-枚举列表
+                var _this = this ;
+                UserCommonApis.getAllUserType().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.enumList){
+                            _this.searchConf.binding.userTypes = res.enumList ;
+                        }
+                    }
+                })
+            },
             handleSearchFormQuery(e) {   //表格-搜索
                 if (e) {
                     e.preventDefault();
                 }
                 var _this = this;
                 var paginationTemp = _this.tableConf.pagination ;
-                console.log(_this.tableConf.pagination)
-                console.log("_this.tableConf.pagination")
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         _this.dealQueryUserAccounts(values,paginationTemp);
@@ -260,7 +282,7 @@
                                 _this.dialogFormConf.visible = true;   //显示弹窗
                                 _this.dialogFormConf.actionType = "update";
                                 _this.dialogFormObj = selectUserBean;
-                                console.log(_this.dialogFormObj);
+                                //console.log(_this.dialogFormObj);
                             }
                         })
                     } else {
@@ -353,6 +375,9 @@
             },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.employeeInfoCreateFormRef.employeeInfoCreateForm;
+            },
+            getFilterOption(input,option){
+                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             }
         },
         computed: {
@@ -369,7 +394,9 @@
             },
         },
         mounted() {
+            console.log("mounted ....");
             this.dealGetAllUserAccounts();
+            this.dealGetUserTypeEnumList();
         },
         watch: {}
     }
