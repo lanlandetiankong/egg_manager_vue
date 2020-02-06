@@ -259,6 +259,7 @@
                 this.tableConf.pagination = pagination ;
                 this.tableConf.filters = filters ;
                 this.tableConf.sorter = sorter ;
+                this.handleSearchFormQuery();
             },
             handleAddUserAccountBtnClick() {     //新增用户按钮-点击
                 var _this = this;
