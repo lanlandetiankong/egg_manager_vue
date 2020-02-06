@@ -80,6 +80,7 @@
                             checkedChildren="展示搜索"
                             unCheckedChildren="隐藏搜索"
                             size="large"
+                            :style="{height:'30px'}"
                             v-model="searchConf.showListFlag"
                         ></a-switch>
                     </a-col>
@@ -147,12 +148,6 @@
                     binding:{
                         userTypes:[]
                     }
-                },
-                searchParams: {
-                    nickName: '',
-                    account: '',
-                    email: '',
-                    userType: ''
                 },
                 searchForm: this.$form.createForm(this, {name: 'search_form'}),
                 tableConf: {

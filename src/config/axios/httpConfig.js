@@ -2,11 +2,15 @@ import axios from 'axios'
 import router from '@/router/index'
 import store from '@/store/index.js'
 import baseURL from './baseUrl'
-import {message, Spin} from 'ant-design-vue'
-import {commonEleNotice} from '~Assets/js/common/notice/myCommonNotice'
+import {message, Spin,notification} from 'ant-design-vue'
 import qs from 'qs'
 
-const http = {}
+const http = {};
+const defaultNotificationMsg = {
+    success:"提示",
+    warning:'提示',
+    error:'错误！'
+}
 //基础访问url
 var instance = axios.create({
     timeout: 50000,
@@ -18,26 +22,33 @@ var instance = axios.create({
     validateStatus(status) {
         switch (status) {
             case 400:
-                message.error('请求出错')
+                notification.error({
+                    message:defaultNotificationMsg.error,
+                    description:'请求出错!'
+                })
                 break
             case 401:
-                message.warning({
-                    message: '授权失败，请重新登录'
+                notification.warning({
+                    message:defaultNotificationMsg.warning,
+                    description:'授权失败，请重新登录'
                 })
                 return;
             case 403:
-                message.warning({
-                    message: '拒绝访问'
+                notification.warning({
+                    message:defaultNotificationMsg.warning,
+                    description:'拒绝访问'
                 })
                 break
             case 404:
-                message.warning({
-                    message: '请求错误,未找到该资源'
+                notification.warning({
+                    message:defaultNotificationMsg.warning,
+                    description:'请求错误,未找到该资源'
                 })
                 break
             case 500:
-                message.warning({
-                    message: '服务端错误'
+                notification.error({
+                    message:defaultNotificationMsg.error,
+                    description:'服务端错误'
                 })
                 break
         }
@@ -70,6 +81,7 @@ instance.interceptors.response.use(
     },
     // 服务器状态码不是200的情况
     error => {
+        var _this = this ;
         if (error.response) {
             if (error.response.status) {
                 switch (error.response.status) {
@@ -82,22 +94,40 @@ instance.interceptors.response.use(
                     // 清除本地token和清空vuex中token对象
                     // 跳转登录页面
                     case 403:
-                        commonEleNotice.notification.handleShowErrorNotify("登录过期，请重新登录");
+                        if(1==2) {       //已在create axios 时定义了处理
+                            notification.error({
+                                message:defaultNotificationMsg.warning,
+                                description:"登录过期，请重新登录！"
+                            });
+                        }
                         // 清除token
                         sessionStorage.removeItem('userToken');
                         break;
                     // 404请求不存在
                     case 404:
-                        commonEleNotice.notification.handleShowErrorNotify("网络请求不存在");
+                        if(1==2){       //已在create axios 时定义了处理
+                            notification.warning({
+                                message:defaultNotificationMsg.warning,
+                                description:"网络请求不存在"
+                            });
+                        }
                         break;
                     // 其他错误，直接抛出错误提示
                     default:
-                        commonEleNotice.notification.handleShowErrorNotify(error.response);
+                        if(1==2) {       //已在create axios 时定义了处理
+                            notification.error({
+                                message:defaultNotificationMsg.warning,
+                                description:"操作出现异常！"
+                            });
+                        }
                 }
                 return Promise.reject(error.response);
             }
         }   else {
-            commonEleNotice.notification.handleShowErrorNotify('请求错误或服务器异常!请联系管理员！');
+            notification.error({
+                message:defaultNotificationMsg.warning,
+                description:"请求错误或服务器异常!请联系管理员！"
+            });
         }
     }
 );
@@ -118,14 +148,20 @@ http.get = function (url, options) {
                 if (response.code === 1) {
                     resolve(response.data)
                 } else {
-                    commonEleNotice.notification.handleShowErrorNotify(response.msg);
+                    notification.error({
+                        message:defaultNotificationMsg.warning,
+                        description:response.msg
+                    });
                     reject(response.msg)
                 }
             })
             .catch(e => {
                 console.log(e)
             }, err => {
-                commonEleNotice.notification.handleShowErrorNotify('请求错误或服务器异常!请联系管理员！');
+                notification.error({
+                    message:defaultNotificationMsg.warning,
+                    description:"请求错误或服务器异常!请联系管理员！"
+                });
                 reject(err)
             })
     })

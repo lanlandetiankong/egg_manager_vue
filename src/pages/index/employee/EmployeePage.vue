@@ -9,7 +9,7 @@
         name: "EmployeePage",
         computed:{
             cachedViews() {
-                return ['employeeInfo','employeeJob'];
+                return [];
             }
         }
     }

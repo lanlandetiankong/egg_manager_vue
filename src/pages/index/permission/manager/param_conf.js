@@ -1,26 +1,25 @@
 const textAlignDefault = 'left' ;
 const columns = [{
-    title: '账号',
+    title: '权限名',
     align:textAlignDefault,
-    dataIndex: 'account',
-    key: 'account',
-    sorter:true,
-    scopedSlots: { customRender: 'account' },
+    dataIndex: 'name',
+    key: 'name'
 }, {
-    title: '姓名',
+    title: '编码',
     align:textAlignDefault,
-    dataIndex: 'nickName',
-    key: 'nickName',
-}, {
-    title: '邮箱',
-    align:textAlignDefault,
-    dataIndex: 'email',
-    key: 'email',
+    dataIndex: 'code',
+    key: 'code',
 }, {
     title: '类型',
     align:textAlignDefault,
-    key: 'userTypeStr',
-    scopedSlots: { customRender: 'userTypeStr' },
+    key: 'typeStr',
+    scopedSlots: { customRender: 'typeStr' },
+}, {
+    title: '备注',
+    align:textAlignDefault,
+    dataIndex: 'remark',
+    width:300,
+    key: 'remark',
 }, {
     title:'操作',
     align:textAlignDefault,
@@ -30,6 +29,7 @@ const columns = [{
     width:100,
     scopedSlots: { customRender: 'action' }
 }];
+
 
 export const tableColumns = columns;
 
