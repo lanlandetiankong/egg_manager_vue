@@ -7,13 +7,13 @@ const PermissionRouter = {
         {
             path:'manager',
             component:_import('index/permission/manager/PermissionManagerView'),
-            name:'permission-manager',
+            name:'permissionManager',
             meta:{title:'权限管理',icon:"user",noCache:true}
         },
         {
             path:'role/manager',
             component:_import('index/permission/role/PermissionRoleManagerView'),
-            name:'permission-role_manager',
+            name:'permissionRoleManager',
             meta:{title:'角色管理',icon:"user",noCache:true}
         }
     ]

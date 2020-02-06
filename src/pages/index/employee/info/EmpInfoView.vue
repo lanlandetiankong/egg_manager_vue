@@ -393,12 +393,14 @@
                 };
             },
         },
-        mounted() {
-            console.log("mounted ....");
+        created(){
             this.dealGetAllUserAccounts();
             this.dealGetUserTypeEnumList();
         },
-        watch: {}
+        destroyed(){
+            //console.log("页面销毁 ...")
+        }
+
     }
 </script>
 

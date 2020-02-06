@@ -7,14 +7,14 @@ const EmployeeRouter = {
         {
             path:'info',
             component:_import('index/employee/info/EmpInfoView'),
-            name:'employee-emp_info',
-            meta:{title:'用户信息',icon:"user",noCache:true}
+            name:'employeeInfo',
+            meta:{title:'用户信息',icon:"user",noCache:false,keepAlive:true}
         },
         {
             path:'job',
             component:_import('index/employee/job/EmpJobManagerView'),
-            name:'employee-emp_job',
-            meta:{title:'职务管理',icon:"user",noCache:true}
+            name:'employeeJob',
+            meta:{title:'职务管理',icon:"user",noCache:false,keepAlive:true}
         }
     ]
 };
