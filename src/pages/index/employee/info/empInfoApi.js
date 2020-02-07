@@ -6,15 +6,9 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const EmpInfoApi = {
-    getAllUserAccounts(query,pagination) {
-        var queryObj = new Object();
-        if(query){
-            for (var key in query){
-                queryObj[key] = query[key] ;
-            }
-        }
+    getAllUserAccounts(queryArr,pagination) {
         var obj = {
-            queryObj:JSON.stringify(queryObj),
+            queryObj:JSON.stringify(queryArr),
             paginationObj:JSON.stringify(pagination)
         }
         //查询所有用户信息

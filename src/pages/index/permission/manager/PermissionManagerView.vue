@@ -126,7 +126,7 @@
     </div>
 </template>
 <script>
-    import {tableColumns} from './param_conf.js'
+    import {tableColumns,searchFormQueryConf} from './param_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
@@ -227,8 +227,8 @@
                     }
                 })
             },
-            dealQueryDefinePermissions(queryObj,pagination) {    //带查询条件 检索权限列表
-                PermissionManagerApi.getAllDefinePermissions(queryObj,pagination).then((res) => {
+            dealQueryDefinePermissions(queryFieldList,pagination) {    //带查询条件 检索权限列表
+                PermissionManagerApi.getAllDefinePermissions(queryFieldList,pagination).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
                         if(res.paginationBean){ //总个数
@@ -260,6 +260,23 @@
                     }
                 })
             },
+            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
+                var _this = this ;
+                var queryFieldArr = [] ;
+                if(queryObj) {
+                    for (var key in queryObj){
+                        var searchFieldObj = searchFormQueryConf[key];
+                        if(searchFieldObj){
+                            const queryVal = queryObj[key] ;
+                            if(queryVal || queryVal == 0){
+                                searchFieldObj['value'] = queryObj[key];
+                                queryFieldArr.push(searchFieldObj);
+                            }
+                        }
+                    }
+                }
+                return queryFieldArr ;
+            },
             handleSearchFormQuery(e) {
                 var _this = this ;
                 if (e) {
@@ -268,7 +285,9 @@
                 var paginationTemp = _this.tableConf.pagination ;
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
-                        _this.dealQueryDefinePermissions(values,paginationTemp);
+                        //取得 bean 形式 的查询条件数组
+                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        _this.dealQueryDefinePermissions(searchFieldArr,paginationTemp);
                     }
                 });
             },

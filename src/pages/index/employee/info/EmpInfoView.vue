@@ -122,7 +122,7 @@
     </div>
 </template>
 <script>
-    import {tableColumns} from './param_conf.js'
+    import {tableColumns,searchFormQueryConf} from './param_conf.js'
     import {EmpInfoApi} from './EmpInfoApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import EmployeeInfoCreateFormComp from '~Components/user/employee/info/EmployeeInfoCreateFormComp'
@@ -192,8 +192,8 @@
                     }
                 })
             },
-            dealQueryUserAccounts(queryObj,pagination) {    //带查询条件 检索用户列表
-                EmpInfoApi.getAllUserAccounts(queryObj,pagination).then((res) => {
+            dealQueryUserAccounts(queryFieldArr,pagination) {    //带查询条件 检索用户列表
+                EmpInfoApi.getAllUserAccounts(queryFieldArr,pagination).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
                         if(res.paginationBean){ //总个数
@@ -225,6 +225,23 @@
                     }
                 })
             },
+            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
+                var _this = this ;
+                var queryFieldArr = [] ;
+                if(queryObj) {
+                    for (var key in queryObj){
+                        var searchFieldObj = searchFormQueryConf[key];
+                        if(searchFieldObj){
+                            const queryVal = queryObj[key] ;
+                            if(queryVal || queryVal == 0){
+                                searchFieldObj['value'] = queryObj[key];
+                                queryFieldArr.push(searchFieldObj);
+                            }
+                        }
+                    }
+                }
+                return queryFieldArr ;
+            },
             dealGetUserTypeEnumList(){  //取得 用户类型-枚举列表
                 var _this = this ;
                 UserCommonApis.getAllUserType().then((res) => {
@@ -243,7 +260,9 @@
                 var paginationTemp = _this.tableConf.pagination ;
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
-                        _this.dealQueryUserAccounts(values,paginationTemp);
+                        //取得 bean 形式 的查询条件数组
+                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        _this.dealQueryUserAccounts(searchFieldArr,paginationTemp);
                     }
                 });
             },

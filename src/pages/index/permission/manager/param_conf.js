@@ -31,5 +31,29 @@ const columns = [{
 }];
 
 
+const searchFormQueryConfObj = {
+    name:{
+        fieldName:'name',
+        matching:'like',
+        value:''
+    },
+    code:{
+        fieldName:'code',
+        matching:'like',
+        value:''
+    },
+    type:{
+        fieldName:'type',
+        matching:'equals',
+        value:''
+    },
+    remark:{
+        fieldName:'remark',
+        matching:'like',
+        value:''
+    }
+}
+
 export const tableColumns = columns;
+export const searchFormQueryConf = searchFormQueryConfObj;
 

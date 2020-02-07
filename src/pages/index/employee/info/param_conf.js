@@ -31,5 +31,29 @@ const columns = [{
     scopedSlots: { customRender: 'action' }
 }];
 
+
+const searchFormQueryConfObj = {
+    account:{
+        fieldName:'account',
+        matching:'like',
+        value:''
+    },
+    nickName:{
+        fieldName:'nickName',
+        matching:'like',
+        value:''
+    },
+    email:{
+        fieldName:'email',
+        matching:'like',
+        value:''
+    },
+    userType:{
+        fieldName:'userType',
+        matching:'equals',
+        value:''
+    }
+}
 export const tableColumns = columns;
+export const searchFormQueryConf = searchFormQueryConfObj;
 

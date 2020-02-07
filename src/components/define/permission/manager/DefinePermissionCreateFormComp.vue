@@ -60,6 +60,9 @@
             }
         },
         methods:{
+            getPermissionTypeFilterOption(input,option){
+                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
+            },
             dealUpdateFormValue(formObj){
                 var _this = this ;
                if(typeof _this.definePermissionCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
