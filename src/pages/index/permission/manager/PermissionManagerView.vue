@@ -40,12 +40,13 @@
                         </a-row>
                         <a-row>
                             <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit"
+                                <a-button type="primary" html-type="submit" icon="search"
                                           :loading="searchConf.loadingFlag"
                                 >
                                     搜索
                                 </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" @click="handleSearchFormReset">
+                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
+                                          @click="handleSearchFormReset">
                                     清空
                                 </a-button>
                             </a-col>
@@ -61,17 +62,20 @@
                     type="flex"
                 >
                     <a-col>
-                        <a-button type="primary" @click="handleAddDefinePermissionBtnClick">
+                        <a-button type="primary" icon="plus"
+                                  @click="handleAddDefinePermissionBtnClick">
                             新增
                         </a-button>
                     </a-col>
                     <a-col>
-                        <a-button type="primary" @click="handleUpdateDefinePermissionBtnClick">
+                        <a-button type="primary" icon="edit"
+                                  @click="handleUpdateDefinePermissionBtnClick">
                             更新
                         </a-button>
                     </a-col>
                     <a-col>
-                        <a-button type="danger" @click="handleDefinePermissionBatchDeleteByIds">
+                        <a-button type="danger" icon="delete"
+                                  @click="handleDefinePermissionBatchDeleteByIds">
                             删除
                         </a-button>
                     </a-col>

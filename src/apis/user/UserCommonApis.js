@@ -8,5 +8,8 @@ import qs from 'qs'
 export const UserCommonApis = {
     getAllUserType() {
         return axios.post('/common_api/user/getAllUserTypeEnumList').then((res) => res) ;
+    },
+    getAllUserLockStateType() {
+        return axios.post('/common_api/user/getAllUserLockStateEnumList').then((res) => res) ;
     }
 }

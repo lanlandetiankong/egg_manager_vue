@@ -37,15 +37,29 @@
                                     </a-select>
                                 </a-form-item>
                             </a-col>
+                            <a-col :span="searchConf.defaultColSpan">
+                                <a-form-item label="锁定状态">
+                                    <a-select showSearch allowClear
+                                              placeholder="请选择"
+                                              style="width: 180px"
+                                              optionFilterProp="children"
+                                              :options="searchConf.binding.lockStates"
+                                              :filterOption="getFilterOption"
+                                              v-decorator="searchConf.paramConf.locked"
+                                    >
+                                    </a-select>
+                                </a-form-item>
+                            </a-col>
                         </a-row>
                         <a-row>
                             <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit"
+                                <a-button type="primary" html-type="submit" icon="search"
                                           :loading="searchConf.loadingFlag"
                                 >
                                     搜索
                                 </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" @click="handleSearchFormReset">
+                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
+                                          @click="handleSearchFormReset">
                                     清空
                                 </a-button>
                             </a-col>
@@ -61,18 +75,33 @@
                     type="flex"
                 >
                     <a-col>
-                        <a-button type="primary" @click="handleAddUserAccountBtnClick">
+                        <a-button type="primary" icon="user-add"
+                                  @click="handleAddUserAccountBtnClick">
                             新增
                         </a-button>
                     </a-col>
                     <a-col>
-                        <a-button type="primary" @click="handleUpdateUserAccountBtnClick">
+                        <a-button type="primary" icon="edit"
+                                  @click="handleUpdateUserAccountBtnClick">
                             更新
                         </a-button>
                     </a-col>
                     <a-col>
-                        <a-button type="danger" @click="handleEmployeeInfoBatchDeleteByIds">
+                        <a-button type="danger" icon="user-delete"
+                                  @click="handleEmployeeInfoBatchDeleteByIds">
                             删除
+                        </a-button>
+                    </a-col>
+                    <a-col>
+                        <a-button icon="lock"
+                            @click="handleEmployeeInfoBatchLockByIds(this,true)" >
+                            锁定用户
+                        </a-button>
+                    </a-col>
+                    <a-col>
+                        <a-button icon="unlock"
+                            @click="handleEmployeeInfoBatchLockByIds(this,false)">
+                            解除锁定
                         </a-button>
                     </a-col>
                     <a-col>
@@ -104,8 +133,23 @@
                     {{record.userTypeStr}}
                 </a-tag>
             </span>
-                <span slot="action" slot-scope="text,record">
-                <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+            <span slot="locked" slot-scope="record">
+                <a-tag v-if="record.locked == 1" color="red" :key="record.fid">
+                    已锁定
+                </a-tag>
+                <a-tag v-else-if="record.locked == 0" color="blue" :key="record.fid">
+                    未锁定
+                </a-tag>
+            </span>
+            <span slot="action" slot-scope="text,record">
+                    <a-dropdown>
+                          <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
+                                <a-menu-item key="recordDel">删除</a-menu-item>
+                                <a-menu-item v-if="record.locked == 0" key="recordLock">锁定</a-menu-item>
+                                <a-menu-item v-else-if="record.locked == 1" key="recordUnlock">解锁</a-menu-item>
+                          </a-menu>
+                          <a-button> 操作 <a-icon type="down" /> </a-button>
+                    </a-dropdown>
             </span>
             </a-table>
         </div>
@@ -122,6 +166,7 @@
     </div>
 </template>
 <script>
+    import jq from 'jquery';
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
     import {EmpInfoApi} from './EmpInfoApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
@@ -143,10 +188,12 @@
                         account: ["account", {rules: []}],
                         nickName: ["nickName", {rules: []}],
                         email: ["email", {rules: []}],
-                        userType: ["userType", {rules: []}]
+                        userType: ["userType", {rules: []}],
+                        locked: ["locked", {rules: []}]
                     },
                     binding:{
-                        userTypes:[]
+                        userTypes:[],
+                        lockStates:[]
                     }
                 },
                 searchForm: this.$form.createForm(this, {name: 'search_form'}),
@@ -225,6 +272,41 @@
                     }
                 })
             },
+            dealBatchLockUserAccount(lockFlag) {  //批量锁定
+                var _this = this;
+                var delIds = _this.tableCheckIdList;
+                EmpInfoApi.batchChangeLockStateUserAccount(delIds,lockFlag).then((res) => {
+                    if (res) {
+                        if (res.hasError == false) {  //已经有对错误进行预处理
+                            this.$message.success(res.info);
+                            _this.handleSearchFormQuery(); //表格重新搜索
+                        }
+                    }
+                })
+            },
+            dealChangeLockOneRowById(delId,lockFlag) {   //根据id 锁定/解锁
+                var _this = this;
+                EmpInfoApi.lockStateChangeOneUserAccount(delId,lockFlag).then((res) => {
+                    if (res) {
+                        if (res.hasError == false) {  //已经有对错误进行预处理
+                            _this.$message.success(res.info);
+                            var tableDatas = _this.tableConf.data ;
+                            var tableDatasTemp = [] ;
+                            var lockedVal = lockFlag ? 1 : 0;
+                            if(tableDatas && tableDatas.length > 0){
+                                jq.each(tableDatas,function (idx,val) {
+                                    if(val.fid == delId){   //修改锁定状态,
+                                        val.locked = lockedVal
+                                    }
+                                    tableDatasTemp.push(val);
+                                })
+                            }
+                            _this.tableConf.data = tableDatasTemp ;
+                            //_this.handleSearchFormQuery(); //表格重新搜索
+                        }
+                    }
+                })
+            },
             dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
                 var _this = this ;
                 var queryFieldArr = [] ;
@@ -252,6 +334,16 @@
                     }
                 })
             },
+            dealGetLockStateEnumList(){  //取得 用户锁定状态-枚举列表
+                var _this = this ;
+                UserCommonApis.getAllUserLockStateType().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.enumList){
+                            _this.searchConf.binding.lockStates = res.enumList ;
+                        }
+                    }
+                })
+            },
             handleSearchFormQuery(e) {   //表格-搜索
                 if (e) {
                     e.preventDefault();
@@ -265,6 +357,18 @@
                         _this.dealQueryUserAccounts(searchFieldArr,paginationTemp);
                     }
                 });
+            },
+            handleTableActionGroupClick(e,record){  //表格-更多操作：按key区分操作类型
+                var _this = this ;
+                if(e.key == "recordDel"){
+                    _this.handleDeleteOneById(record.fid);
+                }   else if(e.key == "recordLock"){
+                    _this.handleChangeLockOneById(record.fid,true);
+                }   else if(e.key == "recordUnlock"){
+                    _this.handleChangeLockOneById(record.fid,false);
+                }
+                //console.log('handleTableActionGroupClick', e);
+                //console.log(record);
             },
             handleSearchFormReset() {    //重置 搜索列表 的值
                 this.searchForm.resetFields();
@@ -388,6 +492,43 @@
                     _this.$message.warning("无效删除操作！");
                 }
             },
+            handleEmployeeInfoBatchLockByIds(e,lockFlag) {  // 批量锁定
+                var _this = this;
+                var selectDelIds = _this.tableCheckIdList;
+                if (selectDelIds.length < 1) {
+                    _this.$message.warning("请选择至少一条要锁定的用户！");
+                } else {
+                    _this.$confirm({
+                        content: '是否确认锁定所选的' + selectDelIds.length + "个用户？",
+                        okText: '确认',
+                        cancelText: '取消',
+                        onOk() {
+                            _this.dealBatchLockUserAccount(lockFlag);
+                        },
+                        onCancel() {
+                            _this.$message.info("操作：取消锁定");
+                        }
+                    })
+                }
+            },
+            handleChangeLockOneById(delId,lockFlag) {     //删除指定行
+                var _this = this;
+                if (delId) {
+                    _this.$confirm({
+                        content: '是否确认锁定所选用户？',
+                        okText: '确认',
+                        cancelText: '取消',
+                        onOk() {
+                            _this.dealChangeLockOneRowById(delId,lockFlag);
+                        },
+                        onCancel() {
+                            _this.$message.info("操作：取消锁定");
+                        }
+                    })
+                } else {
+                    _this.$message.warning("无效锁定操作！");
+                }
+            },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.employeeInfoCreateFormRef.employeeInfoCreateForm;
             },
@@ -411,6 +552,7 @@
         created(){
             this.dealGetAllUserAccounts();
             this.dealGetUserTypeEnumList();
+            this.dealGetLockStateEnumList();
         },
         destroyed(){
             //console.log("页面销毁 ...")

@@ -21,6 +21,11 @@ const columns = [{
     align:textAlignDefault,
     key: 'userTypeStr',
     scopedSlots: { customRender: 'userTypeStr' },
+},{
+    title: '锁定状态',
+    align:textAlignDefault,
+    key: 'locked',
+    scopedSlots: { customRender: 'locked' },
 }, {
     title:'操作',
     align:textAlignDefault,
@@ -50,6 +55,11 @@ const searchFormQueryConfObj = {
     },
     userType:{
         fieldName:'userType',
+        matching:'equals',
+        value:''
+    },
+    locked:{
+        fieldName:'locked',
         matching:'equals',
         value:''
     }

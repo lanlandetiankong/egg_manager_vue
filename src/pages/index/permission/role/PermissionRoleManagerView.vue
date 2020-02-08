@@ -40,12 +40,13 @@
                         </a-row>
                         <a-row>
                             <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit"
+                                <a-button type="primary" html-type="submit" icon="search"
                                           :loading="searchConf.loadingFlag"
                                 >
                                     搜索
                                 </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" @click="handleSearchFormReset">
+                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
+                                          @click="handleSearchFormReset">
                                     清空
                                 </a-button>
                             </a-col>
@@ -60,17 +61,20 @@
                     type="flex"
                 >
                     <a-col>
-                        <a-button type="primary" @click="handleAddDefineRoleBtnClick">
+                        <a-button type="primary" icon="plus"
+                                  @click="handleAddDefineRoleBtnClick">
                             新增
                         </a-button>
                     </a-col>
                     <a-col>
-                        <a-button type="primary" @click="handleUpdateDefineRoleBtnClick">
+                        <a-button type="primary" icon="edit"
+                                  @click="handleUpdateDefineRoleBtnClick">
                             更新
                         </a-button>
                     </a-col>
                     <a-col>
-                        <a-button type="danger" @click="handleDefineRoleBatchDeleteByIds">
+                        <a-button type="danger" icon="delete"
+                                  @click="handleDefineRoleBatchDeleteByIds">
                             删除
                         </a-button>
                     </a-col>

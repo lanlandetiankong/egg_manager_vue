@@ -32,10 +32,24 @@ export const EmpInfoApi = {
         }
         return axios.post("/user/user_account/batchDelUserAccountByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
     },
-    delOneUserAccount(delId) {  //批量删除
+    delOneUserAccount(delId) {  //删除
         var obj = {
             delId:delId
         }
-        return axios.post("/user/user_account/delOneUserAccountByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
-    }
+        return axios.post("/user/user_account/delOneUserAccountById",qs.stringify(obj,{indices: false})).then(res => res) ;
+    },
+    batchChangeLockStateUserAccount(ids,lockFlag) {  //批量锁定
+        var obj = {
+            lockIds:ids,
+            lockFlag:lockFlag
+        }
+        return axios.post("/user/user_account/batchLockUserAccountByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
+    },
+    lockStateChangeOneUserAccount(lockId,lockFlag) {  //锁定
+        var obj = {
+            lockId:lockId,
+            lockFlag:lockFlag
+        }
+        return axios.post("/user/user_account/lockOneUserAccountById",qs.stringify(obj,{indices: false})).then(res => res) ;
+    },
 }
