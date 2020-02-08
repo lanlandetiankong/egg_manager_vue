@@ -8,5 +8,8 @@ import qs from 'qs'
 export const PermissionCommonApis = {
     getAllPermissionTypes() {
         return axios.post('/common_api/permission/getAllPermissionTypeEnumList').then((res) => res) ;
+    },
+    getAllRoleTypes() {
+        return axios.post('/common_api/permission/getAllRoleTypeEnumList').then((res) => res) ;
     }
 }
