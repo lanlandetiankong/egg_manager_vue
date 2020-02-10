@@ -52,4 +52,25 @@ export const EmpInfoApi = {
         }
         return axios.post("/user/user_account/lockOneUserAccountById",qs.stringify(obj,{indices: false})).then(res => res) ;
     },
+    grantRoleToUser(userAccountId,checkIds){     //用户分配角色-提交
+        var obj = {
+            userAccountId:userAccountId,
+            checkIds:checkIds
+        }
+        return axios.post("/user/user_account/grantRoleToUser",qs.stringify(obj,{indices: false})).then(res => res) ;
+    },
+    getAllRoleByUserAccountId(userAccountId){  //根据用户id查询用户所拥有的角色列表
+        var params = {
+            userAccountId:userAccountId
+        }
+        return axios.post("/user/user_account/getAllRoleByUserAccountId",qs.stringify(params)).then(res => res) ;
+    },
+    getAllDefineRoles() {     //取得所有定义的角色
+        var obj = {
+            queryObj:[],
+            paginationObj:{}
+        }
+        //查询所有权限信息
+        return axios.post('/define/define_role/getAllDefineRoles',qs.stringify(obj)).then(res => res);
+    },
 }

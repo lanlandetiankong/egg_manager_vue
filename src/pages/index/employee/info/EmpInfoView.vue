@@ -93,6 +93,12 @@
                         </a-button>
                     </a-col>
                     <a-col>
+                        <a-button type="primary" icon="book"
+                                  @click="handleUserGrantRoleById">
+                            分配角色
+                        </a-button>
+                    </a-col>
+                    <a-col>
                         <a-button icon="lock"
                             @click="handleEmployeeInfoBatchLockByIds(this,true)" >
                             锁定用户
@@ -147,6 +153,7 @@
                                     <a-menu-item key="recordDel">删除</a-menu-item>
                                     <a-menu-item v-if="record.locked == 0" key="recordLock">锁定</a-menu-item>
                                     <a-menu-item v-else-if="record.locked == 1" key="recordUnlock">解锁</a-menu-item>
+                                    <a-menu-item key="grantRole">分配角色</a-menu-item>
                               </a-menu>
                               <a-button> 操作 <a-icon type="down" /> </a-button>
                         </a-dropdown>
@@ -162,6 +169,16 @@
                 @createFormCancel="handleEmployeeInfoCreateFormCancel"
                 @createFormSubmit="handleEmployeeInfoCreateFormSubmit"
             />
+            <user-grant-role-form-comp
+                v-if="dialogGrantRoleConf.initFlag == true"
+                :visible="dialogGrantRoleConf.visible"
+                :userAccountId="dialogGrantRoleObj.userAccountId"
+                :allItemArr="dialogGrantRoleObj.allDataSource"
+                :checkArr="dialogGrantRoleObj.checkedIds"
+                @grantRoleFormCancel="handleUserGrantRoleFormCancel"
+                @grantRoleFormSubmit="handleUserGrantRoleFormSubmit"
+            >
+            </user-grant-role-form-comp>
         </div>
     </div>
 </template>
@@ -170,14 +187,16 @@
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
     import {EmpInfoApi} from './EmpInfoApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
+
     import EmployeeInfoCreateFormComp from '~Components/user/employee/info/EmployeeInfoCreateFormComp'
+    import UserGrantRoleFormComp from '~Components/user/employee/info/UserGrantRoleFormComp';
 
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
 
     export default {
         name: "EmpInfoView",
-        components: {AFormItem, ACol, EmployeeInfoCreateFormComp},
+        components: {UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
         data() {
             return {
                 searchConf: {
@@ -225,6 +244,17 @@
                     account: '',
                     email: '',
                     userType: ''
+                },
+                dialogGrantRoleConf:{
+                    visible:false,
+                    initFlag:false
+                },
+                dialogGrantRoleObj: {
+                    userAccountId:'',
+                    all:[],
+                    allDataSource:[],
+                    checked:[],
+                    checkedIds:[],
                 }
             }
         },
@@ -344,6 +374,71 @@
                     }
                 })
             },
+            dealGetAllRoleList(){  //取得 所有的角色定义
+                var _this = this ;
+                return EmpInfoApi.getAllDefineRoles().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.resultList){
+                            _this.dialogGrantRoleObj.all = res.resultList ;
+                            _this.dealAllItemToTransferDataSource(res.resultList);
+                        }
+                    }
+                })
+            },
+            dealAllItemToTransferDataSource(allItemArr){    //转化为 transfer可用的 数组对象
+                var _this = this ;
+                var dataSourceArrTemp = [] ;
+                if(allItemArr && allItemArr.length > 0 ){
+                    jq.each(allItemArr,function (idx,val) {
+                        if(val){
+                            dataSourceArrTemp.push({
+                                key:_this.dealNullStrToEmpty(val.fid),
+                                title:_this.dealNullStrToEmpty(val.name),
+                                description:_this.dealNullStrToEmpty(val.remark),
+                                disabled:false
+                            })
+                        }
+                    })
+                }
+                _this.dialogGrantRoleObj.allDataSource = dataSourceArrTemp ;
+            },
+            dealNullStrToEmpty(str,repStr){ //如果遇到 Undefine或者null，替换为repStr
+                if(typeof str == "undefined" || str == null){
+                    if(typeof repStr != "undefined" && repStr == null){
+                        return repStr ;
+                    }   else {
+                        return "";
+                    }
+                }   else {
+                    return str;
+                }
+            },
+            dealUserGrantRolesById(selectRowId){        //授权页面弹窗-封装方法
+                var _this = this ;
+                if(_this.dialogGrantRoleConf.initFlag == false){  //第一次进行分配角色时进行 所有角色 的数据加载
+                    _this.dealGetAllRoleList().then(()=>{
+                        _this.dialogGrantRoleConf.initFlag = true ;
+                    }) ;
+                }
+                _this.dialogGrantRoleObj.userAccountId = selectRowId ;
+                if (selectRowId) {
+                    EmpInfoApi.getAllRoleByUserAccountId(selectRowId).then((res) => {
+                        if(res){
+                            _this.dialogGrantRoleObj.checked = res.resultList;
+                            var checkIdListTemp = [] ;
+                            if(res.resultList && res.resultList.length > 0){
+                                jq.each(res.resultList,function (idx,val) {
+                                    checkIdListTemp.push(val.fid);
+                                })
+                            }
+                            _this.dialogGrantRoleObj.checkedIds = checkIdListTemp;
+                            _this.dialogGrantRoleConf.visible = true;   //显示弹窗
+                        }
+                    })
+                } else {
+                    this.$message.warning('操作失败！未取得有效的角色id！');
+                }
+            },
             handleSearchFormQuery(e) {   //表格-搜索
                 if (e) {
                     e.preventDefault();
@@ -366,6 +461,8 @@
                     _this.handleChangeLockOneById(record.fid,true);
                 }   else if(e.key == "recordUnlock"){   //行解锁
                     _this.handleChangeLockOneById(record.fid,false);
+                }   else if(e.key == "grantRole"){  //分配角色
+                    _this.dealUserGrantRolesById(record.fid);
                 }
                 //console.log('handleTableActionGroupClick', e);
                 //console.log(record);
@@ -534,7 +631,41 @@
             },
             getFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
-            }
+            },
+            handleUserGrantRoleById(e) {     // 用户分配角色
+                var _this = this;
+                if (_this.tableCheckIdList.length < 1) {
+                    this.$message.warning('请选择一行要分配角色的数据！');
+                } else if (_this.tableCheckIdList.length > 1) {
+                    this.$message.warning('请选择至多一行要分配角色的数据！');
+                } else {
+                    var selectRowId = _this.tableCheckIdList[0];
+                    //封装方法 处理
+                    _this.dealUserGrantRolesById(selectRowId);
+                }
+            },
+            handleUserGrantRoleFormCancel(e) {  // 用户分配角色表单->取消
+                var _this = this;
+                _this.dialogGrantRoleConf.visible = false;
+            },
+            handleUserGrantRoleFormSubmit(e,userAccountId,targetIdList) {   // 用户分配角色->提交
+                var _this = this;
+                EmpInfoApi.grantRoleToUser(userAccountId,targetIdList).then((res) =>{
+                    var closeDialogFlag = true ;
+                    if (res) {
+                        if (res.hasError == false) {  //异常已经有预处理了
+                            this.$message.success(res.info);
+                        } else {
+                            closeDialogFlag = false;
+                        }
+                    } else {
+                        closeDialogFlag = false;
+                    }
+                    if (closeDialogFlag == true) {    //关闭弹窗
+                        _this.dialogGrantRoleConf.visible = false;
+                    }
+                });
+            },
         },
         computed: {
             rowSelection() {    //行选择
