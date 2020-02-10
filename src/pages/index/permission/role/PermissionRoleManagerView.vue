@@ -79,6 +79,12 @@
                         </a-button>
                     </a-col>
                     <a-col>
+                        <a-button type="primary" icon="book"
+                                  @click="handleDefineRoleGrantPermissionsById">
+                            分配权限
+                        </a-button>
+                    </a-col>
+                    <a-col>
                         <a-switch
                             checkedChildren="展示搜索"
                             unCheckedChildren="隐藏搜索"
@@ -107,9 +113,16 @@
                             {{record.typeStr}}
                         </a-tag>
                     </span>
+
                     <span slot="action" slot-scope="text,record">
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
-                    </span>
+                        <a-dropdown>
+                              <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
+                                    <a-menu-item key="recordDel">删除</a-menu-item>
+                                    <a-menu-item key="grantPermission">授权</a-menu-item>
+                              </a-menu>
+                              <a-button> 操作 <a-icon type="down" /> </a-button>
+                        </a-dropdown>
+                </span>
                 </a-table>
             </div>
         </div>
@@ -125,20 +138,31 @@
                 @createFormSubmit="handleDefineRoleCreateFormSubmit"
             >
             </define-role-create-form-comp>
+            <role-grant-permission-form-comp
+                v-if="dialogGrantPermissionConf.initFlag == true"
+                :visible="dialogGrantPermissionConf.visible"
+                :roleId="dialogGrantPermissionObj.roleId"
+                :allItemArr="dialogGrantPermissionObj.allDataSource"
+                :checkArr="dialogGrantPermissionObj.checkedIds"
+                @grantPermissionFormCancel="handleRoleGrantPermissionFormCancel"
+                @grantPermissionFormSubmit="handleRoleGrantPermissionFormSubmit"
+            >
+            </role-grant-permission-form-comp>
         </div>
     </div>
 </template>
 
 <script>
+    import jq from 'jquery' ;
     import {tableColumns,searchFormQueryConf} from './param_conf.js';
     import {PermissionRoleManagerApi} from './permissionRoleManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
 
     import DefineRoleCreateFormComp from '~Components/define/permission/role/DefineRoleCreateFormComp';
-
+    import RoleGrantPermissionFormComp from '~Components/define/permission/role/RoleGrantPermissionFormComp';
     export default {
         name: "PermissionRoleManagerView",
-        components: {DefineRoleCreateFormComp},
+        components: {RoleGrantPermissionFormComp, DefineRoleCreateFormComp},
         data(){
             return {
                 searchConf:{
@@ -185,6 +209,17 @@
                     name: '',
                     code: '',
                     type: ''
+                },
+                dialogGrantPermissionConf:{
+                    visible:false,
+                    initFlag:false
+                },
+                dialogGrantPermissionObj: {
+                    roleId:'',
+                    all:[],
+                    allDataSource:[],
+                    checked:[],
+                    checkedIds:[],
                 }
             }
         },
@@ -201,6 +236,45 @@
                         }
                     }
                 })
+            },
+            dealGetAllPermissionList(){  //取得 所有的权限定义
+                var _this = this ;
+                return PermissionRoleManagerApi.getAllDefinePermissions().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.resultList){
+                            _this.dialogGrantPermissionObj.all = res.resultList ;
+                            _this.dealAllItemToTransferDataSource(res.resultList);
+                        }
+                    }
+                })
+            },
+            dealAllItemToTransferDataSource(allItemArr){    //转化为 transfer可用的 数组对象
+                var _this = this ;
+                var dataSourceArrTemp = [] ;
+                if(allItemArr && allItemArr.length > 0 ){
+                    jq.each(allItemArr,function (idx,val) {
+                        if(val){
+                            dataSourceArrTemp.push({
+                                key:_this.dealNullStrToEmpty(val.fid),
+                                title:_this.dealNullStrToEmpty(val.name),
+                                description:_this.dealNullStrToEmpty(val.remark),
+                                disabled:false
+                            })
+                        }
+                    })
+                }
+                _this.dialogGrantPermissionObj.allDataSource = dataSourceArrTemp ;
+            },
+            dealNullStrToEmpty(str,repStr){ //如果遇到 Undefine或者null，替换为repStr
+                if(typeof str == "undefined" || str == null){
+                    if(typeof repStr != "undefined" && repStr == null){
+                        return repStr ;
+                    }   else {
+                        return "";
+                    }
+                }   else {
+                    return str;
+                }
             },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.defineRoleCreateFormRef.defineRoleCreateForm;
@@ -265,6 +339,32 @@
                 }
                 return queryFieldArr ;
             },
+            dealDefineRoleGrantPermissionsById(selectRowId){        //授权页面弹窗-封装方法
+                var _this = this ;
+                if(_this.dialogGrantPermissionConf.initFlag == false){  //第一次进行分配权限时进行 所有权限 的数据加载
+                    _this.dealGetAllPermissionList().then(()=>{
+                        _this.dialogGrantPermissionConf.initFlag = true ;
+                    }) ;
+                }
+                _this.dialogGrantPermissionObj.roleId = selectRowId ;
+                if (selectRowId) {
+                    PermissionRoleManagerApi.getAllPermissionByRoleId(selectRowId).then((res) => {
+                        if(res){
+                            _this.dialogGrantPermissionObj.checked = res.resultList;
+                            var checkIdListTemp = [] ;
+                            if(res.resultList && res.resultList.length > 0){
+                                jq.each(res.resultList,function (idx,val) {
+                                    checkIdListTemp.push(val.fid);
+                                })
+                            }
+                            _this.dialogGrantPermissionObj.checkedIds = checkIdListTemp;
+                            _this.dialogGrantPermissionConf.visible = true;   //显示弹窗
+                        }
+                    })
+                } else {
+                    this.$message.warning('操作失败！未取得有效的角色id！');
+                }
+            },
             handleSearchFormQuery(e) {
                 var _this = this ;
                 if (e) {
@@ -299,7 +399,6 @@
                     if (selectRowId) {
                         PermissionRoleManagerApi.getDefineRoleById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
-                            debugger;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
                                 _this.dialogFormConf.actionType = "update";
@@ -329,6 +428,18 @@
                             _this.$message.info("操作：取消删除");
                         }
                     })
+                }
+            },
+            handleDefineRoleGrantPermissionsById(e) {     // 分配权限
+                var _this = this;
+                if (_this.tableCheckIdList.length < 1) {
+                    this.$message.warning('请选择一行要分配权限的数据！');
+                } else if (_this.tableCheckIdList.length > 1) {
+                    this.$message.warning('请选择至多一行要分配权限的数据！');
+                } else {
+                    var selectRowId = _this.tableCheckIdList[0];
+                    //封装方法 处理
+                    _this.dealDefineRoleGrantPermissionsById(selectRowId);
                 }
             },
             handleDefineRoleCreateFormCancel(e) {  // 创建/更新 权限定义表单->取消
@@ -377,6 +488,28 @@
                 });
                 _this.dialogFormConf.visible = false;
             },
+            handleRoleGrantPermissionFormCancel(e) {  // 角色授权表单->取消
+                var _this = this;
+                _this.dialogGrantPermissionConf.visible = false;
+            },
+            handleRoleGrantPermissionFormSubmit(e,roleId,targetIdList) {   // 角色授权->提交
+                var _this = this;
+                PermissionRoleManagerApi.grantPermissionToRole(roleId,targetIdList).then((res) =>{
+                    var closeDialogFlag = true ;
+                    if (res) {
+                        if (res.hasError == false) {  //异常已经有预处理了
+                            this.$message.success(res.info);
+                        } else {
+                            closeDialogFlag = false;
+                        }
+                    } else {
+                        closeDialogFlag = false;
+                    }
+                    if (closeDialogFlag == true) {    //关闭弹窗
+                        _this.dialogGrantPermissionConf.visible = false;
+                    }
+                });
+            },
             handleDeleteOneById(delId) {     //删除指定行
                 var _this = this;
                 if (delId) {
@@ -400,7 +533,15 @@
                 this.tableConf.filters = filters ;
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
-            }
+            },
+            handleTableActionGroupClick(e,record){  //表格-更多操作：按key区分操作类型
+                var _this = this ;
+                if(e.key == "recordDel"){   //行删除
+                    _this.handleDeleteOneById(record.fid);
+                }   else if(e.key == "grantPermission"){ //行锁定
+                    _this.dealDefineRoleGrantPermissionsById(record.fid);
+                }
+            },
         },
         computed:{
             rowSelection() {    //行选择

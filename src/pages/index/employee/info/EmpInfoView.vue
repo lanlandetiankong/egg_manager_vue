@@ -128,29 +128,29 @@
                 :rowSelection="rowSelection"
                 @change="handleTableChange"
             >
-            <span slot="userTypeStr" slot-scope="record">
-                <a-tag color="blue" :key="record.userTypeStr">
-                    {{record.userTypeStr}}
-                </a-tag>
-            </span>
-            <span slot="locked" slot-scope="record">
-                <a-tag v-if="record.locked == 1" color="red" :key="record.fid">
-                    已锁定
-                </a-tag>
-                <a-tag v-else-if="record.locked == 0" color="blue" :key="record.fid">
-                    未锁定
-                </a-tag>
-            </span>
-            <span slot="action" slot-scope="text,record">
-                    <a-dropdown>
-                          <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
-                                <a-menu-item key="recordDel">删除</a-menu-item>
-                                <a-menu-item v-if="record.locked == 0" key="recordLock">锁定</a-menu-item>
-                                <a-menu-item v-else-if="record.locked == 1" key="recordUnlock">解锁</a-menu-item>
-                          </a-menu>
-                          <a-button> 操作 <a-icon type="down" /> </a-button>
-                    </a-dropdown>
-            </span>
+                <span slot="userTypeStr" slot-scope="record">
+                    <a-tag color="blue" :key="record.userTypeStr">
+                        {{record.userTypeStr}}
+                    </a-tag>
+                </span>
+                <span slot="locked" slot-scope="record">
+                    <a-tag v-if="record.locked == 1" color="red" :key="record.fid">
+                        已锁定
+                    </a-tag>
+                    <a-tag v-else-if="record.locked == 0" color="blue" :key="record.fid">
+                        未锁定
+                    </a-tag>
+                </span>
+                <span slot="action" slot-scope="text,record">
+                        <a-dropdown>
+                              <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
+                                    <a-menu-item key="recordDel">删除</a-menu-item>
+                                    <a-menu-item v-if="record.locked == 0" key="recordLock">锁定</a-menu-item>
+                                    <a-menu-item v-else-if="record.locked == 1" key="recordUnlock">解锁</a-menu-item>
+                              </a-menu>
+                              <a-button> 操作 <a-icon type="down" /> </a-button>
+                        </a-dropdown>
+                </span>
             </a-table>
         </div>
         <div>
@@ -360,11 +360,11 @@
             },
             handleTableActionGroupClick(e,record){  //表格-更多操作：按key区分操作类型
                 var _this = this ;
-                if(e.key == "recordDel"){
+                if(e.key == "recordDel"){   //行删除
                     _this.handleDeleteOneById(record.fid);
-                }   else if(e.key == "recordLock"){
+                }   else if(e.key == "recordLock"){ //行锁定
                     _this.handleChangeLockOneById(record.fid,true);
-                }   else if(e.key == "recordUnlock"){
+                }   else if(e.key == "recordUnlock"){   //行解锁
                     _this.handleChangeLockOneById(record.fid,false);
                 }
                 //console.log('handleTableActionGroupClick', e);

@@ -11,19 +11,19 @@ export const PermissionManagerApi = {
             queryObj:JSON.stringify(queryArr),
             paginationObj:JSON.stringify(pagination)
         }
-        //查询所有用户信息
+        //查询所有权限信息
         return axios.post('/define/define_permission/getAllDefinePermissions',qs.stringify(obj)).then(res => res);
     },
-    getDefinePermissionById(definePermissionId){  //根据用户id查询用户信息
+    getDefinePermissionById(definePermissionId){  //根据权限id查询权限信息
         var params = {
             definePermissionId:definePermissionId
         }
         return axios.post("/define/define_permission/getDefinePermissionById",qs.stringify(params)).then(res => res) ;
     },
-    addDefinePermissionByForm(formObj) {     //新增用户
+    addDefinePermissionByForm(formObj) {     //新增权限
         return axios.post("/define/define_permission/doAddDefinePermission",qs.stringify(formObj));
     },
-    updateDefinePermissionByForm(formObj) {  //更新用户
+    updateDefinePermissionByForm(formObj) {  //更新权限
         return axios.post("/define/define_permission/doUpdateDefinePermission",qs.stringify(formObj)).then(res => res) ;
     },
     batchDelDefinePermission(ids) {  //批量删除
