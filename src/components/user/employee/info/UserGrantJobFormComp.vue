@@ -6,7 +6,7 @@
             :title="modalConf.title"
             :okText="modalConf.okText"
             cancelText="取消"
-            @cancel="() => { $emit('grantRoleFormCancel')}"
+            @cancel="() => { $emit('grantJobFormCancel')}"
             @ok="handleDialogSubmit"
         >
             <a-transfer
@@ -32,7 +32,7 @@
 <script>
     import jq from 'jquery' ;
     export default {
-        name: "UserGrantRoleFormComp",
+        name: "UserGrantJobFormComp",
         components: {},
         props:{
             visible:Boolean,
@@ -49,7 +49,7 @@
         data(){
             return {
                 modalConf:{
-                    title:'分配角色',
+                    title:'设置职务',
                     okText:'确认提交'
                 },
                 transferConf:{
@@ -79,7 +79,7 @@
             },
             handleDialogSubmit(e){
                 var transferTargetList = this.transferConf.targetKeys ;
-                this.$emit('grantRoleFormSubmit',e,this.userAccountId,transferTargetList) ;
+                this.$emit('grantJobFormSubmit',e,this.userAccountId,transferTargetList) ;
             }
         },
         computed:{

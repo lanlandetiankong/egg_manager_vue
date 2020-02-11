@@ -53,7 +53,9 @@
                         </a-row>
                     </a-form>
                 </div>
+                <a-divider/>
             </div>
+            <!-- 操作按钮-区域-->
             <div>
                 <a-row
                     :gutter="16"
@@ -96,7 +98,6 @@
                 </a-row>
             </div>
             <a-divider/>
-            <!-- 操作按钮-区域-->
             <div>
                 <a-table
                     :locale="{emptyText:'暂无数据'}"

@@ -70,7 +70,26 @@ export const EmpInfoApi = {
             queryObj:[],
             paginationObj:{}
         }
-        //查询所有权限信息
         return axios.post('/define/define_role/getAllDefineRoles',qs.stringify(obj)).then(res => res);
+    },
+    getAllJobByUserAccountId(userAccountId){  //根据用户id查询用户所拥有的职务列表
+        var params = {
+            userAccountId:userAccountId
+        }
+        return axios.post("/user/user_account/getAllJobByUserAccountId",qs.stringify(params)).then(res => res) ;
+    },
+    getAllDefineJobs() {     //取得所有定义的职务
+        var obj = {
+            queryObj:[],
+            paginationObj:{}
+        }
+        return axios.post('/define/define_job/getAllDefineJobs',qs.stringify(obj)).then(res => res);
+    },
+    grantJobToUser(userAccountId,checkIds){     //用户设置职务-提交
+        var obj = {
+            userAccountId:userAccountId,
+            checkIds:checkIds
+        }
+        return axios.post("/user/user_account/grantJobToUser",qs.stringify(obj,{indices: false})).then(res => res) ;
     },
 }

@@ -66,6 +66,7 @@
                         </a-row>
                     </a-form>
                 </div>
+                <a-divider/>
             </div>
             <!-- 操作区域 -->
             <div>
@@ -96,6 +97,12 @@
                         <a-button type="primary" icon="book"
                                   @click="handleUserGrantRoleById">
                             分配角色
+                        </a-button>
+                    </a-col>
+                    <a-col>
+                        <a-button type="primary" icon="book"
+                                  @click="handleUserGrantJobById">
+                            设置职务
                         </a-button>
                     </a-col>
                     <a-col>
@@ -154,6 +161,7 @@
                                     <a-menu-item v-if="record.locked == 0" key="recordLock">锁定</a-menu-item>
                                     <a-menu-item v-else-if="record.locked == 1" key="recordUnlock">解锁</a-menu-item>
                                     <a-menu-item key="grantRole">分配角色</a-menu-item>
+                                    <a-menu-item key="grantJob">设置职务</a-menu-item>
                               </a-menu>
                               <a-button> 操作 <a-icon type="down" /> </a-button>
                         </a-dropdown>
@@ -179,6 +187,16 @@
                 @grantRoleFormSubmit="handleUserGrantRoleFormSubmit"
             >
             </user-grant-role-form-comp>
+            <user-grant-job-form-comp
+                v-if="dialogGrantJobConf.initFlag == true"
+                :visible="dialogGrantJobConf.visible"
+                :userAccountId="dialogGrantJobObj.userAccountId"
+                :allItemArr="dialogGrantJobObj.allDataSource"
+                :checkArr="dialogGrantJobObj.checkedIds"
+                @grantJobFormCancel="handleUserGrantJobFormCancel"
+                @grantJobFormSubmit="handleUserGrantJobFormSubmit"
+            >
+            </user-grant-job-form-comp>
         </div>
     </div>
 </template>
@@ -190,13 +208,14 @@
 
     import EmployeeInfoCreateFormComp from '~Components/user/employee/info/EmployeeInfoCreateFormComp'
     import UserGrantRoleFormComp from '~Components/user/employee/info/UserGrantRoleFormComp';
+    import UserGrantJobFormComp from '~Components/user/employee/info/UserGrantJobFormComp';
 
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
 
     export default {
         name: "EmpInfoView",
-        components: {UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
+        components: {UserGrantJobFormComp, UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
         data() {
             return {
                 searchConf: {
@@ -250,6 +269,17 @@
                     initFlag:false
                 },
                 dialogGrantRoleObj: {
+                    userAccountId:'',
+                    all:[],
+                    allDataSource:[],
+                    checked:[],
+                    checkedIds:[],
+                },
+                dialogGrantJobConf:{
+                    visible:false,
+                    initFlag:false
+                },
+                dialogGrantJobObj: {
                     userAccountId:'',
                     all:[],
                     allDataSource:[],
@@ -380,12 +410,23 @@
                     if(res && res.hasError == false){
                         if(res.resultList){
                             _this.dialogGrantRoleObj.all = res.resultList ;
-                            _this.dealAllItemToTransferDataSource(res.resultList);
+                            _this.dealAllRoleItemToTransferDataSource(res.resultList);
                         }
                     }
                 })
             },
-            dealAllItemToTransferDataSource(allItemArr){    //转化为 transfer可用的 数组对象
+            dealGetAllJobList(){  //取得 所有的职务定义
+                var _this = this ;
+                return EmpInfoApi.getAllDefineJobs().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.resultList){
+                            _this.dialogGrantJobObj.all = res.resultList ;
+                            _this.dealAllJobItemToTransferDataSource(res.resultList);
+                        }
+                    }
+                })
+            },
+            dealAllRoleItemToTransferDataSource(allItemArr){    //role转化为 transfer可用的 数组对象
                 var _this = this ;
                 var dataSourceArrTemp = [] ;
                 if(allItemArr && allItemArr.length > 0 ){
@@ -401,6 +442,23 @@
                     })
                 }
                 _this.dialogGrantRoleObj.allDataSource = dataSourceArrTemp ;
+            },
+            dealAllJobItemToTransferDataSource(allItemArr){    //job转化为 transfer可用的 数组对象
+                var _this = this ;
+                var dataSourceArrTemp = [] ;
+                if(allItemArr && allItemArr.length > 0 ){
+                    jq.each(allItemArr,function (idx,val) {
+                        if(val){
+                            dataSourceArrTemp.push({
+                                key:_this.dealNullStrToEmpty(val.fid),
+                                title:_this.dealNullStrToEmpty(val.name),
+                                description:_this.dealNullStrToEmpty(val.remark),
+                                disabled:false
+                            })
+                        }
+                    })
+                }
+                _this.dialogGrantJobObj.allDataSource = dataSourceArrTemp ;
             },
             dealNullStrToEmpty(str,repStr){ //如果遇到 Undefine或者null，替换为repStr
                 if(typeof str == "undefined" || str == null){
@@ -439,6 +497,32 @@
                     this.$message.warning('操作失败！未取得有效的角色id！');
                 }
             },
+            dealUserGrantJobsById(selectRowId){        //设置职务页面弹窗-封装方法
+                var _this = this ;
+                if(_this.dialogGrantJobConf.initFlag == false){  //第一次进行设置职务时进行 所有职务 的数据加载
+                    _this.dealGetAllJobList().then(()=>{
+                        _this.dialogGrantJobConf.initFlag = true ;
+                    }) ;
+                }
+                _this.dialogGrantJobObj.userAccountId = selectRowId ;
+                if (selectRowId) {
+                    EmpInfoApi.getAllJobByUserAccountId(selectRowId).then((res) => {
+                        if(res){
+                            _this.dialogGrantJobObj.checked = res.resultList;
+                            var checkIdListTemp = [] ;
+                            if(res.resultList && res.resultList.length > 0){
+                                jq.each(res.resultList,function (idx,val) {
+                                    checkIdListTemp.push(val.fid);
+                                })
+                            }
+                            _this.dialogGrantJobObj.checkedIds = checkIdListTemp;
+                            _this.dialogGrantJobConf.visible = true;   //显示弹窗
+                        }
+                    })
+                } else {
+                    this.$message.warning('操作失败！未取得有效的职务id！');
+                }
+            },
             handleSearchFormQuery(e) {   //表格-搜索
                 if (e) {
                     e.preventDefault();
@@ -463,6 +547,8 @@
                     _this.handleChangeLockOneById(record.fid,false);
                 }   else if(e.key == "grantRole"){  //分配角色
                     _this.dealUserGrantRolesById(record.fid);
+                }   else if(e.key == "grantJob"){  //设置职务
+                    _this.dealUserGrantJobsById(record.fid);
                 }
                 //console.log('handleTableActionGroupClick', e);
                 //console.log(record);
@@ -663,6 +749,40 @@
                     }
                     if (closeDialogFlag == true) {    //关闭弹窗
                         _this.dialogGrantRoleConf.visible = false;
+                    }
+                });
+            },
+            handleUserGrantJobById(e) {     // 用户设置职务
+                var _this = this;
+                if (_this.tableCheckIdList.length < 1) {
+                    this.$message.warning('请选择一行要设置职务的数据！');
+                } else if (_this.tableCheckIdList.length > 1) {
+                    this.$message.warning('请选择至多一行要设置职务的数据！');
+                } else {
+                    var selectRowId = _this.tableCheckIdList[0];
+                    //封装方法 处理
+                    _this.dealUserGrantJobsById(selectRowId);
+                }
+            },
+            handleUserGrantJobFormCancel(e) {  // 用户设置职务表单->取消
+                var _this = this;
+                _this.dialogGrantJobConf.visible = false;
+            },
+            handleUserGrantJobFormSubmit(e,userAccountId,targetIdList) {   // 用户设置职务->提交
+                var _this = this;
+                EmpInfoApi.grantJobToUser(userAccountId,targetIdList).then((res) =>{
+                    var closeDialogFlag = true ;
+                    if (res) {
+                        if (res.hasError == false) {  //异常已经有预处理了
+                            this.$message.success(res.info);
+                        } else {
+                            closeDialogFlag = false;
+                        }
+                    } else {
+                        closeDialogFlag = false;
+                    }
+                    if (closeDialogFlag == true) {    //关闭弹窗
+                        _this.dialogGrantJobConf.visible = false;
                     }
                 });
             },
