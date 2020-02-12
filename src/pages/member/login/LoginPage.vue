@@ -31,8 +31,19 @@
             }
         },
         methods:{
-            handleLoginFormSubmit(e,loginForm){
-
+            handleLoginFormSubmit(e,loginForm,submitRes){
+                var _this = this ;
+                if(submitRes){
+                    if(submitRes.actionFlag == true){ //后台登录验证成功
+                        _this.handleSetUserTokenToCache(submitRes.accountToken);
+                        _this.$router.push("/index");
+                    }
+                }
+            },
+            handleSetUserTokenToCache(userTokenObj){
+                this.$store.dispatch('doSetUserToken',userTokenObj) ;
+                console.log(JSON.stringify(userTokenObj));
+                window.sessionStorage.setItem("userToken",JSON.stringify(userTokenObj));
             }
         }
     }

@@ -60,9 +60,11 @@ var instance = axios.create({
 instance.interceptors.request.use(
     config => {
         var cfgUserToken = window.sessionStorage.getItem("userToken");
+        //var tokenStr = qs.stringify(JSON.parse(cfgUserToken)) ;
         // 请求头添加token
         if (cfgUserToken) {
-            config.headers['token'] = JSON.parse(cfgUserToken).id;
+            //config.headers['token'] = JSON.parse(cfgUserToken).token;
+            config.headers['token'] = cfgUserToken;
         } else {
             console.log("employee is loginout");
         }
@@ -126,7 +128,7 @@ instance.interceptors.response.use(
         }   else {
             notification.error({
                 message:defaultNotificationMsg.warning,
-                description:"请求错误或服务器异常!请联系管理员！"
+                description:"响应错误或服务器异常!请联系管理员！"
             });
         }
     }
@@ -189,6 +191,14 @@ http.post = function (url, data, options) {
                         if (typeof(tempRespInfo) != "undefined" && tempRespInfo != null && tempRespInfo.replace(/(^s*)|(s*$)/g, "").length != 0) {
                             message.error(tempRespInfo);
                         }
+                        let tempErrorActionType = response.errorActionType;
+                        if(tempErrorActionType){     //如果发生异常时，后端明确指明有操作要求
+                            if("AuthenticationExpired" == tempErrorActionType){  //请求明确要求需要重新登录
+                                jumpToLoginPage(router);
+
+                            }
+                        }
+
                         resolve(response);
                     } else {
                         let respHasWarning = response.hasWarning;
@@ -207,5 +217,12 @@ http.post = function (url, data, options) {
             })
 
     })
+}
+
+
+function jumpToLoginPage(router) {
+    window.sessionStorage.removeItem("userToken");
+    //跳转到登录界面
+    router.push("/member/login");
 }
 export default http

@@ -123,11 +123,9 @@
         methods: {
             handleLoginSubmit(e) {
                 e.preventDefault(); //拦截form提交的默认事件
-                console.log(this.loginForm);
                 LoginMainCompApi.submitLoginFormByAccount(this.loginForm).then((res) => {
-                    console.log(res);
+                    this.$emit('login-form-submit',e,this.loginForm,res);
                 });
-                this.$emit('login-form-submit',e,this.loginForm);
             },
             hasLoginFormError() {
                 //判断loginForm是否有错误

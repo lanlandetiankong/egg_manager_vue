@@ -18,6 +18,7 @@
         },
         mounted() {
             //this.initHeight();        //触发高度计算
+            window.vue = this
         },
         methods: {
             changeFixed(clientHeight) {
