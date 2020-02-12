@@ -13,16 +13,24 @@
                 layout="vertical"
                 :form="employeeInfoCreateForm"
             >
-                <a-form-item label="账号">
+                <a-form-item label="账号"
+                     v-bind="formItemLayout"
+                >
                     <a-input v-decorator="formFieldConf.account"/>
                 </a-form-item>
-                <a-form-item label="用户名">
+                <a-form-item label="用户名"
+                     v-bind="formItemLayout"
+                >
                     <a-input v-decorator="formFieldConf.nickName"/>
                 </a-form-item>
-                <a-form-item label="邮箱">
+                <a-form-item label="邮箱"
+                     v-bind="formItemLayout"
+                >
                     <a-input v-decorator="formFieldConf.email"/>
                 </a-form-item>
-                <a-form-item label="用户类型">
+                <a-form-item label="用户类型"
+                     v-bind="formItemLayout"
+                >
                     <a-input v-decorator="formFieldConf.userType"/>
                 </a-form-item>
             </a-form>
@@ -41,6 +49,16 @@
         },
         data(){
             return {
+                formItemLayout: {
+                    labelCol: {
+                        xs: { span: 24 },
+                        sm: { span: 4 },
+                    },
+                    wrapperCol: {
+                        xs: { span: 24 },
+                        sm: { span: 20 },
+                    },
+                },
                 formFieldConf:{
                     account:["account",{rules:[]}],
                     nickName:["nickName",{rules:[]}],

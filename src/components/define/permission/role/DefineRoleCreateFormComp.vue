@@ -13,13 +13,19 @@
                 layout="vertical"
                 :form="defineRoleCreateForm"
             >
-                <a-form-item label="角色名">
+                <a-form-item label="角色名"
+                     v-bind="formItemLayout"
+                >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item label="编码">
+                <a-form-item label="编码"
+                     v-bind="formItemLayout"
+                >
                     <a-input v-decorator="formFieldConf.code"/>
                 </a-form-item>
-                <a-form-item label="类型">
+                <a-form-item label="类型"
+                     v-bind="formItemLayout"
+                >
                     <a-select showSearch allowClear
                               placeholder="请选择"
                               optionFilterProp="children"
@@ -29,7 +35,9 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item label="备注">
+                <a-form-item label="备注"
+                     v-bind="formItemLayout"
+                >
                     <a-textarea v-decorator="formFieldConf.remark"/>
                 </a-form-item>
             </a-form>
@@ -50,6 +58,16 @@
         },
         data(){
             return {
+                formItemLayout: {
+                    labelCol: {
+                        xs: { span: 24 },
+                        sm: { span: 4 },
+                    },
+                    wrapperCol: {
+                        xs: { span: 24 },
+                        sm: { span: 20 },
+                    },
+                },
                 formFieldConf:{
                     name:["name",{rules:[]}],
                     code:["code",{rules:[]}],
