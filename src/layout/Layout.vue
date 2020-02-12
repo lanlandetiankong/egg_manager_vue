@@ -19,6 +19,7 @@
                 >
                     <navbar
                         :userInfo="navbarConf.userInfo"
+                        @userLoginOut="handleUserLoginOut"
                     ></navbar>
                 </a-layout-header>
                 <a-layout-content
@@ -162,6 +163,11 @@
             },
             dealTabsClick(activeKey) {
 
+            },
+            handleUserLoginOut(e){     //子组件命令-退出登录
+                window.sessionStorage.removeItem("userToken");
+                //跳转到登录界面
+                this.$router.push("/member/login");
             }
         },
         mounted() {

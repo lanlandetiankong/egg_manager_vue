@@ -6,10 +6,16 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const PermissionManagerApi = {
-    getAllDefinePermissions(queryArr,pagination) {
+    getAllDefinePermissions(queryArr,pagination,sorter) {
+        var sortObj = {}
+        if(sorter){
+            sortObj['field'] = sorter.field ;
+            sortObj['order'] = sorter.order ;
+        }
         var obj = {
             queryObj:JSON.stringify(queryArr),
-            paginationObj:JSON.stringify(pagination)
+            paginationObj:JSON.stringify(pagination),
+            sortObj:JSON.stringify(sortObj),
         }
         //查询所有权限信息
         return axios.post('/define/define_permission/getAllDefinePermissions',qs.stringify(obj)).then(res => res);

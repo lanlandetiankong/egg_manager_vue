@@ -4,7 +4,7 @@
             <a-col :span=2>
                 <a-row>
                     <a-tag color="blue">
-                        呆着的剑客
+                        {{loginUserName}}
                     </a-tag>
                 </a-row>
             </a-col>
@@ -24,9 +24,8 @@
                             :spin=true
                             theme="filled"
                     />
-                    <a-menu slot="overlay">
+                    <a-menu slot="overlay" @click="handleMoreSettingClick">
                         <a-menu-item key="user_loginout"
-                                     @click=""
                         >
                             退出登录
                         </a-menu-item>
@@ -53,8 +52,26 @@
             return {
             }
         },
+        computed:{
+            loginUserName(){
+                var userTokenCache = window.sessionStorage.getItem("userToken");
+                if(userTokenCache){
+                    var userTokenObj = JSON.parse(userTokenCache);
+                    return userTokenObj.nickName ;
+                }   else {
+                    return "未知用户";
+                }
+            }
+        },
         methods:{
-
+            handleMoreSettingClick(e){  //更多操作点击事件
+                var _this = this ;
+                if(e.key == "user_loginout"){   //退出登录
+                    _this.$emit('userLoginOut',e);
+                }   else if(e.key == "user_center"){ //个人中心
+                    console.log("user_center");
+                }
+            }
         },
         mounted(){
 

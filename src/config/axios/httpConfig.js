@@ -63,8 +63,14 @@ instance.interceptors.request.use(
         //var tokenStr = qs.stringify(JSON.parse(cfgUserToken)) ;
         // 请求头添加token
         if (cfgUserToken) {
+            var cfgUserTokenObj = JSON.parse(cfgUserToken);
+            var userTokenObj = {
+                account:cfgUserTokenObj['account'],
+                token:cfgUserTokenObj['token'],
+                userAccountId:cfgUserTokenObj['userAccountId']
+            }
             //config.headers['token'] = JSON.parse(cfgUserToken).token;
-            config.headers['token'] = cfgUserToken;
+            config.headers['token'] = JSON.stringify(userTokenObj);
         } else {
             console.log("employee is loginout");
         }
@@ -195,7 +201,6 @@ http.post = function (url, data, options) {
                         if(tempErrorActionType){     //如果发生异常时，后端明确指明有操作要求
                             if("AuthenticationExpired" == tempErrorActionType){  //请求明确要求需要重新登录
                                 jumpToLoginPage(router);
-
                             }
                         }
 

@@ -299,8 +299,8 @@
                     }
                 })
             },
-            dealQueryUserAccounts(queryFieldArr,pagination) {    //带查询条件 检索用户列表
-                EmpInfoApi.getAllUserAccounts(queryFieldArr,pagination).then((res) => {
+            dealQueryUserAccounts(queryFieldArr,pagination,sorter) {    //带查询条件 检索用户列表
+                EmpInfoApi.getAllUserAccounts(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
                         if(res.paginationBean){ //总个数
@@ -529,11 +529,12 @@
                 }
                 var _this = this;
                 var paginationTemp = _this.tableConf.pagination ;
+                var sorterTemp = _this.tableConf.sorter ;
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
                         var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
-                        _this.dealQueryUserAccounts(searchFieldArr,paginationTemp);
+                        _this.dealQueryUserAccounts(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });
             },

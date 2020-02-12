@@ -10,6 +10,7 @@ const columns = [{
     title: '姓名',
     align:textAlignDefault,
     dataIndex: 'nickName',
+    sorter:true,
     key: 'nickName',
 }, {
     title: '邮箱',
