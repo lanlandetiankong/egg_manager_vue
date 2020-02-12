@@ -377,9 +377,9 @@
                     }
                     if (closeDialogFlag == true) {    //关闭弹窗
                         dialogFormObj.resetFields();
+                        _this.dialogFormConf.visible = false;
                     }
                 });
-                _this.dialogFormConf.visible = false;
             },
             handleEmployeeJobBatchDeleteByIds(e) {  // 批量删除
                 var _this = this;

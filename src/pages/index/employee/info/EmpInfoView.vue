@@ -174,6 +174,7 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
+                :userTypes="searchConf.binding.userTypes"
                 @createFormCancel="handleEmployeeInfoCreateFormCancel"
                 @createFormSubmit="handleEmployeeInfoCreateFormSubmit"
             />
@@ -262,7 +263,15 @@
                     nickName: '',
                     account: '',
                     email: '',
-                    userType: ''
+                    userType: '',
+                    locked:'0'
+                },
+                dialogFormDefaultObj:{  //新建时的默认值设置
+                    nickName: '',
+                    account: '',
+                    email: '',
+                    userType: '',
+                    locked:'0'
                 },
                 dialogGrantRoleConf:{
                     visible:false,
@@ -567,7 +576,7 @@
                 var _this = this;
                 _this.dialogFormConf.visible = true;   //显示弹窗
                 _this.dialogFormConf.actionType = "create";
-                _this.dialogFormObj = {};
+                _this.dialogFormObj = _this.dialogFormDefaultObj;
             },
             handleUpdateUserAccountBtnClick() {  //更新用户按钮-点击
                 var _this = this;
@@ -635,9 +644,10 @@
                     }
                     if (closeDialogFlag == true) {    //关闭弹窗
                         dialogFormObj.resetFields();
+                        _this.dialogFormConf.visible = false;
                     }
                 });
-                _this.dialogFormConf.visible = false;
+
             },
             handleEmployeeInfoBatchDeleteByIds(e) {  // 批量删除
                 var _this = this;

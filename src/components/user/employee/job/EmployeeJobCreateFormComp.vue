@@ -33,12 +33,12 @@
                 <a-form-item label="描述"
                      v-bind="formItemLayout"
                 >
-                    <a-input v-decorator="formFieldConf.description"/>
+                    <a-textarea v-decorator="formFieldConf.description"/>
                 </a-form-item>
                 <a-form-item label="备注"
                      v-bind="formItemLayout"
                 >
-                    <a-input v-decorator="formFieldConf.remark"/>
+                    <a-textarea v-decorator="formFieldConf.remark"/>
                 </a-form-item>
             </a-form>
         </a-modal>
@@ -46,9 +46,10 @@
 </template>
 <script>
     import AFormItem from "ant-design-vue/es/form/FormItem";
+    import ATextarea from "ant-design-vue/es/input/TextArea";
     export default {
         name: "EmployeeJobCreateFormComp",
-        components: {AFormItem},
+        components: {ATextarea, AFormItem},
         props:{
             visible:Boolean,
             actionType:String,
@@ -56,6 +57,20 @@
             typeEnumArr:Array
         },
         data(){
+            var paramsRules ={
+                name:[
+                    {required:true,message:'请填写职务名!'}
+                ],
+                type:[
+                    {required:true,message:'请选择类型!'}
+                ],
+                description:[
+                    {required:false,message:'请填写描述!'},
+                ],
+                remark:[
+                    {required:false,message:'请填写备注!'}
+                ]
+            };
             return {
                 formItemLayout: {
                     labelCol: {
@@ -68,10 +83,10 @@
                     },
                 },
                 formFieldConf:{
-                    name:["name",{rules:[]}],
-                    type:["type",{rules:[]}],
-                    description:["description",{rules:[]}],
-                    remark:["remark",{rules:[]}]
+                    name:["name",{rules:paramsRules.name}],
+                    type:["type",{rules:paramsRules.type}],
+                    description:["description",{rules:paramsRules.description}],
+                    remark:["remark",{rules:paramsRules.remark}]
                 },
                 employeeJobCreateForm:{}
             }

@@ -31,13 +31,31 @@
                 <a-form-item label="用户类型"
                      v-bind="formItemLayout"
                 >
-                    <a-input v-decorator="formFieldConf.userType"/>
+                    <a-select showSearch allowClear
+                              placeholder="请选择"
+                              optionFilterProp="children"
+                              :options="userTypes"
+                              :filterOption="getUserTypeFilterOption"
+                              v-decorator="formFieldConf.userType"
+                    >
+                    </a-select>
+                </a-form-item>
+                <a-form-item label="用户类型"
+                     v-bind="formItemLayout"
+                >
+                    <a-radio-group buttonStyle="solid"
+                               v-decorator="formFieldConf.locked"
+                    >
+                        <a-radio-button value="1">锁定</a-radio-button>
+                        <a-radio-button value="0">不锁定</a-radio-button>
+                    </a-radio-group>
                 </a-form-item>
             </a-form>
         </a-modal>
     </div>
 </template>
 <script>
+    import {dealNumberToStr} from '~Components/_util/util';
     import AFormItem from "ant-design-vue/es/form/FormItem";
     export default {
         name: "EmployeeInfoCreateFormComp",
@@ -45,9 +63,28 @@
         props:{
             visible:Boolean,
             actionType:String,
-            formObj:Object
+            formObj:Object,
+            userTypes:Array
         },
         data(){
+            var paramsRules ={
+                account:[
+                    {required:true,message:'请填写账号!'}
+                ],
+                nickName:[
+                    {required:true,message:'请填写昵称!'}
+                ],
+                email:[
+                    {required:false,message:'请填写邮箱!'},
+                    {type: 'email',message: '请填写有效的邮箱!'}
+                ],
+                userType:[
+                    {required:true,message:'请填写用户类型!'}
+                ],
+                locked:[
+                    {required:true,message:'请选择是否锁定!'}
+                ]
+            };
             return {
                 formItemLayout: {
                     labelCol: {
@@ -60,10 +97,11 @@
                     },
                 },
                 formFieldConf:{
-                    account:["account",{rules:[]}],
-                    nickName:["nickName",{rules:[]}],
-                    email:["email",{rules:[]}],
-                    userType:["userType",{rules:[]}]
+                    account: ["account", {rules:paramsRules.account}],
+                    nickName: ["nickName", {rules: paramsRules.nickName}],
+                    email: ["email", {rules: paramsRules.email}],
+                    userType: ["userType", {rules: paramsRules.userType}],
+                    locked: ["locked", {rules: paramsRules.locked}]
                 },
                 employeeInfoCreateForm:{}
             }
@@ -88,10 +126,17 @@
                        userType: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.userType,
-                       })
+                       }),
+                       locked: _this.$form.createFormField({
+                           ...formObj,
+                           value: dealNumberToStr(formObj.locked),
+                       }),
                    });
                }
-            }
+            },
+            getUserTypeFilterOption(input,option){
+                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
+            },
         },
         computed:{
             modalCompTitle() {
@@ -131,6 +176,10 @@
                         userType: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.userType
+                        }),
+                        locked: this.$form.createFormField({
+                            ..._this.formObj,
+                            value: dealNumberToStr(_this.formObj.locked)
                         }),
                     }
                 }

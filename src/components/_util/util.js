@@ -44,3 +44,16 @@ export const cutStrByFullLength = (str = '', maxLength) => {
     return pre
   }, '')
 }
+
+
+export const dealNumberToStr = (num,defaultVal) => {
+    if(typeof num == "undefined" || num == null){
+        if(typeof defaultVal == "undefined"){
+            return 0;
+        }   else {
+            return defaultVal;
+        }
+    }   else {
+        return num.toString();
+    }
+}

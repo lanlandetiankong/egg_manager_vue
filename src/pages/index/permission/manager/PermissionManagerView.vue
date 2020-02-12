@@ -391,9 +391,10 @@
                     }
                     if (closeDialogFlag == true) {    //关闭弹窗
                         dialogFormObj.resetFields();
+                        _this.dialogFormConf.visible = false;
                     }
                 });
-                _this.dialogFormConf.visible = false;
+
             },
             handleDeleteOneById(delId) {     //删除指定行
                 var _this = this;

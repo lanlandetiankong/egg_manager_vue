@@ -57,6 +57,21 @@
             roleTypes:Array
         },
         data(){
+            var paramsRules ={
+                name:[
+                    {required:true,message:'请填写角色名!'}
+                ],
+                code:[
+                    {required:true,message:'请填写编码!'}
+                ],
+                type:[
+                    {required:true,message:'请选择类型!'},
+                ],
+                remark:[
+                    {required:false,message:'请填写备注!'}
+                ]
+
+            };
             return {
                 formItemLayout: {
                     labelCol: {
@@ -69,10 +84,10 @@
                     },
                 },
                 formFieldConf:{
-                    name:["name",{rules:[]}],
-                    code:["code",{rules:[]}],
-                    type:["type",{rules:[]}],
-                    remark:["remark",{rules:[]}]
+                    name:["name",{rules:paramsRules.name}],
+                    code:["code",{rules:paramsRules.code}],
+                    type:["type",{rules:paramsRules.type}],
+                    remark:["remark",{rules:paramsRules.remark}]
                 },
                 defineRoleCreateForm:{}
             }

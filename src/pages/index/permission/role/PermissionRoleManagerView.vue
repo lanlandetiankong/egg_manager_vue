@@ -486,9 +486,10 @@
                     }
                     if (closeDialogFlag == true) {    //关闭弹窗
                         dialogFormObj.resetFields();
+                        _this.dialogFormConf.visible = false;
                     }
                 });
-                _this.dialogFormConf.visible = false;
+
             },
             handleRoleGrantPermissionFormCancel(e) {  // 角色授权表单->取消
                 var _this = this;
