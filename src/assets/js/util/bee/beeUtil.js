@@ -1,4 +1,4 @@
-export const BeeUtil = {
+const BeeUtil = {
     //PhoneUtils命名空间
     PhoneUtils: {
         phoneRegexs: {
@@ -52,14 +52,17 @@ export const BeeUtil = {
     },
     //StringUtils命名空间
     StringUtils: {
+        isUndefined:function(input){
+            return typeof input == "undefined" ;
+        },
         isEmpty: function (input) {
-            return input == null || input == '';
+            return this.isUndefined(input) || input == null || input == '';
         },
         isNotEmpty: function (input) {
             return !this.isEmpty(input);
         },
         isBlank: function (input) {
-            return input == null || /^\s*$/.test(input);
+            return this.isUndefined(input) || input == null || /^\s*$/.test(input);
         },
         isNotBlank: function (input) {
             return !this.isBlank(input);
@@ -4510,3 +4513,5 @@ var BEE_AREAS = {
     659003: '图木舒克市',
     659004: '五家渠市'
 }
+
+export default BeeUtil ;

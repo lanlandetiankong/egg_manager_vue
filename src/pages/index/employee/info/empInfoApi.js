@@ -26,11 +26,19 @@ export const EmpInfoApi = {
         }
         return axios.post("/user/user_account/getUserAccountById",qs.stringify(params)).then(res => res) ;
     },
-    addUserAccountByForm(formObj) {     //新增用户
-        return axios.post("/user/user_account/doAddUserAccount",qs.stringify(formObj));
+    addUserAccountByForm(formObj,avatarUrl) {     //新增用户
+        formObj['avatarUrl'] = avatarUrl ;
+        var obj = {
+            formObj:JSON.stringify(formObj),
+        }
+        return axios.post("/user/user_account/doAddUserAccount",qs.stringify(obj));
     },
-    updateUserAccountByForm(formObj) {  //更新用户
-        return axios.post("/user/user_account/doUpdateUserAccount",qs.stringify(formObj)).then(res => res) ;
+    updateUserAccountByForm(formObj,avatarUrl) {  //更新用户
+        formObj['avatarUrl'] = avatarUrl ;
+        var obj = {
+            formObj:JSON.stringify(formObj),
+        }
+        return axios.post("/user/user_account/doUpdateUserAccount",qs.stringify(obj)).then(res => res) ;
     },
     batchDelUserAccount(ids) {  //批量删除
         var obj = {

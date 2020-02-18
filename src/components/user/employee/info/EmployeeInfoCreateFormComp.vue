@@ -7,7 +7,7 @@
             :okText="modalCompOkTest"
             cancelText="取消"
             @cancel="() => { $emit('createFormCancel')}"
-            @ok="() => { $emit('createFormSubmit')}"
+            @ok="handleCreateFormSubmit"
         >
             <a-form
                 layout="vertical"
@@ -27,6 +27,16 @@
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.email"/>
+                </a-form-item>
+                <a-form-item label="头像"
+                     v-bind="formItemLayout"
+                >
+                    <head-img-upload
+                        v-if="visible"
+                        ref="headImgUploadRef"
+                        :avatarUrl="formObj.avatarUrl"
+                    >
+                    </head-img-upload>
                 </a-form-item>
                 <a-form-item label="用户类型"
                      v-bind="formItemLayout"
@@ -57,9 +67,10 @@
 <script>
     import {dealNumberToStr} from '~Components/_util/util';
     import AFormItem from "ant-design-vue/es/form/FormItem";
+    import HeadImgUpload from "~Components/common/img/HeadImgUpload";
     export default {
         name: "EmployeeInfoCreateFormComp",
-        components: {AFormItem},
+        components: {HeadImgUpload, AFormItem},
         props:{
             visible:Boolean,
             actionType:String,
@@ -78,6 +89,7 @@
                     {required:false,message:'请填写邮箱!'},
                     {type: 'email',message: '请填写有效的邮箱!'}
                 ],
+                avatarUrl:[],
                 userType:[
                     {required:true,message:'请填写用户类型!'}
                 ],
@@ -100,6 +112,7 @@
                     account: ["account", {rules:paramsRules.account}],
                     nickName: ["nickName", {rules: paramsRules.nickName}],
                     email: ["email", {rules: paramsRules.email}],
+                    avatarUrl: ["avatarUrl", {rules: paramsRules.avatarUrl}],
                     userType: ["userType", {rules: paramsRules.userType}],
                     locked: ["locked", {rules: paramsRules.locked}]
                 },
@@ -123,6 +136,10 @@
                            ...formObj,
                            value: formObj.email,
                        }),
+                       avatarUrl: _this.$form.createFormField({
+                           ...formObj,
+                           value: formObj.avatarUrl,
+                       }),
                        userType: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.userType,
@@ -137,6 +154,13 @@
             getUserTypeFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
+            dealGetHeadAvatarUrlVal(){  //取得[用户头像上传后的图片object]
+                return this.$refs.headImgUploadRef.avatarUrlVal ;
+            },
+            handleCreateFormSubmit(e){  //创建提交
+                var _this = this ;
+                _this.$emit('createFormSubmit',e,_this.dealGetHeadAvatarUrlVal());
+            }
         },
         computed:{
             modalCompTitle() {
@@ -172,6 +196,10 @@
                         email: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.email
+                        }),
+                        avatarUrl: this.$form.createFormField({
+                            ..._this.formObj,
+                            value: _this.formObj.avatarUrl
                         }),
                         userType: this.$form.createFormField({
                             ..._this.formObj,

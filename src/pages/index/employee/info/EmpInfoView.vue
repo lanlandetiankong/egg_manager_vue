@@ -606,7 +606,7 @@
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleEmployeeInfoCreateFormSubmit(e) {   // 创建/更新 用户表单->提交
+            handleEmployeeInfoCreateFormSubmit(e,avatarUrl) {   // 创建/更新 用户表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -615,7 +615,8 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        EmpInfoApi.addUserAccountByForm(values).then((res) => {
+                        EmpInfoApi.addUserAccountByForm(values,avatarUrl).then((res) => {
+                            debugger;
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
                                     this.$message.success(res.info);
@@ -625,11 +626,15 @@
                                 }
                             } else {
                                 closeDialogFlag = false;
+                            }
+                            if (closeDialogFlag == true) {    //关闭弹窗
+                                dialogFormObj.resetFields();
+                                _this.dialogFormConf.visible = false;
                             }
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        EmpInfoApi.updateUserAccountByForm(values).then((res) => {
+                        EmpInfoApi.updateUserAccountByForm(values,avatarUrl).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
                                     this.$message.success(res.info);
@@ -640,12 +645,13 @@
                             } else {
                                 closeDialogFlag = false;
                             }
+                            if (closeDialogFlag == true) {    //关闭弹窗
+                                dialogFormObj.resetFields();
+                                _this.dialogFormConf.visible = false;
+                            }
                         })
                     }
-                    if (closeDialogFlag == true) {    //关闭弹窗
-                        dialogFormObj.resetFields();
-                        _this.dialogFormConf.visible = false;
-                    }
+
                 });
 
             },
