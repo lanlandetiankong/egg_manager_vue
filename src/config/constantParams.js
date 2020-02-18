@@ -12,6 +12,9 @@ const constantParams ={
                 name:"egg_manager"
             }
         }
+    },
+    defalutObj:{    //一些常用的默认值
+        avatarUrl:"/static/img/user/panda_egg.jpg"
     }
 
 }

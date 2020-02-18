@@ -10,7 +10,7 @@
             </a-col>
             <a-col :span=1 >
                 <a-avatar
-                    src="/static/img/user/panda_egg.jpg"
+                    :src="loginUserAvatarUrl"
                     alt="图片加载失败"
                 />
             </a-col>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+    import constantParams from '~Config/constantParams' ;
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
     export default {
@@ -60,6 +61,17 @@
                     return userTokenObj.nickName ;
                 }   else {
                     return "未知用户";
+                }
+            },
+            loginUserAvatarUrl(){   //取得登录用户的头像
+                var userTokenCache = window.sessionStorage.getItem("userToken");
+                if(userTokenCache){
+                    var userTokenObj = JSON.parse(userTokenCache);
+                    var avatarUrl = userTokenObj.avatarUrl ;
+                    if(avatarUrl){
+                        var urlPrefix = constantParams.props.upload.url.prefix ;
+                        return urlPrefix+avatarUrl ;
+                    }
                 }
             }
         },
