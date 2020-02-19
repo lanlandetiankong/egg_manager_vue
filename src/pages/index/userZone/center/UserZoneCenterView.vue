@@ -29,9 +29,10 @@
                             <a-row :gutter="layoutConf.default.gutter">
                                 <a-col
                                     :span="layoutConf.roleCard.rows.span"
+                                    :key="roleItem.fid"
                                     v-for="roleItem in dataObj.role.checkArr"
                                 >
-                                    <a-tag :key="roleItem.fid"
+                                    <a-tag
                                         :color="layoutConf.roleCard.rows.tag.color">
                                         {{roleItem.name}}
                                     </a-tag>
@@ -53,6 +54,7 @@
                             <a-row :gutter="layoutConf.default.gutter">
                                 <a-col
                                     :span="layoutConf.permissionCard.rows.span"
+                                    :key="permissionItem.fid"
                                     v-for="permissionItem in dataObj.permission.checkArr"
                                 >
                                     <a-tag :key="permissionItem.fid"
@@ -77,6 +79,7 @@
                             <a-row :gutter="layoutConf.default.gutter">
                                 <a-col
                                     :span="layoutConf.jobCard.rows.span"
+                                    :key="jobItem.fid"
                                     v-for="jobItem in dataObj.job.checkArr"
                                 >
                                     <a-tag :key="jobItem.fid"
