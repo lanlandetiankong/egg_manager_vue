@@ -81,7 +81,7 @@
                 if(e.key == "user_loginout"){   //退出登录
                     _this.$emit('userLoginOut',e);
                 }   else if(e.key == "user_center"){ //个人中心
-                    console.log("user_center");
+                    _this.$emit('goToUserCenter',e);
                 }
             }
         },

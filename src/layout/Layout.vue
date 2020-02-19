@@ -20,6 +20,7 @@
                     <navbar
                         :userInfo="navbarConf.userInfo"
                         @userLoginOut="handleUserLoginOut"
+                        @goToUserCenter="handleGoToUserCenter"
                     ></navbar>
                 </a-layout-header>
                 <a-layout-content
@@ -66,6 +67,10 @@
         },
         data() {
             return {
+                routerDefineObj:{   //路径定义对象,请勿修改！(请保持与外部$router一致)
+                    memberLoginPage:"/member/login",
+                    userCenterView:"/index/userZone/center"
+                },
                 siderbar:{
                     conf:{
                         collapsed: false,
@@ -167,12 +172,14 @@
             handleUserLoginOut(e){     //子组件命令-退出登录
                 window.sessionStorage.removeItem("userToken");
                 //跳转到登录界面
-                this.$router.push("/member/login");
+                this.$router.push(this.routerDefineObj.memberLoginPage);
+            },
+            handleGoToUserCenter(){ //子组件命令-跳转到用户中心
+                this.$router.push(this.routerDefineObj.userCenterView);
             }
         },
         mounted() {
             this.handleGetMenus();
-
         }
     }
 </script>

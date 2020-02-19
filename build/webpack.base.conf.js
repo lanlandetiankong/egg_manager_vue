@@ -33,7 +33,8 @@ module.exports = {
       '~Config': resolve('src/config'),
       '~Apis': resolve('src/apis'),
       '~Layout': resolve('src/layout'),
-      '~Router': resolve('src/router')
+      '~Router': resolve('src/router'),
+      '~Utils': resolve('src/utils')
     }
   },
   module: {
