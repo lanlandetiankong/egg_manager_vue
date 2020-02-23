@@ -9,6 +9,7 @@ import Layout from '@/layout/Layout'
 import EmployeeRouter from './main/employee/index'
 import PermissionRouter from './main/permission/index'
 import UserZoneRouter from './main/userZone/index'
+import AnnouncementRouter from './main/announcement/index'
 
 
 //登录、注册
@@ -39,7 +40,8 @@ export const constantRouterMap = [
             },
             EmployeeRouter,
             PermissionRouter,
-            UserZoneRouter
+            UserZoneRouter,
+            AnnouncementRouter
         ]
     },
     MemberRouter,

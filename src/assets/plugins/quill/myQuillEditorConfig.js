@@ -27,5 +27,4 @@ export const quillToolbarConfig = {
         },
         modules: ['Resize', 'DisplaySize', 'Toolbar' ]
     }
-
 }

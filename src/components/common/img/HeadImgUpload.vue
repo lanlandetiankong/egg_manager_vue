@@ -36,10 +36,12 @@
             avatarUrl:String
         },
         data(){
+            //上传图片的路径
+            var uploadFieleUrl = "/commom_api/file/imgUpload/headImgUpload"
             return {
                 uploadConf:{
                     accept:".png, .jpg, .jpeg",
-                    action:baseUrl+"/commom_api/file/imgUpload/headImgUpload",
+                    action:baseUrl+uploadFieleUrl,
                     directory:false,
                     moreData:{
                         a:"a"
