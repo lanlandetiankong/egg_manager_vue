@@ -63,18 +63,6 @@
                     type="flex"
                 >
                     <a-col>
-                        <a-button type="primary" icon="plus"
-                                  @click="handleAddAnnouncementBtnClick">
-                            新增
-                        </a-button>
-                    </a-col>
-                    <a-col>
-                        <a-button type="primary" icon="edit"
-                                  @click="handleUpdateAnnouncementBtnClick">
-                            更新
-                        </a-button>
-                    </a-col>
-                    <a-col>
                         <a-button type="danger" icon="delete"
                                   @click="handleAnnouncementBatchDeleteByIds">
                             删除
@@ -128,7 +116,7 @@
         data() {
             return {
                 searchConf:{
-                    showListFlag:true,
+                    showListFlag:false,
                     loadingFlag:false,
                     defaultColSpan: 8,
                     paramConf: {
@@ -274,25 +262,6 @@
             },
             handleSearchFormReset() {    //重置 搜索列表 的值
                 this.searchForm.resetFields();
-            },
-            handleAddAnnouncementBtnClick() {     //新增公告按钮-点击
-                // TODO
-            },
-            handleUpdateAnnouncementBtnClick() {  //更新公告按钮-点击
-                var _this = this;
-                if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning('请选择一行要更新的数据！');
-                } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning('请选择至多一行要更新的数据！');
-                } else {
-                    //TODO
-                    var selectRowId = _this.tableCheckIdList[0];
-                    if (selectRowId) {
-
-                    } else {
-                        this.$message.warning('操作失败！未取得有效的公告id！');
-                    }
-                }
             },
             handleAnnouncementBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;

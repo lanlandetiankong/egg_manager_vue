@@ -5,12 +5,13 @@
                 <a-col :span="3">
                     <a-button size="large" icon="inbox">存为草稿</a-button>
                 </a-col>
-                <a-col :span="2">
+                <a-col :span="3">
                     <a-button size="large" type="primary" icon="check"
                               @click="handleCreateAnnouncement"
                     >发布</a-button>
                 </a-col>
             </a-row>
+            <br/>
             <a-row>
                 <a-col :span="2">
                     <a-button size="large">标题：</a-button>
@@ -245,16 +246,27 @@
                             _this.formObj = _this.dealFormValuesMapToObj(values) ;
                             AnnouncementCreateApi.addAnnouncementByForm(_this.formObj).then((res) =>{
                                 if(res.hasError == false){
-
+                                    _this.$message.success(res.info) ;
+                                    //关闭当前页面
+                                    _this.doTagItemSelectedClose();
                                 }
-                                console.log(res) ;
                             })
                         }
                     });
 
                 }
-
-
+            },
+            doTagItemSelectedClose(){  //关闭当前标签
+                var selectedTag = this.$route ;
+                //关闭当前所选标签
+                this.$store.dispatch('doDelVisitedViews',selectedTag).then((views) => {
+                    const latestView = views.slice(-1)[0] ;
+                    if(latestView) {
+                        this.$router.push(latestView.path) ;
+                    }   else {
+                        this.$router.push('/') ;
+                    }
+                })
             }
         },
         created(){

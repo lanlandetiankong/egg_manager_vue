@@ -13,8 +13,14 @@ const AnnouncementRouter = {
         {
             path:'all_list',
             component:_import('index/announcement/allList/AnnouncementAllListView'),
-            name:'announcementCreate',
+            name:'announcementAllList',
             meta:{title:'公告列表',icon:"bars",noCache:false,keepAlive:true}
+        },
+        {
+            path:'my_create_list',
+            component:_import('index/announcement/myCreateList/AnnouncementMyCreateListView'),
+            name:'announcementMyCreateList',
+            meta:{title:'我创建的公告列表',icon:"bars",noCache:false,keepAlive:true}
         },
         {
             path:'announcement_tag',
