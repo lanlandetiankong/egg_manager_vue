@@ -4,23 +4,18 @@ const columns = [{
     align:textAlignDefault,
     dataIndex: 'title',
     key: 'title',
+    width:100,
 }, {
     title: '关键字',
     align:textAlignDefault,
     dataIndex: 'keyWord',
     key: 'keyWord',
     width:100,
-}, {
-    title: '发布部门',
-    align:textAlignDefault,
-    dataIndex: 'publishDepartment',
-    width:100,
-    key: 'publishDepartment',
-}, {
+},{
     title: '标签',
     align:textAlignDefault,
     key: 'tagNames',
-    width:300,
+    width:150,
     scopedSlots: { customRender: 'tagNamesRender' },
 }, {
     title: '内容',
@@ -28,13 +23,17 @@ const columns = [{
     dataIndex: 'shortContent',
     width:300,
     key: 'shortContent',
+},  {
+    title: '发布部门',
+    align:textAlignDefault,
+    dataIndex: 'publishDepartment',
+    width:100,
+    key: 'publishDepartment',
 }, {
     title:'操作',
-    align:textAlignDefault,
-    dataIndex:"operation",
     key:'operation',
     fixed:'right',
-    width:100,
+    width: 100,
     scopedSlots: { customRender: 'action' }
 }];
 

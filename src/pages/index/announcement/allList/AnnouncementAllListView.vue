@@ -90,6 +90,7 @@
                     :dataSource="tableConf.data"
                     :loading="tableConf.loading"
                     :rowSelection="rowSelection"
+                    :scroll="tableConf.scroll"
                     @change="handleTableChange"
                 >
                     <span slot="tagNamesRender" slot-scope="record">
@@ -146,7 +147,10 @@
                         }
                     },
                     filters:{},
-                    sorter:{}
+                    sorter:{},
+                    scroll:{
+                        x: 750
+                    }
                 },
                 tableCheckIdList: [],
                 dialogFormConf: {
