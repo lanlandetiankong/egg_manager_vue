@@ -28,6 +28,12 @@ const AnnouncementRouter = {
             name:'announcementTag',
             meta:{title:'公告标签',icon:"reconciliation",noCache:false,keepAlive:true}
         },
+        {
+            path:'my_draft_list',
+            component:_import('index/announcement/myDraftList/AnnouncementMyDraftListView'),
+            name:'announcementMyDraftList',
+            meta:{title:'草稿箱',icon:"bars",noCache:false,keepAlive:true}
+        },
     ]
 };
 export default AnnouncementRouter ;

@@ -9,6 +9,9 @@ export const AnnouncementCreateApi = {
     addAnnouncementByForm(formObj) {     //发布公告
         return axios.post("/announcement/addAnnouncement",qs.stringify(formObj));
     },
+    addAnnouncementDraftByForm(formObj) {     //提交公告到草稿箱
+        return axios.post("/announcement_draft/addAnnouncementDraft",qs.stringify(formObj));
+    },
     getAllAnnouncementTagEnums() {  //取得 公告标签 列表
         var sortObj = {     //固定 order字段 排序
             field:"ordering",

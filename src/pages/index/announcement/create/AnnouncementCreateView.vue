@@ -3,7 +3,9 @@
         <div>
             <a-row>
                 <a-col :span="3">
-                    <a-button size="large" icon="inbox">存为草稿</a-button>
+                    <a-button size="large" icon="inbox"
+                              @click="handleCreateAnnouncementDraft"
+                    >存为草稿</a-button>
                 </a-col>
                 <a-col :span="3">
                     <a-button size="large" type="primary" icon="check"
@@ -253,7 +255,30 @@
                             })
                         }
                     });
-
+                }
+            },
+            handleCreateAnnouncementDraft(){    //存储为草稿
+                var _this = this ;
+                //验证是否未编辑
+                let isCreateAble = this.dealCheckCreateAble() ;
+                if(isCreateAble == false){
+                    _this.$message.warning("公告标题或内容为空,请输入有效公告标题或内容后重试！")
+                    return false ;
+                }   else {
+                    //取得请求的参数：标题&内容、用户信息
+                    var formObjTemp = _this.formObj ;
+                    this.announcementCreateForm.validateFields((err, values) => {
+                        if (!err) {
+                            _this.formObj = _this.dealFormValuesMapToObj(values) ;
+                            AnnouncementCreateApi.addAnnouncementDraftByForm(_this.formObj).then((res) =>{
+                                if(res.hasError == false){
+                                    _this.$message.success(res.info) ;
+                                    //关闭当前页面
+                                    _this.doTagItemSelectedClose();
+                                }
+                            })
+                        }
+                    });
                 }
             },
             doTagItemSelectedClose(){  //关闭当前标签
