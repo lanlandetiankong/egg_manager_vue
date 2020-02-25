@@ -123,7 +123,7 @@
                 this.doToggleCurrentTag(clickTag) ;
             },
             doToggleCurrentTag(tag) {
-                console.log("doToggleCurrentTag",tag);
+                //console.log("doToggleCurrentTag",tag);
                 this.tagsConf.selectedTag = tag ;
             },
             doTagItemSelectedClose(e,selectedTag,isTagActive){

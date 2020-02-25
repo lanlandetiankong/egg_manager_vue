@@ -101,7 +101,7 @@
                         </template>
                     </span>
                     <span slot="action" slot-scope="text,record">
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除?</a-button>
+                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
                     </span>
                 </a-table>
             </div>

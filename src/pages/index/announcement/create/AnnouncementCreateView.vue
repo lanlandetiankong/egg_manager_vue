@@ -119,6 +119,11 @@
                 ]
             };
             return {
+                updateForm:{
+                    flag:false,
+                    fid:'',
+                    initFlag:false
+                },
                 formLayout:{
                     row:{
                         type:"flex"
@@ -188,6 +193,27 @@
             getPermissionTypeFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
+            dealUpdateFormValue(formObj){   //form表单更新
+                var _this = this ;
+                console.log("dealUpdateFormValue");
+                console.log(formObj);
+                if(typeof _this.announcementCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                    _this.announcementCreateForm.updateFields({
+                        keyWord: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.keyWord,
+                        }),
+                        publishDepartment: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.publishDepartment,
+                        }),
+                        tagIds: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.tagIds,
+                        })
+                    });
+                }
+            },
             dealGetAllAnnouncementTagList(){    //取得所有的 公告标签
                 var _this = this ;
                 AnnouncementCreateApi.getAllAnnouncementTagEnums().then((res) =>{
@@ -246,13 +272,25 @@
                     this.announcementCreateForm.validateFields((err, values) => {
                         if (!err) {
                             _this.formObj = _this.dealFormValuesMapToObj(values) ;
-                            AnnouncementCreateApi.addAnnouncementByForm(_this.formObj).then((res) =>{
-                                if(res.hasError == false){
-                                    _this.$message.success(res.info) ;
-                                    //关闭当前页面
-                                    _this.doTagItemSelectedClose();
-                                }
-                            })
+                            console.log("dealFormValuesMapToObj");
+                            console.log(_this.formObj);
+                            if(_this.updateForm.flag == true){  //发布 更新后的 公告草稿
+                                AnnouncementCreateApi.addAnnouncementFromDraftByForm(_this.formObj).then((res) =>{
+                                    if(res.hasError == false){
+                                        _this.$message.success(res.info) ;
+                                        //关闭当前页面
+                                        _this.doTagItemSelectedClose();
+                                    }
+                                })
+                            }   else{   //直接发布
+                                AnnouncementCreateApi.addAnnouncementByForm(_this.formObj).then((res) =>{
+                                    if(res.hasError == false){
+                                        _this.$message.success(res.info) ;
+                                        //关闭当前页面
+                                        _this.doTagItemSelectedClose();
+                                    }
+                                })
+                            }
                         }
                     });
                 }
@@ -270,13 +308,23 @@
                     this.announcementCreateForm.validateFields((err, values) => {
                         if (!err) {
                             _this.formObj = _this.dealFormValuesMapToObj(values) ;
-                            AnnouncementCreateApi.addAnnouncementDraftByForm(_this.formObj).then((res) =>{
-                                if(res.hasError == false){
-                                    _this.$message.success(res.info) ;
-                                    //关闭当前页面
-                                    _this.doTagItemSelectedClose();
-                                }
-                            })
+                            if(_this.updateForm.flag == true) {  //更新公告草稿
+                                AnnouncementCreateApi.updateAnnouncementDraftByForm(_this.formObj).then((res) =>{
+                                    if(res.hasError == false){
+                                        _this.$message.success(res.info) ;
+                                        //关闭当前页面
+                                        _this.doTagItemSelectedClose();
+                                    }
+                                })
+                            }   else {  //添加到 草稿
+                                AnnouncementCreateApi.addAnnouncementDraftByForm(_this.formObj).then((res) =>{
+                                    if(res.hasError == false){
+                                        _this.$message.success(res.info) ;
+                                        //关闭当前页面
+                                        _this.doTagItemSelectedClose();
+                                    }
+                                })
+                            }
                         }
                     });
                 }
@@ -292,6 +340,21 @@
                         this.$router.push('/') ;
                     }
                 })
+            },
+            dealRenderAnnouncementDraftToForm(fid){
+                var _this = this ;
+                if(fid){
+                    AnnouncementCreateApi.getAnnouncementDraftById(fid).then((res) =>{
+                        if(res.hasError == false){
+                            var resBean = res.bean ;
+                            if(resBean){
+                                _this.formObj = resBean ;
+                                console.log("_this.formObj");
+                                console.log(_this.formObj);
+                            }
+                        }
+                    })
+                }
             }
         },
         created(){
@@ -322,7 +385,30 @@
             });
         },
         mounted(){
+            var _this = this ;
+            var routeQuery = this.$route.query ;
+            if(routeQuery){
+                _this.updateForm.fid = routeQuery.fid ;
+                var action = routeQuery.action ;
+                if(action == "update"){ //表示 该页面处理的是 公告草稿 更新
+                    _this.updateForm.flag = true ;
+                    _this.dealRenderAnnouncementDraftToForm(_this.updateForm.fid);
+                }
+            }
             this.dealGetAllAnnouncementTagList() ;
+        },
+        watch:{
+            formObj: {
+                handler (val, oval) {
+                    var _this = this ;
+                    if(_this.updateForm.flag == true && _this.updateForm.initFlag == false){
+                        _this.dealUpdateFormValue(val);
+                        _this.updateForm.initFlag = true ;
+                    }
+                },
+                deep: true,
+                immediate:true
+            }
         }
     }
 </script>

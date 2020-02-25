@@ -65,7 +65,13 @@
                     <a-col>
                         <a-button type="primary" icon="check"
                                   @click="handleAnnouncementDraftBatchPublishByIds">
-                            发布
+                            直接发布
+                        </a-button>
+                    </a-col>
+                    <a-col>
+                        <a-button type="primary" icon="check"
+                                  @click="handleGoToAnnouncementCreateView">
+                            编辑
                         </a-button>
                     </a-col>
                     <a-col>
@@ -391,6 +397,28 @@
                     _this.handlePublishOneById(record.fid);
                 }
             },
+            handleGoToAnnouncementCreateView(){     //跳转到 [新建公告] 页面
+                var _this = this;
+                if (_this.tableCheckIdList.length < 1) {
+                    this.$message.warning('请选择一行要编辑的数据！');
+                }   else if (_this.tableCheckIdList.length > 1) {
+                    this.$message.warning('请选择至多一行要编辑的数据！');
+                }   else {
+                    var selectRowId = _this.tableCheckIdList[0];
+                    if (selectRowId) {
+                        _this.dealGoToAnnouncementCreateView(selectRowId) ;
+                    }   else {
+                        this.$message.warning('操作失败！未取得有效的行id！');
+                    }
+                }
+            },
+            dealGoToAnnouncementCreateView(fid){   //跳转到 [新建公告] 页面 处理
+                var routeParam = {
+                    fid: fid,
+                    action:"update"
+                }
+                this.$router.push({ path: '/index/announcement/create', query: routeParam});
+            }
         },
         created(){
             this.dealGetMyAnnouncementDrafts();
