@@ -34,6 +34,12 @@ const AnnouncementRouter = {
             name:'announcementMyDraftList',
             meta:{title:'草稿箱',icon:"bars",noCache:false,keepAlive:true}
         },
+        {
+            path:'display',
+            component:_import('index/announcement/display/AnnouncementDisplayView'),
+            name:'announcementDisplay',
+            meta:{title:'公告展示',icon:"book",noCache:false,keepAlive:true}
+        },
     ]
 };
 export default AnnouncementRouter ;

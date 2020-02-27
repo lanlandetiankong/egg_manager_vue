@@ -1,7 +1,7 @@
 <template>
-  <section class="app-main" style="min-height: 100%">
+  <section class="app_main" style="min-height: 100%;">
     <transition name="fade" mode="out-in">
-        <router-view></router-view>
+        <router-view style="min-height: 100%;"></router-view>
     </transition>
   </section>
 </template>
@@ -16,3 +16,9 @@ export default {
   }
 }
 </script>
+<style>
+    .app_main{
+        min-height: 100%;
+        height:100%
+    }
+</style>

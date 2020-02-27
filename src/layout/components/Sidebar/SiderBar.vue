@@ -1,7 +1,7 @@
 <template>
     <div id="sider-bar-root">
         <div :class="sideBarLogoCls" >
-            <span @click="() => {this.$router.push('/')}">Egg Manager</span>
+            <span @click="() => {this.$router.push('/index')}">Egg Manager</span>
         </div>
         <a-menu
             mode="inline"
