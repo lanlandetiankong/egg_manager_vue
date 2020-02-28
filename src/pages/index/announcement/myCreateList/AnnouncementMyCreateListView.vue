@@ -315,7 +315,9 @@
             this.dealGetAllAnnouncements();
             this.dealGetAllAnnouncementTagList();
             var currentRoute = this.$route ;
-
+        },
+        destroyed(){
+            console.log("我创建的公告列表-页面销毁 ...")
         }
     }
 </script>

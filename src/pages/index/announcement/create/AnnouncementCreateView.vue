@@ -409,6 +409,9 @@
                 deep: true,
                 immediate:true
             }
+        },
+        destroyed(){
+            console.log("创建公告-页面销毁 ...")
         }
     }
 </script>

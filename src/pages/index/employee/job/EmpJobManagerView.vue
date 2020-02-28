@@ -444,6 +444,7 @@
             this.dealGetDefineJobTypeEnumList();
         },
         destroyed(){
+            console.log("职务管理-页面销毁 ...")
         }
     }
 </script>

@@ -424,8 +424,11 @@
             this.dealGetMyAnnouncementDrafts();
             this.dealGetAllAnnouncementTagList();
             var currentRoute = this.$route ;
-
+        },
+        destroyed(){
+            console.log("我的草稿箱-页面销毁 ...")
         }
+
     }
 </script>
 <style>

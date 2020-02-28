@@ -71,6 +71,9 @@
                     }
                 });
             }
+        },
+        destroyed(){
+            console.log("公告展示-页面销毁 ...")
         }
     }
 </script>

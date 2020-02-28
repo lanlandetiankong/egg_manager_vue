@@ -314,6 +314,9 @@
         created(){
             this.dealGetAllAnnouncements();
             this.dealGetAllAnnouncementTagList();
+        },
+        destroyed(){
+            console.log("所有公告-页面销毁 ...")
         }
     }
 </script>

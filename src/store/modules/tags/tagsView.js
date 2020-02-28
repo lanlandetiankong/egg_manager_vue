@@ -2,7 +2,7 @@ const tagsView = {
     state: {
         contextMenuBaseConf: {},
         visitedViews:[],
-        cachedViews:[]
+        cachedViews:new Map()
     },
     mutations: {
         SET_CONTEXT_MENU_POSITION: (state,contextMenuPositionObj) => {
@@ -19,13 +19,33 @@ const tagsView = {
             if(state.visitedViews.some(v => v.path === view.path)) {
                 return ;
             }   else {
+                var viewMetaTemp = view.meta ;
                 state.visitedViews.push({
                     name:view.name,
                     path:view.path,
-                    title:view.meta.title || 'UnknowName'
+                    title:viewMetaTemp.title || 'UnknowName'
                 })
-                if(!view.meta.noCache){
-                    state.cachedViews.push(view.name);
+                if(viewMetaTemp.keepAliveFlag == true){
+                    //key:上级页面 组件名，该上级页面下需要缓存的 组件名集合
+                    var viewParentRouterCompName = viewMetaTemp.parentRouterCompName ;
+                    if(viewParentRouterCompName){
+                        var parentRouteList = state.cachedViews.get(viewParentRouterCompName);
+                        if(typeof parentRouteList == "undefined" || parentRouteList == null){   //不存在key
+                            parentRouteList = [viewMetaTemp.selfCompName];
+                        }   else {  //存在key 添加新的
+                            var selfCompNameExist = parentRouteList.find((val) => {
+                                return val == viewMetaTemp.selfCompName;
+                            });
+                            if(typeof selfCompNameExist == "undefined"){    //当前组件还没添加
+                                parentRouteList.push(viewMetaTemp.selfCompName);
+                            }   else {
+                                //console.log("当前子页面已经记录："+viewMetaTemp.selfCompName);
+                            }
+                        }
+                        var stateCachedViewsTemp = state.cachedViews;
+                        stateCachedViewsTemp.set(viewParentRouterCompName,parentRouteList);
+                        state.cachedViews = new Map(stateCachedViewsTemp);
+                    }
                 }
             }
         },
@@ -37,14 +57,11 @@ const tagsView = {
                     break ;
                 }
             }
-            //从缓存列表移除
-            for (const i of state.cachedViews){
-                if(i === view.name){
-                    const index = state.cachedViews.indexOf(i) ;
-                    state.cachedViews.splice(index,1);
-                    break ;
-                }
-            }
+
+
+
+
+
         },
         DEL_OTHERS_VIEWS: (state,view) => {
             //从访问列表移除
@@ -54,18 +71,12 @@ const tagsView = {
                     break ;
                 }
             }
-            //从缓存列表移除
-            for (const i of state.cachedViews){
-                if(i === view.name){
-                    const index = state.cachedViews.indexOf(i) ;
-                    state.cachedViews = state.cachedViews.slice(index,i+1);
-                    break ;
-                }
-            }
+
+
         },
         DEL_ALL_VIEWS:(state) => {
             state.visitedViews = [] ;
-            state.cachedViews = [] ;
+            state.cachedViews = new Map() ;
         }
     },
     actions: {

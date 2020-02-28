@@ -562,6 +562,9 @@
         created(){
             this.dealGetAllDefineRoles();
             this.dealGetRoleTypeEnumList();
+        },
+        destroyed(){
+            console.log("权限角色-页面销毁 ...")
         }
     }
 </script>

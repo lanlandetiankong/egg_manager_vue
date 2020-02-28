@@ -823,7 +823,7 @@
             this.dealGetLockStateEnumList();
         },
         destroyed(){
-            //console.log("页面销毁 ...")
+            console.log("员工信息-页面销毁 ...");
         }
 
     }

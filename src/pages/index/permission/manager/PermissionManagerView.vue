@@ -424,6 +424,9 @@
         created(){
             this.dealGetAllDefinePermissions();
             this.dealGetPermissionTypeEnumList();
+        },
+        destroyed(){
+            console.log("权限管理-页面销毁 ...")
         }
     }
 </script>

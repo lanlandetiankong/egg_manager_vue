@@ -396,6 +396,9 @@
         },
         created(){
             this.dealGetAllAnnouncementTags();
+        },
+        destroyed(){
+            console.log("公告标签-页面销毁 ...")
         }
     }
 </script>
