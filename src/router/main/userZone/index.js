@@ -5,6 +5,9 @@ const UserZoneRouter = {
     path:'userZone',
     component:_import('index/userZone/UserZonePage'),
     name:'userZone',
+    meta:{
+        selfCompName:'UserZonePage'
+    },
     children:[
         {
             path:'center',

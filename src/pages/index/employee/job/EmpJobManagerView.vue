@@ -322,7 +322,6 @@
                     if (selectRowId) {
                         EmpJobApi.getDefineJobById(selectRowId).then((res) => {
                             var selectDefineRoleBean = res.bean;
-                            debugger;
                             if (selectDefineRoleBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
                                 _this.dialogFormConf.actionType = "update";

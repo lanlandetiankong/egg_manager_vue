@@ -23,7 +23,8 @@ const tagsView = {
                 state.visitedViews.push({
                     name:view.name,
                     path:view.path,
-                    title:viewMetaTemp.title || 'UnknowName'
+                    title:viewMetaTemp.title || 'UnknowName',
+                    meta:viewMetaTemp
                 })
                 if(viewMetaTemp.keepAliveFlag == true){
                     //key:上级页面 组件名，该上级页面下需要缓存的 组件名集合
@@ -50,6 +51,7 @@ const tagsView = {
             }
         },
         DEL_VISITED_VIEWS:(state,view) => {
+            var _this = this ;
             //从访问列表移除
             for (const[i,v] of state.visitedViews.entries()) {
                 if(v.path === view.path) {
@@ -58,9 +60,35 @@ const tagsView = {
                 }
             }
 
-
-
-
+            //缓存移除 指定view
+            var cachedViewMap = state.cachedViews;
+            var viewMetaTemp = view.meta ;
+            if(viewMetaTemp){   //有设置meta
+                //所选view的父组件名
+                const parentRouterCompNameTemp = viewMetaTemp.parentRouterCompName ;
+                //所选view的组件名
+                const selfCompNameTemp = viewMetaTemp.selfCompName ;
+                if(parentRouterCompNameTemp && selfCompNameTemp){
+                    var pageChildViews = cachedViewMap.get(parentRouterCompNameTemp);
+                    //console.log(pageChildViews);
+                    if(typeof pageChildViews != "undefined" && pageChildViews != null ){
+                        if(pageChildViews.length > 0 ){
+                            var selfCompIndex = pageChildViews.indexOf(selfCompNameTemp);
+                            if (selfCompIndex > -1) {
+                                pageChildViews.splice(selfCompIndex, 1);
+                            }
+                            //重置值，触发更新通知
+                            var stateCachedViewsTemp = state.cachedViews;
+                            stateCachedViewsTemp.set(parentRouterCompNameTemp,pageChildViews);
+                            state.cachedViews = new Map(stateCachedViewsTemp);
+                        }   else {
+                            //当前父页面 下被缓存的记录为0
+                        }
+                    }   else {
+                        //当前父页面没有被缓存的记录
+                    }
+                }
+            }
 
         },
         DEL_OTHERS_VIEWS: (state,view) => {
@@ -72,6 +100,26 @@ const tagsView = {
                 }
             }
 
+            //缓存移除 其他view
+            var cachedViewMap = state.cachedViews;
+            var viewMetaTemp = view.meta ;
+            viewMetaTemp = typeof viewMetaTemp != "undefined" ? viewMetaTemp : view.meta ;
+            if(viewMetaTemp){   //有设置meta
+                if(viewMetaTemp.keepAliveFlag == true){ //如果唯一没关闭的页面是有缓存的
+                    //所选view的父组件名
+                    const parentRouterCompNameTemp = viewMetaTemp.parentRouterCompName ;
+                    //所选view的组件名
+                    var childCompNameArr = [viewMetaTemp.selfCompName] ;
+                    //最终的缓存集合
+                    var resultCacheMap = new Map();
+                    resultCacheMap.set(parentRouterCompNameTemp,childCompNameArr);
+                    state.cachedViews = resultCacheMap ;
+                }   else {
+                    state.cachedViews = new Map() ;
+                }
+            }   else {
+                state.cachedViews = new Map() ;
+            }
 
         },
         DEL_ALL_VIEWS:(state) => {

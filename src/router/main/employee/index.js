@@ -6,6 +6,9 @@ const EmployeeRouter = {
     path:'employee',
     component:_import('index/employee/EmployeePage'),
     name:'employee',
+    meta:{
+        selfCompName:'EmployeePage'
+    },
     children:[
         {
             path:'info',

@@ -5,6 +5,9 @@ const AnnouncementRouter = {
     path:'announcement',
     component:_import('index/announcement/AnnouncementPage'),
     name:'announcement',
+    meta:{
+        selfCompName:'AnnouncementPage'
+    },
     children:[
         {
             path:'create',

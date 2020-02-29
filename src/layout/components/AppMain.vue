@@ -24,27 +24,46 @@
         methods:{
             doBasePageCachesRefresh(){
                 var _this = this;
-                debugger;
                 var cachedViewMap = this.$store.state.tagsView.cachedViews ;
+                var hasChildPageNameArr = [] ;  //需要保持或添加缓存 子页面的page
+                var hasNoChildPageNameArr = [] ;    //无需需要缓存子页面的 page
                 if(typeof cachedViewMap != "undefined" && cachedViewMap != null && cachedViewMap.size > 0){
                     cachedViewMap.forEach(function (value, key, map) {
                         var keyChildViews = cachedViewMap.get(key);
                         if(typeof keyChildViews != "undefined" && keyChildViews != null ){
                             if(keyChildViews.length > 0 ){
-                                //查看效果
-                                if(_this.cachedBasePages.indexOf(key) == -1){ //不重复添加
-                                    _this.cachedBasePages.push(key);
-                                }
-                            }   else {
-                                //TODO
-                                _this.cachedBasePages.remove(key) ;
-                                console.log("当前 page 底下没有子页面，需要移除缓存");
+                                hasChildPageNameArr.push(key);
                             }
-                        }   else {
-                            _this.cachedBasePages.remove(key) ;
                         }
                     });
-                }   else {
+                    var cachedBasePageTemp = _this.cachedBasePages ;
+                    for ( var i = 0; i <cachedBasePageTemp.length; i++){
+                        var pageName = cachedBasePageTemp[i] ;
+                        var keyIndex = hasChildPageNameArr.indexOf(pageName);
+                        if (keyIndex == -1) {
+                            hasNoChildPageNameArr.push(pageName);
+                        }
+                    }
+                }
+
+                if(hasChildPageNameArr.length > 0){ //有带缓存的page
+                    if(hasNoChildPageNameArr.length > 0){   //有需要移除的page 项
+                        for ( var i = 0; i <hasNoChildPageNameArr.length; i++){
+                            var delPageName = hasNoChildPageNameArr[i] ;
+                            var keyIndex = _this.cachedBasePages.indexOf(delPageName);
+                            if (keyIndex > -1) {    //移除
+                                _this.cachedBasePages.splice(keyIndex,1);
+                            }
+                        }
+                    }
+                    for ( var i = 0; i <hasChildPageNameArr.length; i++){   //有 需要缓存子页面的 page
+                        var pageName = hasChildPageNameArr[i] ;
+                        var keyIndex = _this.cachedBasePages.indexOf(pageName);
+                        if (keyIndex == -1) {   //如果不在数组中则添加
+                            _this.cachedBasePages.push(pageName);
+                        }
+                    }
+                }   else {  //没有缓存的page
                     _this.cachedBasePages = [] ;
                 }
             }

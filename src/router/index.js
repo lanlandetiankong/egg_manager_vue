@@ -21,6 +21,7 @@ import Error4XXRouter from  './error/error4xx/index'
 
 Vue.use(Router);
 
+var indexParentRouterCompName = "Layout"
 
 export const constantRouterMap = [
     {
@@ -36,7 +37,11 @@ export const constantRouterMap = [
                 path:'',
                 component:_import('index/dashboard/DashBoardPage'),
                 name:'dashboard',
-                meta:{title:'首页',icon:"dashboard",noCache:true}
+                meta:{
+                    title:'首页',icon:"dashboard",keepAliveFlag:true,
+                    parentRouterCompName:indexParentRouterCompName,
+                    selfCompName:'UserZoneCenterView'
+                }
             },
             EmployeeRouter,
             PermissionRouter,

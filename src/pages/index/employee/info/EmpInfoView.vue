@@ -589,7 +589,6 @@
                     if (selectRowId) {
                         EmpInfoApi.getUserAccountById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
-                            debugger;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
                                 _this.dialogFormConf.actionType = "update";
@@ -616,7 +615,6 @@
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
                         EmpInfoApi.addUserAccountByForm(values,avatarUrl).then((res) => {
-                            debugger;
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
                                     this.$message.success(res.info);

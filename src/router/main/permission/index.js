@@ -6,6 +6,9 @@ const PermissionRouter = {
     path:'permission',
     component:_import('index/permission/PermissionPage'),
     name:'permission',
+    meta:{
+        selfCompName:'PermissionPage'
+    },
     children:[
         {
             path:'manager',

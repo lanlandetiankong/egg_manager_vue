@@ -101,7 +101,6 @@
                 return false
             },
             doAddViewTags() {
-                console.log("doAddViewTags");
                 const route = this.dealGenerateRoute()
                 if (!route) {
                     return false ;
@@ -112,7 +111,6 @@
                 this.$store.dispatch('doAddVisitedViews', route);
             },
             handleOpenContextMenu(tag, e) {
-                console.log("handleOpenContextMenu",tag);
                 this.$store.dispatch('doSetContextMenuPosition',{
                     visible:true,
                     left:e.clientX,

@@ -105,18 +105,27 @@
             },
             doSiderbarMenuOpenView(item,key,keypath) {
                 var _this = this ;
-                var addTagObj = LayoutFunc.handleGetMenuToTagObj(_this,_this.siderbar.menuList,key);
-                //console.log("addTagObj",addTagObj);
-                if(addTagObj != null){
-                    //_this.tagsConf.tagsArray.push(addTagObj);
-                    _this.tagsConf.selectedTag = addTagObj ;
-                    this.$store.dispatch('doSetContextMenuPosition',{
-                        visible:false,
-                        left:0,
-                        top:0
-                    });
-                }   else {
-                    console.log("添加菜单失败!") ;
+                _this.tagsConf.selectedTag = _this.$route ;
+                this.$store.dispatch('doSetContextMenuPosition',{
+                    visible:false,
+                    left:0,
+                    top:0
+                });
+                if(1==2){
+                    var addTagObj = LayoutFunc.handleGetMenuToTagObj(_this,_this.siderbar.menuList,key);
+                    //console.log("addTagObj",addTagObj);
+                    if(addTagObj != null){
+                        //_this.tagsConf.tagsArray.push(addTagObj);
+                        console.log(_this.$route);
+                        _this.tagsConf.selectedTag = addTagObj ;
+                        this.$store.dispatch('doSetContextMenuPosition',{
+                            visible:false,
+                            left:0,
+                            top:0
+                        });
+                    }   else {
+                        console.log("添加菜单失败!") ;
+                    }
                 }
             },
             doTagItemNativeClick(e,clickTag) {

@@ -317,7 +317,6 @@
                     if (selectRowId) {
                         PermissionManagerApi.getDefinePermissionById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
-                            debugger;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
                                 _this.dialogFormConf.actionType = "update";
