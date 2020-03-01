@@ -17,19 +17,19 @@ export const ModuleManagerApi = {
             paginationObj:JSON.stringify(pagination),
             sortObj:JSON.stringify(sortObj),
         }
-        //查询所有权限信息
+        //查询所有模块信息
         return axios.post('/module/define_module/getAllDefineModules',qs.stringify(obj)).then(res => res);
     },
-    getDefineModuleById(defineModuleId){  //根据权限id查询权限信息
+    getDefineModuleById(defineModuleId){  //根据模块id查询模块信息
         var params = {
             defineModuleId:defineModuleId
         }
         return axios.post("/module/define_module/getDefineModuleById",qs.stringify(params)).then(res => res) ;
     },
-    addDefineModuleByForm(formObj) {     //新增权限
+    addDefineModuleByForm(formObj) {     //新增模块
         return axios.post("/module/define_module/doAddDefineModule",qs.stringify(formObj));
     },
-    updateDefineModuleByForm(formObj) {  //更新权限
+    updateDefineModuleByForm(formObj) {  //更新模块
         return axios.post("/module/define_module/doUpdateDefineModule",qs.stringify(formObj)).then(res => res) ;
     },
     batchDelDefineModule(ids) {  //批量删除

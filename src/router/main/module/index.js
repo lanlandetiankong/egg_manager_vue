@@ -20,6 +20,16 @@ const ModuleRouter = {
                 selfCompName:'ModuleManagerView'
             }
         },
+        {
+            path:'menu/manager',
+            component:_import('index/module/menu/MenuManagerView'),
+            name:'menuManager',
+            meta:{
+                title:'模块管理',icon:"user",keepAliveFlag:true,
+                parentRouterCompName,
+                selfCompName:'MenuManagerView'
+            }
+        },
     ]
 };
 export default ModuleRouter ;

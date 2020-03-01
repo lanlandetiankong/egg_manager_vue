@@ -6,8 +6,11 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const ModuleCommonApis = {
-    getAllModuleTypes() {
+    getAllModuleTypes() {   //取得 所有 菜单类型 枚举
         return axios.post('/common_api/module/getAllModuleTypeEnumList').then((res) => res) ;
+    },
+    getAllMenuUrlJumpTypes() {     //取得 所有 菜单 url跳转类型 枚举
+        return axios.post('/common_api/module/getAllMenuUrlJumpTypeEnumList').then((res) => res) ;
     }
 
 
