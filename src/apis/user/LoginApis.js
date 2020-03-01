@@ -9,17 +9,17 @@ import qs from 'qs'
 export const LoginApis = {
 
     doLogin(parameter) {
-        return axios.post('/define/define_menu/get/all_menu',
+        return axios.post('/module/define_menu/get/all_menu',
             qs.stringify(parameter)
         ).then(res => res) ;
     },
     doLogout(parameter) {
-        return axios.post('/define/define_menu/get/all_menu',
+        return axios.post('/module/define_menu/get/all_menu',
             qs.stringify(parameter)
         ).then(res => res) ;
     },
     doGetCurrentUserNav() {
-        return axios.post('/define/define_menu/get/all_menu',
+        return axios.post('/module/define_menu/get/all_menu',
             qs.stringify(parameter)
         ).then(res => res) ;
     },
@@ -29,7 +29,7 @@ export const LoginApis = {
         ).then(res => res) ;
     },
     doGet2step(parameter){
-        return axios.post('/define/define_menu/get/all_menu',
+        return axios.post('/module/define_menu/get/all_menu',
             qs.stringify(parameter)
         ).then(res => res) ;
     }

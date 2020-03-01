@@ -5,12 +5,10 @@ import qs from 'qs'
 
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
-export const LayoutApi = {
-    doGetAllMenu() {
-        var param = {
-
-        }
-        return axios.post('/module/define_menu/get/all_menu',qs.stringify(param)).then(res => res) ;
+export const ModuleCommonApis = {
+    getAllModuleTypes() {
+        return axios.post('/common_api/module/getAllModuleTypeEnumList').then((res) => res) ;
     }
+
 
 }
