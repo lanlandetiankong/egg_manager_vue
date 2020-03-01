@@ -138,7 +138,7 @@
     import {EmpJobApi} from './EmpJobApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
 
-    import EmployeeJobCreateFormComp from '~Components/user/employee/job/EmployeeJobCreateFormComp'
+    import EmployeeJobCreateFormComp from '~Components/index/user/employee/job/EmployeeJobCreateFormComp'
 
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";

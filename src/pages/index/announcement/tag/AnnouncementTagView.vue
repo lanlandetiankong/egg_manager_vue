@@ -118,12 +118,10 @@
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import AFormItem from "ant-design-vue/es/form/FormItem";
-    import ACol from "ant-design-vue/es/grid/Col";
 
     import {AnnouncementTagApi} from './announcementTagApi.js'
 
-    import AnnouncementTagCreateFormComp from "@/components/announcement/tag/AnnouncementTagCreateFormComp";
+    import AnnouncementTagCreateFormComp from "~Components/index/announcement/tag/AnnouncementTagCreateFormComp";
 
     export default {
         name: "AnnouncementTagView",

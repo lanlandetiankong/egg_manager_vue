@@ -159,8 +159,8 @@
     import {PermissionRoleManagerApi} from './permissionRoleManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
 
-    import DefineRoleCreateFormComp from '~Components/define/permission/role/DefineRoleCreateFormComp';
-    import RoleGrantPermissionFormComp from '~Components/define/permission/role/RoleGrantPermissionFormComp';
+    import DefineRoleCreateFormComp from '~Components/index/define/permission/role/DefineRoleCreateFormComp';
+    import RoleGrantPermissionFormComp from '~Components/index/define/permission/role/RoleGrantPermissionFormComp';
     export default {
         name: "PermissionRoleManagerView",
         components: {RoleGrantPermissionFormComp, DefineRoleCreateFormComp},

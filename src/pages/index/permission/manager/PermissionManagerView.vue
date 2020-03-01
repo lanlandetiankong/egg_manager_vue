@@ -138,7 +138,7 @@
     import {PermissionManagerApi} from './permissionManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
 
-    import DefinePermissionCreateFormComp from "@/components/define/permission/manager/DefinePermissionCreateFormComp";
+    import DefinePermissionCreateFormComp from "@/components/index/define/permission/manager/DefinePermissionCreateFormComp";
 
     export default {
         name: "PermissionManagerView",

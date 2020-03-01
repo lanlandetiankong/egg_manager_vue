@@ -207,9 +207,9 @@
     import {EmpInfoApi} from './EmpInfoApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
 
-    import EmployeeInfoCreateFormComp from '~Components/user/employee/info/EmployeeInfoCreateFormComp'
-    import UserGrantRoleFormComp from '~Components/user/employee/info/UserGrantRoleFormComp';
-    import UserGrantJobFormComp from '~Components/user/employee/info/UserGrantJobFormComp';
+    import EmployeeInfoCreateFormComp from '~Components/index/user/employee/info/EmployeeInfoCreateFormComp'
+    import UserGrantRoleFormComp from '~Components/index/user/employee/info/UserGrantRoleFormComp';
+    import UserGrantJobFormComp from '~Components/index/user/employee/info/UserGrantJobFormComp';
 
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
