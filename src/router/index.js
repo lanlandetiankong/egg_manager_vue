@@ -7,6 +7,7 @@ import Layout from '@/layout/Layout'
 
 
 import EmployeeRouter from './main/employee/index'
+import OrganizationRouter from './main/organization/index'
 import PermissionRouter from './main/permission/index'
 import UserZoneRouter from './main/userZone/index'
 import AnnouncementRouter from './main/announcement/index'
@@ -46,7 +47,8 @@ export const constantRouterMap = [
             EmployeeRouter,
             PermissionRouter,
             UserZoneRouter,
-            AnnouncementRouter
+            AnnouncementRouter,
+            OrganizationRouter
         ]
     },
     MemberRouter,
