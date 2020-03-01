@@ -205,12 +205,15 @@
                 })
             },
             dealQueryDefineJobs(queryFieldArr,pagination,sorter) {    //带查询条件 检索职务列表
+                var _this = this ;
                 EmpJobApi.getAllDefineJobs(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
+                        //清空 已勾选
+                        _this.tableCheckIdList = [] ;
                     }
                 })
             },
