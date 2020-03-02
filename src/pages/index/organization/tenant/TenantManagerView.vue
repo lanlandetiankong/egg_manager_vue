@@ -131,7 +131,7 @@
         data() {
             return {
                 searchConf:{
-                    showListFlag:true,
+                    showListFlag:false,
                     loadingFlag:false,
                     defaultColSpan: 8,
                     paramConf: {
@@ -189,7 +189,16 @@
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.defineTenantCreateFormRef.defineTenantCreateForm;
             },
+            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+                if(typeof loadingFlag == "undefined" || loadingFlag == null){
+                    loadingFlag = false ;
+                }
+                this.searchConf.loadingFlag = loadingFlag;
+                this.tableConf.loading = loadingFlag;
+            },
             dealGetAllDefineTenant() {   //取得租户列表
+                var _this = this ;
+                _this.dealChangeTableSearchLoadingState(true);
                 TenantManagerApi.getAllDefineTenants().then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
@@ -197,10 +206,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
+                    _this.dealChangeTableSearchLoadingState(false);
+                }).catch((e) =>{
+                    _this.dealChangeTableSearchLoadingState(false);
                 })
             },
             dealQueryDefineTenants(queryFieldList,pagination,sorter) {    //带查询条件 检索租户列表
                 var _this = this ;
+                _this.dealChangeTableSearchLoadingState(true);
                 TenantManagerApi.getAllDefineTenants(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
@@ -210,6 +223,9 @@
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
                     }
+                    _this.dealChangeTableSearchLoadingState(false);
+                }).catch((e) =>{
+                    _this.dealChangeTableSearchLoadingState(false);
                 })
             },
             dealBatchDelDefineTenant() {  //批量删除

@@ -181,6 +181,13 @@
             getAnnouncementTagListFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
+            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+                if(typeof loadingFlag == "undefined" || loadingFlag == null){
+                    loadingFlag = false ;
+                }
+                this.searchConf.loadingFlag = loadingFlag;
+                this.tableConf.loading = loadingFlag;
+            },
             dealGetAllAnnouncementTagList(){    //取得所有的 公告标签
                 var _this = this ;
                 AnnouncementAllListApi.getAllAnnouncementTagEnums().then((res) =>{
@@ -190,6 +197,8 @@
                 })
             },
             dealGetAllAnnouncements() {   //取得公告列表
+                var _this = this ;
+                _this.dealChangeTableSearchLoadingState(true);
                 AnnouncementAllListApi.getAllAnnouncements().then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
@@ -197,10 +206,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
+                    _this.dealChangeTableSearchLoadingState(false);
+                }).catch((e) =>{
+                    _this.dealChangeTableSearchLoadingState(false);
                 })
             },
             dealQueryAnnouncements(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
                 var _this = this ;
+                _this.dealChangeTableSearchLoadingState(true);
                 AnnouncementAllListApi.getAllAnnouncements(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
@@ -210,6 +223,9 @@
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
                     }
+                    _this.dealChangeTableSearchLoadingState(false);
+                }).catch((e) =>{
+                    _this.dealChangeTableSearchLoadingState(false);
                 })
             },
             dealBatchDelAnnouncement() {  //批量删除

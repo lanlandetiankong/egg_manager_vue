@@ -219,6 +219,7 @@ http.post = function (url, data, options) {
             .catch(e => {
                 //loadingInstance.close();
                 console.log(e);
+                reject(e);
             })
 
     })

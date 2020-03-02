@@ -183,7 +183,7 @@
         data() {
             return {
                 searchConf:{
-                    showListFlag:true,
+                    showListFlag:false,
                     loadingFlag:false,
                     defaultColSpan: 8,
                     paramConf: {
@@ -289,7 +289,16 @@
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.defineMenuCreateFormRef.defineMenuCreateForm;
             },
+            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+                if(typeof loadingFlag == "undefined" || loadingFlag == null){
+                    loadingFlag = false ;
+                }
+                this.searchConf.loadingFlag = loadingFlag;
+                this.tableConf.loading = loadingFlag;
+            },
             dealGetAllDefineMenus() {   //取得菜单列表
+                var _this = this ;
+                _this.dealChangeTableSearchLoadingState(true);
                 MenuManagerApi.getAllDefineMenus().then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
@@ -297,10 +306,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
+                    _this.dealChangeTableSearchLoadingState(false);
+                }).catch((e) =>{
+                    _this.dealChangeTableSearchLoadingState(false);
                 })
             },
             dealQueryDefineMenus(queryFieldList,pagination,sorter) {    //带查询条件 检索菜单列表
                 var _this = this ;
+                _this.dealChangeTableSearchLoadingState(true);
                 MenuManagerApi.getAllDefineMenus(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
@@ -310,6 +323,9 @@
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
                     }
+                    _this.dealChangeTableSearchLoadingState(false);
+                }).catch((e) =>{
+                    _this.dealChangeTableSearchLoadingState(false);
                 })
             },
             dealBatchDelDefineMenu() {  //批量删除
