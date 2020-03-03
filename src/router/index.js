@@ -60,6 +60,7 @@ export const constantRouterMap = [
 
 export default new Router({
     mode:'history',
+    linkExactActiveClass: 'active', // 保持要跳转后的路由页面标题高亮
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRouterMap
 
