@@ -208,8 +208,8 @@
         },
         computed:{
             rowSelection() {    //行选择
-                const {selectedRowKeys} = this;
                 return {
+                    selectedRowKeys: this.tableCheckIdList,
                     onChange: (selectedRowKeys, selectedRows) => {  //勾选 修改事件
                         this.tableCheckIdList = selectedRowKeys;
                     },
@@ -220,6 +220,10 @@
             }
         },
         methods: {
+            onSelectChange(selectedRowKeys) {
+                console.log('selectedRowKeys changed: ', selectedRowKeys);
+                this.selectedRowKeys = selectedRowKeys;
+            },
             getModuleTypeFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },

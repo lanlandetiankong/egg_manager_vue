@@ -166,8 +166,8 @@
         },
         computed:{
             rowSelection() {    //行选择
-                const {selectedRowKeys} = this;
                 return {
+                    selectedRowKeys: this.tableCheckIdList,
                     onChange: (selectedRowKeys, selectedRows) => {  //勾选 修改事件
                         this.tableCheckIdList = selectedRowKeys;
                     },

@@ -29,7 +29,17 @@ const PermissionRouter = {
                 parentRouterCompName,
                 selfCompName:'PermissionRoleManagerView'
             }
-        }
+        },
+        {
+            path:'menu/manager',
+            component:_import('index/permission/menu/MenuManagerView'),
+            name:'menuManager',
+            meta:{
+                title:'菜单管理',icon:"user",keepAliveFlag:true,
+                parentRouterCompName,
+                selfCompName:'MenuManagerView'
+            }
+        },
     ]
 };
 export default PermissionRouter ;
