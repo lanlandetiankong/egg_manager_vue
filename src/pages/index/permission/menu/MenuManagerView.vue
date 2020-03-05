@@ -240,9 +240,10 @@
                     menuName: '',
                     parentId:'',
                     label: '',
+                    orderNum:0,
                     iconName:'',
                     styleVal:'',
-                    typeVal: ''
+                    typeVal: '',
                 }
             }
         },
@@ -387,7 +388,9 @@
                 var _this = this;
                 _this.dialogFormConf.visible = true;   //显示弹窗
                 _this.dialogFormConf.actionType = "create";
-                _this.dialogFormObj = {};
+                _this.dialogFormObj = {
+                    orderNum:0
+                };
             },
             handleUpdateDefineMenuBtnClick() {  //更新菜单按钮-点击
                 var _this = this;
@@ -479,9 +482,7 @@
                             }
                         })
                     }
-
                 });
-
             },
             handleDeleteOneById(delId) {     //删除指定行
                 var _this = this;

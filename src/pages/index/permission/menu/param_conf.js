@@ -48,6 +48,12 @@ const columns = [{
     key: 'hrefUrl',
     width:140
 },{
+    title: '排序',
+    align:textAlignDefault,
+    dataIndex: 'orderNum',
+    key: 'orderNum',
+    width:70
+},{
     title:'操作',
     align:textAlignDefault,
     dataIndex:"operation",

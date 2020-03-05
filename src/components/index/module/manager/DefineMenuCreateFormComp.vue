@@ -46,6 +46,11 @@
                 >
                     <a-input v-decorator="formFieldConf.label"/>
                 </a-form-item>
+                <a-form-item label="排序值"
+                             v-bind="formItemLayout"
+                >
+                    <a-input v-decorator="formFieldConf.orderNum"/>
+                </a-form-item>
                 <a-form-item label="跳转类型"
                              v-bind="formItemLayout"
                 >
@@ -134,6 +139,7 @@
                     iconName:["iconName",{rules:paramsRules.iconName}],
                     parentId:["parentId",{rules:paramsRules.parentId}],
                     label:["label",{rules:paramsRules.label}],
+                    orderNum:["orderNum",{rules:paramsRules.orderNum}],
                     urlJumpType:["urlJumpType",{rules:paramsRules.urlJumpType}],
                     routerUrl:["routerUrl",{rules:paramsRules.routerUrl}],
                     hrefUrl:["hrefUrl",{rules:paramsRules.hrefUrl}],
@@ -173,6 +179,10 @@
                        label: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.label,
+                       }),
+                       orderNum: _this.$form.createFormField({
+                           ...formObj,
+                           value: formObj.orderNum,
                        }),
                        urlJumpType: _this.$form.createFormField({
                            ...formObj,
@@ -246,6 +256,10 @@
                         label: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.label
+                        }),
+                        orderNum: this.$form.createFormField({
+                            ..._this.formObj,
+                            value: _this.formObj.orderNum
                         }),
                         urlJumpType: this.$form.createFormField({
                             ..._this.formObj,
