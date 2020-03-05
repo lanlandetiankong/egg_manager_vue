@@ -195,7 +195,7 @@
             },
             handleParentTreeOfSearchChange(value){  //[上级菜单] SelectTree cchange事件
                 console.log("handleParentTreeOfSearchChange",value);
-            }
+            },
         },
         computed:{
             modalCompTitle() {

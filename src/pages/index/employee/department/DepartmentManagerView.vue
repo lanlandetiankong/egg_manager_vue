@@ -10,15 +10,10 @@
                     >
                         <a-row :gutter="10">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="菜单名">
-                                    <a-input v-decorator="searchConf.paramConf.menuName"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="上级菜单">
+                                <a-form-item label="上级部门">
                                     <a-tree-select
                                         style="width: 150px"
-                                        placeholder="筛选上级菜单"
+                                        placeholder="筛选上级部门"
                                         showSearch allowClear
                                         :treeNodeFilterProp="searchConf.treeSelectConf.parentId.treeNodeFilterProp"
                                         :treeDefaultExpandAll="searchConf.treeSelectConf.parentId.treeDefaultExpandAll"
@@ -30,36 +25,33 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="标注">
-                                    <a-input v-decorator="searchConf.paramConf.label"/>
+                                <a-form-item label="部门名">
+                                    <a-input allowClear
+                                        v-decorator="searchConf.paramConf.name"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="路由地址">
-                                    <a-input v-decorator="searchConf.paramConf.routerUrl"/>
+                                <a-form-item label="编码">
+                                    <a-input allowClear
+                                        v-decorator="searchConf.paramConf.code"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="外部地址">
-                                    <a-input v-decorator="searchConf.paramConf.hrefUrl"/>
+                                <a-form-item label="层级">
+                                    <a-input-number allowClear
+                                                    :style="{width:'130px'}"
+                                                    v-decorator="searchConf.paramConf.level"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="类型">
-                                    <a-select showSearch allowClear
-                                          placeholder="请选择"
-                                          style="width: 180px"
-                                          optionFilterProp="children"
-                                          :options="searchConf.binding.menu.urlJumpTypes"
-                                          :filterOption="getMenuTypeFilterOption"
-                                          v-decorator="searchConf.paramConf.urlJumpType"
-                                    >
-                                    </a-select>
+                                <a-form-item label="描述">
+                                    <a-input v-decorator="searchConf.paramConf.description"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="备注">
-                                    <a-input v-decorator="searchConf.paramConf.remark"/>
+                                    <a-input    allowClear
+                                        v-decorator="searchConf.paramConf.remark"/>
                                 </a-form-item>
                             </a-col>
                         </a-row>
@@ -89,19 +81,19 @@
                 >
                     <a-col>
                         <a-button type="primary" icon="plus"
-                                  @click="handleAddDefineMenuBtnClick">
+                                  @click="handleAddDefineDepartmentBtnClick">
                             新增
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="edit"
-                                  @click="handleUpdateDefineMenuBtnClick">
+                                  @click="handleUpdateDefineDepartmentBtnClick">
                             更新
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
-                                  @click="handleDefineMenuBatchDeleteByIds">
+                                  @click="handleDefineDepartmentBatchDeleteByIds">
                             删除
                         </a-button>
                     </a-col>
@@ -123,25 +115,12 @@
                     :locale="{emptyText:'暂无数据'}"
                     :pagination="tableConf.pagination"
                     :rowKey="item => item.fid"
-                    :bordered="tableConf.bordered"
                     :columns="tableConf.columns"
                     :dataSource="tableConf.data"
                     :loading="tableConf.loading"
-                    :scroll="tableConf.scroll"
                     :rowSelection="rowSelection"
                     @change="handleTableChange"
                 >
-                    <span slot="iconRender" slot-scope="text,record">
-                            <span :key="record.fid"
-                                  v-show="typeof record.iconName != 'undefined' && record.iconName != null && record.iconName.length > 0">
-                                 <a-icon :type="record.iconName" />
-                            </span>
-                    </span>
-                    <span slot="urlJumpTypeStrRender" slot-scope="text,record">
-                        <a-tag color="blue" :key="record.urlJumpTypeStr">
-                            {{record.urlJumpTypeStr}}
-                        </a-tag>
-                    </span>
                     <span slot="action" slot-scope="text,record">
                         <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
                     </span>
@@ -150,17 +129,16 @@
         </div>
         <!-- 弹窗dom-区域 -->
         <div>
-            <define-menu-create-form-comp
-                ref="defineMenuCreateFormRef"
+            <define-department-create-form-comp
+                ref="defineDepartmentCreateFormRef"
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                :menuUrlJumpTypes="searchConf.binding.menu.urlJumpTypes"
                 :parentSelectTrees="searchConf.treeSelectConf.parentId.treeData"
-                @createFormCancel="handleDefineMenuCreateFormCancel"
-                @createFormSubmit="handleDefineMenuCreateFormSubmit"
+                @createFormCancel="handleDefineDepartmentCreateFormCancel"
+                @createFormSubmit="handleDefineDepartmentCreateFormSubmit"
             >
-            </define-menu-create-form-comp>
+            </define-department-create-form-comp>
         </div>
     </div>
 </template>
@@ -169,14 +147,13 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
-    import {MenuManagerApi} from './menuManagerApi.js'
-    import {ModuleCommonApis} from '~Apis/module/ModuleCommonApis.js'
+    import {DepartmentManagerApi} from './departmentManagerApi.js'
 
-    import DefineMenuCreateFormComp from "~Components/index/module/manager/DefineMenuCreateFormComp";
+    import DefineDepartmentCreateFormComp from '~Components/index/user/employee/department/DefineDepartmentCreateFormComp';
 
     export default {
-        name: "MenuManagerView",
-        components: {DefineMenuCreateFormComp, ACol, AFormItem},
+        name: "DepartmentManagerView",
+        components: {DefineDepartmentCreateFormComp,ACol, AFormItem},
         data() {
             return {
                 searchConf:{
@@ -184,21 +161,13 @@
                     loadingFlag:false,
                     defaultColSpan: 8,
                     paramConf: {
-                        menuName: ["menuName", {rules: []}],
                         parentId: ["parentId", {rules: []}],
-                        label: ["label", {rules: []}],
-                        routerUrl: ["routerUrl", {rules: []}],
-                        hrefUrl: ["hrefUrl", {rules: []}],
-                        urlJumpType: ["urlJumpType", {rules: []}],
+                        name: ["name", {rules: []}],
+                        code: ["code", {rules: []}],
+                        level: ["level", {rules: []}],
+                        description: ["description", {rules: []}],
+                        type: ["type", {rules: []}],
                         remark:["remark",{rules: []}]
-                    },
-                    binding:{
-                        menu:{
-                            urlJumpTypes:[]
-                        }
-                    },
-                    formObj:{
-
                     },
                     treeSelectConf:{
                         parentId:{
@@ -225,11 +194,7 @@
                         }
                     },
                     filters:{},
-                    sorter:{},
-                    scroll:{
-                        x: 1140
-                    },
-                    bordered:true
+                    sorter:{}
                 },
                 tableCheckIdList: [],
                 dialogFormConf: {
@@ -237,12 +202,13 @@
                     actionType: "create"
                 },
                 dialogFormObj: {
-                    menuName: '',
+                    name: '',
+                    code: '',
+                    level:0,
+                    orderNum:0,
+                    description:'',
                     parentId:'',
-                    label: '',
-                    iconName:'',
-                    styleVal:'',
-                    typeVal: ''
+                    type: ''
                 }
             }
         },
@@ -260,31 +226,18 @@
             }
         },
         methods: {
-            getMenuTypeFilterOption(input,option){
-                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
+            dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
+                return this.$refs.defineDepartmentCreateFormRef.defineDepartmentCreateForm;
             },
-            dealGetMenuTypeEnumList(){  //取得 菜单url跳转类型-枚举列表
+            dealGetParentIdTreeData(){  //取得 部门定义-树形数据
                 var _this = this ;
-                ModuleCommonApis.getAllMenuUrlJumpTypes().then((res) => {
-                    if(res && res.hasError == false){
-                        if(res.enumList){
-                            _this.searchConf.binding.menu.urlJumpTypes = res.enumList ;
-                        }
-                    }
-                })
-            },
-            dealGetParentIdTreeData(){  //取得 菜单定义-树形数据
-                var _this = this ;
-                MenuManagerApi.getAllDefineMenuTree().then((res) => {
+                DepartmentManagerApi.getAllDefineDepartmentTree().then((res) => {
                     if(res && res.hasError == false){
                         if(res.resultList){
                             _this.searchConf.treeSelectConf.parentId.treeData = res.resultList ;
                         }
                     }
                 })
-            },
-            dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
-                return this.$refs.defineMenuCreateFormRef.defineMenuCreateForm;
             },
             dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
@@ -293,10 +246,10 @@
                 this.searchConf.loadingFlag = loadingFlag;
                 this.tableConf.loading = loadingFlag;
             },
-            dealGetAllDefineMenus() {   //取得菜单列表
+            dealGetAllDefineDepartment() {   //取得部门列表
                 var _this = this ;
                 _this.dealChangeTableSearchLoadingState(true);
-                MenuManagerApi.getAllDefineMenus().then((res) => {
+                DepartmentManagerApi.getAllDefineDepartments().then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
                         if(res.paginationBean){ //总个数
@@ -308,10 +261,10 @@
                     _this.dealChangeTableSearchLoadingState(false);
                 })
             },
-            dealQueryDefineMenus(queryFieldList,pagination,sorter) {    //带查询条件 检索菜单列表
+            dealQueryDefineDepartments(queryFieldList,pagination,sorter) {    //带查询条件 检索部门列表
                 var _this = this ;
                 _this.dealChangeTableSearchLoadingState(true);
-                MenuManagerApi.getAllDefineMenus(queryFieldList,pagination,sorter).then((res) => {
+                DepartmentManagerApi.getAllDefineDepartments(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
                         if(res.paginationBean){ //总个数
@@ -325,10 +278,10 @@
                     _this.dealChangeTableSearchLoadingState(false);
                 })
             },
-            dealBatchDelDefineMenu() {  //批量删除
+            dealBatchDelDefineDepartment() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                MenuManagerApi.batchDelDefineMenu(delIds).then((res) => {
+                DepartmentManagerApi.batchDelDefineDepartment(delIds).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
                             this.$message.success(res.info);
@@ -339,7 +292,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                MenuManagerApi.delOneDefineMenu(delId).then((res) => {
+                DepartmentManagerApi.delOneDefineDepartment(delId).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
                             _this.$message.success(res.info);
@@ -376,20 +329,23 @@
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
                         var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
-                        _this.dealQueryDefineMenus(searchFieldArr,paginationTemp,sorterTemp);
+                        _this.dealQueryDefineDepartments(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });
             },
             handleSearchFormReset() {    //重置 搜索列表 的值
                 this.searchForm.resetFields();
             },
-            handleAddDefineMenuBtnClick() {     //新增菜单按钮-点击
+            handleAddDefineDepartmentBtnClick() {     //新增部门按钮-点击
                 var _this = this;
                 _this.dialogFormConf.visible = true;   //显示弹窗
                 _this.dialogFormConf.actionType = "create";
-                _this.dialogFormObj = {};
+                _this.dialogFormObj = {
+                    level:0,
+                    orderNum:0,
+                };
             },
-            handleUpdateDefineMenuBtnClick() {  //更新菜单按钮-点击
+            handleUpdateDefineDepartmentBtnClick() {  //更新部门按钮-点击
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
                     this.$message.warning('请选择一行要更新的数据！');
@@ -398,7 +354,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        MenuManagerApi.getDefineMenuById(selectRowId).then((res) => {
+                        DepartmentManagerApi.getDefineDepartmentById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
@@ -408,11 +364,11 @@
                             }
                         })
                     } else {
-                        this.$message.warning('操作失败！未取得有效的菜单id！');
+                        this.$message.warning('操作失败！未取得有效的部门id！');
                     }
                 }
             },
-            handleDefineMenuBatchDeleteByIds(e) {     // 批量删除
+            handleDefineDepartmentBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -423,7 +379,7 @@
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
-                            _this.dealBatchDelDefineMenu();
+                            _this.dealBatchDelDefineDepartment();
                         },
                         onCancel() {
                             _this.$message.info("操作：取消删除");
@@ -431,11 +387,11 @@
                     })
                 }
             },
-            handleDefineMenuCreateFormCancel(e) {  // 创建/更新 菜单定义表单->取消
+            handleDefineDepartmentCreateFormCancel(e) {  // 创建/更新 部门定义表单->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleDefineMenuCreateFormSubmit(e) {   // 创建/更新 菜单表单->提交
+            handleDefineDepartmentCreateFormSubmit(e) {   // 创建/更新 部门表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -444,7 +400,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        MenuManagerApi.addDefineMenuByForm(values).then((res) => {
+                        DepartmentManagerApi.addDefineDepartmentByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
                                     this.$message.success(res.info);
@@ -462,7 +418,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        MenuManagerApi.updateDefineMenuByForm(values).then((res) => {
+                        DepartmentManagerApi.updateDefineDepartmentByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
                                     this.$message.success(res.info);
@@ -507,17 +463,16 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
-            handleParentTreeOfSearchChange(value){  //[上级菜单] SelectTree cchange事件
+            handleParentTreeOfSearchChange(value){  //[上级部门] SelectTree cchange事件
                 console.log("handleParentTreeOfSearchChange",value);
-            }
+            },
         },
         created(){
-            this.dealGetAllDefineMenus();
-            this.dealGetMenuTypeEnumList();
+            this.dealGetAllDefineDepartment();
             this.dealGetParentIdTreeData();
         },
         destroyed(){
-            console.log("菜单管理-页面销毁 ...")
+            console.log("部门管理-页面销毁 ...")
         }
     }
 </script>

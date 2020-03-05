@@ -21,13 +21,23 @@ const EmployeeRouter = {
             }
         },
         {
-            path:'job',
+            path:'job/manager',
             component:_import('index/employee/job/EmpJobManagerView'),
             name:'employeeJob',
             meta:{
                 title:'职务管理',icon:"user",keepAliveFlag:true,
                 parentRouterCompName,
                 selfCompName:'EmpJobManagerView'
+            }
+        },
+        {
+            path:'department/manager',
+            component:_import('index/employee/department/DepartmentManagerView'),
+            name:'departmentManager',
+            meta:{
+                title:'部门管理',icon:"gold",keepAliveFlag:true,
+                parentRouterCompName,
+                selfCompName:'DepartmentManagerView'
             }
         }
     ]
