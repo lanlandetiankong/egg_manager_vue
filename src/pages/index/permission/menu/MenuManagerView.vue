@@ -151,6 +151,7 @@
         <!-- 弹窗dom-区域 -->
         <div>
             <define-menu-create-form-comp
+                v-if="dialogFormConf.initFlag"
                 ref="defineMenuCreateFormRef"
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
@@ -233,6 +234,7 @@
                 },
                 tableCheckIdList: [],
                 dialogFormConf: {
+                    initFlag:false,
                     visible: false,
                     actionType: "create"
                 },
@@ -386,6 +388,7 @@
             },
             handleAddDefineMenuBtnClick() {     //新增菜单按钮-点击
                 var _this = this;
+                _this.dialogFormConf.initFlag = true ;  //弹窗初始化
                 _this.dialogFormConf.visible = true;   //显示弹窗
                 _this.dialogFormConf.actionType = "create";
                 _this.dialogFormObj = {
@@ -404,7 +407,9 @@
                         MenuManagerApi.getDefineMenuById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
+                                _this.dialogFormConf.initFlag = true ;  //弹窗初始化
                                 _this.dialogFormConf.visible = true;   //显示弹窗
+
                                 _this.dialogFormConf.actionType = "update";
                                 _this.dialogFormObj = selectUserBean;
                                 //console.log(_this.dialogFormObj);
