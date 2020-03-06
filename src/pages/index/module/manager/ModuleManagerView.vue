@@ -409,6 +409,10 @@
                             } else {
                                 closeDialogFlag = false;
                             }
+                            if (closeDialogFlag == true) {    //关闭弹窗
+                                dialogFormObj.resetFields();
+                                _this.dialogFormConf.visible = false;
+                            }
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
@@ -423,12 +427,13 @@
                             } else {
                                 closeDialogFlag = false;
                             }
+                            if (closeDialogFlag == true) {    //关闭弹窗
+                                dialogFormObj.resetFields();
+                                _this.dialogFormConf.visible = false;
+                            }
                         })
                     }
-                    if (closeDialogFlag == true) {    //关闭弹窗
-                        dialogFormObj.resetFields();
-                        _this.dialogFormConf.visible = false;
-                    }
+
                 });
 
             },
