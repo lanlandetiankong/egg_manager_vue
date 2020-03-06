@@ -156,8 +156,7 @@
                         treeNodeFilterProp:"title",
                         selftTreeData:[]
                     }
-                },
-                prefixFormObjFid:''
+                }
             }
         },
         methods:{
@@ -308,7 +307,6 @@
                 handler (val, oval) {
                     var _this = this ;
                     _this.dealUpdateFormValue(val);
-                    _this.prefixFormObjFid = val.fid ;
                 },
                 deep: true,
                 immediate:true

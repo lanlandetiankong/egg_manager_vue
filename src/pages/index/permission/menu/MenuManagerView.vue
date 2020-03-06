@@ -409,7 +409,6 @@
                             if (selectUserBean) {
                                 _this.dialogFormConf.initFlag = true ;  //弹窗初始化
                                 _this.dialogFormConf.visible = true;   //显示弹窗
-
                                 _this.dialogFormConf.actionType = "update";
                                 _this.dialogFormObj = selectUserBean;
                                 //console.log(_this.dialogFormObj);

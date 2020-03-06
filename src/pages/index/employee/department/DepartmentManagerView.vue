@@ -130,6 +130,7 @@
         <!-- 弹窗dom-区域 -->
         <div>
             <define-department-create-form-comp
+                v-if="dialogFormConf.initFlag"
                 ref="defineDepartmentCreateFormRef"
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
@@ -198,6 +199,7 @@
                 },
                 tableCheckIdList: [],
                 dialogFormConf: {
+                    initFlag:false,
                     visible: false,
                     actionType: "create"
                 },
@@ -338,6 +340,7 @@
             },
             handleAddDefineDepartmentBtnClick() {     //新增部门按钮-点击
                 var _this = this;
+                _this.dialogFormConf.initFlag = true ;  //弹窗初始化
                 _this.dialogFormConf.visible = true;   //显示弹窗
                 _this.dialogFormConf.actionType = "create";
                 _this.dialogFormObj = {
@@ -357,6 +360,7 @@
                         DepartmentManagerApi.getDefineDepartmentById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
+                                _this.dialogFormConf.initFlag = true ;  //弹窗初始化
                                 _this.dialogFormConf.visible = true;   //显示弹窗
                                 _this.dialogFormConf.actionType = "update";
                                 _this.dialogFormObj = selectUserBean;

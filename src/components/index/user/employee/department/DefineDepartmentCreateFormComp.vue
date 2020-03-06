@@ -20,7 +20,7 @@
                         :treeNodeFilterProp="treeSelectConf.parentId.treeNodeFilterProp"
                         :treeDefaultExpandAll="treeSelectConf.parentId.treeDefaultExpandAll"
                         v-decorator="formFieldConf.parentId"
-                        :treeData="parentSelectTrees"
+                        :treeData="treeSelectConf.parentId.selftTreeData"
                         @change="handleParentTreeOfSearchChange"
                     >
                     </a-tree-select>
@@ -57,6 +57,8 @@
 <script>
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ATextarea from "ant-design-vue/es/input/TextArea";
+
+    import {EmployeeDepartmentCompsApi} from '../employeeCompsApi'
     export default {
         name: "DefineDepartmentCreateFormComp",
         components: {ATextarea, AFormItem},
@@ -111,6 +113,7 @@
                     parentId:{
                         treeDefaultExpandAll:false,
                         treeNodeFilterProp:"title",
+                        selftTreeData:[]
                     }
                 }
             }
@@ -149,6 +152,18 @@
             },
             handleParentTreeOfSearchChange(value){  //[上级部门] SelectTree cchange事件
                 console.log("handleParentTreeOfSearchChange",value);
+            },
+            handleCreateActionInit(){   //弹窗展示为[创建-操作]的初始化
+                var _this = this ;
+                _this.treeSelectConf.parentId.selftTreeData = _this.parentSelectTrees ;
+            },
+            handleUpdateActionInit(){   //弹窗展示为[更新-操作]的初始化
+                var _this = this ;
+                EmployeeDepartmentCompsApi.getDefineDepartmentTreeFilterChildrens(_this.formObj.fid).then((res) => { //更新 上级部门 树
+                    if(res && res.hasError == false){
+                        _this.treeSelectConf.parentId.selftTreeData  = res.resultList ;
+                    }
+                })
             },
         },
         computed:{
@@ -212,6 +227,21 @@
                     _this.dealUpdateFormValue(val);
                 },
                 deep: true,
+                immediate:true
+            },
+            visible:{
+                handler(val,oval){  //隐藏与展示弹窗时监听
+                    var _this = this ;
+                    if(val === true){
+                        if("create" == _this.actionType){   //打开=>创建
+                            _this.handleCreateActionInit();
+                        }   else if("update" == _this.actionType){  //打开=>更新
+                            _this.handleUpdateActionInit();
+                        }
+                    }   else {  //弹窗关闭
+                        //console.log("弹窗展示状态变更:关闭");
+                    }
+                },
                 immediate:true
             }
         }
