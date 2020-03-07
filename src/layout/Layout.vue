@@ -97,6 +97,16 @@
 
         },
         methods: {
+            dealGotoIndex(){
+                var _currentRoute = this.$route;
+                if(_currentRoute){
+                    if(_currentRoute.fullPath == "" || _currentRoute.fullPath == "/index"){
+                        //当前已经在 index页面了，无需再跳转
+                    }   else {
+                        this.$router.push('/index');
+                    }
+                }
+            },
             handleGetMenus() {
                 var _this = this;
                 LayoutApi.doGetAllMenu().then(res => {
@@ -143,7 +153,7 @@
                         if(latestView) {
                             this.$router.push(latestView.path) ;
                         }   else {
-                            this.$router.push('/') ;
+                            this.dealGotoIndex();
                         }
                     }
                 })
@@ -154,7 +164,7 @@
                 _this.$store.dispatch('doDelOthersViews',_this.tagsConf.selectedTag).then((views) => {
                     const latestView = views.slice(-1)[0] ;
                     if(!latestView) {
-                        _this.$router.push('/') ;
+                        this.dealGotoIndex();
                     }
                 })
             },
