@@ -77,16 +77,16 @@ http://47.99.160.215:8081
 
 ### 4、项目截图
 
-​	1、登录界面
+​	1、登录界面  
 
-![image-20200307215347922](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200307215347922.png)
+![images](https://github.com/lanlandetiankong/egg_manager_vue/blob/master/md_images/image-20200307215347922.png)
 
-2、主页面
+2、主页面  
 
-![image-20200307215508375](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200307215508375.png)
+![image](https://github.com/lanlandetiankong/egg_manager_vue/blob/master/md_images/image-20200307215508375.png)
 
-3、员工信息 Tag页面
+3、员工信息 Tag页面  
 
-![image-20200307215552430](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200307215552430.png)
-
+![image](https://github.com/lanlandetiankong/egg_manager_vue/blob/master/md_images/image-20200307215552430.png)
+  
 ### 5、更多配置以及备注 在项目的 doc\ 目录下。
