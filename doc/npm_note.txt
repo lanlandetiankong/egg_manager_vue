@@ -7,3 +7,6 @@ npm install quill-image-resize-module --save
 npm install quill-image-drop-module --save
 
 npm install quill-image-extend-module --save-dev
+
+#验证码
+npm i vue2-verify

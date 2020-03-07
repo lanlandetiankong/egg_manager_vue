@@ -45,6 +45,26 @@
                     </a-input>
                 </a-form-item>
                 <a-form-item
+                    :colon=false
+                    :label-col="loginFormConf.labelCol"
+                    :wrapper-col="loginFormConf.wrapperCol"
+                >
+                    <template slot="label">
+                        <span class="formBaseCls">验证码</span>
+                    </template>
+                    <Verify
+                        ref="loginVerifyRef"
+                        :type="verifyConf.picture.type"
+                        :width="verifyConf.picture.width"
+                        :height="verifyConf.picture.height"
+                        :fontSize="verifyConf.picture.fontSize"
+                        :codeLength="verifyConf.picture.codeLength"
+                        :showButton="verifyConf.picture.showButton"
+                        @success="handleVerifySuccess"
+                        @error="handleVerifyError"
+                    ></Verify>
+                </a-form-item>
+                <a-form-item
                     label=" "
                     :colon=false
                     :label-col="loginFormConf.labelCol"
@@ -88,11 +108,13 @@
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
 
+    import Verify from 'vue2-verify'
+
     import {LoginMainCompApi} from './_LoginMainCompApi'
 
     export default {
         name: "LoginMainComp",
-        components: {ACol, ARow, AFormItem},
+        components: {ACol, ARow, AFormItem,Verify},
         props:{
             othersRouters:{
                 type:Object,
@@ -118,19 +140,52 @@
                     labelCol: {span: 4},
                     wrapperCol: {span: 20}
                 },
+                verifyConf:{
+                    picture:{
+                        type:"picture",
+                        width:"100%",
+                        height:"100%",
+                        fontSize:"30px",
+                        codeLength:4,
+                        showButton:false    //是否展示按钮
+                    },
+                    more:{
+                        success:false
+                    }
+                },
             }
         },
         methods: {
+            dealTriggerVerify(){    //触发 Verify 的验证事件
+                this.$refs.loginVerifyRef.$refs.instance.checkCode() ;
+            },
+            dealVerifySubmit(){ //触发Verify提交事件并验证
+                var _this = this ;
+                _this.dealTriggerVerify();
+                if(_this.verifyConf.more.success == false){
+                    _this.$message.error("验证码未填写或错误！");
+                }
+                return _this.verifyConf.more.success ;
+            },
             handleLoginSubmit(e) {
                 e.preventDefault(); //拦截form提交的默认事件
-                LoginMainCompApi.submitLoginFormByAccount(this.loginForm).then((res) => {
-                    this.$emit('login-form-submit',e,this.loginForm,res);
-                });
+                var verifyFlag = this.dealVerifySubmit() ;
+                if(verifyFlag == true){
+                    LoginMainCompApi.submitLoginFormByAccount(this.loginForm).then((res) => {
+                        this.$emit('login-form-submit',e,this.loginForm,res);
+                    });
+                }
             },
             hasLoginFormError() {
                 //判断loginForm是否有错误
                 return false;
-            }
+            },
+            handleVerifySuccess(e){
+                this.verifyConf.more.success = true;
+            },
+            handleVerifyError(e){
+                this.verifyConf.more.success = false;
+            },
         }
     }
 </script>
