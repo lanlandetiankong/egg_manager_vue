@@ -1,0 +1,18 @@
+端口:{
+    java:8083
+    vue:8081
+    静态资源:8090
+}
+
+
+
+所以：
+脚本：{
+    java:
+        java -jar egg-web.jar
+    vue:
+        http-server -p 8081
+    静态资源:
+        anywhere -p 8090
+}
+
