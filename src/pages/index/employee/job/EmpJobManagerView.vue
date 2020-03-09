@@ -109,16 +109,23 @@
                         {{record.typeStr}}
                     </a-tag>
                 </span>
-                <span slot="action" slot-scope="text,record">
+                <template slot="action" slot-scope="text,record">
+                    <span>
+                        <a @click="handleEmployeeJobDetailDrawerShow($event,record)">
+                            详情
+                        </a>
+                        <a-divider type="vertical" />
                         <a-dropdown>
                               <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
                                     <a-menu-item key="recordDel">删除</a-menu-item>
                               </a-menu>
                               <a-button> 操作 <a-icon type="down" /> </a-button>
                         </a-dropdown>
-                </span>
+                    </span>
+                </template>
             </a-table>
         </div>
+        <!-- 挂载弹窗、抽屉 等组件的dom -->
         <div>
             <employee-job-create-form-comp
                 ref="employeeJobCreateFormRef"
@@ -129,22 +136,43 @@
                 @createFormCancel="handleEmployeeJobCreateFormCancel"
                 @createFormSubmit="handleEmployeeJobCreateFormSubmit"
             />
+            <a-drawer
+                :title="drawerConf.detail.employeeJob.title"
+                :closeable="drawerConf.detail.employeeJob.closable"
+                :visible="drawerConf.detail.employeeJob.visible"
+                :placement="drawerConf.detail.employeeJob.placement"
+                :mask="drawerConf.detail.employeeJob.mask"
+                :maskStyle="drawerConf.detail.employeeJob.maskStyle"
+                :wrapStyle="drawerConf.detail.employeeJob.wrapStyle"
+                :drawerStyle="drawerConf.detail.employeeJob.drawerStyle"
+                :bodyStyle="drawerConf.detail.employeeJob.bodyStyle"
+                :maskClosable="drawerConf.detail.employeeJob.maskClosable"
+                @close="handleEmployeeJobDetailDrawerClose"
+            >
+                <simple-detail-drawer-comp
+                    :dataObj="drawerConf.detail.employeeJob.dataObj"
+                    :visible="drawerConf.detail.employeeJob.visible"
+                    :drawerFieldConf="drawerConf.detail.employeeJob.drawerFieldConf"
+                />
+            </a-drawer>
         </div>
     </div>
 </template>
 
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
+    import {EmployeeJobDetailDrawerConf} from  './drawer_conf'
     import {EmpJobApi} from './EmpJobApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
 
     import EmployeeJobCreateFormComp from '~Components/index/user/employee/job/EmployeeJobCreateFormComp'
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
     export default {
         name: "EmpJobManagerView",
-        components: { AFormItem, ACol, EmployeeJobCreateFormComp},
+        components: { AFormItem, ACol, EmployeeJobCreateFormComp,SimpleDetailDrawerComp},
         data() {
             return {
                 searchConf: {
@@ -190,7 +218,33 @@
                     type: 0,
                     description: '',
                     remark: ''
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        employeeJob:{
+                            title:"职务详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:EmployeeJobDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         methods: {
@@ -446,6 +500,17 @@
             },
             getFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
+            },
+            handleEmployeeJobDetailDrawerShow(e,record){   //Drawer-职务定义 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.employeeJob.dataObj = record ;
+                    this.drawerConf.detail.employeeJob.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleEmployeeJobDetailDrawerClose(e){ //Drawer-职务定义 详情关闭
+                this.drawerConf.detail.employeeJob.visible = false ;
             }
 
         },

@@ -22,19 +22,13 @@ const columns = [{
     align:textAlignDefault,
     key: 'typeStr',
     scopedSlots: { customRender: 'typeStr' },
-}, {
-    title: '备注',
-    align:textAlignDefault,
-    dataIndex: 'remark',
-    width:300,
-    key: 'remark',
-}, {
+},{
     title:'操作',
     align:textAlignDefault,
     dataIndex:"operation",
     key:'operation',
     fixed:'right',
-    width:100,
+    width:220,
     scopedSlots: { customRender: 'action' }
 }];
 

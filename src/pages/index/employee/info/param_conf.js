@@ -33,7 +33,7 @@ const columns = [{
     dataIndex:"operation",
     key:'operation',
     fixed:'right',
-    width:100,
+    width:220,
     scopedSlots: { customRender: 'action' }
 }];
 

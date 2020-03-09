@@ -113,26 +113,58 @@
                         </template>
                     </span>
 
-                    <span slot="action" slot-scope="text,record">
-                        <a-dropdown>
-                              <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
+                    <template slot="action" slot-scope="text,record">
+                        <span>
+                            <a @click="handleAnnouncementDraftDetailDrawerShow($event,record)">
+                                详情
+                            </a>
+                            <a-divider type="vertical" />
+                            <a-dropdown>
+                                <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
                                     <a-menu-item key="recordDel">删除</a-menu-item>
                                     <a-menu-item key="publish">发布</a-menu-item>
-                              </a-menu>
-                              <a-button> 操作 <a-icon type="down" /> </a-button>
-                        </a-dropdown>
-                    </span>
+                                </a-menu>
+                                <a-button> 操作 <a-icon type="down" /> </a-button>
+                            </a-dropdown>
+                        </span>
+                    </template>
                 </a-table>
+            </div>
+            <!-- 弹窗dom-区域 -->
+            <div>
+                <a-drawer
+                    :title="drawerConf.detail.announcementDraft.title"
+                    :closeable="drawerConf.detail.announcementDraft.closable"
+                    :visible="drawerConf.detail.announcementDraft.visible"
+                    :placement="drawerConf.detail.announcementDraft.placement"
+                    :mask="drawerConf.detail.announcementDraft.mask"
+                    :maskStyle="drawerConf.detail.announcementDraft.maskStyle"
+                    :wrapStyle="drawerConf.detail.announcementDraft.wrapStyle"
+                    :drawerStyle="drawerConf.detail.announcementDraft.drawerStyle"
+                    :bodyStyle="drawerConf.detail.announcementDraft.bodyStyle"
+                    :maskClosable="drawerConf.detail.announcementDraft.maskClosable"
+                    @close="handleAnnouncementDraftDetailDrawerClose"
+                >
+                    <simple-detail-drawer-comp
+                        :dataObj="drawerConf.detail.announcementDraft.dataObj"
+                        :visible="drawerConf.detail.announcementDraft.visible"
+                        :drawerFieldConf="drawerConf.detail.announcementDraft.drawerFieldConf"
+                    />
+                </a-drawer>
             </div>
         </div>
     </div>
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
+    import {AnnouncementDraftDetailDrawerConf} from './drawer_conf.js'
     import {AnnouncementMyDraftListApi} from './announcementMyDraftListApi'
+
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     export default {
         name: "AnnouncementMyDraftListView",
+        components:{SimpleDetailDrawerComp},
         data() {
             return {
                 searchConf:{
@@ -180,7 +212,33 @@
                     title: '',
                     keyWord: '',
                     tagIds: ''
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        announcementDraft:{
+                            title:"公告草稿详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:AnnouncementDraftDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         computed:{
@@ -437,6 +495,17 @@
                     action:"update"
                 }
                 this.$router.push({ path: '/index/announcement/create', query: routeParam});
+            },
+            handleAnnouncementDraftDetailDrawerShow(e,record){   //Drawer-公告草稿 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.announcementDraft.dataObj = record ;
+                    this.drawerConf.detail.announcementDraft.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleAnnouncementDraftDetailDrawerClose(e){ //Drawer-公告草稿 详情关闭
+                this.drawerConf.detail.announcementDraft.visible = false ;
             }
         },
         created(){

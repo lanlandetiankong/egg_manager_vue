@@ -109,9 +109,15 @@
                             {{record.typeStr}}
                         </a-tag>
                     </span>
-                    <span slot="action" slot-scope="text,record">
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
-                    </span>
+                    <template slot="action" slot-scope="text,record">
+                        <span>
+                            <a @click="handleDefinePermissionDetailDrawerShow($event,record)">
+                                详情
+                            </a>
+                            <a-divider type="vertical" />
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                        </span>
+                    </template>
                 </a-table>
             </div>
         </div>
@@ -127,11 +133,31 @@
                 @createFormSubmit="handleDefinePermissionCreateFormSubmit"
             >
             </define-permission-create-form-comp>
+            <a-drawer
+                :title="drawerConf.detail.definePermission.title"
+                :closeable="drawerConf.detail.definePermission.closable"
+                :visible="drawerConf.detail.definePermission.visible"
+                :placement="drawerConf.detail.definePermission.placement"
+                :mask="drawerConf.detail.definePermission.mask"
+                :maskStyle="drawerConf.detail.definePermission.maskStyle"
+                :wrapStyle="drawerConf.detail.definePermission.wrapStyle"
+                :drawerStyle="drawerConf.detail.definePermission.drawerStyle"
+                :bodyStyle="drawerConf.detail.definePermission.bodyStyle"
+                :maskClosable="drawerConf.detail.definePermission.maskClosable"
+                @close="handleDefinePermissionDetailDrawerClose"
+            >
+                <simple-detail-drawer-comp
+                    :dataObj="drawerConf.detail.definePermission.dataObj"
+                    :visible="drawerConf.detail.definePermission.visible"
+                    :drawerFieldConf="drawerConf.detail.definePermission.drawerFieldConf"
+                />
+            </a-drawer>
         </div>
     </div>
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
+    import {DefinePermissionDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
@@ -139,10 +165,10 @@
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
 
     import DefinePermissionCreateFormComp from "@/components/index/define/permission/manager/DefinePermissionCreateFormComp";
-
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     export default {
         name: "PermissionManagerView",
-        components: {DefinePermissionCreateFormComp, ACol, AFormItem},
+        components: {DefinePermissionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
         data() {
             return {
                 searchConf:{
@@ -189,7 +215,33 @@
                     name: '',
                     code: '',
                     type: ''
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        definePermission:{
+                            title:"权限定义详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:DefinePermissionDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         computed:{
@@ -443,6 +495,17 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
+            handleDefinePermissionDetailDrawerShow(e,record){   //Drawer-租户定义 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.definePermission.dataObj = record ;
+                    this.drawerConf.detail.definePermission.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleDefinePermissionDetailDrawerClose(e){ //Drawer-租户定义 详情关闭
+                this.drawerConf.detail.definePermission.visible = false ;
+            }
         },
         created(){
             this.dealGetAllDefinePermissions();

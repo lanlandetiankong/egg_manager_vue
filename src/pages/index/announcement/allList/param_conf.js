@@ -34,7 +34,7 @@ const columns = [{
     align:textAlignDefault,
     dataIndex:"operation",
     key:'operation',
-    width:100,
+    width:220,
     scopedSlots: { customRender: 'action' }
 }];
 

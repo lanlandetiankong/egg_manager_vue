@@ -14,18 +14,13 @@ const columns = [{
     align:textAlignDefault,
     dataIndex: 'description',
     key: 'description',
-}, {
-    title: '备注',
-    align:textAlignDefault,
-    dataIndex: 'remark',
-    key: 'remark',
-}, {
+},{
     title:'操作',
     align:textAlignDefault,
     dataIndex:"operation",
     key:'operation',
     fixed:'right',
-    width:100,
+    width:220,
     scopedSlots: { customRender: 'action' }
 }];
 

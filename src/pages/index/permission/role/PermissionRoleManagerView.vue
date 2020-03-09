@@ -115,15 +115,21 @@
                         </a-tag>
                     </span>
 
-                    <span slot="action" slot-scope="text,record">
-                        <a-dropdown>
-                              <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
-                                    <a-menu-item key="recordDel">删除</a-menu-item>
-                                    <a-menu-item key="grantPermission">授权</a-menu-item>
-                              </a-menu>
-                              <a-button> 操作 <a-icon type="down" /> </a-button>
-                        </a-dropdown>
-                </span>
+                    <template slot="action" slot-scope="text,record">
+                        <span>
+                            <a @click="handleDefineRoleDetailDrawerShow($event,record)">
+                                详情
+                            </a>
+                            <a-divider type="vertical" />
+                            <a-dropdown>
+                                  <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
+                                        <a-menu-item key="recordDel">删除</a-menu-item>
+                                        <a-menu-item key="grantPermission">授权</a-menu-item>
+                                  </a-menu>
+                                  <a-button> 操作 <a-icon type="down" /> </a-button>
+                            </a-dropdown>
+                        </span>
+                </template>
                 </a-table>
             </div>
         </div>
@@ -149,6 +155,25 @@
                 @grantPermissionFormSubmit="handleRoleGrantPermissionFormSubmit"
             >
             </role-grant-permission-form-comp>
+            <a-drawer
+                :title="drawerConf.detail.defineRole.title"
+                :closeable="drawerConf.detail.defineRole.closable"
+                :visible="drawerConf.detail.defineRole.visible"
+                :placement="drawerConf.detail.defineRole.placement"
+                :mask="drawerConf.detail.defineRole.mask"
+                :maskStyle="drawerConf.detail.defineRole.maskStyle"
+                :wrapStyle="drawerConf.detail.defineRole.wrapStyle"
+                :drawerStyle="drawerConf.detail.defineRole.drawerStyle"
+                :bodyStyle="drawerConf.detail.defineRole.bodyStyle"
+                :maskClosable="drawerConf.detail.defineRole.maskClosable"
+                @close="handleDefineRoleDetailDrawerClose"
+            >
+                <simple-detail-drawer-comp
+                    :dataObj="drawerConf.detail.defineRole.dataObj"
+                    :visible="drawerConf.detail.defineRole.visible"
+                    :drawerFieldConf="drawerConf.detail.defineRole.drawerFieldConf"
+                />
+            </a-drawer>
         </div>
     </div>
 </template>
@@ -156,14 +181,16 @@
 <script>
     import jq from 'jquery' ;
     import {tableColumns,searchFormQueryConf} from './param_conf.js';
+    import {DefineRoleDetailDrawerConf} from './drawer_conf.js'
     import {PermissionRoleManagerApi} from './permissionRoleManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
 
     import DefineRoleCreateFormComp from '~Components/index/define/permission/role/DefineRoleCreateFormComp';
     import RoleGrantPermissionFormComp from '~Components/index/define/permission/role/RoleGrantPermissionFormComp';
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     export default {
         name: "PermissionRoleManagerView",
-        components: {RoleGrantPermissionFormComp, DefineRoleCreateFormComp},
+        components: {RoleGrantPermissionFormComp, DefineRoleCreateFormComp,SimpleDetailDrawerComp},
         data(){
             return {
                 searchConf:{
@@ -221,7 +248,33 @@
                     allDataSource:[],
                     checked:[],
                     checkedIds:[],
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        defineRole:{
+                            title:"租户信息详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:DefineRoleDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         methods:{
@@ -569,6 +622,17 @@
                     _this.dealDefineRoleGrantPermissionsById(record.fid);
                 }
             },
+            handleDefineRoleDetailDrawerShow(e,record){   //Drawer-角色定义 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.defineRole.dataObj = record ;
+                    this.drawerConf.detail.defineRole.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleDefineRoleDetailDrawerClose(e){ //Drawer-角色定义 详情关闭
+                this.drawerConf.detail.defineRole.visible = false ;
+            }
         },
         computed:{
             rowSelection() {    //行选择

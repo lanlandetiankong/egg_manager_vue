@@ -100,20 +100,52 @@
                             </a-tag>
                         </template>
                     </span>
-                    <span slot="action" slot-scope="text,record">
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
-                    </span>
+                    <template slot="action" slot-scope="text,record">
+                        <span>
+                            <a @click="handleAnnouncementDetailDrawerShow($event,record)">
+                                详情
+                            </a>
+                            <a-divider type="vertical" />
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                        </span>
+                    </template>
                 </a-table>
+            </div>
+            <!-- 弹窗dom-区域 -->
+            <div>
+                <a-drawer
+                    :title="drawerConf.detail.announcement.title"
+                    :closeable="drawerConf.detail.announcement.closable"
+                    :visible="drawerConf.detail.announcement.visible"
+                    :placement="drawerConf.detail.announcement.placement"
+                    :mask="drawerConf.detail.announcement.mask"
+                    :maskStyle="drawerConf.detail.announcement.maskStyle"
+                    :wrapStyle="drawerConf.detail.announcement.wrapStyle"
+                    :drawerStyle="drawerConf.detail.announcement.drawerStyle"
+                    :bodyStyle="drawerConf.detail.announcement.bodyStyle"
+                    :maskClosable="drawerConf.detail.announcement.maskClosable"
+                    @close="handleAnnouncementDetailDrawerClose"
+                >
+                    <simple-detail-drawer-comp
+                        :dataObj="drawerConf.detail.announcement.dataObj"
+                        :visible="drawerConf.detail.announcement.visible"
+                        :drawerFieldConf="drawerConf.detail.announcement.drawerFieldConf"
+                    />
+                </a-drawer>
             </div>
         </div>
     </div>
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
+    import {AnnouncementDetailDrawerConf} from './drawer_conf.js'
     import {AnnouncementAllListApi} from './announcementAllListApi'
+
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     export default {
         name: "AnnouncementAllListView",
+        components:{SimpleDetailDrawerComp},
         data() {
             return {
                 searchConf:{
@@ -161,7 +193,33 @@
                     title: '',
                     keyWord: '',
                     tagIds: ''
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        announcement:{
+                            title:"公告信息详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:AnnouncementDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         computed:{
@@ -329,6 +387,17 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
+            handleAnnouncementDetailDrawerShow(e,record){   //Drawer-公告 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.announcement.dataObj = record ;
+                    this.drawerConf.detail.announcement.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleAnnouncementDetailDrawerClose(e){ //Drawer-公告 详情关闭
+                this.drawerConf.detail.announcement.visible = false ;
+            }
         },
         created(){
             this.dealGetAllAnnouncements();

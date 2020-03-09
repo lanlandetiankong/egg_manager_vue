@@ -96,9 +96,15 @@
                     :rowSelection="rowSelection"
                     @change="handleTableChange"
                 >
-                    <span slot="action" slot-scope="text,record">
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
-                    </span>
+                    <template slot="action" slot-scope="text,record">
+                        <span>
+                            <a @click="handleDefineTenantDetailDrawerShow($event,record)">
+                                详情
+                            </a>
+                            <a-divider type="vertical" />
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                        </span>
+                    </template>
                 </a-table>
             </div>
         </div>
@@ -113,21 +119,42 @@
                 @createFormSubmit="handleDefineTenantCreateFormSubmit"
             >
             </define-tenant-create-form-comp>
+            <a-drawer
+                :title="drawerConf.detail.defineTenant.title"
+                :closeable="drawerConf.detail.defineTenant.closable"
+                :visible="drawerConf.detail.defineTenant.visible"
+                :placement="drawerConf.detail.defineTenant.placement"
+                :mask="drawerConf.detail.defineTenant.mask"
+                :maskStyle="drawerConf.detail.defineTenant.maskStyle"
+                :wrapStyle="drawerConf.detail.defineTenant.wrapStyle"
+                :drawerStyle="drawerConf.detail.defineTenant.drawerStyle"
+                :bodyStyle="drawerConf.detail.defineTenant.bodyStyle"
+                :maskClosable="drawerConf.detail.defineTenant.maskClosable"
+                @close="handleDefineTenantDetailDrawerClose"
+            >
+                <simple-detail-drawer-comp
+                    :dataObj="drawerConf.detail.defineTenant.dataObj"
+                    :visible="drawerConf.detail.defineTenant.visible"
+                    :drawerFieldConf="drawerConf.detail.defineTenant.drawerFieldConf"
+                />
+            </a-drawer>
         </div>
     </div>
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
+    import {DefineTenantDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
     import {TenantManagerApi} from './tenantManagerApi.js'
 
     import DefineTenantCreateFormComp from '~Components/index/organization/tenant/DefineTenantCreateFormComp'
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     export default {
         name: "TenantManagerView",
-        components: { ACol, AFormItem,DefineTenantCreateFormComp},
+        components: { ACol, AFormItem,DefineTenantCreateFormComp,SimpleDetailDrawerComp},
         data() {
             return {
                 searchConf:{
@@ -169,7 +196,33 @@
                     name: '',
                     code: '',
                     dbCode:'',
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        defineTenant:{
+                            title:"租户信息详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:DefineTenantDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         computed:{
@@ -405,6 +458,17 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
+            handleDefineTenantDetailDrawerShow(e,record){   //Drawer-租户定义 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.defineTenant.dataObj = record ;
+                    this.drawerConf.detail.defineTenant.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleDefineTenantDetailDrawerClose(e){ //Drawer-租户定义 详情关闭
+                this.drawerConf.detail.defineTenant.visible = false ;
+            }
         },
         created(){
             this.dealGetAllDefineTenant();

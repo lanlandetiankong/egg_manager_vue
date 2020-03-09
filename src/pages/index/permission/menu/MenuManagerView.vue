@@ -142,9 +142,15 @@
                             {{record.urlJumpTypeStr}}
                         </a-tag>
                     </span>
-                    <span slot="action" slot-scope="text,record">
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
-                    </span>
+                    <template slot="action" slot-scope="text,record">
+                        <span>
+                            <a @click="handleDefineMenuDetailDrawerShow($event,record)">
+                                详情
+                            </a>
+                            <a-divider type="vertical" />
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                        </span>
+                    </template>
                 </a-table>
             </div>
         </div>
@@ -162,11 +168,31 @@
                 @createFormSubmit="handleDefineMenuCreateFormSubmit"
             >
             </define-menu-create-form-comp>
+            <a-drawer
+                :title="drawerConf.detail.defineMenu.title"
+                :closeable="drawerConf.detail.defineMenu.closable"
+                :visible="drawerConf.detail.defineMenu.visible"
+                :placement="drawerConf.detail.defineMenu.placement"
+                :mask="drawerConf.detail.defineMenu.mask"
+                :maskStyle="drawerConf.detail.defineMenu.maskStyle"
+                :wrapStyle="drawerConf.detail.defineMenu.wrapStyle"
+                :drawerStyle="drawerConf.detail.defineMenu.drawerStyle"
+                :bodyStyle="drawerConf.detail.defineMenu.bodyStyle"
+                :maskClosable="drawerConf.detail.defineMenu.maskClosable"
+                @close="handleDefineMenuDetailDrawerClose"
+            >
+                <simple-detail-drawer-comp
+                    :dataObj="drawerConf.detail.defineMenu.dataObj"
+                    :visible="drawerConf.detail.defineMenu.visible"
+                    :drawerFieldConf="drawerConf.detail.defineMenu.drawerFieldConf"
+                />
+            </a-drawer>
         </div>
     </div>
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
+    import {DefineMenuDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
@@ -174,10 +200,10 @@
     import {ModuleCommonApis} from '~Apis/module/ModuleCommonApis.js'
 
     import DefineMenuCreateFormComp from "~Components/index/module/manager/DefineMenuCreateFormComp";
-
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     export default {
         name: "MenuManagerView",
-        components: {DefineMenuCreateFormComp, ACol, AFormItem},
+        components: {DefineMenuCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
         data() {
             return {
                 searchConf:{
@@ -246,7 +272,33 @@
                     iconName:'',
                     styleVal:'',
                     typeVal: '',
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        defineMenu:{
+                            title:"菜单定义详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:DefineMenuDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         computed:{
@@ -514,6 +566,17 @@
             },
             handleParentTreeOfSearchChange(value){  //[上级菜单] SelectTree cchange事件
                 console.log("handleParentTreeOfSearchChange",value);
+            },
+            handleDefineMenuDetailDrawerShow(e,record){   //Drawer-菜单定义 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.defineMenu.dataObj = record ;
+                    this.drawerConf.detail.defineMenu.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleDefineMenuDetailDrawerClose(e){ //Drawer-菜单定义 详情关闭
+                this.drawerConf.detail.defineMenu.visible = false ;
             }
         },
         created(){

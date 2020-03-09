@@ -121,9 +121,15 @@
                     :rowSelection="rowSelection"
                     @change="handleTableChange"
                 >
-                    <span slot="action" slot-scope="text,record">
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
-                    </span>
+                    <template slot="action" slot-scope="text,record">
+                        <span>
+                            <a @click="handleEmployeeDepartmentDetailDrawerShow($event,record)">
+                                详情
+                            </a>
+                            <a-divider type="vertical" />
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                        </span>
+                    </template>
                 </a-table>
             </div>
         </div>
@@ -140,21 +146,41 @@
                 @createFormSubmit="handleDefineDepartmentCreateFormSubmit"
             >
             </define-department-create-form-comp>
+            <a-drawer
+                :title="drawerConf.detail.employeeDepartment.title"
+                :closeable="drawerConf.detail.employeeDepartment.closable"
+                :visible="drawerConf.detail.employeeDepartment.visible"
+                :placement="drawerConf.detail.employeeDepartment.placement"
+                :mask="drawerConf.detail.employeeDepartment.mask"
+                :maskStyle="drawerConf.detail.employeeDepartment.maskStyle"
+                :wrapStyle="drawerConf.detail.employeeDepartment.wrapStyle"
+                :drawerStyle="drawerConf.detail.employeeDepartment.drawerStyle"
+                :bodyStyle="drawerConf.detail.employeeDepartment.bodyStyle"
+                :maskClosable="drawerConf.detail.employeeDepartment.maskClosable"
+                @close="handleEmployeeDepartmentDetailDrawerClose"
+            >
+                <simple-detail-drawer-comp
+                    :dataObj="drawerConf.detail.employeeDepartment.dataObj"
+                    :visible="drawerConf.detail.employeeDepartment.visible"
+                    :drawerFieldConf="drawerConf.detail.employeeDepartment.drawerFieldConf"
+                />
+            </a-drawer>
         </div>
     </div>
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
+    import {EmployeeDepartmentDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
     import {DepartmentManagerApi} from './departmentManagerApi.js'
 
     import DefineDepartmentCreateFormComp from '~Components/index/user/employee/department/DefineDepartmentCreateFormComp';
-
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     export default {
         name: "DepartmentManagerView",
-        components: {DefineDepartmentCreateFormComp,ACol, AFormItem},
+        components: {DefineDepartmentCreateFormComp,SimpleDetailDrawerComp,ACol, AFormItem},
         data() {
             return {
                 searchConf:{
@@ -211,7 +237,33 @@
                     description:'',
                     parentId:'',
                     type: ''
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        employeeDepartment:{
+                            title:"部门定义详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:EmployeeDepartmentDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         computed:{
@@ -470,6 +522,17 @@
             handleParentTreeOfSearchChange(value){  //[上级部门] SelectTree cchange事件
                 console.log("handleParentTreeOfSearchChange",value);
             },
+            handleEmployeeDepartmentDetailDrawerShow(e,record){   //Drawer-部门定义 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.employeeDepartment.dataObj = record ;
+                    this.drawerConf.detail.employeeDepartment.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleEmployeeDepartmentDetailDrawerClose(e){ //Drawer-部门定义 详情关闭
+                this.drawerConf.detail.employeeDepartment.visible = false ;
+            }
         },
         created(){
             this.dealGetAllDefineDepartment();

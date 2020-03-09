@@ -121,9 +121,15 @@
                             {{record.typeStr}}
                         </a-tag>
                     </span>
-                    <span slot="action" slot-scope="text,record">
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
-                    </span>
+                    <template slot="action" slot-scope="text,record">
+                        <span>
+                            <a @click="handleDefineModuleDetailDrawerShow($event,record)">
+                                详情
+                            </a>
+                            <a-divider type="vertical" />
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                        </span>
+                    </template>
                 </a-table>
             </div>
         </div>
@@ -139,11 +145,31 @@
                 @createFormSubmit="handleDefineModuleCreateFormSubmit"
             >
             </define-module-create-form-comp>
+            <a-drawer
+                :title="drawerConf.detail.defineModule.title"
+                :closeable="drawerConf.detail.defineModule.closable"
+                :visible="drawerConf.detail.defineModule.visible"
+                :placement="drawerConf.detail.defineModule.placement"
+                :mask="drawerConf.detail.defineModule.mask"
+                :maskStyle="drawerConf.detail.defineModule.maskStyle"
+                :wrapStyle="drawerConf.detail.defineModule.wrapStyle"
+                :drawerStyle="drawerConf.detail.defineModule.drawerStyle"
+                :bodyStyle="drawerConf.detail.defineModule.bodyStyle"
+                :maskClosable="drawerConf.detail.defineModule.maskClosable"
+                @close="handleDefineModuleDetailDrawerClose"
+            >
+                <simple-detail-drawer-comp
+                    :dataObj="drawerConf.detail.defineModule.dataObj"
+                    :visible="drawerConf.detail.defineModule.visible"
+                    :drawerFieldConf="drawerConf.detail.defineModule.drawerFieldConf"
+                />
+            </a-drawer>
         </div>
     </div>
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
+    import {DefineModuleDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
@@ -151,10 +177,11 @@
     import {ModuleCommonApis} from '~Apis/module/ModuleCommonApis.js'
 
     import DefineModuleCreateFormComp from "@/components/index/module/manager/DefineModuleCreateFormComp";
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     export default {
         name: "ModuleManagerView",
-        components: {DefineModuleCreateFormComp, ACol, AFormItem},
+        components: {DefineModuleCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
         data() {
             return {
                 searchConf:{
@@ -203,7 +230,33 @@
                     iconVal:'',
                     styleVal:'',
                     typeVal: ''
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        defineModule:{
+                            title:"部门详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:DefineModuleDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         computed:{
@@ -461,6 +514,17 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
+            handleDefineModuleDetailDrawerShow(e,record){   //Drawer-模块定义 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.defineModule.dataObj = record ;
+                    this.drawerConf.detail.defineModule.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleDefineModuleDetailDrawerClose(e){ //Drawer-模块定义 详情关闭
+                this.drawerConf.detail.defineModule.visible = false ;
+            }
         },
         created(){
             this.dealGetAllDefineModules();

@@ -96,9 +96,15 @@
                             {{record.typeStr}}
                         </a-tag>
                     </span>
-                    <span slot="action" slot-scope="text,record">
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
-                    </span>
+                    <template slot="action" slot-scope="text,record">
+                        <span>
+                            <a @click="handleAnnouncementTagDetailDrawerShow($event,record)">
+                                详情
+                            </a>
+                            <a-divider type="vertical" />
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                        </span>
+                    </template>
                 </a-table>
             </div>
         </div>
@@ -113,19 +119,38 @@
                 @createFormSubmit="handleAnnouncementTagCreateFormSubmit"
             >
             </announcement-tag-create-form-comp>
+            <a-drawer
+                :title="drawerConf.detail.announcementTag.title"
+                :closeable="drawerConf.detail.announcementTag.closable"
+                :visible="drawerConf.detail.announcementTag.visible"
+                :placement="drawerConf.detail.announcementTag.placement"
+                :mask="drawerConf.detail.announcementTag.mask"
+                :maskStyle="drawerConf.detail.announcementTag.maskStyle"
+                :wrapStyle="drawerConf.detail.announcementTag.wrapStyle"
+                :drawerStyle="drawerConf.detail.announcementTag.drawerStyle"
+                :bodyStyle="drawerConf.detail.announcementTag.bodyStyle"
+                :maskClosable="drawerConf.detail.announcementTag.maskClosable"
+                @close="handleAnnouncementTagDetailDrawerClose"
+            >
+                <simple-detail-drawer-comp
+                    :dataObj="drawerConf.detail.announcementTag.dataObj"
+                    :visible="drawerConf.detail.announcementTag.visible"
+                    :drawerFieldConf="drawerConf.detail.announcementTag.drawerFieldConf"
+                />
+            </a-drawer>
         </div>
     </div>
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
-
+    import {AnnouncementTagDetailDrawerConf} from './drawer_conf.js'
     import {AnnouncementTagApi} from './announcementTagApi.js'
 
     import AnnouncementTagCreateFormComp from "~Components/index/announcement/tag/AnnouncementTagCreateFormComp";
-
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     export default {
         name: "AnnouncementTagView",
-        components: {AnnouncementTagCreateFormComp},
+        components: {AnnouncementTagCreateFormComp,SimpleDetailDrawerComp},
         data() {
             return {
                 searchConf:{
@@ -169,7 +194,33 @@
                     name: '',
                     description: '',
                     ordering:0
-                }
+                },
+                drawerConf:{
+                    detail:{
+                        announcementTag:{
+                            title:"公告标签详情",
+                            closable:true,
+                            visible:false,
+                            placement:"right",
+                            mask:true,
+                            maskStyle:{
+                                overFlowY:"auto"
+                            },
+                            wrapStyle:{
+                                overFlowY:"auto"
+                            },
+                            drawerStyle:{
+                                overFlowY:"auto"
+                            },
+                            bodyStyle:{
+                                overFlowY:"auto"
+                            },
+                            maskClosable:true,  //点击蒙层是否关闭,
+                            dataObj:{},
+                            drawerFieldConf:AnnouncementTagDetailDrawerConf
+                        },
+                    },
+                },
             }
         },
         computed:{
@@ -410,6 +461,17 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
+            handleAnnouncementTagDetailDrawerShow(e,record){   //Drawer-公告标签 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.announcementTag.dataObj = record ;
+                    this.drawerConf.detail.announcementTag.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleAnnouncementTagDetailDrawerClose(e){ //Drawer-公告标签 详情关闭
+                this.drawerConf.detail.announcementTag.visible = false ;
+            }
         },
         created(){
             this.dealGetAllAnnouncementTags();

@@ -154,7 +154,12 @@
                         未锁定
                     </a-tag>
                 </span>
-                <span slot="action" slot-scope="text,record">
+                <template slot="action" slot-scope="text,record">
+                    <span>
+                        <a @click="handleEmployeeInfoDetailDrawerShow($event,record)">
+                            详情
+                        </a>
+                        <a-divider type="vertical" />
                         <a-dropdown>
                               <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
                                     <a-menu-item key="recordDel">删除</a-menu-item>
@@ -165,9 +170,11 @@
                               </a-menu>
                               <a-button> 操作 <a-icon type="down" /> </a-button>
                         </a-dropdown>
-                </span>
+                    </span>
+                </template>
             </a-table>
         </div>
+        <!-- 挂载弹窗、抽屉 等组件的dom -->
         <div>
             <employee-info-create-form-comp
                 ref="employeeInfoCreateFormRef"
@@ -198,25 +205,48 @@
                 @grantJobFormSubmit="handleUserGrantJobFormSubmit"
             >
             </user-grant-job-form-comp>
+            <a-drawer
+                    :title="drawerConf.detail.employeeInfo.title"
+                    :closeable="drawerConf.detail.employeeInfo.closable"
+                    :visible="drawerConf.detail.employeeInfo.visible"
+                    :placement="drawerConf.detail.employeeInfo.placement"
+                    :mask="drawerConf.detail.employeeInfo.mask"
+                    :maskStyle="drawerConf.detail.employeeInfo.maskStyle"
+                    :wrapStyle="drawerConf.detail.employeeInfo.wrapStyle"
+                    :drawerStyle="drawerConf.detail.employeeInfo.drawerStyle"
+                    :bodyStyle="drawerConf.detail.employeeInfo.bodyStyle"
+                    :maskClosable="drawerConf.detail.employeeInfo.maskClosable"
+                    @close="handleEmployeeInfoDetailDrawerClose"
+            >
+                <simple-detail-drawer-comp
+                    :dataObj="drawerConf.detail.employeeInfo.dataObj"
+                    :visible="drawerConf.detail.employeeInfo.visible"
+                    :drawerFieldConf="drawerConf.detail.employeeInfo.drawerFieldConf"
+                />
+            </a-drawer>
         </div>
     </div>
 </template>
 <script>
     import jq from 'jquery';
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
+    import {EmployeeInfoDetailDrawerConf} from  './drawer_conf'
     import {EmpInfoApi} from './EmpInfoApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
 
     import EmployeeInfoCreateFormComp from '~Components/index/user/employee/info/EmployeeInfoCreateFormComp'
     import UserGrantRoleFormComp from '~Components/index/user/employee/info/UserGrantRoleFormComp';
     import UserGrantJobFormComp from '~Components/index/user/employee/info/UserGrantJobFormComp';
+    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
 
     export default {
         name: "EmpInfoView",
-        components: {UserGrantJobFormComp, UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
+        components: {
+            SimpleDetailDrawerComp,
+            UserGrantJobFormComp, UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
         data() {
             return {
                 searchConf: {
@@ -294,7 +324,33 @@
                     allDataSource:[],
                     checked:[],
                     checkedIds:[],
-                }
+                },
+                drawerConf:{
+                    detail:{
+                       employeeInfo:{
+                           title:"用户定义详情",
+                           closable:true,
+                           visible:false,
+                           placement:"right",
+                           mask:true,
+                           maskStyle:{
+                               overFlowY:"auto"
+                           },
+                           wrapStyle:{
+                               overFlowY:"auto"
+                           },
+                           drawerStyle:{
+                               overFlowY:"auto"
+                           },
+                           bodyStyle:{
+                               overFlowY:"auto"
+                           },
+                           maskClosable:true,  //点击蒙层是否关闭,
+                           dataObj:{},
+                           drawerFieldConf:EmployeeInfoDetailDrawerConf
+                       },
+                    },
+                },
             }
         },
         methods: {
@@ -820,6 +876,17 @@
                     }
                 });
             },
+            handleEmployeeInfoDetailDrawerShow(e,record){   //Drawer-用户定义 详情展示
+                if(typeof record != "undefined"){
+                    this.drawerConf.detail.employeeInfo.dataObj = record ;
+                    this.drawerConf.detail.employeeInfo.visible = true ;
+                }   else {
+                    this.$message.error("打开无效的行详情！");
+                }
+            },
+            handleEmployeeInfoDetailDrawerClose(e){ //Drawer-用户定义 详情关闭
+                this.drawerConf.detail.employeeInfo.visible = false ;
+            }
         },
         computed: {
             rowSelection() {    //行选择
