@@ -56,10 +56,35 @@
                     return checkVal ;
                 }
             },
+            dealGetFieldConfValue(obj,fieldConfObj){    //根据配置取得字段的值
+                var _this = this ;
+                var fieldVal = obj[fieldConfObj.fieldKey];
+                //是否需要拆分fieldKey字段数组并遍历取值,如未设置则为否
+                var isNeedSplitTemp = _this.dealEmptyToDefaultVal(fieldConfObj.isNeedSplit,false);
+                if(isNeedSplitTemp === true){
+                    var fieldKeySplitArrTemp = _this.dealEmptyToDefaultVal(fieldConfObj.fieldKeySplitArr,[fieldConfObj.fieldKey]);
+                    if(fieldKeySplitArrTemp.length > 1){
+                        var fieldValObj = obj[fieldKeySplitArrTemp[0]] ;
+                        fieldVal = _this.dealRecurveGetRealValue(fieldKeySplitArrTemp,fieldValObj,0);
+                    }
+                }
+                return fieldVal ;
+            },
+            dealRecurveGetRealValue(fieldKeySplitArrTemp,fieldValObj,idx){  //递归取得真实的取值
+                //console.log(fieldValObj);
+                if(typeof fieldValObj == "undefined" || fieldValObj == null){
+                    return fieldValObj ;
+                }   else if(fieldKeySplitArrTemp.length == idx +1){
+                    return fieldValObj ;
+                }   else {
+                    return this.dealRecurveGetRealValue(fieldKeySplitArrTemp,fieldValObj[fieldKeySplitArrTemp[idx+1]],idx+1);
+                }
+            },
             dealGetFieldObjFromConf(fieldConfObj,fieldVal){  //尝试从配置中取得 fieldVal的 其他处理方式后
                 var _this = this;
                 var fieldResObj = {     //默认的返回对象
                     fieldKey:fieldConfObj.fieldKey,
+                    fieldKeySplitArr:fieldConfObj.fieldKeySplitArr,
                     fieldName:fieldConfObj.fieldName,
                     fieldVal:fieldVal,
                     fieldType:fieldConfObj.type,
@@ -108,9 +133,8 @@
                             var fieldConfObj = showFieldArr[i] ;
                             var visibleVal = this.dealEmptyToDefaultVal(fieldConfObj.visible,true);
                             if(visibleVal === true){
-                                //console.log("fieldConfObj",fieldConfObj);
-                                var fieldVal = obj[fieldConfObj.fieldKey];
-                                var fieldResObj = fieldVal = this.dealGetFieldObjFromConf(fieldConfObj,fieldVal);
+                                var fieldVal = this.dealGetFieldConfValue(obj,fieldConfObj);
+                                var fieldResObj = this.dealGetFieldObjFromConf(fieldConfObj,fieldVal);
                                 dataObjArr.push(fieldResObj);
                             }
                         }

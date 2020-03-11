@@ -45,15 +45,29 @@ export const CommonFieldConfArr = {
             date:CommonDateFormatTypeObj.yMdhms_cn
         }
     },
-    updateDate:{
-        fieldKey:"createTime",
-        fieldName:"创建日期",
+    updateTime:{
+        fieldKey:"updateTime",
+        fieldName:"最后更新日期",
         type:DrawerFieldTypeEnum.Date,
         visible:true,
         format:{
             date:CommonDateFormatTypeObj.yMdhms_cn
         }
     },
+    createUserNickName:{
+        fieldKey:"createUserNickName",
+        fieldKeySplitArr:['createUser','nickName'],
+        fieldName:"创建人",
+        type:DrawerFieldTypeEnum.String,
+        isNeedSplit:true
+    },
+    lastModifyerNickName:{
+        fieldKey:"lastModifyerNickName",
+        fieldKeySplitArr:['lastModifyer','nickName'],
+        fieldName:"最后修改人",
+        type:DrawerFieldTypeEnum.String,
+        isNeedSplit:true
+    }
 }
 
 

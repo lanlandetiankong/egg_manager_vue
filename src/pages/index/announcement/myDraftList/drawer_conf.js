@@ -35,8 +35,10 @@ export  const AnnouncementDraftDetailDrawerConf = {
             type:DrawerFieldTypeEnum.String
         },
         CommonFieldConfArr.remark,
+        CommonFieldConfArr.createUserNickName,
+        CommonFieldConfArr.lastModifyerNickName,
         CommonFieldConfArr.createDate,
-        CommonFieldConfArr.updateDate
+        CommonFieldConfArr.updateTime
     ]
 
 }
