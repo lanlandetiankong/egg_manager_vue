@@ -254,7 +254,7 @@
                     filters:{},
                     sorter:{},
                     scroll:{
-                        x: 1140
+                        x: 1400
                     },
                     bordered:true
                 },

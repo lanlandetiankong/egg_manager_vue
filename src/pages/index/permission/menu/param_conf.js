@@ -6,6 +6,12 @@ const columns = [{
     key: 'menuName',
     width:100,
 },{
+    title: '上级菜单',
+    align:textAlignDefault,
+    dataIndex: 'parentMenu.menuName',
+    key: 'parentMenu.menuName',
+    width:100,
+},{
     title: '图标',
     align:textAlignDefault,
     dataIndex: 'iconName',
