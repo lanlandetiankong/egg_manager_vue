@@ -18,7 +18,7 @@ export const TenantManagerApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有租户信息
-        return axios.post('/organization/define_tenant/getAllDefineTenants',qs.stringify(obj)).then(res => res);
+        return axios.post('/organization/define_tenant/getAllDefineTenantDtos',qs.stringify(obj)).then(res => res);
     },
     getDefineTenantById(defineTenantId){  //根据租户id查询租户信息
         var params = {

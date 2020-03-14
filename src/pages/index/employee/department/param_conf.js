@@ -5,6 +5,12 @@ const columns = [{
     dataIndex: 'name',
     key: 'name',
 }, {
+    title: '上级部门名',
+    align:textAlignDefault,
+    dataIndex: 'parentDepartment.name',
+    key: 'parentDepartment.name',
+    width:100,
+},{
     title: '编码',
     align:textAlignDefault,
     dataIndex: 'code',

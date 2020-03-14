@@ -18,7 +18,7 @@ export const EmpJobApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有职务信息
-        return axios.post('/define/define_job/getAllDefineJobs',qs.stringify(obj)).then(res => res);
+        return axios.post('/define/define_job/getAllDefineJobDtos',qs.stringify(obj)).then(res => res);
     },
     getDefineJobById(defineJobId){  //根据职务id查询职务信息
         var params = {

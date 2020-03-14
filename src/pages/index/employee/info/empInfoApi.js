@@ -18,7 +18,7 @@ export const EmpInfoApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有用户信息
-        return axios.post('/user/user_account/getAllUserAccounts',qs.stringify(obj)).then(res => res);
+        return axios.post('/user/user_account/getAllUserAccountDtos',qs.stringify(obj)).then(res => res);
     },
     getUserAccountById(userAccountId){  //根据用户id查询用户信息
         var params = {

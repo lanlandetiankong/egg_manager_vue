@@ -18,7 +18,7 @@ export const AnnouncementTagApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有公告标签信息
-        return axios.post('/announcement_tag/getAllAnnouncementTags',qs.stringify(obj)).then(res => res);
+        return axios.post('/announcement_tag/getAllAnnouncementTagDtos',qs.stringify(obj)).then(res => res);
     },
     getAnnouncementTagById(announcementTagId){  //根据公告标签id查询公告标签信息
         var params = {

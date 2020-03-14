@@ -31,7 +31,7 @@ export const AnnouncementAllListApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有公告信息
-        return axios.post('/announcement/getAllAnnouncements',qs.stringify(obj)).then(res => res);
+        return axios.post('/announcement/getAllAnnouncementDtos',qs.stringify(obj)).then(res => res);
     },
     batchDelAnnouncement(ids) {  //批量删除
         var obj = {

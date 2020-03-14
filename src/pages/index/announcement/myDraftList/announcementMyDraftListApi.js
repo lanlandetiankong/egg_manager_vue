@@ -32,7 +32,7 @@ export const AnnouncementMyDraftListApi = {
             onlySelf:true
         }
         //查询所有公告信息
-        return axios.post('/announcement_draft/getAllAnnouncementDrafts',qs.stringify(obj)).then(res => res);
+        return axios.post('/announcement_draft/getAllAnnouncementDraftDtos',qs.stringify(obj)).then(res => res);
     },
     batchDelAnnouncementDraft(ids) {  //批量删除
         var obj = {

@@ -15,6 +15,13 @@ export  const DefineMenuDetailDrawerConf = {
             type:DrawerFieldTypeEnum.String
         },
         {
+            fieldKey:"parentMenuName",
+            fieldKeySplitArr:['parentMenu','menuName'],
+            fieldName:"上级菜单名",
+            type:DrawerFieldTypeEnum.String,
+            isNeedSplit:true
+        },
+        {
             fieldKey:"iconName",
             fieldName:"图标",
             type:DrawerFieldTypeEnum.Icon

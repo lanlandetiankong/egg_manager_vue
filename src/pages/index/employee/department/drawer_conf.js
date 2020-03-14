@@ -15,6 +15,13 @@ export  const EmployeeDepartmentDetailDrawerConf = {
             type:DrawerFieldTypeEnum.String
         },
         {
+            fieldKey:"parentDepartmentName",
+            fieldKeySplitArr:['parentDepartment','name'],
+            fieldName:"上级部门名",
+            type:DrawerFieldTypeEnum.String,
+            isNeedSplit:true
+        },
+        {
             fieldKey:"code",
             fieldName:"编码",
             type:DrawerFieldTypeEnum.String

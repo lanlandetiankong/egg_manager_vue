@@ -22,7 +22,7 @@ export const MenuManagerApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有菜单信息
-        return axios.post('/define/define_menu/getAllDefineMenus',qs.stringify(obj)).then(res => res);
+        return axios.post('/define/define_menu/getAllDefineMenuDtos',qs.stringify(obj)).then(res => res);
     },
     getDefineMenuById(defineMenuId){  //根据菜单id查询菜单信息
         var params = {

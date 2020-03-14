@@ -18,7 +18,7 @@ export const ModuleManagerApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有模块信息
-        return axios.post('/module/define_module/getAllDefineModules',qs.stringify(obj)).then(res => res);
+        return axios.post('/module/define_module/getAllDefineModuleDtos',qs.stringify(obj)).then(res => res);
     },
     getDefineModuleById(defineModuleId){  //根据模块id查询模块信息
         var params = {

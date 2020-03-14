@@ -22,7 +22,7 @@ export const DepartmentManagerApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有部门信息
-        return axios.post('/define/define_department/getAllDefineDepartments',qs.stringify(obj)).then(res => res);
+        return axios.post('/define/define_department/getAllDefineDepartmentDtos',qs.stringify(obj)).then(res => res);
     },
     getDefineDepartmentById(defineDepartmentId){  //根据部门id查询部门信息
         var params = {
