@@ -42,8 +42,8 @@
             },
             handleSetUserTokenToCache(userTokenObj){
                 this.$store.dispatch('doSetUserToken',userTokenObj) ;
-                console.log(JSON.stringify(userTokenObj));
                 window.sessionStorage.setItem("userToken",JSON.stringify(userTokenObj));
+                console.log(JSON.stringify(window.sessionStorage.getItem("userToken")));
             }
         }
     }

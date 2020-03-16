@@ -91,10 +91,7 @@
         computed: {
             tagViewOpendArray() {
                 return this.$store.state.tagsView.visitedViews ;
-            },
-        },
-        watch: {
-
+            }
         },
         methods: {
             dealGotoIndex(){
@@ -188,6 +185,15 @@
             dealTabsClick(activeKey) {
 
             },
+            dealVerifyUserToken(){
+                var userTokenTemp = window.sessionStorage.getItem("userToken");
+                if(typeof userTokenTemp == "undefined" || userTokenTemp == null){
+                    this.$message.error("用户未登录，将为您跳转到登录页面！");
+                    this.handleUserLoginOut();
+                }   else {
+                    return userTokenTemp ;
+                }
+            },
             handleUserLoginOut(e){     //子组件命令-退出登录
                 window.sessionStorage.removeItem("userToken");
                 //跳转到登录界面
@@ -197,8 +203,11 @@
                 this.$router.push(this.routerDefineObj.userCenterView);
             }
         },
-        mounted() {
-            this.handleGetMenus();
+        created(){
+            var userLoginFlag = this.dealVerifyUserToken();
+            if(userLoginFlag == true){
+                this.handleGetMenus();
+            }
         }
     }
 </script>
