@@ -41,18 +41,6 @@
                 <a-form-item label="用户类型"
                      v-bind="formItemLayout"
                 >
-                    <a-select showSearch allowClear
-                              placeholder="请选择"
-                              optionFilterProp="children"
-                              :options="userTypes"
-                              :filterOption="getUserTypeFilterOption"
-                              v-decorator="formFieldConf.userType"
-                    >
-                    </a-select>
-                </a-form-item>
-                <a-form-item label="用户类型"
-                     v-bind="formItemLayout"
-                >
                     <a-radio-group buttonStyle="solid"
                                v-decorator="formFieldConf.locked"
                     >
@@ -75,7 +63,6 @@
             visible:Boolean,
             actionType:String,
             formObj:Object,
-            userTypes:Array
         },
         data(){
             var paramsRules ={
@@ -90,9 +77,6 @@
                     {type: 'email',message: '请填写有效的邮箱!'}
                 ],
                 avatarUrl:[],
-                userType:[
-                    {required:true,message:'请填写用户类型!'}
-                ],
                 locked:[
                     {required:true,message:'请选择是否锁定!'}
                 ]
@@ -113,7 +97,6 @@
                     nickName: ["nickName", {rules: paramsRules.nickName}],
                     email: ["email", {rules: paramsRules.email}],
                     avatarUrl: ["avatarUrl", {rules: paramsRules.avatarUrl}],
-                    userType: ["userType", {rules: paramsRules.userType}],
                     locked: ["locked", {rules: paramsRules.locked}]
                 },
                 employeeInfoCreateForm:{}
@@ -139,10 +122,6 @@
                        avatarUrl: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.avatarUrl,
-                       }),
-                       userType: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.userType,
                        }),
                        locked: _this.$form.createFormField({
                            ...formObj,
@@ -200,10 +179,6 @@
                         avatarUrl: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.avatarUrl
-                        }),
-                        userType: this.$form.createFormField({
-                            ..._this.formObj,
-                            value: _this.formObj.userType
                         }),
                         locked: this.$form.createFormField({
                             ..._this.formObj,

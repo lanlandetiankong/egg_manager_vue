@@ -30,7 +30,7 @@
                                         placeholder="请选择"
                                         style="width: 180px"
                                         optionFilterProp="children"
-                                        :options="searchConf.binding.userTypes"
+                                        :options="searchConf.binding.allUserTypes"
                                         :filterOption="getFilterOption"
                                         v-decorator="searchConf.paramConf.userType"
                                     >
@@ -181,7 +181,6 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                :userTypes="searchConf.binding.userTypes"
                 @createFormCancel="handleEmployeeInfoCreateFormCancel"
                 @createFormSubmit="handleEmployeeInfoCreateFormSubmit"
             />
@@ -261,7 +260,7 @@
                         locked: ["locked", {rules: []}]
                     },
                     binding:{
-                        userTypes:[],
+                        allUserTypes:[],
                         lockStates:[]
                     }
                 },
@@ -468,12 +467,12 @@
                 }
                 return queryFieldArr ;
             },
-            dealGetUserTypeEnumList(){  //取得 用户类型-枚举列表
+            dealGetAllUserTypeEnumList(){  //取得 用户类型-枚举列表
                 var _this = this ;
                 UserCommonApis.getAllUserType().then((res) => {
                     if(res && res.hasError == false){
                         if(res.enumList){
-                            _this.searchConf.binding.userTypes = res.enumList ;
+                            _this.searchConf.binding.allUserTypes = res.enumList ;
                         }
                     }
                 })
@@ -903,7 +902,7 @@
         },
         created(){
             this.dealGetAllUserAccounts();
-            this.dealGetUserTypeEnumList();
+            this.dealGetAllUserTypeEnumList();
             this.dealGetLockStateEnumList();
         },
         destroyed(){
