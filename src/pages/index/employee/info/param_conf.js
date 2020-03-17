@@ -6,12 +6,18 @@ const columns = [{
     key: 'account',
     sorter:true,
     scopedSlots: { customRender: 'account' },
-}, {
+},  {
     title: '姓名',
     align:textAlignDefault,
     dataIndex: 'nickName',
     sorter:true,
     key: 'nickName',
+}, {
+    title: '所属租户',
+    align:textAlignDefault,
+    dataIndex: 'belongTenant.name',
+    sorter:true,
+    key: 'belongTenant.name',
 }, {
     title: '邮箱',
     align:textAlignDefault,
@@ -54,9 +60,10 @@ const searchFormQueryConfObj = {
         matching:'like',
         value:''
     },
-    userType:{
-        fieldName:'userType',
+    belongTenantId:{
+        fieldName:'defineTenantId',
         matching:'equals',
+        foreignName:'userTenant',   //外表的关联查询
         value:''
     },
     locked:{

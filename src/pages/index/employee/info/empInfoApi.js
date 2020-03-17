@@ -106,4 +106,17 @@ export const EmpInfoApi = {
         }
         return axios.post("/user/user_account/grantJobToUser",qs.stringify(obj,{indices: false})).then(res => res) ;
     },
+    getAllDefineTenantEnums() {  //取得 租户 列表
+        var sortObj = {     //固定 order字段 排序
+            field:"ordering",
+            order:"ascend"
+        }
+        var obj = {
+            queryObj:JSON.stringify([]),
+            //paginationObj:JSON.stringify({}),
+            //sortObj:JSON.stringify(sortObj),
+        }
+        //查询所有[租户定义]信息
+        return axios.post('/organization/define_tenant/getAllDefineTenantEnums',qs.stringify(obj)).then(res => res);
+    },
 }

@@ -23,6 +23,13 @@ export  const EmployeeInfoDetailDrawerConf = {
             type:DrawerFieldTypeEnum.String
         },
         {
+            fieldKey:"belongTenantName",
+            fieldKeySplitArr:['belongTenant','name'],
+            fieldName:"所属租户",
+            type:DrawerFieldTypeEnum.String,
+            isNeedSplit:true
+        },
+        {
             fieldKey:"userTypeStr",
             fieldName:"用户类型",
             type:DrawerFieldTypeEnum.String

@@ -10,6 +10,19 @@
                     >
                         <a-row :gutter="10">
                             <a-col :span="searchConf.defaultColSpan">
+                                <a-form-item label="所属租户">
+                                    <a-select showSearch allowClear
+                                              placeholder="请选择"
+                                              style="width: 180px"
+                                              optionFilterProp="children"
+                                              :options="searchConf.binding.belongTenants"
+                                              :filterOption="getFilterOption"
+                                              v-decorator="searchConf.paramConf.belongTenantId"
+                                    >
+                                    </a-select>
+                                </a-form-item>
+                            </a-col>
+                            <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="账号">
                                     <a-input v-decorator="searchConf.paramConf.account" />
                                 </a-form-item>
@@ -27,12 +40,12 @@
                             <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="类型">
                                     <a-select showSearch allowClear
-                                        placeholder="请选择"
-                                        style="width: 180px"
-                                        optionFilterProp="children"
-                                        :options="searchConf.binding.allUserTypes"
-                                        :filterOption="getFilterOption"
-                                        v-decorator="searchConf.paramConf.userType"
+                                              placeholder="请选择"
+                                              style="width: 180px"
+                                              optionFilterProp="children"
+                                              :options="searchConf.binding.userTypes"
+                                              :filterOption="getFilterOption"
+                                              v-decorator="searchConf.paramConf.userType"
                                     >
                                     </a-select>
                                 </a-form-item>
@@ -181,6 +194,7 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
+                :belongTenants="searchConf.binding.belongTenants"
                 @createFormCancel="handleEmployeeInfoCreateFormCancel"
                 @createFormSubmit="handleEmployeeInfoCreateFormSubmit"
             />
@@ -253,6 +267,7 @@
                     loadingFlag: false,
                     defaultColSpan: 8,
                     paramConf: {
+                        belongTenantId: ["belongTenantId", {rules: []}],
                         account: ["account", {rules: []}],
                         nickName: ["nickName", {rules: []}],
                         email: ["email", {rules: []}],
@@ -260,7 +275,8 @@
                         locked: ["locked", {rules: []}]
                     },
                     binding:{
-                        allUserTypes:[],
+                        belongTenants:[],
+                        userTypes:[],
                         lockStates:[]
                     }
                 },
@@ -293,6 +309,7 @@
                     account: '',
                     email: '',
                     userType: '',
+                    belongTenantId: '',
                     locked:'0'
                 },
                 dialogFormDefaultObj:{  //新建时的默认值设置
@@ -300,6 +317,7 @@
                     account: '',
                     email: '',
                     userType: '',
+                    belongTenantId: '',
                     locked:'0'
                 },
                 dialogGrantRoleConf:{
@@ -467,12 +485,22 @@
                 }
                 return queryFieldArr ;
             },
-            dealGetAllUserTypeEnumList(){  //取得 用户类型-枚举列表
+            dealGetUserTypeEnumList(){  //取得 用户类型-枚举列表
                 var _this = this ;
                 UserCommonApis.getAllUserType().then((res) => {
                     if(res && res.hasError == false){
                         if(res.enumList){
-                            _this.searchConf.binding.allUserTypes = res.enumList ;
+                            _this.searchConf.binding.userTypes = res.enumList ;
+                        }
+                    }
+                })
+            },
+            dealGetDefineTenantEnumList(){  //取得 用户类型-枚举列表
+                var _this = this ;
+                EmpInfoApi.getAllDefineTenantEnums().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.enumList){
+                            _this.searchConf.binding.belongTenants = res.enumList ;
                         }
                     }
                 })
@@ -902,7 +930,8 @@
         },
         created(){
             this.dealGetAllUserAccounts();
-            this.dealGetAllUserTypeEnumList();
+            this.dealGetUserTypeEnumList();
+            this.dealGetDefineTenantEnumList();
             this.dealGetLockStateEnumList();
         },
         destroyed(){

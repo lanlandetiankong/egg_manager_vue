@@ -13,23 +13,35 @@
                 layout="vertical"
                 :form="employeeInfoCreateForm"
             >
+                <a-form-item label="所属租户"
+                             v-bind="formItemLayout"
+                >
+                    <a-select showSearch allowClear
+                              placeholder="请选择"
+                              optionFilterProp="children"
+                              :options="belongTenants"
+                              :filterOption="getBelongTenantFilterOption"
+                              v-decorator="formFieldConf.belongTenantId"
+                    >
+                    </a-select>
+                </a-form-item>
                 <a-form-item label="账号"
-                     v-bind="formItemLayout"
+                             v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.account"/>
                 </a-form-item>
                 <a-form-item label="用户名"
-                     v-bind="formItemLayout"
+                             v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.nickName"/>
                 </a-form-item>
                 <a-form-item label="邮箱"
-                     v-bind="formItemLayout"
+                             v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.email"/>
                 </a-form-item>
                 <a-form-item label="头像"
-                     v-bind="formItemLayout"
+                             v-bind="formItemLayout"
                 >
                     <head-img-upload
                         v-if="visible"
@@ -38,11 +50,11 @@
                     >
                     </head-img-upload>
                 </a-form-item>
-                <a-form-item label="用户类型"
-                     v-bind="formItemLayout"
+                <a-form-item label="是否锁定用户"
+                             v-bind="formItemLayout"
                 >
                     <a-radio-group buttonStyle="solid"
-                               v-decorator="formFieldConf.locked"
+                                   v-decorator="formFieldConf.locked"
                     >
                         <a-radio-button value="1">锁定</a-radio-button>
                         <a-radio-button value="0">不锁定</a-radio-button>
@@ -63,6 +75,7 @@
             visible:Boolean,
             actionType:String,
             formObj:Object,
+            belongTenants:Array
         },
         data(){
             var paramsRules ={
@@ -77,6 +90,9 @@
                     {type: 'email',message: '请填写有效的邮箱!'}
                 ],
                 avatarUrl:[],
+                belongTenantId:[
+                    {required:true,message:'请选择所属租户!'}
+                ],
                 locked:[
                     {required:true,message:'请选择是否锁定!'}
                 ]
@@ -97,6 +113,7 @@
                     nickName: ["nickName", {rules: paramsRules.nickName}],
                     email: ["email", {rules: paramsRules.email}],
                     avatarUrl: ["avatarUrl", {rules: paramsRules.avatarUrl}],
+                    belongTenantId: ["belongTenantId", {rules: paramsRules.belongTenantId}],
                     locked: ["locked", {rules: paramsRules.locked}]
                 },
                 employeeInfoCreateForm:{}
@@ -105,32 +122,36 @@
         methods:{
             dealUpdateFormValue(formObj){
                 var _this = this ;
-               if(typeof _this.employeeInfoCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.employeeInfoCreateForm.updateFields({
-                       account: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.account,
-                       }),
-                       nickName: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.nickName,
-                       }),
-                       email: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.email,
-                       }),
-                       avatarUrl: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.avatarUrl,
-                       }),
-                       locked: _this.$form.createFormField({
-                           ...formObj,
-                           value: dealNumberToStr(formObj.locked),
-                       }),
-                   });
-               }
+                if(typeof _this.employeeInfoCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                    _this.employeeInfoCreateForm.updateFields({
+                        account: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.account,
+                        }),
+                        nickName: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.nickName,
+                        }),
+                        email: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.email,
+                        }),
+                        avatarUrl: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.avatarUrl,
+                        }),
+                        belongTenantId: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.belongTenantId,
+                        }),
+                        locked: _this.$form.createFormField({
+                            ...formObj,
+                            value: dealNumberToStr(formObj.locked),
+                        }),
+                    });
+                }
             },
-            getUserTypeFilterOption(input,option){
+            getBelongTenantFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
             dealGetHeadAvatarUrlVal(){  //取得[用户头像上传后的图片object]
@@ -179,6 +200,10 @@
                         avatarUrl: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.avatarUrl
+                        }),
+                        belongTenantId: this.$form.createFormField({
+                            ..._this.formObj,
+                            value: _this.formObj.belongTenantId
                         }),
                         locked: this.$form.createFormField({
                             ..._this.formObj,
