@@ -205,7 +205,7 @@
         },
         created(){
             var userLoginFlag = this.dealVerifyUserToken();
-            if(userLoginFlag == true){
+            if(typeof userLoginFlag != "undefined" && userLoginFlag != null){
                 this.handleGetMenus();
             }
         }
