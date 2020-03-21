@@ -36,14 +36,19 @@
                 if(submitRes){
                     if(submitRes.actionFlag == true){ //后台登录验证成功
                         _this.handleSetUserTokenToCache(submitRes.accountToken);
+                        _this.handleSetAuthorizationToCache(submitRes.authorization);
                         _this.$router.push("/index");
                     }
                 }
             },
-            handleSetUserTokenToCache(userTokenObj){
+            handleSetUserTokenToCache(userTokenObj){    //设置 token
                 this.$store.dispatch('doSetUserToken',userTokenObj) ;
                 window.sessionStorage.setItem("userToken",JSON.stringify(userTokenObj));
                 console.log(JSON.stringify(window.sessionStorage.getItem("userToken")));
+            },
+            handleSetAuthorizationToCache(authorization){   //设置 JWT 值
+                this.$store.dispatch('doSetAuthorization',authorization) ;
+                window.sessionStorage.setItem("authorization",authorization);
             }
         }
     }

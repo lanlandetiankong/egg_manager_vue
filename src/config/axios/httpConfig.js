@@ -60,6 +60,8 @@ var instance = axios.create({
 instance.interceptors.request.use(
     config => {
         var cfgUserToken = window.sessionStorage.getItem("userToken");
+        var cfgAuthorization = window.sessionStorage.getItem("authorization");
+        cfgAuthorization = typeof cfgAuthorization == "undefined" ? "" : cfgAuthorization ;
         //var tokenStr = qs.stringify(JSON.parse(cfgUserToken)) ;
         // 请求头添加token
         if (cfgUserToken) {
@@ -74,6 +76,7 @@ instance.interceptors.request.use(
         } else {
             console.log("employee is loginout");
         }
+        config.headers['authorization'] = cfgAuthorization;
         return config
     },
     error => {

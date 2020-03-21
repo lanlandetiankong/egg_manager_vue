@@ -16,3 +16,6 @@
         anywhere -p 8090
 }
 
+
+#快速关闭 nginx(nginx假死情况下才使用)
+taskkill /f /t /im nginx.exe
