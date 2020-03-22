@@ -267,7 +267,9 @@
                         this.tableCheckIdList = selectedRowKeys;
                     },
                     getCheckboxProps: record => ({  //选择框的默认属性配置
-                        props: {},
+                        props: {
+                            name:record.fid
+                        }
                     }),
                 };
             }
