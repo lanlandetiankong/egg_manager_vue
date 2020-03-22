@@ -10,13 +10,31 @@
                 v-if="!item.children"
                 :key="item.key"
             >
-                <router-link
-                    :style="{color:'#fff'}"
-                    :to="item.path"
-                    :key="item.key">
-                    <a-icon :type="item.iconName" />
-                    <span>{{ item.name }}</span>
-                </router-link>
+                <!-- Router地址跳转 -->
+                <template v-if="item.urlJumpType == 1" >
+                    <router-link
+                        :style="{color:'#fff'}"
+                        :to="item.routerUrl"
+                        :key="item.key">
+                        <a-icon :type="item.iconName" />
+                        <span>{{ item.name }}</span>
+                    </router-link>
+                </template>
+                <!-- 在当前页面打开外部链接 -->
+                <template v-else-if="item.urlJumpType == 2">
+                    <a :href="item.hrefUrl" :style="{color:'#fff'}">
+                        <a-icon :type="item.iconName" />
+                        <span>{{ item.name }}</span>
+                    </a>
+                </template>
+                <!-- 在新页面打开外部链接 -->
+                <template v-else-if="item.urlJumpType == 3">
+                    <a :href="item.hrefUrl" :style="{color:'#fff'}" target="_blank">
+                        <a-icon :type="item.iconName" />
+                        <span>{{ item.name }}</span>
+                    </a>
+                </template>
+
             </a-menu-item>
             <sub-menu-comp
                 v-else
@@ -31,7 +49,7 @@
 <script>
     export default {
         name: "SubMenuComp",
-        props: ['menuInfo'],
+        props: ['menuInfo']
     }
 </script>
 
