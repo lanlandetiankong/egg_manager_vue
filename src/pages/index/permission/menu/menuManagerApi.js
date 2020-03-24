@@ -7,8 +7,11 @@ import qs from 'qs'
 
 export const MenuManagerApi = {
     getAllDefineMenuTree() {
+        var obj = {
+            withRoot:true  ,   //是否包含根节点
+        }
         //查询所有菜单信息(树结构)
-        return axios.post('/define/define_menu/getAllMenuTreeSelect').then(res => res);
+        return axios.post('/define/define_menu/getAllMenuTreeSelect',qs.stringify(obj)).then(res => res);
     },
     getAllDefineMenus(queryArr,pagination,sorter) {
         var sortObj = {}

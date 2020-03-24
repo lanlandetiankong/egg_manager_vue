@@ -87,6 +87,12 @@
                         </a-button>
                     </a-col>
                     <a-col>
+                        <a-button type="primary" icon="book"
+                                  @click="handleDefineRoleGrantMenusById">
+                            授权菜单
+                        </a-button>
+                    </a-col>
+                    <a-col>
                         <a-switch
                             checkedChildren="展示搜索"
                             unCheckedChildren="隐藏搜索"
@@ -155,6 +161,16 @@
                 @grantPermissionFormSubmit="handleRoleGrantPermissionFormSubmit"
             >
             </role-grant-permission-form-comp>
+            <role-grant-menus-form-comp
+                v-if="dialogGrantMenusConf.initFlag == true"
+                :visible="dialogGrantMenusConf.visible"
+                :roleId="dialogGrantMenusObj.roleId"
+                :treeData="dialogGrantMenusObj.treeData"
+                :checkArr="dialogGrantMenusObj.checkedIds"
+                @grantMenusFormCancel="handleRoleGrantMenusFormCancel"
+                @grantMenusFormSubmit="handleRoleGrantMenusFormSubmit"
+            >
+            </role-grant-menus-form-comp>
             <a-drawer
                 :title="drawerConf.detail.defineRole.title"
                 :closeable="drawerConf.detail.defineRole.closable"
@@ -187,10 +203,11 @@
 
     import DefineRoleCreateFormComp from '~Components/index/define/permission/role/DefineRoleCreateFormComp';
     import RoleGrantPermissionFormComp from '~Components/index/define/permission/role/RoleGrantPermissionFormComp';
+    import RoleGrantMenusFormComp from '~Components/index/define/permission/role/RoleGrantMenusFormComp';
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     export default {
         name: "PermissionRoleManagerView",
-        components: {RoleGrantPermissionFormComp, DefineRoleCreateFormComp,SimpleDetailDrawerComp},
+        components: {RoleGrantPermissionFormComp, DefineRoleCreateFormComp,SimpleDetailDrawerComp,RoleGrantMenusFormComp},
         data(){
             return {
                 searchConf:{
@@ -246,6 +263,16 @@
                     roleId:'',
                     all:[],
                     allDataSource:[],
+                    checked:[],
+                    checkedIds:[],
+                },
+                dialogGrantMenusConf:{
+                    visible:false,
+                    initFlag:false
+                },
+                dialogGrantMenusObj: {
+                    roleId:'',
+                    treeData:[],
                     checked:[],
                     checkedIds:[],
                 },
@@ -305,6 +332,16 @@
                         if(res.resultList){
                             _this.dialogGrantPermissionObj.all = res.resultList ;
                             _this.dealAllItemToTransferDataSource(res.resultList);
+                        }
+                    }
+                })
+            },
+            dealGetAllMenuTreeList(){  //取得 所有的[菜单定义]Tree
+                var _this = this ;
+                return PermissionRoleManagerApi.getAllDefineMenuTree().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.resultList){
+                            _this.dialogGrantMenusObj.treeData = res.resultList ;
                         }
                     }
                 })
@@ -434,7 +471,33 @@
                             _this.dialogGrantPermissionConf.visible = true;   //显示弹窗
                         }
                     })
-                } else {
+                }   else {
+                    this.$message.warning('操作失败！未取得有效的角色id！');
+                }
+            },
+            dealDefineRoleGrantMenusById(selectRowId){        //[授权菜单]页面弹窗-封装方法
+                var _this = this ;
+                if(_this.dialogGrantMenusConf.initFlag == false){  //第一次进行[菜单授权]时进行 所有[菜单定义] 的数据加载
+                    this.dealGetAllMenuTreeList().then(() => {
+                        _this.dialogGrantMenusConf.initFlag = true ;
+                    })
+                }
+                _this.dialogGrantMenusObj.roleId = selectRowId ;
+                if (selectRowId) {
+                    PermissionRoleManagerApi.getAllMenuByRoleId(selectRowId).then((res) => {
+                        if(res){
+                            _this.dialogGrantMenusObj.checked = res.resultList;
+                            var checkIdListTemp = [] ;
+                            if(res.resultList && res.resultList.length > 0){
+                                jq.each(res.resultList,function (idx,val) {
+                                    checkIdListTemp.push(val.fid);
+                                })
+                            }
+                            _this.dialogGrantMenusObj.checkedIds = checkIdListTemp;
+                            _this.dialogGrantMenusConf.visible = true;   //显示弹窗
+                        }
+                    })
+                }   else {
                     this.$message.warning('操作失败！未取得有效的角色id！');
                 }
             },
@@ -507,13 +570,25 @@
             handleDefineRoleGrantPermissionsById(e) {     // 分配权限
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning('请选择一行要分配权限的数据！');
+                    this.$message.warning('请选择一行要分配权限的角色！');
                 } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning('请选择至多一行要分配权限的数据！');
+                    this.$message.warning('请选择至多一行要分配权限的角色！');
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     //封装方法 处理
                     _this.dealDefineRoleGrantPermissionsById(selectRowId);
+                }
+            },
+            handleDefineRoleGrantMenusById(e) {     // [授权菜单]
+                var _this = this;
+                if (_this.tableCheckIdList.length < 1) {
+                    this.$message.warning('请选择一行要授权菜单的角色！');
+                } else if (_this.tableCheckIdList.length > 1) {
+                    this.$message.warning('请选择至多一行要授权菜单的角色！');
+                } else {
+                    var selectRowId = _this.tableCheckIdList[0];
+                    //封装方法 处理
+                    _this.dealDefineRoleGrantMenusById(selectRowId);
                 }
             },
             handleDefineRoleCreateFormCancel(e) {  // 创建/更新 权限定义表单->取消
@@ -587,6 +662,28 @@
                     }
                     if (closeDialogFlag == true) {    //关闭弹窗
                         _this.dialogGrantPermissionConf.visible = false;
+                    }
+                });
+            },
+            handleRoleGrantMenusFormCancel(e) {  // [授权菜单]表单->取消
+                var _this = this;
+                _this.dialogGrantMenusConf.visible = false;
+            },
+            handleRoleGrantMenusFormSubmit(e,roleId,checkIds,halfCheckIds) {   // [授权菜单]表单->提交
+                var _this = this;
+                PermissionRoleManagerApi.grantMenusToRole(roleId,checkIds,halfCheckIds).then((res) =>{
+                    var closeDialogFlag = true ;
+                    if (res) {
+                        if (res.hasError == false) {  //异常已经有预处理了
+                            this.$message.success(res.info);
+                        } else {
+                            closeDialogFlag = false;
+                        }
+                    } else {
+                        closeDialogFlag = false;
+                    }
+                    if (closeDialogFlag == true) {    //关闭弹窗
+                        _this.dialogGrantMenusConf.visible = false;
                     }
                 });
             },

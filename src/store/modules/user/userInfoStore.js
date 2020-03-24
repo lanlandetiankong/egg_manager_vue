@@ -5,11 +5,11 @@ const userInfoStore = {
     },
     actions:{
         doSetUserToken({commit},userTokenObj){
-            console.log("doSetUserToken",userTokenObj) ;
+            //console.log("doSetUserToken",userTokenObj) ;
             commit('SET_USER_TOKEN',userTokenObj);
         },
         doSetAuthorization({commit},authorization){
-            console.log("doSetAuthorization",authorization) ;
+            //console.log("doSetAuthorization",authorization) ;
             commit('SET_Authorization',authorization);
         }
     },
@@ -22,7 +22,6 @@ const userInfoStore = {
             state.userToken = userTokenObj;
         },
         SET_Authorization:(state,authorization) => {
-            console.log("SET_Authorization",authorization) ;
             if(typeof authorization == "undefined"){
                 authorization = '' ;
             }
