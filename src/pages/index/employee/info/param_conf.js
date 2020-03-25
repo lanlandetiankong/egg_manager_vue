@@ -60,6 +60,11 @@ const searchFormQueryConfObj = {
         matching:'like',
         value:''
     },
+    userType:{
+        fieldName:'userType',
+        matching:'equals',
+        value:''
+    },
     belongTenantId:{
         fieldName:'defineTenantId',
         matching:'equals',
