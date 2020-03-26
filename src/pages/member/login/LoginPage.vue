@@ -37,6 +37,7 @@
                     if(submitRes.actionFlag == true){ //后台登录验证成功
                         _this.handleSetUserTokenToCache(submitRes.accountToken);
                         _this.handleSetAuthorizationToCache(submitRes.authorization);
+                        _this.handleSetRouterUrlsToCache(submitRes.routerUrlSet);
                         _this.$router.push("/index");
                     }
                 }
@@ -49,7 +50,12 @@
             handleSetAuthorizationToCache(authorization){   //设置 JWT 值
                 this.$store.dispatch('doSetAuthorization',authorization) ;
                 window.sessionStorage.setItem("authorization",authorization);
+            },
+            handleSetRouterUrlsToCache(routerUrls){   //设置 可访问的router路径-Set集合
+                this.$store.dispatch('doSetVisibleRouterUrls',routerUrls) ;
+                window.sessionStorage.setItem("visibleRouterUrls",JSON.stringify(routerUrls));
             }
+
         }
     }
 </script>

@@ -1,10 +1,11 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
+import {message,Modal} from 'ant-design-vue';
 
 const _import = require('~Router/_import_' + process.env.NODE_ENV)
 
+//index的基本布局
 import Layout from '@/layout/Layout'
-
 
 import EmployeeRouter from './main/employee/index'
 import ModuleRouter from './main/module/index'
@@ -16,12 +17,11 @@ import AnnouncementRouter from './main/announcement/index'
 
 //登录、注册
 import MemberRouter from './member/index.js'
-import MemberPage from '~Pages/member/MemberPage'
 //错误页面
 import Error4XXRouter from  './error/error4xx/index'
 
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
 var indexParentRouterCompName = "Layout"
 
@@ -58,10 +58,52 @@ export const constantRouterMap = [
 ]
 
 
-export default new Router({
+//默认可访问的路径，不进行拦截
+const defaultPassRouterUrls = ['','/','/index','/member/login']
+
+
+const vueRouter = new VueRouter({
     mode:'history',
     linkExactActiveClass: 'active', // 保持要跳转后的路由页面标题高亮
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRouterMap
-
 })
+vueRouter.beforeEach((to,from,next) => {
+    var _this = this ;
+    var passFlag = true ;
+    if(to && from){
+        const toPath = to.fullPath ;
+        if(defaultPassRouterUrls.indexOf(toPath) == -1){    //要访问的路径不在 [默认放行路径] ?
+            var visibleRouterUrlsStr = window.sessionStorage.getItem("visibleRouterUrls") ;
+            if(visibleRouterUrlsStr){
+                var visibleRouterUrlsSet = JSON.parse(visibleRouterUrlsStr);
+                if(visibleRouterUrlsSet.indexOf(toPath) == -1){   //验证根据用户角色 返回的可访问路径
+                    passFlag = false ;
+                }
+            }
+        }
+    }
+    if(passFlag){   //放行
+        next();
+    }   else {  //拦截,判断用户是否跳转到首页
+        Modal.confirm({
+            title:"您当前没有权限访问该路径！已拦截您的跳转请求！",
+            closable:true,
+            okText:"留在当前页面",
+            cancelText:"跳转到首页",
+            maskClosable:true,
+            onCancel(close){
+                next("/index");
+                close();
+            },
+            onOk(close){
+                close();
+                next(false);
+            }
+        })
+
+        //message.warning("您当前没有权限访问该路径！已拦截您的跳转请求！");
+    }
+})
+
+export default vueRouter;

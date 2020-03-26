@@ -1,7 +1,8 @@
 const userInfoStore = {
     state:{
         userToken:{},
-        authorization:''
+        authorization:'',
+        visibleRouterUrls:[]
     },
     actions:{
         doSetUserToken({commit},userTokenObj){
@@ -11,6 +12,9 @@ const userInfoStore = {
         doSetAuthorization({commit},authorization){
             //console.log("doSetAuthorization",authorization) ;
             commit('SET_Authorization',authorization);
+        },
+        doSetVisibleRouterUrls({commit},routerUrls){
+            commit('SET_VisibleRouterUrls',routerUrls);
         }
     },
     mutations:{
@@ -26,6 +30,12 @@ const userInfoStore = {
                 authorization = '' ;
             }
             state.authorization = authorization;
+        },
+        SET_VisibleRouterUrls:(state,routerUrls) => {
+            if(typeof routerUrls == "undefined" || routerUrls == null){
+                routerUrls = [] ;
+            }
+            state.visibleRouterUrls = JSON.stringify(routerUrls);
         }
     }
 
