@@ -33,6 +33,19 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
+                                <a-form-item label="是否已启用">
+                                    <a-select showSearch allowClear
+                                              placeholder="请选择"
+                                              style="width: 180px"
+                                              optionFilterProp="children"
+                                              :options="searchConf.binding.switchEnums"
+                                              :filterOption="getPermissionTypeFilterOption"
+                                              v-decorator="searchConf.paramConf.ensure"
+                                    >
+                                    </a-select>
+                                </a-form-item>
+                            </a-col>
+                            <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="备注">
                                     <a-input v-decorator="searchConf.paramConf.remark"/>
                                 </a-form-item>
@@ -81,6 +94,12 @@
                         </a-button>
                     </a-col>
                     <a-col>
+                        <a-button type="primary" icon="check"
+                                  @click="handleDefinePermissionBatchEnusreByIds">
+                            启用
+                        </a-button>
+                    </a-col>
+                    <a-col>
                         <a-switch
                             checkedChildren="展示搜索"
                             unCheckedChildren="隐藏搜索"
@@ -104,6 +123,11 @@
                     :rowSelection="rowSelection"
                     @change="handleTableChange"
                 >
+                    <span slot="ensureStr" slot-scope="record">
+                        <a-tag :color="record.ensure ? 'blue' : 'red'" :key="record.ensure">
+                            {{record.ensureStr}}
+                        </a-tag>
+                    </span>
                     <span slot="typeStr" slot-scope="record">
                         <a-tag color="blue" :key="record.typeStr">
                             {{record.typeStr}}
@@ -163,6 +187,7 @@
 
     import {PermissionManagerApi} from './permissionManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
+    import {BindingCommonApis} from '~Apis/common/CommonApis.js'
 
     import DefinePermissionCreateFormComp from "@/components/index/define/permission/manager/DefinePermissionCreateFormComp";
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
@@ -179,12 +204,14 @@
                         name: ["name", {rules: []}],
                         code: ["code", {rules: []}],
                         type: ["type", {rules: []}],
+                        ensure: ["ensure", {rules: []}],
                         remark:["remark",{rules: []}]
                     },
                     binding:{
                         permission:{
                             types:[]
-                        }
+                        },
+                        switchEnums:[]
                     }
                 },
                 searchForm:this.$form.createForm(this,{name:'search_form'}),
@@ -273,6 +300,16 @@
                     }
                 })
             },
+            dealGetBindingSwitchEnumList(){  //取得 开关式取值-枚举列表
+                var _this = this ;
+                BindingCommonApis.getSwitchEnumList().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.enumList){
+                            _this.searchConf.binding.switchEnums = res.enumList ;
+                        }
+                    }
+                })
+            },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.definePermissionCreateFormRef.definePermissionCreateForm;
             },
@@ -319,6 +356,18 @@
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
                 PermissionManagerApi.batchDelDefinePermission(delIds).then((res) => {
+                    if (res) {
+                        if (res.hasError == false) {  //已经有对错误进行预处理
+                            this.$message.success(res.info);
+                            _this.handleSearchFormQuery(); //表格重新搜索
+                        }
+                    }
+                })
+            },
+            dealBatchEnusreDefinePermission() {  //批量启用
+                var _this = this;
+                var delIds = _this.tableCheckIdList;
+                PermissionManagerApi.batchEnsureDefinePermission(delIds).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
                             this.$message.success(res.info);
@@ -402,7 +451,7 @@
                     }
                 }
             },
-            handleDefinePermissionBatchDeleteByIds(e) {     // 批量删除
+            handleDefinePermissionBatchDeleteByIds(e) {     // 批量删除-确认框
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -417,6 +466,25 @@
                         },
                         onCancel() {
                             _this.$message.info("操作：取消删除");
+                        }
+                    })
+                }
+            },
+            handleDefinePermissionBatchEnusreByIds(e) {     // 批量启用-确认框
+                var _this = this;
+                var selectDelIds = _this.tableCheckIdList;
+                if (selectDelIds.length < 1) {
+                    _this.$message.warning("请选择至少一条要启用的数据！");
+                } else {
+                    _this.$confirm({
+                        content: '权限一旦启用后无法禁用！请再次确认是否启用所选的' + selectDelIds.length + "条数据？",
+                        okText: '确认',
+                        cancelText: '取消',
+                        onOk() {
+                            _this.dealBatchEnusreDefinePermission();
+                        },
+                        onCancel() {
+                            _this.$message.info("操作：取消启用");
                         }
                     })
                 }
@@ -512,6 +580,7 @@
         created(){
             this.dealGetAllDefinePermissions();
             this.dealGetPermissionTypeEnumList();
+            this.dealGetBindingSwitchEnumList();
         },
         destroyed(){
             console.log("权限管理-页面销毁 ...")

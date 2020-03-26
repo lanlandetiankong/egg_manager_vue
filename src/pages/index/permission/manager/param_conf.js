@@ -10,6 +10,11 @@ const columns = [{
     dataIndex: 'code',
     key: 'code',
 }, {
+    title: '是否启用',
+    align:textAlignDefault,
+    key: 'ensureStr',
+    scopedSlots: { customRender: 'ensureStr' },
+}, {
     title: '类型',
     align:textAlignDefault,
     key: 'typeStr',
@@ -38,6 +43,11 @@ const searchFormQueryConfObj = {
     },
     type:{
         fieldName:'type',
+        matching:'equals',
+        value:''
+    },
+    ensure:{
+        fieldName:'ensure',
         matching:'equals',
         value:''
     },

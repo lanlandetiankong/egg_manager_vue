@@ -43,5 +43,11 @@ export const PermissionManagerApi = {
             delId:delId
         }
         return axios.post("/define/define_permission/delOneDefinePermissionByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
-    }
+    },
+    batchEnsureDefinePermission(ids) {  //批量启用
+        var obj = {
+            ensureIds:ids
+        }
+        return axios.post("/define/define_permission/batchEnsureDefinePermissionByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
+    },
 }
