@@ -21,7 +21,7 @@
                 <a-form-item label="编码"
                      v-bind="formItemLayout"
                 >
-                    <a-input v-decorator="formFieldConf.code"/>
+                    <a-input v-decorator="formFieldConf.code" :readonly="formObj.ensure == 1"/>
                 </a-form-item>
                 <a-form-item label="类型"
                      v-bind="formItemLayout"
@@ -127,10 +127,6 @@
                 return "create" == this.actionType ?  "创建" : "更新" ;
             }
         },
-        beforeCreate(){
-            var _this = this ;
-
-        },
         created(){
             var _this = this ;
             _this.definePermissionCreateForm = this.$form.createForm(_this,{
@@ -161,9 +157,6 @@
                     }
                 }
             });
-        },
-        mounted(){
-
         },
         watch:{
             formObj: {
