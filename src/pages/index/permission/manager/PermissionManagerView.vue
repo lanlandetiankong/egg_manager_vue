@@ -139,7 +139,9 @@
                                 详情
                             </a>
                             <a-divider type="vertical" />
-                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)" v-show="record.ensure != 1">
+                                删除
+                            </a-button>
                         </span>
                     </template>
                 </a-table>
@@ -234,6 +236,7 @@
                     sorter:{}
                 },
                 tableCheckIdList: [],
+                tableCheckRowList: [],
                 dialogFormConf: {
                     visible: false,
                     actionType: "create"
@@ -277,6 +280,7 @@
                     selectedRowKeys: this.tableCheckIdList,
                     onChange: (selectedRowKeys, selectedRows) => {  //勾选 修改事件
                         this.tableCheckIdList = selectedRowKeys;
+                        this.tableCheckRowList = selectedRows;
                     },
                     getCheckboxProps: record => ({  //选择框的默认属性配置
                         props: {
@@ -346,6 +350,7 @@
                         }
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
+                        _this.tableCheckRowList = [] ;
                     }
                     _this.dealChangeTableSearchLoadingState(false);
                 }).catch((e) =>{
@@ -457,17 +462,29 @@
                 if (selectDelIds.length < 1) {
                     _this.$message.warning("请选择至少一条要删除的数据！");
                 } else {
-                    _this.$confirm({
-                        content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
-                        okText: '确认',
-                        cancelText: '取消',
-                        onOk() {
-                            _this.dealBatchDelDefinePermission();
-                        },
-                        onCancel() {
-                            _this.$message.info("操作：取消删除");
+                    var selectDelRows = _this.tableCheckRowList ;
+                    var delAbleFlag = true ;    //是否可删除
+                    for (var i in selectDelRows){
+                        if(selectDelRows[i].ensure == 1){
+                            delAbleFlag = false;
+                            break;
                         }
-                    })
+                    }
+                    if(delAbleFlag === true){
+                        _this.$confirm({
+                            content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
+                            okText: '确认',
+                            cancelText: '取消',
+                            onOk() {
+                                _this.dealBatchDelDefinePermission();
+                            },
+                            onCancel() {
+                                _this.$message.info("操作：取消删除");
+                            }
+                        })
+                    }   else {
+                        _this.$message.warning("所选项中包含已启用的项，请取消勾选所有已启用的项后重试！");
+                    }
                 }
             },
             handleDefinePermissionBatchEnusreByIds(e) {     // 批量启用-确认框
