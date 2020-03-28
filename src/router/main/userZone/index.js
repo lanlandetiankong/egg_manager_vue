@@ -15,6 +15,7 @@ const UserZoneRouter = {
             name:'userZoneCenterView',
             meta:{
                 title:'用户中心',icon:"user",keepAliveFlag:true,
+                visitLimit:false ,
                 parentRouterCompName,
                 selfCompName:'UserZoneCenterView'
             }

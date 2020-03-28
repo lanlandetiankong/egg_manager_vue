@@ -41,6 +41,7 @@ export const constantRouterMap = [
                 name:'dashboard',
                 meta:{
                     title:'首页',icon:"dashboard",keepAliveFlag:true,
+                    visitLimit:false ,
                     parentRouterCompName:indexParentRouterCompName,
                     selfCompName:'UserZoneCenterView'
                 }
@@ -59,7 +60,7 @@ export const constantRouterMap = [
 
 
 //默认可访问的路径，不进行拦截
-const defaultPassRouterUrls = ['','/','/index','/member/login']
+const defaultPassRouterUrls = [] ;
 
 
 const vueRouter = new VueRouter({
@@ -74,13 +75,18 @@ vueRouter.beforeEach((to,from,next) => {
     if(to && from){
         const toPath = to.fullPath ;
         if(defaultPassRouterUrls.indexOf(toPath) == -1){    //要访问的路径不在 [默认放行路径] ?
-            var visibleRouterUrlsStr = window.sessionStorage.getItem("visibleRouterUrls") ;
-            if(visibleRouterUrlsStr){
-                var visibleRouterUrlsSet = JSON.parse(visibleRouterUrlsStr);
-                if(visibleRouterUrlsSet.indexOf(toPath) == -1){   //验证根据用户角色 返回的可访问路径
-                    passFlag = false ;
+            if(to.meta.visitLimit == false){    //在router定义的meta配置 visitLimit = false ，标识该路径默认可访问，不会受权限控制 而无法访问!
+                passFlag = true ;
+            }   else {
+                var visibleRouterUrlsStr = window.sessionStorage.getItem("visibleRouterUrls") ;
+                if(visibleRouterUrlsStr){
+                    var visibleRouterUrlsSet = JSON.parse(visibleRouterUrlsStr);
+                    if(visibleRouterUrlsSet.indexOf(toPath) == -1){   //验证根据用户角色 返回的可访问路径
+                        passFlag = false ;
+                    }
                 }
             }
+
         }
     }
     if(passFlag){   //放行

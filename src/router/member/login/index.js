@@ -6,6 +6,9 @@ const MemberLoginRouter = {
     path:'login',
     component:_import('member/login/LoginPage'),
     name:'member_login_page',
+    meta:{
+        visitLimit:false ,
+    },
     children:[
 
     ]

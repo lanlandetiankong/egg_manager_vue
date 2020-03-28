@@ -65,6 +65,7 @@ const AnnouncementRouter = {
             name:'announcementDisplay',
             meta:{
                 title:'公告展示',icon:"book",keepAliveFlag:true,
+                visitLimit:false ,
                 parentRouterCompName,
                 selfCompName:'AnnouncementTagView'
             }
