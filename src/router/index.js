@@ -93,12 +93,20 @@ vueRouter.beforeEach((to,from,next) => {
             cancelText:"跳转到首页",
             maskClosable:true,
             onCancel(close){
-                next("/index");
-                close();
+                debugger;
+                if(typeof close == "function"){
+                    close();
+                }
+                if(from.path != "/index" && from.path != ""){
+                    next({path:"/index"});
+                }   else {
+                    //next(false);
+                }
             },
             onOk(close){
+                debugger;
                 close();
-                next(false);
+                //next(false);
             }
         })
 
