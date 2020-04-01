@@ -24,7 +24,7 @@
                     ></navbar>
                 </a-layout-header>
                 <a-layout-content
-                    :style="{ margin: '10px 0', overflow: 'initial' }"
+                    :style="{ margin: '10px 0' }"
                 >
                     <tags-view
                         :tagsArray="tagViewOpendArray"

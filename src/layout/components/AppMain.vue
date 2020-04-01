@@ -1,11 +1,11 @@
 <template>
-    <section class="app_main" style="min-height: 100%;">
+    <div class="app_main">
         <transition name="fade" mode="out-in">
             <keep-alive :include="cachedBasePages">
                 <router-view style="min-height: 100%;"></router-view>
             </keep-alive>
         </transition>
-    </section>
+    </div>
 </template>
 
 <script>
@@ -79,8 +79,7 @@
     }
 </script>
 <style>
-    .app_main {
+    .app_main{
         min-height: 100%;
-        height: 100%
     }
 </style>
