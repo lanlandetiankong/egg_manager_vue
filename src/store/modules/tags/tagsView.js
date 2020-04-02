@@ -20,6 +20,9 @@ const tagsView = {
                 return ;
             }   else {
                 var viewMetaTemp = view.meta ;
+                if(viewMetaTemp.visitedCacheAble == false){ //明确指明不允许添加到[已访问列表]
+                    return ;
+                }
                 state.visitedViews.push({
                     name:view.name,
                     path:view.path,

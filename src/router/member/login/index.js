@@ -7,7 +7,8 @@ const MemberLoginRouter = {
     component:_import('member/login/LoginPage'),
     name:'member_login_page',
     meta:{
-        visitLimit:false ,
+        visitLimit:false ,title:'登录页面',
+        visitedCacheAble:false
     },
     children:[
 
