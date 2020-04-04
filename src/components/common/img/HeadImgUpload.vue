@@ -8,9 +8,10 @@
             :beforeUpload="beforeImgUpload"
             :data="uploadConf.moreData"
             :action="uploadConf.action"
+            :headers="uploadConf.headers"
             @change="handleUploadChange"
         >
-            <img v-if="headImgRealUri" :src="headImgRealUri" alt="头像" :style="uploadConf.imgDomStyle"/>
+            <img v-if="uploadConf.headImgRealUri" :src="uploadConf.headImgRealUri" alt="头像" :style="uploadConf.imgDomStyle"/>
             <div v-else>
                 <a-icon :type="uploadConf.loading ? 'loading' : 'plus'" />
                 <div class="ant-upload-text">上传</div>
@@ -37,7 +38,9 @@
         },
         data(){
             //上传图片的路径
-            var uploadFieleUrl = "/commom_api/file/imgUpload/headImgUpload"
+            var uploadFieleUrl = "/commom_api/file/imgUpload/headImgUpload";
+            var cfgAuthorization = window.sessionStorage.getItem("authorization");
+            cfgAuthorization = typeof cfgAuthorization == "undefined" ? "" : cfgAuthorization ;
             return {
                 uploadConf:{
                     accept:".png, .jpg, .jpeg",
@@ -46,8 +49,12 @@
                     moreData:{
                         a:"a"
                     },
+                    headers:{
+                        authorization:cfgAuthorization
+                    },
                     loading:false,
                     imageUri:'',
+                    headImgRealUri:'',
                     imgDomStyle:{
                         maxWidth:"100px",
                         maxHeight:"100px"
@@ -77,38 +84,35 @@
                 return (isJPG || isPng) && isLt2M;
             },
             handleUploadChange(info) {
-                console.log("handleUploadChange...");
-                console.log(info);
+                debugger;
                 if (info.file.status === 'uploading') {
                     this.uploadConf.loading = true;
                     return;
                 }
                 if (info.file.status === 'done') {
-                    var resp = info.fileList[0].response ;
+                    //文件个数
+                    let fileListLen = info.fileList.length ;
+                    var resp = info.fileList[fileListLen-1].response ;
                     if(resp.hasError == false){
                         var fileResBeanTemp  = resp.fileResBean ;
                         this.uploadConf.imageUri =  fileResBeanTemp.fileUri ;
                         this.uploadConf.uploadImgObj = fileResBeanTemp ;
+                        this.dealImgUriToReal() ;
+                    }   else {
+                        this.$message.error(resp.errorMsg);
                     }
+                    this.uploadConf.loading = false;
                 }
                 if (info.file.status === 'error') {
-
+                    console.log("error") ;
                 }
+
             },
             dealUploadReset(){  //清空上传框的内容
                 this.uploadConf.imageUri = "" ;
                 this.uploadConf.uploadImgObj = {} ;
-            }
-        },
-        computed:{
-            largeSizeComp(){    //单文件最大上传
-                var largeSizeTemp = this.singleLargeSize ;
-                if(typeof largeSizeTemp == "undefined" || largeSizeTemp == null){   //如果没指定，默认2mb
-                    largeSizeTemp = 1024 * 1024 * 2 ;
-                }
-                return largeSizeTemp ;
             },
-            headImgRealUri(){   //展示的图片的真实地址
+            dealImgUriToReal(){ //设置真正展示的图片地址
                 var _this = this ;
                 var urlPrefix = constantParams.props.upload.url.prefix ;
                 var imgUri = "" ;
@@ -122,7 +126,16 @@
                 }   else {
                     imgUri = _this.uploadConf.imageUri ;
                 }
-                return showImgFlag ? urlPrefix + imgUri : "" ;
+                _this.uploadConf.headImgRealUri =  showImgFlag ? urlPrefix + imgUri : "" ;
+            }
+        },
+        computed:{
+            largeSizeComp(){    //单文件最大上传
+                var largeSizeTemp = this.singleLargeSize ;
+                if(typeof largeSizeTemp == "undefined" || largeSizeTemp == null){   //如果没指定，默认2mb
+                    largeSizeTemp = 1024 * 1024 * 2 ;
+                }
+                return largeSizeTemp ;
             },
             avatarUrlVal(){   //展示的图片的真实地址
                 var _this = this ;
@@ -139,6 +152,9 @@
                 }
                 return showImgFlag ?  imgUri : "" ;
             }
+        },
+        mounted(){
+            this.dealImgUriToReal();
         }
 
     }
