@@ -100,6 +100,13 @@
                         </a-button>
                     </a-col>
                     <a-col>
+                        <a-button icon="upload"
+                                  @click="handleUploadExcelModeltnClick"
+                        >
+                            上传导出Excel模板
+                        </a-button>
+                    </a-col>
+                    <a-col>
                         <a-button type="danger" icon="delete"
                                   @click="handleDefineMenuBatchDeleteByIds">
                             删除
@@ -187,6 +194,16 @@
                     :drawerFieldConf="drawerConf.detail.defineMenu.drawerFieldConf"
                 />
             </a-drawer>
+            <excel-templet-upload-comp
+                v-if="uploadExcelModelconf.visible"
+                :visible="uploadExcelModelconf.visible"
+                :modalCompTitle="uploadExcelModelconf.title"
+                :limitSize="uploadExcelModelconf.limitSize"
+                :moreData="uploadExcelModelconf.moreData"
+                :uploadedBeanList="uploadExcelModelconf.uploadedBeanList"
+                @modalCancel="handleUploadExcelModelModalCancel"
+                @modalSubmit="handleUploadExcelModelModalSubmit"
+            />
         </div>
     </div>
 </template>
@@ -201,9 +218,10 @@
 
     import DefineMenuCreateFormComp from "~Components/index/module/manager/DefineMenuCreateFormComp";
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import ExcelTempletUploadComp from '~Components/index/common/excel/ExcelTempletUploadComp';
     export default {
         name: "MenuManagerView",
-        components: {DefineMenuCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        components: {DefineMenuCreateFormComp,SimpleDetailDrawerComp,ExcelTempletUploadComp, ACol, AFormItem},
         data() {
             return {
                 searchConf:{
@@ -259,6 +277,7 @@
                     bordered:true
                 },
                 tableCheckIdList: [],
+                tableCheckRowList: [],
                 dialogFormConf: {
                     initFlag:false,
                     visible: false,
@@ -299,6 +318,16 @@
                         },
                     },
                 },
+                uploadExcelModelconf:{
+                    visible:false,
+                    title:"Excel模板上传",
+                    limitSize:1,
+                    moreData:{
+                        prefixFolder:"/menuManager",
+                        fid:''
+                    },
+                    uploadedBeanList:[] //当前菜单已经设置的已上传的文件列表
+                }
             }
         },
         computed:{
@@ -307,6 +336,7 @@
                     selectedRowKeys: this.tableCheckIdList,
                     onChange: (selectedRowKeys, selectedRows) => {  //勾选 修改事件
                         this.tableCheckIdList = selectedRowKeys;
+                        this.tableCheckRowList = selectedRows;
                     },
                     getCheckboxProps: record => ({  //选择框的默认属性配置
                         props: {
@@ -376,6 +406,7 @@
                         }
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
+                        _this.tableCheckRowList = [] ;
                     }
                     _this.dealChangeTableSearchLoadingState(false);
                 }).catch((e) =>{
@@ -473,6 +504,25 @@
                     }
                 }
             },
+            handleUploadExcelModeltnClick() {  //[上传导出Excel模板]-点击
+                var _this = this;
+                if (_this.tableCheckIdList.length < 1) {
+                    this.$message.warning('请选择一行要[上传导出Excel模板]的数据！');
+                } else if (_this.tableCheckIdList.length > 1) {
+                    this.$message.warning('请选择至多一行要[上传导出Excel模板]的数据！');
+                } else {
+                    var selectRowId = _this.tableCheckIdList[0];
+                    var selectRowItem = _this.tableCheckRowList[0] ;
+                    if (selectRowId) {
+                        _this.uploadExcelModelconf.title = "["+selectRowItem.menuName + "]Excel模板上传" ;
+                        _this.uploadExcelModelconf.visible = true ;
+                        _this.uploadExcelModelconf.moreData['fid'] = selectRowId ;
+                        _this.uploadExcelModelconf.uploadedBeanList = selectRowItem.uploadExcelBeanList ;
+                    } else {
+                        this.$message.warning('操作失败！未取得有效的菜单id！');
+                    }
+                }
+            },
             handleDefineMenuBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
@@ -541,6 +591,37 @@
                         })
                     }
                 });
+            },
+            handleUploadExcelModelModalCancel(e) {  // [上传Excel导出模板]->取消
+                var _this = this;
+                _this.uploadExcelModelconf.visible = false;
+            },
+            handleUploadExcelModelModalSubmit(e,uploadedFileList,processData) {   // [上传Excel导出模板]->提交
+                var _this = this;
+                var closeDialogFlag = true;
+                var fid = _this.uploadExcelModelconf.moreData.fid ;
+                var fileItem ;
+                if(uploadedFileList){
+                    fileItem = uploadedFileList[0] ;    //只取第一个
+                }
+                MenuManagerApi.updateExcelModel(fid,fileItem).then((res) => {
+                    if (res) {
+                        if (res.hasError == false) {
+                            this.$message.success(res.info);
+                        } else {
+                            closeDialogFlag = false;
+                        }
+                    } else {
+                        closeDialogFlag = false;
+                    }
+                    if (closeDialogFlag == true) {    //关闭弹窗
+                        _this.handleSearchFormQuery(); //表格重新搜索
+                        _this.uploadExcelModelconf.visible = false;
+                    }
+                })
+
+
+                _this.uploadExcelModelconf.visible = false;
             },
             handleDeleteOneById(delId) {     //删除指定行
                 var _this = this;

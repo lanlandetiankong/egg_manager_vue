@@ -227,8 +227,6 @@
                 //console.log("handleQuillEditorChange => ",e.text) ;
             },
             dealQuillImgExtendResponse(res){    //quill 图片上传回调
-                console.log("dealQuillImgExtendResponse");
-                console.log(res);
                 if(res.hasError == false){
                     var fileResBean = res.fileResBean ;
                     return fileResBean.filePrefix + fileResBean.fileUri

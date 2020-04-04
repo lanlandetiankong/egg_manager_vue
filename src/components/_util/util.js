@@ -57,3 +57,14 @@ export const dealNumberToStr = (num,defaultVal) => {
         return num.toString();
     }
 }
+
+
+export function jsObjectToFormData(confObj,formData) { //对象转formdata格式
+    formData = (typeof formData != "undefined" && formData != null) ? formData : new FormData();
+    if(typeof confObj != "undefined" && confObj != null){
+        for(var confItem in confObj){
+            formData.append(confItem,confObj[confItem]);
+        }
+    }
+    return formData;
+}

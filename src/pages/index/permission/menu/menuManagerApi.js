@@ -39,6 +39,11 @@ export const MenuManagerApi = {
     updateDefineMenuByForm(formObj) {  //更新菜单
         return axios.post("/define/define_menu/doUpdateDefineMenu",qs.stringify(formObj)).then(res => res) ;
     },
+    updateExcelModel(menuId,fileItem) {  //更新菜单的excel模板
+        fileItem = (fileItem) ? fileItem : {} ;
+        fileItem['menuId'] = menuId ;
+        return axios.post("/define/define_menu/doUpdateExcelModel",qs.stringify(fileItem)).then(res => res) ;
+    },
     batchDelDefineMenu(ids) {  //批量删除
         var obj = {
             delIds:ids
