@@ -18,7 +18,8 @@
         },
         mounted() {
             //this.initHeight();        //触发高度计算
-            window.vue = this
+            window.vue = this;
+            this.handleSetSessionStorageToVuex();
         },
         methods: {
             changeFixed(clientHeight) {
@@ -30,6 +31,29 @@
                 //console.log($(document).height()) ;//浏览器可视区域对象宽度
                 window.onresize = () => {
                     this.clientHeight = $(document).height();
+                }
+            },
+            handleSetSessionStorageToVuex(){    //刷新时，从设置SessionStorage取得缓存 设置到 vuex
+                this.handleSetUserTokenToCache();
+                this.handleSetAuthorizationToCache();
+                this.handleSetRouterUrlsToCache();
+            },
+            handleSetUserTokenToCache(){    //设置 token
+                var userTokenJson = window.sessionStorage.getItem("userToken");
+                if(userTokenJson){
+                    this.$store.dispatch('doSetUserToken',JSON.parse(userTokenJson)) ;
+                }
+            },
+            handleSetAuthorizationToCache(){   //设置 JWT 值
+                var authorization = window.sessionStorage.getItem("authorization");
+                if(authorization){
+                    this.$store.dispatch('doSetAuthorization',authorization) ;
+                }
+            },
+            handleSetRouterUrlsToCache(routerUrls){   //设置 可访问的router路径-Set集合
+                var routerUrls = window.sessionStorage.getItem("visibleRouterUrls");
+                if(routerUrls){
+                    this.$store.dispatch('doSetVisibleRouterUrls',JSON.parse(routerUrls)) ;
                 }
             }
         },

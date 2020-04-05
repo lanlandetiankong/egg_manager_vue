@@ -35,7 +35,7 @@ const userInfoStore = {
             if(typeof routerUrls == "undefined" || routerUrls == null){
                 routerUrls = [] ;
             }
-            state.visibleRouterUrls = JSON.stringify(routerUrls);
+            state.visibleRouterUrls = routerUrls;
         }
     }
 
