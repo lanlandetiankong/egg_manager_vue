@@ -83,11 +83,13 @@
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="edit"
-                                  @click="handleUpdateDefinePermissionBtnClick">
+                                  v-show="mixin_handlePermissionDomShow('PermCtrl:Permission_Add')"
+                                  @click="handleUpdateDefinePermissionBtnClick"
+                        >
                             更新
                         </a-button>
                     </a-col>
-                    <a-col>
+                    <a-col >
                         <a-button type="danger" icon="delete"
                                   @click="handleDefinePermissionBatchDeleteByIds">
                             删除
@@ -155,6 +157,8 @@
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
                 :permissionTypes="searchConf.binding.permission.types"
+                :permissonCodePrefixs="searchConf.binding.permission.codePrefixs.list"
+                :permissonCodePrefixDefaultChecks="searchConf.binding.permission.codePrefixs.defaultChecks"
                 @createFormCancel="handleDefinePermissionCreateFormCancel"
                 @createFormSubmit="handleDefinePermissionCreateFormSubmit"
             >
@@ -182,6 +186,9 @@
     </div>
 </template>
 <script>
+    import { mapGetters } from 'vuex'
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
+
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
     import {DefinePermissionDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
@@ -211,7 +218,11 @@
                     },
                     binding:{
                         permission:{
-                            types:[]
+                            types:[],
+                            codePrefixs:{
+                                list:[],
+                                defaultChecks:[]
+                            }
                         },
                         switchEnums:[]
                     }
@@ -274,6 +285,7 @@
                 },
             }
         },
+        mixins:[EggCommonMixin],
         computed:{
             rowSelection() {    //行选择
                 return {
@@ -288,9 +300,15 @@
                         }
                     }),
                 };
-            }
+            },
+            ...mapGetters([
+                'userInfoStore_grantedPermissions',
+            ])
         },
         methods: {
+            dealPermissionBtnShow(key){
+                return this.userInfoStore_grantedPermissions.includes('Permission:Add2') ;
+            },
             getPermissionTypeFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
@@ -300,6 +318,17 @@
                     if(res && res.hasError == false){
                         if(res.enumList){
                             _this.searchConf.binding.permission.types = res.enumList ;
+                        }
+                    }
+                })
+            },
+            dealGetPermissionCodePrefixEnumList(){  //取得 权限定义Code前缀-枚举列表
+                var _this = this ;
+                PermissionCommonApis.getAllPermissionCodePrefixs().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.enumList){
+                            _this.searchConf.binding.permission.codePrefixs.list = res.enumList ;
+                            _this.searchConf.binding.permission.codePrefixs.defaultChecks = res.enumDefaultCheckList ;
                         }
                     }
                 })
@@ -597,6 +626,7 @@
         created(){
             this.dealGetAllDefinePermissions();
             this.dealGetPermissionTypeEnumList();
+            this.dealGetPermissionCodePrefixEnumList();
             this.dealGetBindingSwitchEnumList();
         },
         destroyed(){

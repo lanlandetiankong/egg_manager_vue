@@ -38,6 +38,7 @@
                         _this.handleSetUserTokenToCache(submitRes.accountToken);
                         _this.handleSetAuthorizationToCache(submitRes.authorization);
                         _this.handleSetRouterUrlsToCache(submitRes.routerUrlSet);
+                        _this.handleSetGrantedPermissionsToCache(submitRes.permissionSet);
                         _this.$router.push("/index");
                     }
                 }
@@ -54,6 +55,10 @@
             handleSetRouterUrlsToCache(routerUrls){   //设置 可访问的router路径-Set集合
                 this.$store.dispatch('doSetVisibleRouterUrls',routerUrls) ;
                 window.sessionStorage.setItem("visibleRouterUrls",JSON.stringify(routerUrls));
+            },
+            handleSetGrantedPermissionsToCache(grantedPermissions){   //设置 可使用的 权限code 集合
+                this.$store.dispatch('doSetGrantedPermissions',grantedPermissions) ;
+                window.sessionStorage.setItem("grantedPermissions",JSON.stringify(grantedPermissions));
             }
 
         }

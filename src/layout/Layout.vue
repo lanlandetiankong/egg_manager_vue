@@ -48,12 +48,13 @@
 
 <script>
     import {LayoutApi} from '~Layout/_LayoutApi.js' ;
-    import $ from 'jquery' ;
 
     import { Navbar, Sidebar, AppMain, TagsView,BaseFooter } from './components'
     import ALayoutSider from "ant-design-vue/es/layout/Sider";
 
     import {LayoutFunc} from './_LayoutFunc.js'
+
+    import ResizeMixin from './mixin/ResizeHandler';
 
     export default {
         name: "Layout",
@@ -65,6 +66,7 @@
             TagsView,
             BaseFooter
         },
+        mixins: [ResizeMixin],
         data() {
             return {
                 routerDefineObj:{   //路径定义对象,请勿修改！(请保持与外部$router一致)

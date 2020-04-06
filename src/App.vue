@@ -37,6 +37,7 @@
                 this.handleSetUserTokenToCache();
                 this.handleSetAuthorizationToCache();
                 this.handleSetRouterUrlsToCache();
+                this.handleSetGrantedPermissionToCache();
             },
             handleSetUserTokenToCache(){    //设置 token
                 var userTokenJson = window.sessionStorage.getItem("userToken");
@@ -50,10 +51,16 @@
                     this.$store.dispatch('doSetAuthorization',authorization) ;
                 }
             },
-            handleSetRouterUrlsToCache(routerUrls){   //设置 可访问的router路径-Set集合
+            handleSetRouterUrlsToCache(){   //设置 可访问的router路径-Set集合
                 var routerUrls = window.sessionStorage.getItem("visibleRouterUrls");
                 if(routerUrls){
                     this.$store.dispatch('doSetVisibleRouterUrls',JSON.parse(routerUrls)) ;
+                }
+            },
+            handleSetGrantedPermissionToCache(){   //设置 可访问的router路径-Set集合
+                var grantedPermissions = window.sessionStorage.getItem("grantedPermissions");
+                if(grantedPermissions){
+                    this.$store.dispatch('doSetGrantedPermissions',JSON.parse(grantedPermissions)) ;
                 }
             }
         },

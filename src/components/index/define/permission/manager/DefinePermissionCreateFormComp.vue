@@ -21,7 +21,16 @@
                 <a-form-item label="编码"
                      v-bind="formItemLayout"
                 >
-                    <a-input v-decorator="formFieldConf.code" :readonly="formObj.ensure == 1"/>
+                    <a-input v-decorator="formFieldConf.code" :readonly="formObj.ensure == 1">
+                        <a-select slot="addonBefore"
+                                  v-decorator="['codePrefix',{ initialValue: permissonCodePrefixDefaultChecks }]"
+                                  style="width:160px"
+                                  optionFilterProp="children"
+                                  :options="permissonCodePrefixs"
+                                  :filterOption="getPermissionTypeFilterOption"
+                        >
+                        </a-select>
+                    </a-input>
                 </a-form-item>
                 <a-form-item label="类型"
                      v-bind="formItemLayout"
@@ -54,7 +63,15 @@
             visible:Boolean,
             actionType:String,
             formObj:Object,
-            permissionTypes:Array
+            permissionTypes:Array,
+            permissonCodePrefixs:{  //code前缀枚举
+                type:Array,
+                default:[]
+            },
+            permissonCodePrefixDefaultChecks:{
+                type:Array,
+                default:[]
+            }
         },
         data(){
             var paramsRules ={

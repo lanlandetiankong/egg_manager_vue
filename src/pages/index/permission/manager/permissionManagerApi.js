@@ -27,6 +27,12 @@ export const PermissionManagerApi = {
         return axios.post("/define/define_permission/getDefinePermissionById",qs.stringify(params)).then(res => res) ;
     },
     addDefinePermissionByForm(formObj) {     //新增权限
+        debugger;
+        if(formObj){
+            if(formObj.codePrefix){
+                formObj.code = formObj.codePrefix[0] + formObj.code ;
+            }
+        }
         return axios.post("/define/define_permission/doAddDefinePermission",qs.stringify(formObj));
     },
     updateDefinePermissionByForm(formObj) {  //更新权限

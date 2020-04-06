@@ -11,5 +11,8 @@ export const PermissionCommonApis = {
     },
     getAllRoleTypes() {
         return axios.post('/common_api/permission/getAllRoleTypeEnumList').then((res) => res) ;
-    }
+    },
+    getAllPermissionCodePrefixs() {
+        return axios.post('/common_api/permission/getAllPermissionCodePrefixEnumList').then((res) => res) ;
+    },
 }

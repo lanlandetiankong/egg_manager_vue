@@ -2,7 +2,8 @@ const userInfoStore = {
     state:{
         userToken:{},
         authorization:'',
-        visibleRouterUrls:[]
+        visibleRouterUrls:[],   //可访问的菜单路径-集合
+        grantedPermissions:[]  //可使用的权限-集合
     },
     actions:{
         doSetUserToken({commit},userTokenObj){
@@ -15,6 +16,9 @@ const userInfoStore = {
         },
         doSetVisibleRouterUrls({commit},routerUrls){
             commit('SET_VisibleRouterUrls',routerUrls);
+        },
+        doSetGrantedPermissions({commit},grantedPermissions){
+            commit('SET_GrantedPermissions',grantedPermissions);
         }
     },
     mutations:{
@@ -36,9 +40,32 @@ const userInfoStore = {
                 routerUrls = [] ;
             }
             state.visibleRouterUrls = routerUrls;
+        },
+        SET_GrantedPermissions:(state,grantedPermissions) => {
+            if(typeof grantedPermissions == "undefined" || grantedPermissions == null){
+                grantedPermissions = [] ;
+            }
+            state.grantedPermissions = grantedPermissions;
         }
+    },
+    getters: {
+        userInfoStore_userToken(state, getters, rootState) {
+            return state.userToken ;
+        },
+        userInfoStore_authorization(state, getters, rootState) {
+            return state.authorization ;
+        },
+        userInfoStore_visibleRouterUrls(state, getters, rootState) {
+            return state.visibleRouterUrls ;
+        },
+        userInfoStore_grantedPermissions(state, getters, rootState) {
+            if(state.grantedPermissions){
+                return state.grantedPermissions ;
+            }   else {
+                return new Array() ;
+            }
+        },
     }
-
 }
 
 
