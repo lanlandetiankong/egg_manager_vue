@@ -306,9 +306,6 @@
             ])
         },
         methods: {
-            dealPermissionBtnShow(key){
-                return this.userInfoStore_grantedPermissions.includes('Permission:Add2') ;
-            },
             getPermissionTypeFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },

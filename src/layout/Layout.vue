@@ -7,7 +7,7 @@
             >
                 <sidebar
                     class="sidebar-container"
-                    :menuList="siderbar.menuList"
+                    :menuList="SideMenuList"
                     :siderCollapsed="siderbar.conf.collapsed"
                     @siderbar-menu-open="doSiderbarMenuOpenView"
                 >
@@ -56,6 +56,14 @@
 
     import ResizeMixin from './mixin/ResizeHandler';
 
+    var constantVars = {
+        MenuUrlJumpTypeEnum:{
+            RouterUrlJump:1,
+            OutUrlJump:2,
+            OutUrlBlankJump:3
+        }
+    }
+
     export default {
         name: "Layout",
         components: {
@@ -77,8 +85,8 @@
                     conf:{
                         collapsed: false,
                     },
-                    menuList: [],
                 },
+                SideMenuList:[],
                 tagsConf: {
                     tagsArray:[],
                     selectedTag:{}
@@ -87,7 +95,8 @@
                     userInfo:{
                         imgSrc: '~UserImgPath/panda-egg.jpg'
                     }
-                }
+                },
+
             }
         },
         computed: {
@@ -109,7 +118,7 @@
             handleGetMenus() {
                 var _this = this;
                 LayoutApi.doGetAllMenu().then(res => {
-                    _this.siderbar.menuList = res.resultList;
+                    _this.SideMenuList = res.resultList;
                 });
             },
             doSiderbarMenuOpenView(item,key,keypath) {
@@ -120,22 +129,7 @@
                     left:0,
                     top:0
                 });
-                if(1==2){
-                    var addTagObj = LayoutFunc.handleGetMenuToTagObj(_this,_this.siderbar.menuList,key);
-                    //console.log("addTagObj",addTagObj);
-                    if(addTagObj != null){
-                        //_this.tagsConf.tagsArray.push(addTagObj);
-                        console.log(_this.$route);
-                        _this.tagsConf.selectedTag = addTagObj ;
-                        this.$store.dispatch('doSetContextMenuPosition',{
-                            visible:false,
-                            left:0,
-                            top:0
-                        });
-                    }   else {
-                        console.log("添加菜单失败!") ;
-                    }
-                }
+
             },
             doTagItemNativeClick(e,clickTag) {
                 this.doToggleCurrentTag(clickTag) ;
@@ -203,12 +197,50 @@
             },
             handleGoToUserCenter(){ //子组件命令-跳转到用户中心
                 this.$router.push(this.routerDefineObj.userCenterView);
+            },
+            dealCheckMenuItemPutAble(menuItem){ //返回是否可添加到map
+                return menuItem.routerUrl && menuItem.urlJumpType == constantVars.MenuUrlJumpTypeEnum.RouterUrlJump ;
+            },
+            dealRecursiveMenuChildrenToMap(menuUrlMap,menuItem){
+                var _this = this ;
+                if(_this.dealCheckMenuItemPutAble(menuItem)){
+                    menuUrlMap.set(menuItem.routerUrl,menuItem) ;
+                }
+                var itemChildrens = menuItem.children ;
+                if(itemChildrens && itemChildrens.length > 0){
+                    for(var childIdx in itemChildrens){
+                        _this.dealRecursiveMenuChildrenToMap(menuUrlMap,itemChildrens[childIdx]);
+                    }
+                }
+            },
+            handleMenuListToRouters(menuList){
+                var _this = this ;
+                var menuUrlMap = new Map();
+                if(menuList && menuList.length > 0){
+                    for(var idx in menuList){
+                        var menuItem = menuList[idx];
+                        _this.dealRecursiveMenuChildrenToMap(menuUrlMap,menuItem);
+                    }
+                }
+                this.$store.dispatch('doSetGrantMenuUrlMap',menuUrlMap) ;
+                console.log(menuUrlMap);
             }
         },
         created(){
             var userLoginFlag = this.dealVerifyUserToken();
             if(typeof userLoginFlag != "undefined" && userLoginFlag != null){
                 this.handleGetMenus();
+            }
+        },
+        watch:{
+            SideMenuList:{
+                handler(val,oval){  //隐藏与展示弹窗时监听
+                    console.log("SideMenuList ==>change val");
+                    console.log(val);
+                    this.handleMenuListToRouters(val);
+                },
+                deep: true,
+                immediate:true
             }
         }
     }
