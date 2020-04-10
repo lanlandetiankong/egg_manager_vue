@@ -7,7 +7,7 @@
             >
                 <sidebar
                     class="sidebar-container"
-                    :menuList="SideMenuList"
+                    :menuList="routingStore_grantMenuList"
                     :siderCollapsed="siderbar.conf.collapsed"
                     @siderbar-menu-open="doSiderbarMenuOpenView"
                 >
@@ -47,22 +47,13 @@
 </template>
 
 <script>
-    import {LayoutApi} from '~Layout/_LayoutApi.js' ;
+    import { mapGetters } from 'vuex'
 
     import { Navbar, Sidebar, AppMain, TagsView,BaseFooter } from './components'
     import ALayoutSider from "ant-design-vue/es/layout/Sider";
 
-    import {LayoutFunc} from './_LayoutFunc.js'
-
     import ResizeMixin from './mixin/ResizeHandler';
 
-    var constantVars = {
-        MenuUrlJumpTypeEnum:{
-            RouterUrlJump:1,
-            OutUrlJump:2,
-            OutUrlBlankJump:3
-        }
-    }
 
     export default {
         name: "Layout",
@@ -86,7 +77,6 @@
                         collapsed: false,
                     },
                 },
-                SideMenuList:[],
                 tagsConf: {
                     tagsArray:[],
                     selectedTag:{}
@@ -102,7 +92,10 @@
         computed: {
             tagViewOpendArray() {
                 return this.$store.state.tagsView.visitedViews ;
-            }
+            },
+            ...mapGetters([
+                'routingStore_grantMenuList',
+            ])
         },
         methods: {
             dealGotoIndex(){
@@ -114,12 +107,6 @@
                         this.$router.push('/index');
                     }
                 }
-            },
-            handleGetMenus() {
-                var _this = this;
-                LayoutApi.doGetAllMenu().then(res => {
-                    _this.SideMenuList = res.resultList;
-                });
             },
             doSiderbarMenuOpenView(item,key,keypath) {
                 var _this = this ;
@@ -197,50 +184,12 @@
             },
             handleGoToUserCenter(){ //子组件命令-跳转到用户中心
                 this.$router.push(this.routerDefineObj.userCenterView);
-            },
-            dealCheckMenuItemPutAble(menuItem){ //返回是否可添加到map
-                return menuItem.routerUrl && menuItem.urlJumpType == constantVars.MenuUrlJumpTypeEnum.RouterUrlJump ;
-            },
-            dealRecursiveMenuChildrenToMap(menuUrlMap,menuItem){
-                var _this = this ;
-                if(_this.dealCheckMenuItemPutAble(menuItem)){
-                    menuUrlMap.set(menuItem.routerUrl,menuItem) ;
-                }
-                var itemChildrens = menuItem.children ;
-                if(itemChildrens && itemChildrens.length > 0){
-                    for(var childIdx in itemChildrens){
-                        _this.dealRecursiveMenuChildrenToMap(menuUrlMap,itemChildrens[childIdx]);
-                    }
-                }
-            },
-            handleMenuListToRouters(menuList){
-                var _this = this ;
-                var menuUrlMap = new Map();
-                if(menuList && menuList.length > 0){
-                    for(var idx in menuList){
-                        var menuItem = menuList[idx];
-                        _this.dealRecursiveMenuChildrenToMap(menuUrlMap,menuItem);
-                    }
-                }
-                this.$store.dispatch('doSetGrantMenuUrlMap',menuUrlMap) ;
-                console.log(menuUrlMap);
             }
         },
         created(){
             var userLoginFlag = this.dealVerifyUserToken();
             if(typeof userLoginFlag != "undefined" && userLoginFlag != null){
-                this.handleGetMenus();
-            }
-        },
-        watch:{
-            SideMenuList:{
-                handler(val,oval){  //隐藏与展示弹窗时监听
-                    console.log("SideMenuList ==>change val");
-                    console.log(val);
-                    this.handleMenuListToRouters(val);
-                },
-                deep: true,
-                immediate:true
+                //当用户登录后
             }
         }
     }

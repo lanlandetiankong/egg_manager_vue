@@ -11,5 +11,8 @@ export const LoginMainApi = {
 
         }
         return axios.post('')
+    },
+    doGetAllMenu() {    //取得用户 能访问菜单列表
+        return axios.post('/define/define_menu/user/getGrantedMenuTree').then(res => res) ;
     }
 }
