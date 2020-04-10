@@ -10,10 +10,10 @@
                          @click.native="handleTagItemNativeClick(tag,$event)"
                          @contextmenu.prevent.native="handleOpenContextMenu(tag,$event)"
             >
-                <template v-if="typeof tag.icon != 'undefined' && tag.icon != null && tag.icon != '' ">
-                    <a-icon :type="tag.icon" />
+                <template v-if="typeof tag.meta.icon != 'undefined' && tag.meta.icon != null && tag.meta.icon != '' ">
+                    <a-icon :type="tag.meta.icon" />
                 </template>
-                {{tag.title}}  &nbsp;
+                {{tag.title}}&nbsp;
                 <a-icon type="close" @click.prevent.stop="handleSelectedTagItemClose(tag,$event)"/>
             </router-link>
         </vue-scroll>
