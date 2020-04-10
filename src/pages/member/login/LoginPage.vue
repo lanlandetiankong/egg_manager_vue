@@ -11,6 +11,8 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
+    import {AsyncRouterUtil} from '~Router/asyncRouterUtil.js';
     import {LoginMainApi} from './_LoginMainApi.js'
     import LoginMainComp from '~Components/login/LoginMainComp.vue'
 
@@ -30,6 +32,15 @@
                     }
                 }
             }
+        },
+        computed: {
+            tagViewOpendArray() {
+                return this.$store.state.tagsView.visitedViews ;
+            },
+            ...mapGetters([
+                'routingStore_grantedMenuList',
+                'routingStore_grantedMenuUrlMap'
+            ])
         },
         methods:{
             handleLoginFormSubmit(e,loginForm,submitRes){
@@ -71,8 +82,14 @@
                         this.$store.dispatch('doDelAllViews') ; //登录前清空已访问页面的tag缓存
                         window.sessionStorage.setItem("grantedMenuList",JSON.stringify(menuList));
                         window.sessionStorage.setItem("grantedMenuUrlMap",JSON.stringify(urlMap));
+                        this.$store.dispatch('doSetGrantedMenuList',menuList) ;
+                        this.$store.dispatch('doSetGrantedMenuUrlMap',urlMap) ;
+                        _this.handleMenuListToRouters(urlMap);
                     }
                 });
+            },
+            handleMenuListToRouters(grantedMenuUrlMap){      //将后台的[菜单配置]更新到 VueRouter配置中
+                AsyncRouterUtil.dealMenuListToRouters(grantedMenuUrlMap,this);
             }
 
         }

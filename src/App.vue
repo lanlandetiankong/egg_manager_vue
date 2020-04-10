@@ -83,7 +83,9 @@
             },
             handleAfterPageRefresh(){
                 this.$store.dispatch("doDelAllViews");
-                this.$router.push("/index");
+                if(this.$route.path != "/index"){
+                    this.$router.push("/index");
+                }
             },
             handleMenuListToRouters(){
                 AsyncRouterUtil.dealMenuListToRouters(this.routingStore_grantedMenuUrlMap,this);
