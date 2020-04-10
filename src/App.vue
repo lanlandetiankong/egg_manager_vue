@@ -5,7 +5,10 @@
 </template>
 
 <script>
-    import $ from 'jquery'
+    import $ from 'jquery';
+    import { mapGetters } from 'vuex' ;
+    import {AsyncRouterUtil} from '~Router/asyncRouterUtil.js';
+
     export default {
         name: 'App',
         data() {
@@ -16,10 +19,11 @@
                 }
             }
         },
-        mounted() {
-            //this.initHeight();        //触发高度计算
-            window.vue = this;
-            this.handleSetSessionStorageToVuex();
+        computed:{
+            ...mapGetters([
+                'routingStore_grantedMenuList',
+                'routingStore_grantedMenuUrlMap'
+            ])
         },
         methods: {
             changeFixed(clientHeight) {
@@ -38,6 +42,8 @@
                 this.handleSetAuthorizationToCache();
                 this.handleSetRouterUrlsToCache();
                 this.handleSetGrantedPermissionToCache();
+                this.handleSetGrantedMenuListToCache();
+                this.handleSetGrantedMenuUrlMapToCache();
             },
             handleSetUserTokenToCache(){    //设置 token
                 var userTokenJson = window.sessionStorage.getItem("userToken");
@@ -62,6 +68,25 @@
                 if(grantedPermissions){
                     this.$store.dispatch('doSetGrantedPermissions',JSON.parse(grantedPermissions)) ;
                 }
+            },
+            handleSetGrantedMenuListToCache(){   //设置 侧边菜单
+                var grantedMenuList = window.sessionStorage.getItem("grantedMenuList");
+                if(grantedMenuList){
+                    this.$store.dispatch('doSetGrantedMenuList',JSON.parse(grantedMenuList)) ;
+                }
+            },
+            handleSetGrantedMenuUrlMapToCache(){   //设置 侧边菜单 菜单url配置映射
+                var grantedMenuUrlMap = window.sessionStorage.getItem("grantedMenuUrlMap");
+                if(grantedMenuUrlMap){
+                    this.$store.dispatch('doSetGrantedMenuUrlMap',JSON.parse(grantedMenuUrlMap)) ;
+                }
+            },
+            handleAfterPageRefresh(){
+                this.$store.dispatch("doDelAllViews");
+                this.$router.push("/index");
+            },
+            handleMenuListToRouters(){
+                AsyncRouterUtil.dealMenuListToRouters(this.routingStore_grantedMenuUrlMap,this);
             }
         },
         watch: {
@@ -69,6 +94,21 @@
                 this.changeFixed(this.clientHeight);
             }
         },
+        mounted () {
+            //this.initHeight();        //触发高度计算
+            window.vue = this;
+            this.handleSetSessionStorageToVuex();
+
+
+            if (window.performance.navigation.type == 1) {
+                //console.log("页面被刷新");
+                this.handleAfterPageRefresh();
+            } else {
+                //console.log("首次被加载")
+            }
+            this.handleMenuListToRouters();
+        }
+
     }
 </script>
 <style>

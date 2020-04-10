@@ -12,7 +12,6 @@
 
 <script>
     import {LoginMainApi} from './_LoginMainApi.js'
-    import {ConstantVars} from '~Utils/constantVars.js'
     import LoginMainComp from '~Components/login/LoginMainComp.vue'
 
     export default {
@@ -41,7 +40,7 @@
                         _this.handleSetAuthorizationToCache(submitRes.authorization);
                         _this.handleSetRouterUrlsToCache(submitRes.routerUrlSet);
                         _this.handleSetGrantedPermissionsToCache(submitRes.permissionSet);
-                        _this.handleMenuListToRouters();
+                        _this.handleMenuListToCache();
                         _this.$router.push("/index");
                     }
                 }
@@ -63,65 +62,15 @@
                 this.$store.dispatch('doSetGrantedPermissions',grantedPermissions) ;
                 window.sessionStorage.setItem("grantedPermissions",JSON.stringify(grantedPermissions));
             },
-            dealCheckMenuItemPutAble(routerItem){ //返回是否可添加到routerUrlMap
-                return routerItem.path ;
-            },
-            dealSetMenuConfToRouter(toRouter,menuConf) {    //将值设置到VueRouter的相关配置
-                if(menuConf){
-                    var menuIconName = menuConf.iconName;
-                    if(menuIconName){
-                        toRouter.meta.icon = menuIconName ;
-                    }
-                    var menuName = menuConf.name;
-                    if(menuName){
-                        toRouter.meta.title = menuName ;
-                    }
-                    toRouter.meta.visitLimit = false ;
-                }
-            },
-            dealRecursiveMenuChildrenToMap(routerUrlMap,routerItem,parentUrl){
-                var _this = this ;
-                parentUrl = (parentUrl) ? parentUrl+"/" : "/" ;
-                if(_this.dealCheckMenuItemPutAble(routerItem)){
-                    var realUrl = (parentUrl+routerItem.path).replace("//","/");
-                    if(realUrl.indexOf("/") != 0){
-                        realUrl = "/" + realUrl ;
-                    }
-                    routerUrlMap.set(realUrl,routerItem) ;
-                }
-                var itemChildrens = routerItem.children ;
-                if(itemChildrens && itemChildrens.length > 0){
-                    var nextParentUrl = parentUrl+routerItem.path ;
-                    for(var childIdx in itemChildrens){
-                        _this.dealRecursiveMenuChildrenToMap(routerUrlMap,itemChildrens[childIdx],nextParentUrl);
-                    }
-                }
-            },
-            handleMenuListToRouters(){  //将后台的[菜单配置]更新到 VueRouter配置中
+            handleMenuListToCache(){  //将后台的[菜单配置]更新到 VueRouter配置中
                 var _this = this ;
                 LoginMainApi.doGetAllMenu().then(res => {
                     if(res.hasError == false){
                         var menuList = res.resultList;
                         var urlMap = res.resultMap ;
                         this.$store.dispatch('doDelAllViews') ; //登录前清空已访问页面的tag缓存
-                        this.$store.dispatch('doSetGrantMenuList',menuList) ;
-                        var routersArrTemp = _this.$router.options.routes;
-                        var routerUrlMap = new Map();   //将VueRouter根据url为key,对应Router为Value映射为map
-                        if(routersArrTemp && routersArrTemp.length > 0){
-                            for(var idx in routersArrTemp){
-                                var routerItem = routersArrTemp[idx];
-                                _this.dealRecursiveMenuChildrenToMap(routerUrlMap,routerItem);
-                            }
-                        }
-                        for(var urlKey in urlMap){  //遍历[可访问url]Map
-                            var grantMenuUrlFlag = routerUrlMap.has(urlKey);
-                            if(grantMenuUrlFlag == true){   //如果定义的路由有对应的后台相关配置
-                                var urlConf =  urlMap[urlKey];
-                                var routerItem = routerUrlMap.get(urlKey);
-                                _this.dealSetMenuConfToRouter(routerItem,urlConf); //根据后台配置修改路由的相关配置
-                            }
-                        }
-                        //console.log(routerUrlMap);
+                        window.sessionStorage.setItem("grantedMenuList",JSON.stringify(menuList));
+                        window.sessionStorage.setItem("grantedMenuUrlMap",JSON.stringify(urlMap));
                     }
                 });
             }

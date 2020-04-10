@@ -1,13 +1,13 @@
 const routingStore = {
     state:{
-        grantMenuList:[],
-        grantMenuUrlMap: new Map()
+        grantedMenuList:[],
+        grantedMenuUrlMap: new Map()
     },
     actions:{
-        doSetGrantMenuList({commit},menuList){
+        doSetGrantedMenuList({commit},menuList){
             commit('SET_GRANT_MENU_LIST',menuList);
         },
-        doSetGrantMenuUrlMap({commit},menuUrlMap){
+        doSetGrantedMenuUrlMap({commit},menuUrlMap){
             commit('SET_GRANT_MENU_URL_MAP',menuUrlMap);
         }
     },
@@ -16,23 +16,23 @@ const routingStore = {
             if(typeof menuList == "undefined"){
                 menuList = [] ;
             }
-            state.grantMenuList = menuList;
+            state.grantedMenuList = menuList;
         },
         SET_GRANT_MENU_URL_MAP:(state,menuUrlMap) => {
             //console.log("SET_GRANT_MENU_URL_MAP",menuUrlMap) ;
             if(typeof menuUrlMap == "undefined"){
                 menuUrlMap = new Map() ;
             }
-            state.grantMenuUrlMap = menuUrlMap;
+            state.grantedMenuUrlMap = menuUrlMap;
         }
     },
     getters: {
-        routingStore_grantMenuUrlMap(state, getters, rootState) {
-            return state.grantMenuUrlMap ;
+        routingStore_grantedMenuList(state, getters, rootState) {
+            return state.grantedMenuList ;
         },
-        routingStore_grantMenuList(state, getters, rootState) {
-            return state.grantMenuList ;
-        }
+        routingStore_grantedMenuUrlMap(state, getters, rootState) {
+            return state.grantedMenuUrlMap ;
+        },
     }
 }
 

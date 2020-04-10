@@ -7,7 +7,7 @@
             >
                 <sidebar
                     class="sidebar-container"
-                    :menuList="routingStore_grantMenuList"
+                    :menuList="routingStore_grantedMenuList"
                     :siderCollapsed="siderbar.conf.collapsed"
                     @siderbar-menu-open="doSiderbarMenuOpenView"
                 >
@@ -94,7 +94,7 @@
                 return this.$store.state.tagsView.visitedViews ;
             },
             ...mapGetters([
-                'routingStore_grantMenuList',
+                'routingStore_grantedMenuList',
             ])
         },
         methods: {

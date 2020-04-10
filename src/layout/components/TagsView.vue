@@ -10,6 +10,9 @@
                          @click.native="handleTagItemNativeClick(tag,$event)"
                          @contextmenu.prevent.native="handleOpenContextMenu(tag,$event)"
             >
+                <template v-if="typeof tag.icon != 'undefined' && tag.icon != null && tag.icon != '' ">
+                    <a-icon :type="tag.icon" />
+                </template>
                 {{tag.title}}  &nbsp;
                 <a-icon type="close" @click.prevent.stop="handleSelectedTagItemClose(tag,$event)"/>
             </router-link>
