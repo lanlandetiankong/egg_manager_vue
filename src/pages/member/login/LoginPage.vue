@@ -66,7 +66,7 @@
             dealCheckMenuItemPutAble(routerItem){ //返回是否可添加到routerUrlMap
                 return routerItem.path ;
             },
-            dealSetMenuConfToRouter(toRouter,menuConf) {    //将值设置到vue router定义
+            dealSetMenuConfToRouter(toRouter,menuConf) {    //将值设置到VueRouter的相关配置
                 if(menuConf){
                     var menuIconName = menuConf.iconName;
                     if(menuIconName){
@@ -97,23 +97,23 @@
                     }
                 }
             },
-            handleMenuListToRouters(){
+            handleMenuListToRouters(){  //将后台的[菜单配置]更新到 VueRouter配置中
+                var _this = this ;
                 LoginMainApi.doGetAllMenu().then(res => {
                     if(res.hasError == false){
                         var menuList = res.resultList;
                         var urlMap = res.resultMap ;
                         this.$store.dispatch('doDelAllViews') ; //登录前清空已访问页面的tag缓存
                         this.$store.dispatch('doSetGrantMenuList',menuList) ;
-                        var _this = this ;
                         var routersArrTemp = _this.$router.options.routes;
-                        var routerUrlMap = new Map();
+                        var routerUrlMap = new Map();   //将VueRouter根据url为key,对应Router为Value映射为map
                         if(routersArrTemp && routersArrTemp.length > 0){
                             for(var idx in routersArrTemp){
                                 var routerItem = routersArrTemp[idx];
                                 _this.dealRecursiveMenuChildrenToMap(routerUrlMap,routerItem);
                             }
                         }
-                        for(var urlKey in urlMap){
+                        for(var urlKey in urlMap){  //遍历[可访问url]Map
                             var grantMenuUrlFlag = routerUrlMap.has(urlKey);
                             if(grantMenuUrlFlag == true){   //如果定义的路由有对应的后台相关配置
                                 var urlConf =  urlMap[urlKey];
