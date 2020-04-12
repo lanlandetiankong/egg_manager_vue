@@ -27,7 +27,7 @@
                     <a-button
                         type="primary"
                         @click="handleUpload"
-                        :disabled="fileList.length === 0"
+                        :disabled="fileList.length === 0 || (fileList.length - uploadedFileList.length < 1)"
                         :loading="uploading"
                         style="margin-top: 16px"
                     >
@@ -82,6 +82,10 @@
                 const newFileList = this.fileList.slice();
                 newFileList.splice(index, 1);
                 this.fileList = newFileList;
+                const uploadIndex = this.uploadedFileList.indexOf(file);
+                const newUploadFileList = this.uploadedFileList.slice();
+                newUploadFileList.splice(uploadIndex, 1);
+                this.uploadedFileList = newUploadFileList;
             },
             handleBeforeUpload(file,fileList) { //
                 if(this.dealVerifyIsExcel(file.name) === true){
