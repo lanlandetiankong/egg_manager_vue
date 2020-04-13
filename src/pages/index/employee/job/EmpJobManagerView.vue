@@ -8,7 +8,7 @@
                             :form="searchForm"
                             @submit="handleSearchFormQuery"
                     >
-                        <a-row :gutter="10">
+                        <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="职务名">
                                     <a-input v-decorator="searchConf.paramConf.name" />
@@ -58,7 +58,7 @@
             <!-- 操作区域 -->
             <div>
                 <a-row
-                    :gutter="16"
+                    :gutter="6"
                     justify="start"
                     type="flex"
                 >

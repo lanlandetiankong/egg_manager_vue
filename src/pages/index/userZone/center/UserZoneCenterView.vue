@@ -108,7 +108,7 @@
             return {
                 layoutConf:{
                     default:{
-                        gutter:16,
+                        gutter:6,
                         span:6
                     },
                     roleCard:{
