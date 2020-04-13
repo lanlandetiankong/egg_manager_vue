@@ -11,6 +11,9 @@ function dealSetMenuConfToRouter(toRouter,menuConf) {    //将值设置到VueRou
         if(menuName){
             toRouter.meta.title = menuName ;
         }
+        toRouter.meta.menuConf = {
+            fid:menuConf.id
+        } ;
         toRouter.meta.visitLimit = false ;
     }
 };

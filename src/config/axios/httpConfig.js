@@ -1,9 +1,7 @@
 import axios from 'axios'
 import router from '@/router/index'
-import store from '@/store/index.js'
 import baseURL from './baseUrl'
 import {message, Spin,notification} from 'ant-design-vue'
-import qs from 'qs'
 
 const http = {};
 const defaultNotificationMsg = {
@@ -53,7 +51,11 @@ var instance = axios.create({
                 break
         }
         return status >= 200 && status < 300
-    }
+    },
+    transformResponse: [function (data) {
+        // 在传递给 then/catch 前，允许修改响应数据
+        return data;
+    }],
 })
 
 // 添加请求拦截器
@@ -88,7 +90,8 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
     response => {
-        return response.data;
+        //return response.data;
+        return response;
     },
     // 服务器状态码不是200的情况
     error => {
@@ -186,36 +189,40 @@ http.post = function (url, data, options) {
     return new Promise((resolve, reject) => {
         instance
             .post(url, data, options)
-            .then(response => {
+            .then((response) => {
+                var respData = response.data ;
                 //loadingInstance.close();
                 //对返回结果的预先处理
-                if (response) {
-                    let tempRespHasError = response.hasError;
-                    //Error:不放行
-                    if (typeof(tempRespHasError) != "undefined" && tempRespHasError != null && tempRespHasError === true) {
-                        let tempRespInfo = response.errorMsg;
-                        if(!tempRespInfo){
-                            tempRespInfo = response.info ;
-                        }
-                        if (typeof(tempRespInfo) != "undefined" && tempRespInfo != null && tempRespInfo.replace(/(^s*)|(s*$)/g, "").length != 0) {
-                            message.error(tempRespInfo);
-                        }
-                        let tempErrorActionType = response.errorActionType;
-                        if(tempErrorActionType){     //如果发生异常时，后端明确指明有操作要求
-                            if("AuthenticationExpired" == tempErrorActionType){  //请求明确要求需要重新登录
-                                jumpToLoginPage(router);
+                if (respData) {
+                    if(respData instanceof Blob){   //判断是否是Blob文件流
+                        resolve(response);
+                    }   else {
+                        let tempRespHasError = respData.hasError;
+                        //Error:不放行
+                        if (typeof(tempRespHasError) != "undefined" && tempRespHasError != null && tempRespHasError === true) {
+                            let tempRespInfo = respData.errorMsg;
+                            if(!tempRespInfo){
+                                tempRespInfo = respData.info ;
                             }
+                            if (typeof(tempRespInfo) != "undefined" && tempRespInfo != null && tempRespInfo.replace(/(^s*)|(s*$)/g, "").length != 0) {
+                                message.error(tempRespInfo);
+                            }
+                            let tempErrorActionType = respData.errorActionType;
+                            if(tempErrorActionType){     //如果发生异常时，后端明确指明有操作要求
+                                if("AuthenticationExpired" == tempErrorActionType){  //请求明确要求需要重新登录
+                                    jumpToLoginPage(router);
+                                }
+                            }
+                            resolve(response);
+                        } else {
+                            let respHasWarning = respData.hasWarning;
+                            if (typeof(respHasWarning) == "undefined" || respHasWarning == null) {
+                                respHasWarning = false;
+                            }
+                            //respData.hasWarning = respHasWarning;
+                            //Warning或正常:放行
+                            resolve(response);
                         }
-
-                        resolve(response);
-                    } else {
-                        let respHasWarning = response.hasWarning;
-                        if (typeof(respHasWarning) == "undefined" || respHasWarning == null) {
-                            respHasWarning = false;
-                        }
-                        response.hasWarning = respHasWarning;
-                        //Warning或正常:放行
-                        resolve(response);
                     }
                 }
             })

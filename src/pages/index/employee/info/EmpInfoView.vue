@@ -131,6 +131,15 @@
                         </a-button>
                     </a-col>
                     <a-col>
+                        <a-dropdown>
+                            <a-menu slot="overlay" @click="handleExportListToExcel">
+                                <a-menu-item key="checkToExcel"><a-icon type="check-square" />导出已选为Excel</a-menu-item>
+                                <a-menu-item key="allToExcel"><a-icon type="arrow-down" />导出全部为Excel</a-menu-item>
+                            </a-menu>
+                            <a-button style="margin-left: 8px"><a-icon type="down-circle" />导出 </a-button>
+                        </a-dropdown>
+                    </a-col>
+                    <a-col>
                         <a-switch
                             checkedChildren="展示搜索"
                             unCheckedChildren="隐藏搜索"
@@ -242,6 +251,7 @@
 </template>
 <script>
     import jq from 'jquery';
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
     import {EmployeeInfoDetailDrawerConf} from  './drawer_conf'
     import {EmpInfoApi} from './EmpInfoApi'
@@ -260,6 +270,7 @@
         components: {
             SimpleDetailDrawerComp,
             UserGrantJobFormComp, UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
+        mixins:[EggCommonMixin],
         data() {
             return {
                 searchConf: {
@@ -903,6 +914,29 @@
                     }
                 });
             },
+            dealExportCheckToExcel(curMenuId,checkIds){   //导出已勾选项
+                EmpInfoApi.exportCheckToExcel(curMenuId,checkIds).then((res) =>{
+                })
+            },
+            dealExportAllToExcel(curMenuId){     //导出所有
+                EmpInfoApi.exportAllToExcel(curMenuId);
+            },
+            handleExportListToExcel(e){
+                var _this = this ;
+                const curMenuId = _this.mixin_handleGetCurMenuId() ;
+                if(curMenuId){
+                    if(e.key == "checkToExcel"){    //导出已勾选项
+                        var checkIds = _this.tableCheckIdList ;
+                        _this.dealExportCheckToExcel(curMenuId,checkIds) ;
+                    }   else if(e.key == "allToExcel"){ //导出所有
+                        _this.dealExportAllToExcel(curMenuId) ;
+                    }   else {
+                        this.$message.error("未知导出命令！");
+                    }
+                }   else {
+                    this.$message.error("当前页面不支持导出操作！");
+                }
+            },
             handleEmployeeInfoDetailDrawerShow(e,record){   //Drawer-用户定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.employeeInfo.dataObj = record ;
@@ -913,7 +947,7 @@
             },
             handleEmployeeInfoDetailDrawerClose(e){ //Drawer-用户定义 详情关闭
                 this.drawerConf.detail.employeeInfo.visible = false ;
-            }
+            },
         },
         computed: {
             rowSelection() {    //行选择

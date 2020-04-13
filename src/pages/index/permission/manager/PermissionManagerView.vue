@@ -203,6 +203,7 @@
     export default {
         name: "PermissionManagerView",
         components: {DefinePermissionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        mixins:[EggCommonMixin],
         data() {
             return {
                 searchConf:{
@@ -285,7 +286,6 @@
                 },
             }
         },
-        mixins:[EggCommonMixin],
         computed:{
             rowSelection() {    //行选择
                 return {
