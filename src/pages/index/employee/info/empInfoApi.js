@@ -19,93 +19,93 @@ export const EmpInfoApi = {
             sortObj: JSON.stringify(sortObj),
         }
         //查询所有用户信息
-        return axios.post('/user/user_account/getAllUserAccountDtos', qs.stringify(obj)).then(res => res);
+        return axios.post('/user/user_account/getAllUserAccountDtos', qs.stringify(obj)).then(res => res.data);
     },
     getUserAccountById(userAccountId) {  //根据用户id查询用户信息
         var params = {
             accountId: userAccountId
         }
-        return axios.post("/user/user_account/getUserAccountById", qs.stringify(params)).then(res => res);
+        return axios.post("/user/user_account/getUserAccountById", qs.stringify(params)).then(res => res.data);
     },
     addUserAccountByForm(formObj, avatarUrl) {     //新增用户
         formObj['avatarUrl'] = avatarUrl;
         var obj = {
             formObj: JSON.stringify(formObj),
         }
-        return axios.post("/user/user_account/doAddUserAccount", qs.stringify(obj));
+        return axios.post("/user/user_account/doAddUserAccount", qs.stringify(obj)).then(res => res.data);;
     },
     updateUserAccountByForm(formObj, avatarUrl) {  //更新用户
         formObj['avatarUrl'] = avatarUrl;
         var obj = {
             formObj: JSON.stringify(formObj),
         }
-        return axios.post("/user/user_account/doUpdateUserAccount", qs.stringify(obj)).then(res => res);
+        return axios.post("/user/user_account/doUpdateUserAccount", qs.stringify(obj)).then(res => res.data);
     },
     batchDelUserAccount(ids) {  //批量删除
         var obj = {
             delIds: ids
         }
-        return axios.post("/user/user_account/batchDelUserAccountByIds", qs.stringify(obj, {indices: false})).then(res => res);
+        return axios.post("/user/user_account/batchDelUserAccountByIds", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
     delOneUserAccount(delId) {  //删除
         var obj = {
             delId: delId
         }
-        return axios.post("/user/user_account/delOneUserAccountById", qs.stringify(obj, {indices: false})).then(res => res);
+        return axios.post("/user/user_account/delOneUserAccountById", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
     batchChangeLockStateUserAccount(ids, lockFlag) {  //批量锁定
         var obj = {
             lockIds: ids,
             lockFlag: lockFlag
         }
-        return axios.post("/user/user_account/batchLockUserAccountByIds", qs.stringify(obj, {indices: false})).then(res => res);
+        return axios.post("/user/user_account/batchLockUserAccountByIds", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
     lockStateChangeOneUserAccount(lockId, lockFlag) {  //锁定
         var obj = {
             lockId: lockId,
             lockFlag: lockFlag
         }
-        return axios.post("/user/user_account/lockOneUserAccountById", qs.stringify(obj, {indices: false})).then(res => res);
+        return axios.post("/user/user_account/lockOneUserAccountById", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
     grantRoleToUser(userAccountId, checkIds) {     //用户分配角色-提交
         var obj = {
             userAccountId: userAccountId,
             checkIds: checkIds
         }
-        return axios.post("/user/user_account/grantRoleToUser", qs.stringify(obj, {indices: false})).then(res => res);
+        return axios.post("/user/user_account/grantRoleToUser", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
     getAllRoleByUserAccountId(userAccountId) {  //根据用户id查询用户所拥有的角色列表
         var params = {
             userAccountId: userAccountId
         }
-        return axios.post("/user/user_account/getAllRoleByUserAccountId", qs.stringify(params)).then(res => res);
+        return axios.post("/user/user_account/getAllRoleByUserAccountId", qs.stringify(params)).then(res => res.data);
     },
     getAllDefineRoles() {     //取得所有定义的角色
         var obj = {
             queryObj: [],
             paginationObj: {}
         }
-        return axios.post('/define/define_role/getAllDefineRoles', qs.stringify(obj)).then(res => res);
+        return axios.post('/define/define_role/getAllDefineRoles', qs.stringify(obj)).then(res => res.data);
     },
     getAllJobByUserAccountId(userAccountId) {  //根据用户id查询用户所拥有的职务列表
         var params = {
             userAccountId: userAccountId
         }
-        return axios.post("/user/user_account/getAllJobByUserAccountId", qs.stringify(params)).then(res => res);
+        return axios.post("/user/user_account/getAllJobByUserAccountId", qs.stringify(params)).then(res => res.data);
     },
     getAllDefineJobs() {     //取得所有定义的职务
         var obj = {
             queryObj: [],
             paginationObj: {}
         }
-        return axios.post('/define/define_job/getAllDefineJobs', qs.stringify(obj)).then(res => res);
+        return axios.post('/define/define_job/getAllDefineJobs', qs.stringify(obj)).then(res => res.data);
     },
     grantJobToUser(userAccountId, checkIds) {     //用户设置职务-提交
         var obj = {
             userAccountId: userAccountId,
             checkIds: checkIds
         }
-        return axios.post("/user/user_account/grantJobToUser", qs.stringify(obj, {indices: false})).then(res => res);
+        return axios.post("/user/user_account/grantJobToUser", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
     getAllDefineTenantEnums() {  //取得 租户 列表
         var sortObj = {     //固定 order字段 排序
@@ -118,7 +118,7 @@ export const EmpInfoApi = {
             //sortObj:JSON.stringify(sortObj),
         }
         //查询所有[租户定义]信息
-        return axios.post('/organization/define_tenant/getAllDefineTenantEnums', qs.stringify(obj)).then(res => res);
+        return axios.post('/organization/define_tenant/getAllDefineTenantEnums', qs.stringify(obj)).then(res => res.data);
     },
     exportCheckToExcel(menuId, checkIds) {    //导出已勾选为Excel
         var _this = this ;

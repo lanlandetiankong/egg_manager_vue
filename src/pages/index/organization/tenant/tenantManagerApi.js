@@ -18,30 +18,30 @@ export const TenantManagerApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有租户信息
-        return axios.post('/organization/define_tenant/getAllDefineTenantDtos',qs.stringify(obj)).then(res => res);
+        return axios.post('/organization/define_tenant/getAllDefineTenantDtos',qs.stringify(obj)).then(res => res.data);
     },
     getDefineTenantById(defineTenantId){  //根据租户id查询租户信息
         var params = {
             defineTenantId:defineTenantId
         }
-        return axios.post("/organization/define_tenant/getDefineTenantById",qs.stringify(params)).then(res => res) ;
+        return axios.post("/organization/define_tenant/getDefineTenantById",qs.stringify(params)).then(res => res.data) ;
     },
     addDefineTenantByForm(formObj) {     //新增租户
-        return axios.post("/organization/define_tenant/doAddDefineTenant",qs.stringify(formObj));
+        return axios.post("/organization/define_tenant/doAddDefineTenant",qs.stringify(formObj)).then(res => res.data);
     },
     updateDefineTenantByForm(formObj) {  //更新租户
-        return axios.post("/organization/define_tenant/doUpdateDefineTenant",qs.stringify(formObj)).then(res => res) ;
+        return axios.post("/organization/define_tenant/doUpdateDefineTenant",qs.stringify(formObj)).then(res => res.data) ;
     },
     batchDelDefineTenant(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
-        return axios.post("/organization/define_tenant/batchDelDefineTenantByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
+        return axios.post("/organization/define_tenant/batchDelDefineTenantByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     delOneDefineTenant(delId) {  //删除
         var obj = {
             delId:delId
         }
-        return axios.post("/organization/define_tenant/delOneDefineTenantById",qs.stringify(obj,{indices: false})).then(res => res) ;
+        return axios.post("/organization/define_tenant/delOneDefineTenantById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     }
 }

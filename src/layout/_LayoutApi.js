@@ -7,7 +7,7 @@ import qs from 'qs'
 
 export const LayoutApi = {
     doGetAllMenu() {
-        return axios.post('/define/define_menu/user/getGrantedMenuTree').then(res => res) ;
+        return axios.post('/define/define_menu/user/getGrantedMenuTree').then(res => res.data) ;
     }
 
 }

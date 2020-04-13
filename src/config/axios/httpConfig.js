@@ -54,6 +54,11 @@ var instance = axios.create({
     },
     transformResponse: [function (data) {
         // 在传递给 then/catch 前，允许修改响应数据
+        if(data){
+            if(typeof data == "string"){
+                return JSON.parse(data);
+            }
+        }
         return data;
     }],
 })

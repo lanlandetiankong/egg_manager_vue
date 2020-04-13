@@ -18,31 +18,31 @@ export const AnnouncementTagApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有公告标签信息
-        return axios.post('/announcement_tag/getAllAnnouncementTagDtos',qs.stringify(obj)).then(res => res);
+        return axios.post('/announcement_tag/getAllAnnouncementTagDtos',qs.stringify(obj)).then(res => res.data);
     },
     getAnnouncementTagById(announcementTagId){  //根据公告标签id查询公告标签信息
         var params = {
             announcementTagId:announcementTagId
         }
-        return axios.post("/announcement_tag/getAnnouncementTagById",qs.stringify(params)).then(res => res) ;
+        return axios.post("/announcement_tag/getAnnouncementTagById",qs.stringify(params)).then(res => res.data) ;
     },
     addAnnouncementTagByForm(formObj) {     //新增公告标签
-        return axios.post("/announcement_tag/doAddAnnouncementTag",qs.stringify(formObj));
+        return axios.post("/announcement_tag/doAddAnnouncementTag",qs.stringify(formObj)).then(res => res.data);;
     },
     updateAnnouncementTagByForm(formObj) {  //更新公告标签
-        return axios.post("/announcement_tag/doUpdateAnnouncementTag",qs.stringify(formObj)).then(res => res) ;
+        return axios.post("/announcement_tag/doUpdateAnnouncementTag",qs.stringify(formObj)).then(res => res.data) ;
     },
     batchDelAnnouncementTag(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
-        return axios.post("/announcement_tag/batchDelAnnouncementTagByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
+        return axios.post("/announcement_tag/batchDelAnnouncementTagByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     delOneAnnouncementTag(delId) {  //删除
         var obj = {
             delId:delId
         }
-        return axios.post("/announcement_tag/delOneAnnouncementTagById",qs.stringify(obj,{indices: false})).then(res => res) ;
+        return axios.post("/announcement_tag/delOneAnnouncementTagById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     }
 }
 

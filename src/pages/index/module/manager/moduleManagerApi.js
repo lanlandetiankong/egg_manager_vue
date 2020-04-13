@@ -18,30 +18,30 @@ export const ModuleManagerApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有模块信息
-        return axios.post('/module/define_module/getAllDefineModuleDtos',qs.stringify(obj)).then(res => res);
+        return axios.post('/module/define_module/getAllDefineModuleDtos',qs.stringify(obj)).then(res => res.data);
     },
     getDefineModuleById(defineModuleId){  //根据模块id查询模块信息
         var params = {
             defineModuleId:defineModuleId
         }
-        return axios.post("/module/define_module/getDefineModuleById",qs.stringify(params)).then(res => res) ;
+        return axios.post("/module/define_module/getDefineModuleById",qs.stringify(params)).then(res => res.data) ;
     },
     addDefineModuleByForm(formObj) {     //新增模块
-        return axios.post("/module/define_module/doAddDefineModule",qs.stringify(formObj));
+        return axios.post("/module/define_module/doAddDefineModule",qs.stringify(formObj)).then(res => res.data);;
     },
     updateDefineModuleByForm(formObj) {  //更新模块
-        return axios.post("/module/define_module/doUpdateDefineModule",qs.stringify(formObj)).then(res => res) ;
+        return axios.post("/module/define_module/doUpdateDefineModule",qs.stringify(formObj)).then(res => res.data) ;
     },
     batchDelDefineModule(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
-        return axios.post("/module/define_module/batchDelDefineModuleByIds",qs.stringify(obj,{indices: false})).then(res => res) ;
+        return axios.post("/module/define_module/batchDelDefineModuleByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     delOneDefineModule(delId) {  //删除
         var obj = {
             delId:delId
         }
-        return axios.post("/module/define_module/delOneDefineModuleById",qs.stringify(obj,{indices: false})).then(res => res) ;
+        return axios.post("/module/define_module/delOneDefineModuleById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     }
 }

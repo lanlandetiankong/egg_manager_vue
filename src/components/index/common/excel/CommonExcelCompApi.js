@@ -11,6 +11,6 @@ export const CommonExcelCompApi = {
             {
                 headers: {'Content-Type': 'multipart/form-data'}
             }
-        ).then(res => res) ;
+        ).then(res => res.data) ;
     }
 }

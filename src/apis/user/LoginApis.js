@@ -11,26 +11,26 @@ export const LoginApis = {
     doLogin(parameter) {
         return axios.post('/define/define_menu/get/all_menu',
             qs.stringify(parameter)
-        ).then(res => res) ;
+        ).then(res => res.data) ;
     },
     doLogout(parameter) {
         return axios.post('/define/define_menu/get/all_menu',
             qs.stringify(parameter)
-        ).then(res => res) ;
+        ).then(res => res.data) ;
     },
     doGetCurrentUserNav() {
         return axios.post('/define/define_menu/get/all_menu',
             qs.stringify(parameter)
-        ).then(res => res) ;
+        ).then(res => res.data) ;
     },
     doGetSmsCaptcha(parameter) {
         return axios.post(apiUrl.SendSms,
             qs.stringify(parameter)
-        ).then(res => res) ;
+        ).then(res => res.data) ;
     },
     doGet2step(parameter){
         return axios.post('/define/define_menu/get/all_menu',
             qs.stringify(parameter)
-        ).then(res => res) ;
+        ).then(res => res.data) ;
     }
 }

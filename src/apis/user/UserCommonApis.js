@@ -7,12 +7,12 @@ import qs from 'qs'
 
 export const UserCommonApis = {
     getAllUserType() {  //所有用户类型
-        return axios.post('/common_api/user/getAllUserTypeEnumList').then((res) => res) ;
+        return axios.post('/common_api/user/getAllUserTypeEnumList').then((res) => res.data) ;
     },
     getAllUserLockStateType() { //用户锁的状态
-        return axios.post('/common_api/user/getAllUserLockStateEnumList').then((res) => res) ;
+        return axios.post('/common_api/user/getAllUserLockStateEnumList').then((res) => res.data) ;
     },
     getAllDefineJobType() { //所有职务类型
-        return axios.post('/common_api/user/getAllDefineJobTypeEnumList').then((res) => res) ;
+        return axios.post('/common_api/user/getAllDefineJobTypeEnumList').then((res) => res.data) ;
     }
 }
