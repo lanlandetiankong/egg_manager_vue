@@ -135,8 +135,8 @@
                         var processDataTemp = Object.assign(this.moreData, this.uploadConf.processData);
                         this.uploadConf.processData = processDataTemp ;
                         //合并prop的已上传文件
-                        //this.uploadedFileList = [...this.uploadedBeanList,...this.uploadedFileList];
-                        //this.fileList = [...this.uploadedFileList];
+                        this.uploadedFileList = [...this.uploadedBeanList,...this.uploadedFileList];
+                        this.fileList = [...this.uploadedFileList];
                     }
                     this.uploading = false;
                 },
