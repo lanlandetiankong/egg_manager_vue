@@ -914,22 +914,19 @@
                     }
                 });
             },
-            dealExportCheckToExcel(curMenuId,checkIds){   //导出已勾选项
-                EmpInfoApi.exportCheckToExcel(curMenuId,checkIds).then((res) =>{
-                })
-            },
-            dealExportAllToExcel(curMenuId){     //导出所有
-                EmpInfoApi.exportAllToExcel(curMenuId);
-            },
             handleExportListToExcel(e){
                 var _this = this ;
                 const curMenuId = _this.mixin_handleGetCurMenuId() ;
                 if(curMenuId){
                     if(e.key == "checkToExcel"){    //导出已勾选项
                         var checkIds = _this.tableCheckIdList ;
-                        _this.dealExportCheckToExcel(curMenuId,checkIds) ;
+                        if(!checkIds || checkIds.length == 0){
+                            this.$message.error("请至少选择一条要导出的数据！");
+                        }   else {
+                            EmpInfoApi.exportCheckToExcel(curMenuId,checkIds);
+                        }
                     }   else if(e.key == "allToExcel"){ //导出所有
-                        _this.dealExportAllToExcel(curMenuId) ;
+                        EmpInfoApi.exportAllToExcel(curMenuId);
                     }   else {
                         this.$message.error("未知导出命令！");
                     }
