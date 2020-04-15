@@ -200,7 +200,21 @@ http.post = function (url, data, options) {
                 //对返回结果的预先处理
                 if (respData) {
                     if(respData instanceof Blob){   //判断是否是Blob文件流
-                        resolve(response);
+                        let fileReader = new FileReader();
+                        fileReader.onload = function() {
+                            try {
+                                let jsonData = JSON.parse(this.result);  // 说明是普通对象数据，后台转换失败
+                                if (jsonData.hasError) {
+                                    message.error(jsonData.errorMsg);
+                                    reject(response);
+                                }   else {
+                                    resolve(response);
+                                }
+                            } catch (err) {   // 解析成对象失败，说明是正常的文件流
+                                resolve(response);
+                            }
+                        };
+                        fileReader.readAsText(respData);    //触发onload
                     }   else {
                         let tempRespHasError = respData.hasError;
                         //Error:不放行

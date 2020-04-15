@@ -130,7 +130,7 @@ export const EmpInfoApi = {
             qs.stringify(obj, {indices: false}),{
                 responseType: "blob"
             }
-        ).then((response,e,els) => {
+        ).then((response) => {
             if(!response){
                 return;
             }
@@ -150,16 +150,7 @@ export const EmpInfoApi = {
             if(!response){
                 return;
             }
-            //将response 新建成文件流
-            var blob = new Blob([response], {type: 'application/vnd.ms-excel;charset=utf-8'})
-            //创建下载地址以及a标签,并且模拟a标签的点击事件进行下载文件。
-            var url = window.URL.createObjectURL(blob);
-            var aLink = document.createElement("a");
-            aLink.style.display = "none";
-            aLink.download = '短讯接收人列表模板.xlsx';
-            aLink.href = url;
-            document.body.appendChild(aLink)
-            aLink.click();
+            axiosForExcelUtil.exportExcelDownload(response);
         });
     },
 }
