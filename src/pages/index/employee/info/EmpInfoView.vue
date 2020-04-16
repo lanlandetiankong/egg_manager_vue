@@ -140,6 +140,12 @@
                         </a-dropdown>
                     </a-col>
                     <a-col>
+                        <a-button icon="upload"
+                                  @click="() =>{uploadExcelModelconf.visible = true}">
+                            导入
+                        </a-button>
+                    </a-col>
+                    <a-col>
                         <a-switch
                             checkedChildren="展示搜索"
                             unCheckedChildren="隐藏搜索"
@@ -227,6 +233,18 @@
                 @grantJobFormSubmit="handleUserGrantJobFormSubmit"
             >
             </user-grant-job-form-comp>
+            <excel-import-data-comp
+                v-if="uploadExcelModelconf.visible"
+                :visible="uploadExcelModelconf.visible"
+                :modalCompTitle="uploadExcelModelconf.title"
+                :limitSize="uploadExcelModelconf.limitSize"
+                :limitMinSize="uploadExcelModelconf.limitMinSize"
+                :moreData="uploadExcelModelconf.moreData"
+                :uploadedBeanList="uploadExcelModelconf.uploadedBeanList"
+                @modalCancel="handleImportDataModalCancel"
+                @modalSubmit="handleImportDataModalSubmit"
+            >
+            </excel-import-data-comp>
             <a-drawer
                     :title="drawerConf.detail.employeeInfo.title"
                     :closeable="drawerConf.detail.employeeInfo.closable"
@@ -261,6 +279,7 @@
     import UserGrantRoleFormComp from '~Components/index/user/employee/info/UserGrantRoleFormComp';
     import UserGrantJobFormComp from '~Components/index/user/employee/info/UserGrantJobFormComp';
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import ExcelImportDataComp from '~Components/index/common/excel/ExcelImportDataComp';
 
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
@@ -268,7 +287,7 @@
     export default {
         name: "EmpInfoView",
         components: {
-            SimpleDetailDrawerComp,
+            SimpleDetailDrawerComp,ExcelImportDataComp,
             UserGrantJobFormComp, UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
         mixins:[EggCommonMixin],
         data() {
@@ -352,6 +371,17 @@
                     allDataSource:[],
                     checked:[],
                     checkedIds:[],
+                },
+                uploadExcelModelconf:{
+                    visible:false,
+                    title:"导入数据Excel文件上传",
+                    limitSize:1,
+                    limitMinSize:1,
+                    moreData:{
+                        prefixFolder:"/menuManager",
+                        fid:''
+                    },
+                    uploadedBeanList:[] //当前菜单已经设置的已上传的文件列表
                 },
                 drawerConf:{
                     detail:{
@@ -933,6 +963,18 @@
                 }   else {
                     this.$message.error("当前页面不支持导出操作！");
                 }
+            },
+            handleImportDataModalCancel(){  //[数据导入] 弹窗取消
+                this.uploadExcelModelconf.visible = false ;
+            },
+            handleImportDataModalSubmit(formData,processData){  //[数据导入] 弹窗提交
+                EmpInfoApi.doImportDataFromExcel(formData).then((res) => {
+                    if(res.hasError == false){
+                        //console.log(res);
+                        this.uploadExcelModelconf.visible = false ;
+                    }
+
+                })
             },
             handleEmployeeInfoDetailDrawerShow(e,record){   //Drawer-用户定义 详情展示
                 if(typeof record != "undefined"){

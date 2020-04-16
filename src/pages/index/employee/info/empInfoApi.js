@@ -153,4 +153,11 @@ export const EmpInfoApi = {
             axiosForExcelUtil.exportExcelDownload(response);
         });
     },
+    doImportDataFromExcel(formData){    //[导入数据]
+        return axios.post("/excel/user_account/dealImportData",formData,
+            {
+                headers: {'Content-Type': 'multipart/form-data'}
+            }
+        ).then(res => res.data) ;
+    }
 }
