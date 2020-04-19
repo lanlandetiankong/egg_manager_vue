@@ -269,6 +269,7 @@
 </template>
 <script>
     import jq from 'jquery';
+    import BeeUtil from '~Assets/js/util/bee/BeeUtil.js' ;
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
     import {EmployeeInfoDetailDrawerConf} from  './drawer_conf'
@@ -1010,7 +1011,7 @@
             this.dealGetLockStateEnumList();
         },
         destroyed(){
-            console.log("员工信息-页面销毁 ...");
+            console.log("员工信息??-页面销毁 ...");
         }
 
     }

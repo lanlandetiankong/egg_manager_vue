@@ -2,6 +2,7 @@ import axios from 'axios'
 import router from '@/router/index'
 import baseURL from './baseUrl'
 import {message, Spin,notification} from 'ant-design-vue'
+import {ExceptionRecordUtils} from '~Utils/extensions/extensions.js'
 
 const http = {};
 const defaultNotificationMsg = {
@@ -219,6 +220,8 @@ http.post = function (url, data, options) {
                         let tempRespHasError = respData.hasError;
                         //Error:不放行
                         if (typeof(tempRespHasError) != "undefined" && tempRespHasError != null && tempRespHasError === true) {
+                            debugger;
+                            ExceptionRecordUtils.dealAddExceptionRecords(response);
                             let tempRespInfo = respData.errorMsg;
                             if(!tempRespInfo){
                                 tempRespInfo = respData.info ;

@@ -4,6 +4,7 @@ import getters  from  './getters.js'
 import tagsView from './modules/tags/tagsView.js'
 import routingStore from './modules/routing/routingStore.js'
 import userInfoStore from './modules/user/userInfoStore.js'
+import exceptionRecordStore from './modules/extensions/exceptionRecordStore.js'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ const store = new Vuex.Store({
     modules:{
         tagsView,
         routingStore,
-        userInfoStore
+        userInfoStore,
+        exceptionRecordStore
     },
     getters
 })

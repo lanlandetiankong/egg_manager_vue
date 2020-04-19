@@ -50,7 +50,6 @@
 <script>
     import BeeUtil from '~Assets/js/util/bee/BeeUtil.js' ;
     import {jsObjectToFormData} from '~Components/_util/util.js' ;
-    import {CommonExcelCompApi} from './CommonExcelCompApi.js'
 
     export default {
         name: "ExcelImportDataComp",

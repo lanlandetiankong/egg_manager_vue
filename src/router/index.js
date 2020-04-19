@@ -13,6 +13,7 @@ import OrganizationRouter from './main/organization/index'
 import PermissionRouter from './main/permission/index'
 import UserZoneRouter from './main/userZone/index'
 import AnnouncementRouter from './main/announcement/index'
+import ExtensionsRouter from './main/extensions/index'
 
 
 //登录、注册
@@ -51,7 +52,8 @@ export const constantRouterMap = [
             PermissionRouter,
             UserZoneRouter,
             AnnouncementRouter,
-            OrganizationRouter
+            OrganizationRouter,
+            ExtensionsRouter
         ]
     },
     MemberRouter,
