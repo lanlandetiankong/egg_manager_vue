@@ -97,8 +97,11 @@
             }
         },
         mounted () {
+            //开发环境->允许在console取得vue
+            if(AsyncRouterUtil.verifyProcessEnvIsDev()){
+                window.vue = this;
+            }
             //this.initHeight();        //触发高度计算
-            window.vue = this;
             this.handleSetSessionStorageToVuex();
 
 

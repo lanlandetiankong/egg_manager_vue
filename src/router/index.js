@@ -14,6 +14,7 @@ import PermissionRouter from './main/permission/index'
 import UserZoneRouter from './main/userZone/index'
 import AnnouncementRouter from './main/announcement/index'
 import ExtensionsRouter from './main/extensions/index'
+import FormsRouter from './main/forms/index'
 
 
 //登录、注册
@@ -53,7 +54,8 @@ export const constantRouterMap = [
             UserZoneRouter,
             AnnouncementRouter,
             OrganizationRouter,
-            ExtensionsRouter
+            ExtensionsRouter,
+            FormsRouter
         ]
     },
     MemberRouter,
@@ -69,11 +71,17 @@ const vueRouter = new VueRouter({
     mode:'history',
     linkExactActiveClass: 'active', // 保持要跳转后的路由页面标题高亮
     scrollBehavior: () => ({ y: 0 }),
-    routes: constantRouterMap
+    routes: constantRouterMap,
+    beforeRouteLeave:(to, from, next) =>{
+        debugger;
+        next();
+    }
 })
+
 vueRouter.beforeEach((to,from,next) => {
     var _this = this ;
     var passFlag = true ;
+    debugger;
     if(to && from){
         const toPath = to.fullPath ;
         if(defaultPassRouterUrls.indexOf(toPath) == -1){    //要访问的路径不在 [默认放行路径] ?

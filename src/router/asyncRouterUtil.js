@@ -35,6 +35,22 @@ function dealRecursiveMenuChildrenToMap(_this,routerUrlMap,routerItem,parentUrl)
     }
 }
 
+/**
+ * 匹配环境值
+ * @param envVal
+ * @returns {boolean}
+ */
+function verifyProcessEnvIsProd() {
+    return process.env.NODE_ENV === "production" ;
+}
+function verifyProcessEnvIsTest() {
+    return process.env.NODE_ENV === "testing" ;
+}
+function verifyProcessEnvIsDev() {
+    return process.env.NODE_ENV === "development" ;
+}
+
+
 export const AsyncRouterUtil = {
     dealMenuListToRouters (urlMap,_this) {  //将后台的[菜单配置]更新到 VueRouter配置中
         var routersArrTemp = _this.$router.options.routes;
@@ -54,6 +70,10 @@ export const AsyncRouterUtil = {
             }
         }
         //console.log(routerUrlMap);
-    }
+    },
+    verifyProcessEnvIsProd:verifyProcessEnvIsProd,
+    verifyProcessEnvIsTest:verifyProcessEnvIsTest,
+    verifyProcessEnvIsDev:verifyProcessEnvIsDev
+
 }
 

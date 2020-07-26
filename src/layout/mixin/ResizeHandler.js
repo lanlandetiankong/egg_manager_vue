@@ -24,8 +24,6 @@ export default {
   },
   methods: {
     isMobile() {
-      /*const rect = body.getBoundingClientRect()
-      return rect.width - RATIO < WIDTH*/
       return false ;
     },
     resizeHandler() {

@@ -67,7 +67,36 @@ export const CommonFieldConfArr = {
         fieldName:"最后修改人",
         type:DrawerFieldTypeEnum.String,
         isNeedSplit:true
+    },
+    createDateOfMO:{
+        fieldKey:"createTime",
+        fieldName:"创建日期",
+        type:DrawerFieldTypeEnum.Date,
+        visible:true,
+        format:{
+            date:CommonDateFormatTypeObj.yMdhms_cn
+        }
+    },
+    updateTimeOfMO:{
+        fieldKey:"lastModifiedDate",
+        fieldName:"最后更新日期",
+        type:DrawerFieldTypeEnum.Date,
+        visible:true,
+        format:{
+            date:CommonDateFormatTypeObj.yMdhms_cn
+        }
+    },
+    createUserNickNameOfMO:{
+        fieldKey:"createUserNickName",
+        fieldName:"创建人",
+        type:DrawerFieldTypeEnum.String
+    },
+    lastModifyerNickNameOfMO:{
+        fieldKey:"lastModifyerNickName",
+        fieldName:"最后修改人",
+        type:DrawerFieldTypeEnum.String
     }
+
 }
 
 
