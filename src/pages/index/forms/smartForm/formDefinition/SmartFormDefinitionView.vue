@@ -117,7 +117,7 @@
         <!-- 弹窗dom-区域 -->
         <div>
             <smart-form-type-defintion-create-form-comp
-                ref="smartFormTypeDefinitionCreateFormCompRef"
+                ref="smartFormDefinitionCreateFormCompRef"
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
@@ -149,18 +149,18 @@
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import {SmartFormTypeDefinitionDrawerConf} from './drawer_conf.js'
+    import {SmartFormDefinitionDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
-    import {SmartFormTypeDefinitionApi} from './smartFormTypeDefinitionApi.js'
+    import {SmartFormDefinitionApi} from './smartFormDefinitionApi.js'
 
-    import SmartFormTypeDefinitionCreateFormComp from "@/components/index/forms/smartForm/formTypeDefinition/SmartFormTypeDefinitionCreateFormComp";
+    import SmartFormDefinitionCreateFormComp from "@/components/index/forms/smartForm/formDefinition/SmartFormDefinitionCreateFormComp";
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     export default {
-        name: "SmartFormTypeDefinitionView",
-        components: {SmartFormTypeDefinitionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        name: "SmartFormDefinitionView",
+        components: {SmartFormDefinitionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
         data() {
             return {
                 searchConf:{
@@ -225,7 +225,7 @@
                             },
                             maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
-                            drawerFieldConf:SmartFormTypeDefinitionDrawerConf
+                            drawerFieldConf:SmartFormDefinitionDrawerConf
                         },
                     },
                 },
@@ -252,7 +252,7 @@
                 this.selectedRowKeys = selectedRowKeys;
             },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
-                return this.$refs.smartFormTypeDefinitionCreateFormCompRef.smartFormTypeDefinitionCreateForm;
+                return this.$refs.smartFormDefinitionCreateFormCompRef.smartFormDefinitionCreateForm;
             },
             dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
@@ -264,7 +264,7 @@
             dealGetAllGridData() {   //取得数据列表
                 var _this = this;
                 _this.dealChangeTableSearchLoadingState(true);
-                SmartFormTypeDefinitionApi.getDataPage().then((res) => {
+                SmartFormDefinitionApi.getDataPage().then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
                         if(res.paginationBean){ //总个数
@@ -279,7 +279,7 @@
             dealQueryGridData(queryFieldList,pagination,sorter) {    //带查询条件 检索数据列表
                 var _this = this ;
                 _this.dealChangeTableSearchLoadingState(true);
-                SmartFormTypeDefinitionApi.getDataPage(queryFieldList,pagination,sorter).then((res) => {
+                SmartFormDefinitionApi.getDataPage(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.resultList;
                         if(res.paginationBean){ //总个数
@@ -296,7 +296,7 @@
             dealBatchDelByIdsBtnClick() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                SmartFormTypeDefinitionApi.batchDelByIds(delIds).then((res) => {
+                SmartFormDefinitionApi.batchDelByIds(delIds).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
                             this.$message.success(res.info);
@@ -307,7 +307,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                SmartFormTypeDefinitionApi.delOneById(delId).then((res) => {
+                SmartFormDefinitionApi.delOneById(delId).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
                             _this.$message.success(res.info);
@@ -367,7 +367,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        SmartFormTypeDefinitionApi.getOneItemById(selectRowId).then((res) => {
+                        SmartFormDefinitionApi.getOneItemById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
@@ -413,7 +413,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        SmartFormTypeDefinitionApi.addByForm(values).then((res) => {
+                        SmartFormDefinitionApi.addByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
                                     this.$message.success(res.info);
@@ -431,7 +431,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        SmartFormTypeDefinitionApi.updateByForm(values).then((res) => {
+                        SmartFormDefinitionApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
                                     this.$message.success(res.info);

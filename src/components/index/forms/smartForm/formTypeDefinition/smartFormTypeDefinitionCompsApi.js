@@ -5,6 +5,6 @@ import qs from 'qs'
 
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
-export const SmartFormTypeDefintionCreateFormApi = {
+export const SmartFormTypeDefinitionCreateFormApi = {
 
 }

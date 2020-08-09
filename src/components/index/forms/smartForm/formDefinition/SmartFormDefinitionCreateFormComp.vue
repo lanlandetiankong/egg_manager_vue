@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="vertical"
-                :form="smartFormTypeDefintionCreateForm"
+                :form="smartFormDefinitionCreateForm"
             >
                 <a-form-item label="类型名"
                      v-bind="formItemLayout"
@@ -41,10 +41,10 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ATextarea from "ant-design-vue/es/input/TextArea";
 
-    import {SmartFormTypeDefintionCreateFormApi} from './smartFormTypeDefintionCompsApi'
+    import {SmartFormDefinitionCreateFormApi} from './smartFormDefinitionCompsApi'
 
     export default {
-        name: "SmartFormTypeDefintionCreateFormComp",
+        name: "SmartFormDefinitionCreateFormComp",
         components: {ATextarea, AFormItem},
         props:{
             visible:Boolean,
@@ -84,7 +84,7 @@
                     orderNum:["orderNum",{rules:paramsRules.orderNum}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
-                smartFormTypeDefintionCreateForm:{},
+                smartFormDefinitionCreateForm:{},
                 formValObj:{},
                 treeSelectConf:{
                     parentId:{
@@ -99,8 +99,8 @@
             dealUpdateFormValue(formObj){
                 var _this = this ;
                 _this.formValObj = _this.formObj ;
-               if(typeof _this.smartFormTypeDefintionCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.smartFormTypeDefintionCreateForm.updateFields({
+               if(typeof _this.smartFormDefinitionCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                   _this.smartFormDefinitionCreateForm.updateFields({
                        name: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.name,
@@ -132,8 +132,8 @@
         },
         created(){
             var _this = this ;
-            _this.smartFormTypeDefintionCreateForm = this.$form.createForm(_this,{
-                name:'SmartFormTypeDefintionCreateForm',
+            _this.smartFormDefinitionCreateForm = this.$form.createForm(_this,{
+                name:'SmartFormDefinitionCreateForm',
                 onFieldsChange: (_, changedFields) => {     //表单字段发生修改
                     if(changedFields){
                         var formValObjTemp = _this.formValObj ;

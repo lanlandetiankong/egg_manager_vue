@@ -4,7 +4,7 @@
 
 import {CommonFieldConfArr,DrawerFieldTypeEnum,CommonDateFormatTypeEnum,FieldUndefinedMsgConf} from '~Components/index/common/drawer/drawer_define.js'
 
-export  const SmartFormTypeDefinitionDrawerConf = {
+export  const SmartFormDefinitionDrawerConf = {
     msgConf:{
         undefinedEnum:FieldUndefinedMsgConf.undefinedEnumKeyValue
     },

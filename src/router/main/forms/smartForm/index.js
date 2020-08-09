@@ -11,6 +11,16 @@ const SmartFormRouter = {
     },
     children:[
         {
+            path:'formDefinition',
+            component:_import('index/forms/smartForm/formDefinition/SmartFormDefinitionView'),
+            name:'formDefinition',
+            meta:{
+                title:'表单定义',icon:"user",keepAliveFlag:true,
+                parentRouterCompName,
+                selfCompName:'SmartFormDefinitionView'
+            }
+        },
+        {
             path:'formTypeDefinition',
             component:_import('index/forms/smartForm/formTypeDefinition/SmartFormTypeDefinitionView'),
             name:'formTypeDefinition',
