@@ -195,7 +195,6 @@
 </template>
 
 <script>
-    import jq from 'jquery' ;
     import {tableColumns,searchFormQueryConf} from './param_conf.js';
     import {DefineRoleDetailDrawerConf} from './drawer_conf.js'
     import {PermissionRoleManagerApi} from './permissionRoleManagerApi.js'
@@ -350,7 +349,7 @@
                 var _this = this ;
                 var dataSourceArrTemp = [] ;
                 if(allItemArr && allItemArr.length > 0 ){
-                    jq.each(allItemArr,function (idx,val) {
+                    jquery.each(allItemArr,function (idx,val) {
                         if(val){
                             dataSourceArrTemp.push({
                                 key:_this.dealNullStrToEmpty(val.fid),
@@ -463,7 +462,7 @@
                             _this.dialogGrantPermissionObj.checked = res.resultList;
                             var checkIdListTemp = [] ;
                             if(res.resultList && res.resultList.length > 0){
-                                jq.each(res.resultList,function (idx,val) {
+                                jquery.each(res.resultList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }
@@ -489,7 +488,7 @@
                             _this.dialogGrantMenusObj.checked = res.resultList;
                             var checkIdListTemp = [] ;
                             if(res.resultList && res.resultList.length > 0){
-                                jq.each(res.resultList,function (idx,val) {
+                                jquery.each(res.resultList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }

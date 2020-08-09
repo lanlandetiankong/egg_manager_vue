@@ -10,6 +10,8 @@ import 'ant-design-vue/dist/antd.css'
 import VueDraggableResizable from 'vue-draggable-resizable';
 Vue.component('vue-draggable-resizable', VueDraggableResizable);
 
+import jquery from 'jquery'
+window.jquery = jquery ;
 
 import VueScroll from 'vuescroll'
 import VueScrollConf from '~Config/vuescroll/vuescroll.conf.js'

@@ -22,7 +22,7 @@
     </div>
 </template>
 <script>
-    import jq from 'jquery' ;
+    import jquery from 'jquery' ;
     export default {
         name: "RoleGrantMenusFormComp",
         props:{
@@ -77,7 +77,7 @@
                 var _this = this ;
                 var defaultExpandedKeyArr = [];
                 if(_this.treeData && _this.treeData.length > 0){
-                    jq.each(_this.treeData,function (idx,val) {
+                    jquery.each(_this.treeData,function (idx,val) {
                         _this.dealRecursionGetExpandedKeys(val,defaultExpandedKeyArr);
                     })
                 }
@@ -87,7 +87,7 @@
                 var _this = this ;
                 if(val && val.children){
                     expandedKeyArr.push(val.key);
-                    jq.each(val.children,function (idx,val) {
+                    jquery.each(val.children,function (idx,val) {
                         _this.dealRecursionGetExpandedKeys(val,expandedKeyArr);
                     })
                 }

@@ -30,7 +30,6 @@
     </div>
 </template>
 <script>
-    import jq from 'jquery' ;
     export default {
         name: "UserGrantJobFormComp",
         components: {},

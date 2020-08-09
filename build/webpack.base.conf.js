@@ -89,7 +89,8 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({
         'window.Quill': 'quill',
-        'Quill': 'quill'
+        'Quill': 'quill',
+        jQuery: "jquery"
     })
   ],
   node: {

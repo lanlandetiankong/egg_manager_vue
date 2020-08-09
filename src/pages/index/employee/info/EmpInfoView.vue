@@ -268,7 +268,7 @@
     </div>
 </template>
 <script>
-    import jq from 'jquery';
+    import jquery from 'jquery';
     import BeeUtil from '~Assets/js/util/bee/BeeUtil.js' ;
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
@@ -497,7 +497,7 @@
                             var tableDatasTemp = [] ;
                             var lockedVal = lockFlag ? 1 : 0;
                             if(tableDatas && tableDatas.length > 0){
-                                jq.each(tableDatas,function (idx,val) {
+                                jquery.each(tableDatas,function (idx,val) {
                                     if(val.fid == delId){   //修改锁定状态,
                                         val.locked = lockedVal
                                     }
@@ -583,7 +583,7 @@
                 var _this = this ;
                 var dataSourceArrTemp = [] ;
                 if(allItemArr && allItemArr.length > 0 ){
-                    jq.each(allItemArr,function (idx,val) {
+                    jquery.each(allItemArr,function (idx,val) {
                         if(val){
                             dataSourceArrTemp.push({
                                 key:_this.dealNullStrToEmpty(val.fid),
@@ -600,7 +600,7 @@
                 var _this = this ;
                 var dataSourceArrTemp = [] ;
                 if(allItemArr && allItemArr.length > 0 ){
-                    jq.each(allItemArr,function (idx,val) {
+                    jquery.each(allItemArr,function (idx,val) {
                         if(val){
                             dataSourceArrTemp.push({
                                 key:_this.dealNullStrToEmpty(val.fid),
@@ -638,7 +638,7 @@
                             _this.dialogGrantRoleObj.checked = res.resultList;
                             var checkIdListTemp = [] ;
                             if(res.resultList && res.resultList.length > 0){
-                                jq.each(res.resultList,function (idx,val) {
+                                jquery.each(res.resultList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }
@@ -664,7 +664,7 @@
                             _this.dialogGrantJobObj.checked = res.resultList;
                             var checkIdListTemp = [] ;
                             if(res.resultList && res.resultList.length > 0){
-                                jq.each(res.resultList,function (idx,val) {
+                                jquery.each(res.resultList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }
