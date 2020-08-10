@@ -11,7 +11,12 @@ export  const SmartFormDefinitionDrawerConf = {
     showFieldArr:[
         {
             fieldKey:"name",
-            fieldName:"类型名",
+            fieldName:"表单名",
+            type:DrawerFieldTypeEnum.String
+        },
+        {
+            fieldKey:"title",
+            fieldName:"标题",
             type:DrawerFieldTypeEnum.String
         },
         CommonFieldConfArr.description,

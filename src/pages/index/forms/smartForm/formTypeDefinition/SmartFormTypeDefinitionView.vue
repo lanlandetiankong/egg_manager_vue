@@ -116,7 +116,7 @@
         </div>
         <!-- 弹窗dom-区域 -->
         <div>
-            <smart-form-type-defintion-create-form-comp
+            <smart-form-type-definition-create-form-comp
                 ref="smartFormTypeDefinitionCreateFormCompRef"
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
@@ -124,7 +124,7 @@
                 @createFormCancel="handleCreateFormDialogCancel"
                 @createFormSubmit="handleCreateFormDialogSubmit"
             >
-            </smart-form-type-defintion-create-form-comp>
+            </smart-form-type-definition-create-form-comp>
             <a-drawer
                 :title="drawerConf.detail.defaultGridItem.title"
                 :closeable="drawerConf.detail.defaultGridItem.closable"

@@ -1,9 +1,14 @@
 const textAlignDefault = 'left' ;
 const columns = [{
-    title: '类型名',
+    title: '表单名',
     align:textAlignDefault,
     dataIndex: 'name',
     key: 'name'
+}, {
+    title: '标题',
+    align:textAlignDefault,
+    dataIndex: 'title',
+    key: 'title'
 }, {
     title: '描述',
     align:textAlignDefault,
@@ -28,6 +33,11 @@ const columns = [{
 const searchFormQueryConfObj = {
     name:{
         fieldName:'name',
+        matching:'like',
+        value:''
+    },
+    title:{
+        fieldName:'title',
         matching:'like',
         value:''
     },

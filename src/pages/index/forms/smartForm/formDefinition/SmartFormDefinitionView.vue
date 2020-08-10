@@ -10,8 +10,13 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="类型名">
+                                <a-form-item label="表单名">
                                     <a-input v-decorator="searchConf.paramConf.name"/>
+                                </a-form-item>
+                            </a-col>
+                            <a-col :span="searchConf.defaultColSpan">
+                                <a-form-item label="标题">
+                                    <a-input v-decorator="searchConf.paramConf.title"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
@@ -116,7 +121,7 @@
         </div>
         <!-- 弹窗dom-区域 -->
         <div>
-            <smart-form-type-defintion-create-form-comp
+            <smart-form-definition-create-form-comp
                 ref="smartFormDefinitionCreateFormCompRef"
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
@@ -124,7 +129,7 @@
                 @createFormCancel="handleCreateFormDialogCancel"
                 @createFormSubmit="handleCreateFormDialogSubmit"
             >
-            </smart-form-type-defintion-create-form-comp>
+            </smart-form-definition-create-form-comp>
             <a-drawer
                 :title="drawerConf.detail.defaultGridItem.title"
                 :closeable="drawerConf.detail.defaultGridItem.closable"
@@ -169,6 +174,7 @@
                     defaultColSpan: 8,
                     paramConf: {
                         name: ["name", {rules: []}],
+                        title: ["title", {rules: []}],
                         description: ["description", {rules: []}],
                         remark:["remark",{rules: []}]
                     }
@@ -199,6 +205,7 @@
                 },
                 dialogFormObj: {
                     name: '',
+                    title: '',
                     description:'',
                     orderNum:undefined,
                     remark:''
@@ -206,7 +213,7 @@
                 drawerConf:{
                     detail:{
                         defaultGridItem:{
-                            title:"表单类型详情",
+                            title:"表单定义详情",
                             closable:true,
                             visible:false,
                             placement:"right",
@@ -359,7 +366,6 @@
             },
             handleUpdateByFormBtnClick() {  //更新按钮-点击
                 var _this = this;
-                debugger ;
                 if (_this.tableCheckIdList.length < 1) {
                     this.$message.warning('请选择一行要更新的数据！');
                 } else if (_this.tableCheckIdList.length > 1) {
@@ -368,11 +374,11 @@
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
                         SmartFormDefinitionApi.getOneItemById(selectRowId).then((res) => {
-                            var selectUserBean = res.bean;
-                            if (selectUserBean) {
+                            var selectBean = res.bean;
+                            if (selectBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
                                 _this.dialogFormConf.actionType = "update";
-                                _this.dialogFormObj = selectUserBean;
+                                _this.dialogFormObj = selectBean;
                                 console.log(_this.dialogFormObj);
                             }
                         })
@@ -492,7 +498,7 @@
             this.dealGetAllGridData();
         },
         destroyed(){
-            console.log("智能表单类型管理-页面销毁 ...")
+            console.log("智能表单定义管理-页面销毁 ...")
         }
     }
 </script>

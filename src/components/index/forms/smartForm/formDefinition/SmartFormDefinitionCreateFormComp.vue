@@ -10,13 +10,18 @@
             @ok="() => { $emit('createFormSubmit')}"
         >
             <a-form
-                layout="vertical"
+                layout="horizontal"
                 :form="smartFormDefinitionCreateForm"
             >
-                <a-form-item label="类型名"
+                <a-form-item label="表单名称"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
+                </a-form-item>
+                <a-form-item label="表单标题"
+                             v-bind="formItemLayout"
+                >
+                    <a-input v-decorator="formFieldConf.title"/>
                 </a-form-item>
                 <a-form-item label="描述"
                              v-bind="formItemLayout"
@@ -55,7 +60,10 @@
         data(){
             var paramsRules ={
                 name:[
-                    {required:true,message:'请填写类型名!'}
+                    {required:true,message:'请填写表单名称!'}
+                ],
+                title:[
+                    {required:true,message:'请填写标题!'}
                 ],
                 description:[
                     {required:true,message:'请填写描述!'}
@@ -80,6 +88,7 @@
                 },
                 formFieldConf:{
                     name:["name",{rules:paramsRules.name}],
+                    title:["title",{rules:paramsRules.title}],
                     description:["description",{rules:paramsRules.description}],
                     orderNum:["orderNum",{rules:paramsRules.orderNum}],
                     remark:["remark",{rules:paramsRules.remark}]
@@ -104,6 +113,10 @@
                        name: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.name,
+                       }),
+                       title: _this.$form.createFormField({
+                           ...formObj,
+                           value: formObj.title,
                        }),
                        description: _this.$form.createFormField({
                            ...formObj,
@@ -160,6 +173,10 @@
                             ..._this.formObj,
                             value: _this.formObj.name
                         }),
+                        title: this.$form.createFormField({
+                            ..._this.formObj,
+                            value: _this.formObj.title
+                        }),
                         description: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.description
@@ -181,6 +198,7 @@
         watch:{
             formObj: {
                 handler (val, oval) {
+                    debugger;
                     var _this = this ;
                     _this.dealUpdateFormValue(val);
                 },
@@ -189,6 +207,7 @@
             },
             visible:{
                 handler(val,oval){  //隐藏与展示弹窗时监听
+                    debugger;
                     var _this = this ;
                     if(val === true){
                         if("create" == _this.actionType){   //打开=>创建
