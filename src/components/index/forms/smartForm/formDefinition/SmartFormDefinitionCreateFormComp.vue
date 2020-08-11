@@ -23,6 +23,18 @@
                 >
                     <a-input v-decorator="formFieldConf.title"/>
                 </a-form-item>
+                <a-form-item label="表单类型"
+                             v-bind="formItemLayout"
+                >
+                    <a-select showSearch allowClear
+                              placeholder="请选择"
+                              optionFilterProp="children"
+                              :options="formTypeList"
+                              :filterOption="getSelectCommonFilterOption"
+                              v-decorator="formFieldConf.formTypeId"
+                    >
+                    </a-select>
+                </a-form-item>
                 <a-form-item label="描述"
                              v-bind="formItemLayout"
                 >
@@ -49,13 +61,13 @@
     import {SmartFormDefinitionCreateFormApi} from './smartFormDefinitionCompsApi'
 
     export default {
-        name: "SmartFormDefinitionCreateFormComp",
+        name: "formTypeList",
         components: {ATextarea, AFormItem},
         props:{
             visible:Boolean,
             actionType:String,
             formObj:Object,
-
+            formTypeList:Array
         },
         data(){
             var paramsRules ={
@@ -64,6 +76,9 @@
                 ],
                 title:[
                     {required:true,message:'请填写标题!'}
+                ],
+                formTypeId:[
+                    {required:true,message:'请选择表单类型!'}
                 ],
                 description:[
                     {required:true,message:'请填写描述!'}
@@ -89,6 +104,7 @@
                 formFieldConf:{
                     name:["name",{rules:paramsRules.name}],
                     title:["title",{rules:paramsRules.title}],
+                    formTypeId:["formTypeId",{rules:paramsRules.formTypeId}],
                     description:["description",{rules:paramsRules.description}],
                     orderNum:["orderNum",{rules:paramsRules.orderNum}],
                     remark:["remark",{rules:paramsRules.remark}]
@@ -105,6 +121,9 @@
             }
         },
         methods:{
+            getSelectCommonFilterOption(input,option){
+                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
+            },
             dealUpdateFormValue(formObj){
                 var _this = this ;
                 _this.formValObj = _this.formObj ;
@@ -117,6 +136,10 @@
                        title: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.title,
+                       }),
+                       formTypeId: _this.$form.createFormField({
+                           ...formObj,
+                           value: formObj.formTypeId,
                        }),
                        description: _this.$form.createFormField({
                            ...formObj,
@@ -176,6 +199,10 @@
                         title: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.title
+                        }),
+                        formTypeId: this.$form.createFormField({
+                            ..._this.formObj,
+                            value: _this.formObj.formTypeId
                         }),
                         description: this.$form.createFormField({
                             ..._this.formObj,

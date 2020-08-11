@@ -537,7 +537,7 @@
                     }
                 })
             },
-            dealGetDefineTenantEnumList(){  //取得 用户类型-枚举列表
+            dealGetDefineTenantEnumList(){  //取得 所属租户-枚举列表
                 var _this = this ;
                 EmpInfoApi.getAllDefineTenantEnums().then((res) => {
                     if(res && res.hasError == false){

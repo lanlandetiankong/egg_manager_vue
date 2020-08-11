@@ -43,5 +43,18 @@ export const SmartFormDefinitionApi = {
             delId:delId
         }
         return axios.post("/forms/smartForm/formDefinition/delOneById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
-    }
+    },
+    getAllFormTypeEnums() {  //取得 租户 列表
+        var sortObj = {     //固定 order字段 排序
+            field: "ordering",
+            order: "ascend"
+        }
+        var obj = {
+            queryObj: JSON.stringify([]),
+            //paginationObj:JSON.stringify({}),
+            //sortObj:JSON.stringify(sortObj),
+        }
+        //查询所有[租户定义]信息
+        return axios.post('/forms/smartForm/formTypeDefinition/getDataAll', qs.stringify(obj)).then(res => res.data);
+    },
 }

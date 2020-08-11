@@ -20,6 +20,19 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
+                                <a-form-item label="表单类型">
+                                    <a-select showSearch allowClear
+                                              placeholder="请选择"
+                                              style="width: 180px"
+                                              optionFilterProp="children"
+                                              :options="searchConf.binding.form.formTypeList"
+                                              :filterOption="getFilterOption"
+                                              v-decorator="searchConf.paramConf.formTypeId"
+                                    >
+                                    </a-select>
+                                </a-form-item>
+                            </a-col>
+                            <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="描述">
                                     <a-input v-decorator="searchConf.paramConf.description"/>
                                 </a-form-item>
@@ -126,6 +139,7 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
+                :formTypeList="searchConf.binding.form.formTypeList"
                 @createFormCancel="handleCreateFormDialogCancel"
                 @createFormSubmit="handleCreateFormDialogSubmit"
             >
@@ -175,8 +189,14 @@
                     paramConf: {
                         name: ["name", {rules: []}],
                         title: ["title", {rules: []}],
+                        formTypeId: ["formTypeId", {rules: []}],
                         description: ["description", {rules: []}],
                         remark:["remark",{rules: []}]
+                    },
+                    binding:{
+                        form:{
+                            formTypeList:[]
+                        }
                     }
                 },
                 searchForm:this.$form.createForm(this,{name:'search_form'}),
@@ -207,6 +227,7 @@
                     name: '',
                     title: '',
                     description:'',
+                    formTypeId:undefined,
                     orderNum:undefined,
                     remark:''
                 },
@@ -254,6 +275,9 @@
             }
         },
         methods: {
+            getFilterOption(input,option){
+                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
+            },
             onSelectChange(selectedRowKeys) {
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
@@ -267,6 +291,16 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
                 this.tableConf.loading = loadingFlag;
+            },
+            dealGetFormTypeList(){  //取得 表单类型
+                var _this = this ;
+                SmartFormDefinitionApi.getAllFormTypeEnums().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.enumList){
+                            _this.searchConf.binding.form.formTypeList = res.enumList ;
+                        }
+                    }
+                })
             },
             dealGetAllGridData() {   //取得数据列表
                 var _this = this;
@@ -496,6 +530,7 @@
         },
         created(){
             this.dealGetAllGridData();
+            this.dealGetFormTypeList();
         },
         destroyed(){
             console.log("智能表单定义管理-页面销毁 ...")

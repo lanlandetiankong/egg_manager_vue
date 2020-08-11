@@ -109,7 +109,7 @@ export const EmpInfoApi = {
     },
     getAllDefineTenantEnums() {  //取得 租户 列表
         var sortObj = {     //固定 order字段 排序
-            field: "ordering",
+            field: "orderNum",
             order: "ascend"
         }
         var obj = {
