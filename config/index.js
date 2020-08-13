@@ -13,7 +13,7 @@ module.exports = {
       proxyTable: {
           '/egg_manager': {
               // 测试环境
-              target: 'http://www.localhost:8083',  // 接口域名
+              target: 'http://www.localhost:10100',  // 接口域名
               changeOrigin: true,  //是否跨域
               pathRewrite: {
                   //需要rewrite重写的,
