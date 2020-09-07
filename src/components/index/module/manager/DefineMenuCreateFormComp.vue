@@ -299,8 +299,7 @@
             });
         },
         mounted(){
-            console.log(this.parentSelectTrees);
-            console.log("this.parentSelectTrees");
+            //console.log("parentSelectTrees",this.parentSelectTrees);
         },
         watch:{
             formObj: {

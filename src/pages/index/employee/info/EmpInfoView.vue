@@ -210,6 +210,7 @@
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
                 :belongTenants="searchConf.binding.belongTenants"
+                :belongDepartmentTrees="searchConf.treeSelectConf.belongDepartmentId.treeData"
                 @createFormCancel="handleEmployeeInfoCreateFormCancel"
                 @createFormSubmit="handleEmployeeInfoCreateFormSubmit"
             />
@@ -299,6 +300,7 @@
                     defaultColSpan: 8,
                     paramConf: {
                         belongTenantId: ["belongTenantId", {rules: []}],
+                        belongDepartmentId: ["belongDepartmentId", {rules: []}],
                         account: ["account", {rules: []}],
                         nickName: ["nickName", {rules: []}],
                         email: ["email", {rules: []}],
@@ -307,8 +309,16 @@
                     },
                     binding:{
                         belongTenants:[],
+                        belongDepartments:[],
                         userTypes:[],
                         lockStates:[]
+                    },
+                    treeSelectConf:{
+                        belongDepartmentId:{
+                            treeDefaultExpandAll:false,
+                            treeNodeFilterProp:"title",
+                            treeData:[]
+                        }
                     }
                 },
                 searchForm: this.$form.createForm(this, {name: 'search_form'}),
@@ -341,6 +351,7 @@
                     email: '',
                     userType: '',
                     belongTenantId: '',
+                    belongDepartmentId: '',
                     locked:'0'
                 },
                 dialogFormDefaultObj:{  //新建时的默认值设置
@@ -349,6 +360,7 @@
                     email: '',
                     userType: '',
                     belongTenantId: '',
+                    belongDepartmentId: '',
                     locked:'0'
                 },
                 dialogGrantRoleConf:{
@@ -543,6 +555,16 @@
                     if(res && res.hasError == false){
                         if(res.enumList){
                             _this.searchConf.binding.belongTenants = res.enumList ;
+                        }
+                    }
+                })
+            },
+            dealGetDefineDepartmentTreeData(){  //取得 所属租户-枚举列表
+                var _this = this ;
+                EmpInfoApi.getAllDefineDepartmentTrees().then((res) => {
+                    if(res && res.hasError == false){
+                        if(res.resultList){
+                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.resultList ;
                         }
                     }
                 })
@@ -1008,6 +1030,7 @@
             this.dealGetAllUserAccounts();
             this.dealGetUserTypeEnumList();
             this.dealGetDefineTenantEnumList();
+            this.dealGetDefineDepartmentTreeData();
             this.dealGetLockStateEnumList();
         },
         destroyed(){

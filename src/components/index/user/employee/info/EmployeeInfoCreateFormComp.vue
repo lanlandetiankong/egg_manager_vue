@@ -25,6 +25,20 @@
                     >
                     </a-select>
                 </a-form-item>
+                <a-form-item label="所属部门"
+                             v-bind="formItemLayout"
+                >
+                    <a-tree-select
+                        placeholder="选择部门"
+                        showSearch allowClear
+                        v-decorator="formFieldConf.belongDepartmentId"
+                        :treeNodeFilterProp="treeSelectConf.belongDepartmentId.treeNodeFilterProp"
+                        :treeDefaultExpandAll="treeSelectConf.belongDepartmentId.treeDefaultExpandAll"
+                        :treeData="treeSelectConf.belongDepartmentId.selftTreeData"
+                        @change="handleBelongDepartmentOfSearchChange"
+                    >
+                    </a-tree-select>
+                </a-form-item>
                 <a-form-item label="账号"
                              v-bind="formItemLayout"
                 >
@@ -75,7 +89,8 @@
             visible:Boolean,
             actionType:String,
             formObj:Object,
-            belongTenants:Array
+            belongTenants:Array,
+            belongDepartmentTrees:Array
         },
         data(){
             var paramsRules ={
@@ -92,6 +107,9 @@
                 avatarUrl:[],
                 belongTenantId:[
                     {required:true,message:'请选择所属租户!'}
+                ],
+                belongDepartmentId:[
+                    {required:true,message:'请选择所属部门!'}
                 ],
                 locked:[
                     {required:true,message:'请选择是否锁定!'}
@@ -114,9 +132,17 @@
                     email: ["email", {rules: paramsRules.email}],
                     avatarUrl: ["avatarUrl", {rules: paramsRules.avatarUrl}],
                     belongTenantId: ["belongTenantId", {rules: paramsRules.belongTenantId}],
+                    belongDepartmentId: ["belongDepartmentId", {rules: paramsRules.belongDepartmentId}],
                     locked: ["locked", {rules: paramsRules.locked}]
                 },
-                employeeInfoCreateForm:{}
+                employeeInfoCreateForm:{},
+                treeSelectConf:{
+                    belongDepartmentId:{
+                        treeDefaultExpandAll:false,
+                        treeNodeFilterProp:"title",
+                        selftTreeData:[]
+                    }
+                }
             }
         },
         methods:{
@@ -144,6 +170,10 @@
                             ...formObj,
                             value: formObj.belongTenantId,
                         }),
+                        belongDepartmentId: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.belongDepartmentId,
+                        }),
                         locked: _this.$form.createFormField({
                             ...formObj,
                             value: dealNumberToStr(formObj.locked),
@@ -152,6 +182,11 @@
                 }
             },
             getBelongTenantFilterOption(input,option){
+                //[租户]select 搜索过滤
+                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
+            },
+            getBelongDepartmentFilterOption(input,option){
+                //[部门]select 搜索过滤
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
             dealGetHeadAvatarUrlVal(){  //取得[用户头像上传后的图片object]
@@ -160,7 +195,18 @@
             handleCreateFormSubmit(e){  //创建提交
                 var _this = this ;
                 _this.$emit('createFormSubmit',e,_this.dealGetHeadAvatarUrlVal());
-            }
+            },
+            handleBelongDepartmentOfSearchChange(value){  //[所属部门] SelectTree cchange事件
+                console.log("handleBelongDepartmentOfSearchChange",value);
+            },
+            handleCreateActionInit(){   //弹窗展示为[创建-操作]的初始化
+                var _this = this ;
+                _this.treeSelectConf.belongDepartmentId.selftTreeData = _this.belongDepartmentTrees ;
+            },
+            handleUpdateActionInit(){   //弹窗展示为[更新-操作]的初始化
+                var _this = this ;
+                _this.treeSelectConf.belongDepartmentId.selftTreeData = _this.belongDepartmentTrees ;
+            },
         },
         computed:{
             modalCompTitle() {
@@ -205,6 +251,10 @@
                             ..._this.formObj,
                             value: _this.formObj.belongTenantId
                         }),
+                        belongDepartmentId: this.$form.createFormField({
+                            ..._this.formObj,
+                            value: _this.formObj.belongDepartmentId
+                        }),
                         locked: this.$form.createFormField({
                             ..._this.formObj,
                             value: dealNumberToStr(_this.formObj.locked)
@@ -223,6 +273,21 @@
                     _this.dealUpdateFormValue(val);
                 },
                 deep: true,
+                immediate:true
+            },
+            visible:{
+                handler(val,oval){  //隐藏与展示弹窗时监听
+                    var _this = this ;
+                    if(val === true){
+                        if("create" == _this.actionType){   //打开=>创建
+                            _this.handleCreateActionInit();
+                        }   else if("update" == _this.actionType){  //打开=>更新
+                            _this.handleUpdateActionInit();
+                        }
+                    }   else {  //弹窗关闭
+                        //console.log("弹窗展示状态变更:关闭");
+                    }
+                },
                 immediate:true
             }
         }

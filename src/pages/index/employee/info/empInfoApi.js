@@ -120,6 +120,17 @@ export const EmpInfoApi = {
         //查询所有[租户定义]信息
         return axios.post('/organization/define_tenant/getAllDefineTenantEnums', qs.stringify(obj)).then(res => res.data);
     },
+    getAllDefineDepartmentTrees() {  //取得 租户 列表
+        var sortObj = {     //固定 order字段 排序
+            field: "orderNum",
+            order: "ascend"
+        }
+        var obj = {
+            queryObj: JSON.stringify([]),
+        }
+        //查询所有[租户定义]信息
+        return axios.post('/define/define_department/getAllDepartmentTreeSelect', qs.stringify(obj)).then(res => res.data);
+    },
     exportCheckToExcel(menuId, checkIds) {    //导出已勾选为Excel
         var _this = this ;
         var obj = {
