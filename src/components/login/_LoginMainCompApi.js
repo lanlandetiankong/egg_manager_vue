@@ -11,6 +11,6 @@ export const LoginMainCompApi = {
             account:loginForm.userAccount,
             password:loginForm.password
         }
-        return axios.post('/user/user_account/login/account',qs.stringify(formObj)).then(res => res.data);
+        return axios.post('user/login/byAccountForm',qs.stringify(formObj)).then(res => res.data);
     }
 }
