@@ -260,7 +260,12 @@ http.post = function (url, data, options) {
 
 function jumpToLoginPage(router) {
     window.sessionStorage.removeItem("userToken");
-    //跳转到登录界面
-    router.push("/member/login");
+    debugger;
+    if("/member/login" == router.app._route.fullPath){
+        //当前已经是登录界面
+    }   else {
+        //跳转到登录界面
+        router.push("/member/login");
+    }
 }
 export default http
