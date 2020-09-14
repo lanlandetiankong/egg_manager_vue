@@ -23,6 +23,21 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
+                                <a-form-item label="所属部门">
+                                    <a-tree-select
+                                        placeholder="选择部门"
+                                        style="width: 150px"
+                                        showSearch allowClear
+                                        v-decorator="searchConf.paramConf.belongDepartmentId"
+                                        :treeNodeFilterProp="searchConf.treeSelectConf.belongDepartmentId.treeNodeFilterProp"
+                                        :treeDefaultExpandAll="searchConf.treeSelectConf.belongDepartmentId.treeDefaultExpandAll"
+                                        :treeData="searchConf.treeSelectConf.belongDepartmentId.treeData"
+                                        @change="handleBelongDepartmentOfSearchChange"
+                                    >
+                                    </a-tree-select>
+                                </a-form-item>
+                            </a-col>
+                            <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="账号">
                                     <a-input v-decorator="searchConf.paramConf.account" />
                                 </a-form-item>
@@ -1009,6 +1024,9 @@
             },
             handleEmployeeInfoDetailDrawerClose(e){ //Drawer-用户定义 详情关闭
                 this.drawerConf.detail.employeeInfo.visible = false ;
+            },
+            handleBelongDepartmentOfSearchChange(value){  //[所属部门] SelectTree cchange事件
+                //console.log("handleBelongDepartmentOfSearchChange",value);
             },
         },
         computed: {

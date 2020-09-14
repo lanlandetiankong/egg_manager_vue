@@ -30,6 +30,13 @@ export  const EmployeeInfoDetailDrawerConf = {
             isNeedSplit:true
         },
         {
+            fieldKey:"belongDepartmentName",
+            fieldKeySplitArr:['belongDepartment','name'],
+            fieldName:"所属部门",
+            type:DrawerFieldTypeEnum.String,
+            isNeedSplit:true
+        },
+        {
             fieldKey:"userTypeStr",
             fieldName:"用户类型",
             type:DrawerFieldTypeEnum.String

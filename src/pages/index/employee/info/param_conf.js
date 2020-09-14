@@ -18,6 +18,12 @@ const columns = [{
     dataIndex: 'belongTenant.name',
     sorter:true,
     key: 'belongTenant.name',
+},  {
+    title: '所属部门',
+    align:textAlignDefault,
+    dataIndex: 'belongDepartment.name',
+    sorter:true,
+    key: 'belongDepartment.name',
 }, {
     title: '邮箱',
     align:textAlignDefault,
@@ -69,6 +75,12 @@ const searchFormQueryConfObj = {
         fieldName:'defineTenantId',
         matching:'equals',
         foreignName:'userTenant',   //外表的关联查询
+        value:''
+    },
+    belongDepartmentId:{
+        fieldName:'defineDepartmentId',
+        matching:'equals',
+        foreignName:'userDepartment',
         value:''
     },
     locked:{
