@@ -10,8 +10,6 @@ import 'ant-design-vue/dist/antd.css'
 import VueDraggableResizable from 'vue-draggable-resizable';
 Vue.component('vue-draggable-resizable', VueDraggableResizable);
 
-import jquery from 'jquery'
-window.jquery = jquery ;
 
 import VueScroll from 'vuescroll'
 import VueScrollConf from '~Config/vuescroll/vuescroll.conf.js'
@@ -37,6 +35,9 @@ Vue.use(Antd)
 Vue.use(VueScroll,VueScrollConf)
 Vue.use(VueQuillEditor)
 
+
+//router每次跳转都刷新页面的处理
+//Vue.prototype.router = router;
 new Vue({
   el: '#app',
   router,
