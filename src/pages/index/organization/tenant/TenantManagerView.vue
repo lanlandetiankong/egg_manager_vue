@@ -73,6 +73,12 @@
                         </a-button>
                     </a-col>
                     <a-col>
+                        <a-button type="primary" icon="edit"
+                                  @click="handleTenantSetupManagerBtnClick">
+                            设置管理员
+                        </a-button>
+                    </a-col>
+                    <a-col>
                         <a-switch
                             checkedChildren="展示搜索"
                             unCheckedChildren="隐藏搜索"
@@ -112,9 +118,9 @@
         <div>
             <define-tenant-create-form-comp
                 ref="defineTenantCreateFormRef"
-                :visible="dialogFormConf.visible"
-                :formObj="dialogFormObj"
-                :actionType="dialogFormConf.actionType"
+                :visible="dialog.form.conf.visible"
+                :formObj="dialog.form.obj"
+                :actionType="dialog.form.conf.actionType"
                 @createFormCancel="handleDefineTenantCreateFormCancel"
                 @createFormSubmit="handleDefineTenantCreateFormSubmit"
             >
@@ -138,6 +144,10 @@
                     :drawerFieldConf="drawerConf.detail.defineTenant.drawerFieldConf"
                 />
             </a-drawer>
+            <tenant-setup-manager-comp
+                :visible="dialog.setupManager.conf.visible"
+                :tenantId="dialog.setupManager.conf.tenantId"
+            />
         </div>
     </div>
 </template>
@@ -150,11 +160,12 @@
     import {TenantManagerApi} from './tenantManagerApi.js'
 
     import DefineTenantCreateFormComp from '~Components/index/organization/tenant/DefineTenantCreateFormComp'
+    import TenantSetupManagerComp from '~Components/index/organization/tenant/TenantSetupManagerComp'
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     export default {
         name: "TenantManagerView",
-        components: { ACol, AFormItem,DefineTenantCreateFormComp,SimpleDetailDrawerComp},
+        components: { ACol, AFormItem,DefineTenantCreateFormComp,TenantSetupManagerComp,SimpleDetailDrawerComp},
         data() {
             return {
                 searchConf:{
@@ -192,10 +203,24 @@
                     visible: false,
                     actionType: "create"
                 },
-                dialogFormObj: {
-                    name: '',
-                    code: '',
-                    dbCode:'',
+                dialog:{
+                    form:{
+                        conf:{
+                            visible: false,
+                            actionType: "create"
+                        },
+                        obj:{
+                            name: '',
+                            code: '',
+                            dbCode:'',
+                        }
+                    },
+                    setupManager:{
+                        conf:{
+                            visible: false,
+                            tenantId:''
+                        }
+                    }
                 },
                 drawerConf:{
                     detail:{
@@ -343,9 +368,9 @@
             },
             handleAddDefineTenantBtnClick() {     //新增租户按钮-点击
                 var _this = this;
-                _this.dialogFormConf.visible = true;   //显示弹窗
-                _this.dialogFormConf.actionType = "create";
-                _this.dialogFormObj = {};
+                _this.dialog.form.conf.visible = true;   //显示弹窗
+                _this.dialog.form.conf.actionType = "create";
+                _this.dialog.form.obj = {};
             },
             handleUpdateDefineTenantBtnClick() {  //更新租户按钮-点击
                 var _this = this;
@@ -357,12 +382,12 @@
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
                         TenantManagerApi.getDefineTenantById(selectRowId).then((res) => {
-                            var selectUserBean = res.bean;
-                            if (selectUserBean) {
-                                _this.dialogFormConf.visible = true;   //显示弹窗
-                                _this.dialogFormConf.actionType = "update";
-                                _this.dialogFormObj = selectUserBean;
-                                //console.log(_this.dialogFormObj);
+                            var selectBean = res.bean;
+                            if (selectBean) {
+                                _this.dialog.form.conf.visible = true;   //显示弹窗
+                                _this.dialog.form.conf.actionType = "update";
+                                _this.dialog.form.obj = selectBean;
+                                //console.log(_this.dialog.form.obj);
                             }
                         })
                     } else {
@@ -391,17 +416,17 @@
             },
             handleDefineTenantCreateFormCancel(e) {  // 创建/更新 租户定义表单->取消
                 var _this = this;
-                _this.dialogFormConf.visible = false;
+                _this.dialog.form.conf.visible = false;
             },
             handleDefineTenantCreateFormSubmit(e) {   // 创建/更新 租户表单->提交
                 var _this = this;
-                const dialogFormObj = _this.dealGetDialogRefFormObj();
-                dialogFormObj.validateFields((err, values) => {
+                const dialogRefFormObj = _this.dealGetDialogRefFormObj();
+                dialogRefFormObj.validateFields((err, values) => {
                     if (err) {
                         return;
                     }
                     var closeDialogFlag = true;
-                    if (_this.dialogFormConf.actionType == "create") {        //新建-提交
+                    if (_this.dialog.form.conf.actionType == "create") {        //新建-提交
                         TenantManagerApi.addDefineTenantByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
@@ -414,8 +439,8 @@
                                 closeDialogFlag = false;
                             }
                         })
-                    } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
-                        values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
+                    } else if (_this.dialog.form.conf.actionType == "update") {   //更新-提交
+                        values['fid'] = _this.dialog.form.obj.fid;   //提交时，回填fid值
                         TenantManagerApi.updateDefineTenantByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
@@ -430,8 +455,8 @@
                         })
                     }
                     if (closeDialogFlag == true) {    //关闭弹窗
-                        dialogFormObj.resetFields();
-                        _this.dialogFormConf.visible = false;
+                        dialogRefFormObj.resetFields();
+                        _this.dialog.form.conf.visible = false;
                     }
                 });
 
@@ -470,7 +495,23 @@
             },
             handleDefineTenantDetailDrawerClose(e){ //Drawer-租户定义 详情关闭
                 this.drawerConf.detail.defineTenant.visible = false ;
-            }
+            },
+            handleTenantSetupManagerBtnClick() {  //更新租户按钮-点击
+                var _this = this;
+                if (_this.tableCheckIdList.length < 1) {
+                    this.$message.warning('请选择一行要设置的数据！');
+                } else if (_this.tableCheckIdList.length > 1) {
+                    this.$message.warning('请选择至多一行要设置的数据！');
+                } else {
+                    var selectRowId = _this.tableCheckIdList[0];
+                    if (selectRowId) {
+                        _this.dialog.setupManager.conf.visible = true;   //显示弹窗
+                        _this.dialog.setupManager.conf.tenantId = selectRowId;
+                    } else {
+                        this.$message.warning('操作失败！未取得有效的租户id！');
+                    }
+                }
+            },
         },
         created(){
             this.dealGetAllDefineTenant();
