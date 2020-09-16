@@ -8,10 +8,14 @@
             :width="1000"
             :centered="true"
             cancelText="取消"
-            @cancel="() => { $emit('createFormCancel')}"
-            @ok="() => { $emit('createFormSubmit')}"
+            @cancel="() => { $emit('setupManagerCancel')}"
+            @ok="handleSubmit"
         >
-            <user-table-select-comp />
+            <user-table-select-comp
+                :maxSize="userTableSelect.conf.maxSize"
+                :minSize="userTableSelect.conf.minSize"
+                :checkIdList="userTableSelect.conf.checkIdList"
+            />
         </a-modal>
     </div>
 </template>
@@ -35,10 +39,20 @@
                     title:'设置管理员',
                     okText:'确认提交'
                 },
+                userTableSelect:{
+                    conf:{
+                        maxSize:1,
+                        minSize:1,
+                        checkIdList: []
+                    }
+                }
             }
         },
         methods:{
-
+            handleSubmit(e){
+                //传递数据到父组件处理
+                this.$emit('setupManagerSubmit');
+            }
         },
         computed:{
 

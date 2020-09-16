@@ -3,8 +3,8 @@
         <!-- 搜索栏-->
         <div>
             <!-- 搜索区域 -->
-            <div v-show="searchConf.showListFlag">
-                <div>
+            <div >
+                <div v-show="searchConf.showListFlag">
                     <a-form layout="inline"
                             :form="searchForm"
                             @submit="handleSearchFormQuery"
@@ -82,24 +82,37 @@
                         </a-row>
                         <a-row>
                             <a-col :span="24" :style="{ textAlign: 'right' }">
+                                <search-filter-btn-comp
+                                    :showFlag="searchConf.showListFlag"
+                                    @btnClick="toggleSearchShowListFlag"
+                                >
+                                </search-filter-btn-comp>
                                 <a-button type="primary" html-type="submit" icon="search"
-                                          :loading="searchConf.loadingFlag"
                                 >
                                     搜索
                                 </a-button>
                                 <a-button :style="{ marginLeft: '8px' }" icon="close-square"
-                                          @click="handleSearchFormReset">
+                                          @click="handleSearchFormReset" >
                                     清空
                                 </a-button>
                             </a-col>
                         </a-row>
                     </a-form>
                 </div>
-                <a-divider/>
+                <div>
+                    <a-row>
+                        <a-col :span="24" :style="{ textAlign: 'right' }">
+                            <search-filter-btn-comp
+                                :showFlag="!searchConf.showListFlag"
+                                @btnClick="toggleSearchShowListFlag"
+                            >
+                            </search-filter-btn-comp>
+                        </a-col>
+                    </a-row>
+                </div>
             </div>
         </div>
         <!-- 表格内容 -->
-        <a-divider/>
         <div>
             <a-table
                 :locale="{emptyText:'暂无数据'}"
@@ -135,9 +148,13 @@
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
     import {UserTableSelectCompApi} from './userTableSelectCompApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
+
+    import SearchFilterBtnComp from '~Components/common/search/SearchFilterBtnComp'
+
     export default {
         name: 'UserTableSelectComp',
         mixins:[EggCommonMixin],
+        components:{SearchFilterBtnComp},
         props: {
             maxSize:{
                 type:Number,
@@ -216,6 +233,10 @@
             }
         },
         methods: {
+            toggleSearchShowListFlag(){ //切换显示/隐藏
+                debugger;
+                this.searchConf.showListFlag = !this.searchConf.showListFlag ;
+            },
             dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
                     loadingFlag = false ;

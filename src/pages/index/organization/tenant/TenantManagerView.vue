@@ -45,7 +45,6 @@
                         </a-row>
                     </a-form>
                 </div>
-                <a-divider/>
             </div>
             <!-- 操作按钮-区域-->
             <div>
@@ -147,7 +146,9 @@
             <tenant-setup-manager-comp
                 :visible="dialog.setupManager.conf.visible"
                 :tenantId="dialog.setupManager.conf.tenantId"
-            />
+                @setupManagerCancel="handleSetupManagerCancel"
+                @setupManagerSubmit="handleSetupManagerSubmit"
+            ></tenant-setup-manager-comp>
         </div>
     </div>
 </template>
@@ -512,6 +513,14 @@
                     }
                 }
             },
+            handleSetupManagerCancel(e){ //[设置管理员]-取消
+                var _this = this;
+                _this.dialog.setupManager.conf.visible = false;
+            },
+            handleSetupManagerSubmit(){ //[设置管理员]-提交
+                var _this = this;
+                _this.dialog.setupManager.conf.visible = false;
+            }
         },
         created(){
             this.dealGetAllDefineTenant();
