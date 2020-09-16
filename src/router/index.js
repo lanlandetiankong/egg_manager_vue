@@ -13,7 +13,6 @@ import OrganizationRouter from './main/organization/index'
 import PermissionRouter from './main/permission/index'
 import UserZoneRouter from './main/userZone/index'
 import AnnouncementRouter from './main/announcement/index'
-import ExtensionsRouter from './main/extensions/index'
 import FormsRouter from './main/forms/index'
 
 
@@ -54,7 +53,6 @@ export const constantRouterMap = [
             UserZoneRouter,
             AnnouncementRouter,
             OrganizationRouter,
-            ExtensionsRouter,
             FormsRouter
         ]
     },
