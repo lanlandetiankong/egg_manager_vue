@@ -12,8 +12,8 @@
             <template v-for="item in menuList">
                 <a-menu-item v-if="!item.children"
                              :key="item.key">
-                    <a-icon type="pie-chart"/>
-                    <span>{{item.title}}</span>
+                    <a-icon :type="item.iconName"/>
+                    <span>{{item.name}}</span>
                 </a-menu-item>
                 <sub-menu-comp v-else
                                :menu-info="item"
