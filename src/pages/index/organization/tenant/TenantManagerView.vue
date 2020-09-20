@@ -20,11 +20,6 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="数据库标识">
-                                    <a-input v-decorator="searchConf.paramConf.dbCode"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="备注">
                                     <a-input v-decorator="searchConf.paramConf.remark"/>
                                 </a-form-item>
@@ -176,7 +171,6 @@
                     paramConf: {
                         name: ["name", {rules: []}],
                         code: ["code", {rules: []}],
-                        dbCode: ["dbCode", {rules: []}],
                         remark:["remark",{rules: []}]
                     }
                 },
@@ -213,7 +207,6 @@
                         obj:{
                             name: '',
                             code: '',
-                            dbCode:'',
                         }
                     },
                     setupManager:{

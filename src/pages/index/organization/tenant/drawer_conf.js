@@ -19,11 +19,6 @@ export  const DefineTenantDetailDrawerConf = {
             fieldName:"编码",
             type:DrawerFieldTypeEnum.String
         },
-        {
-            fieldKey:"dbCode",
-            fieldName:"数据库标识",
-            type:DrawerFieldTypeEnum.String
-        },
         CommonFieldConfArr.remark,
         CommonFieldConfArr.createUserNickName,
         CommonFieldConfArr.lastModifyerNickName,

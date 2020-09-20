@@ -10,11 +10,6 @@ const columns = [{
     dataIndex: 'code',
     key: 'code',
 },  {
-    title: '数据库标识',
-    align:textAlignDefault,
-    dataIndex: 'dbCode',
-    key: 'dbCode',
-}, {
     title:'操作',
     align:textAlignDefault,
     dataIndex:"operation",
@@ -33,11 +28,6 @@ const searchFormQueryConfObj = {
     },
     code:{
         fieldName:'code',
-        matching:'like',
-        value:''
-    },
-    dbCode:{
-        fieldName:'dbCode',
         matching:'like',
         value:''
     },

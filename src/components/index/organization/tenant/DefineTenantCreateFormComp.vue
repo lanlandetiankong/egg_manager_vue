@@ -23,11 +23,6 @@
                 >
                     <a-input v-decorator="formFieldConf.code"/>
                 </a-form-item>
-                <a-form-item label="数据库标识"
-                     v-bind="formItemLayout"
-                >
-                    <a-input v-decorator="formFieldConf.dbCode"/>
-                </a-form-item>
                 <a-form-item label="备注"
                      v-bind="formItemLayout"
                 >
@@ -56,9 +51,6 @@
                 code:[
                     {required:true,message:'请填写编码!'}
                 ],
-                dbCode:[
-                    {required:true,message:'请选择数据库标识!'},
-                ],
                 remark:[
                     {required:false,message:'请填写备注!'}
                 ]
@@ -77,7 +69,6 @@
                 formFieldConf:{
                     name:["name",{rules:paramsRules.name}],
                     code:["code",{rules:paramsRules.code}],
-                    dbCode:["dbCode",{rules:paramsRules.dbCode}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
                 defineTenantCreateForm:{}
@@ -95,10 +86,6 @@
                        code: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.code,
-                       }),
-                       dbCode: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.dbCode,
                        }),
                        remark: _this.$form.createFormField({
                            ...formObj,
@@ -138,10 +125,6 @@
                         code: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.code
-                        }),
-                        dbCode: this.$form.createFormField({
-                            ..._this.formObj,
-                            value: _this.formObj.dbCode
                         }),
                         remark: this.$form.createFormField({
                             ..._this.formObj,
