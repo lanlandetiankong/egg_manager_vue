@@ -10,12 +10,15 @@
                             @submit="handleSearchFormQuery"
                     >
                         <a-row :gutter="6">
-                            <a-col :span="searchConf.defaultColSpan">
+                            <a-col :span="searchConf.defaultColSpan"
+                                   v-show="searchFlagConf.belongTenantId.show"
+                            >
                                 <a-form-item label="所属租户">
                                     <a-select showSearch allowClear
                                               placeholder="请选择"
                                               style="width: 180px"
                                               optionFilterProp="children"
+                                              :disabled="!searchFlagConf.belongTenantId.modifyVal"
                                               :options="searchConf.binding.belongTenants"
                                               :filterOption="getFilterOption"
                                               v-decorator="searchConf.paramConf.belongTenantId"
@@ -90,10 +93,6 @@
                                 <a-button type="primary" html-type="submit" icon="search"
                                 >
                                     搜索
-                                </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
-                                          @click="handleSearchFormReset" >
-                                    清空
                                 </a-button>
                             </a-col>
                         </a-row>
@@ -179,22 +178,68 @@
             checkIdList:{
                 type:Array,
                 default:[]
+            },
+            searchFlagConf:{
+                belongTenantId:{
+                    show:true,
+                    search:true,
+                    modifyVal:true,
+                    defaultVal:''
+                },
+                belongDepartmentId: {
+                    show:true,
+                    search:true,
+                    modifyVal:true,
+                    defaultVal:''
+                },
+                account: {
+                    show:true,
+                    search:true,
+                    modifyVal:true,
+                    defaultVal:''
+                },
+                nickName: {
+                    show:true,
+                    search:true,
+                    modifyVal:true,
+                    defaultVal:''
+                },
+                email: {
+                    show:true,
+                    search:true,
+                    modifyVal:true,
+                    defaultVal:''
+                },
+                userType: {
+                    show:true,
+                    search:true,
+                    modifyVal:true,
+                    defaultVal:undefined
+                },
+                locked: {
+                    show:true,
+                    search:true,
+                    modifyVal:true,
+                    defaultVal:undefined
+                }
             }
         },
         data() {
+            debugger;
+            var _this = this ;
             return {
                 searchConf: {
                     showListFlag:false,
                     loadingFlag: false,
                     defaultColSpan: 8,
                     paramConf: {
-                        belongTenantId: ["belongTenantId", {rules: []}],
-                        belongDepartmentId: ["belongDepartmentId", {rules: []}],
-                        account: ["account", {rules: []}],
-                        nickName: ["nickName", {rules: []}],
-                        email: ["email", {rules: []}],
-                        userType: ["userType", {rules: []}],
-                        locked: ["locked", {rules: []}]
+                        belongTenantId: ["belongTenantId", {rules: [],initialValue:_this.$props.searchFlagConf.belongTenantId.defaultVal}],
+                        belongDepartmentId: ["belongDepartmentId", {rules: [],initialValue:_this.$props.searchFlagConf.belongDepartmentId.defaultVal}],
+                        account: ["account", {rules: [],initialValue:_this.$props.searchFlagConf.account.defaultVal}],
+                        nickName: ["nickName", {rules: [],initialValue:_this.$props.searchFlagConf.nickName.defaultVal}],
+                        email: ["email", {rules: [],initialValue:_this.$props.searchFlagConf.email.defaultVal}],
+                        userType: ["userType", {rules: [],initialValue:_this.$props.searchFlagConf.userType.defaultVal}],
+                        locked: ["locked", {rules: [],initialValue:_this.$props.searchFlagConf.locked.defaultVal}]
                     },
                     binding:{
                         belongTenants:[],
@@ -281,8 +326,12 @@
                 var queryFieldArr = [] ;
                 if(queryObj) {
                     for (var key in queryObj){
+                        debugger;
                         var searchFieldObj = searchFormQueryConf[key];
-                        if(searchFieldObj){
+                        var searchFlagConfItem = _this.searchFlagConf[key];
+                        //是否可以作为搜索条件
+                        var searchFlagTmp = _this.handleGetSearchFlagBoolean(searchFlagConfItem,"show",true);
+                        if(searchFieldObj && (searchFlagTmp == true)){
                             const queryVal = queryObj[key] ;
                             if(queryVal || queryVal == 0){
                                 searchFieldObj['value'] = queryObj[key];
@@ -292,6 +341,16 @@
                     }
                 }
                 return queryFieldArr ;
+            },
+            handleGetSearchFlagBoolean(searchFlagConfItem,key,defaultVal){
+                if(!searchFlagConfItem){
+                    return defaultVal ;
+                }
+                var itemFlag = searchFlagConfItem[key];
+                if(typeof itemFlag == "undefined" || itemFlag ==null){
+                    return defaultVal;
+                }
+                return itemFlag;
             },
             dealGetUserTypeEnumList(){  //取得 用户类型-枚举列表
                 var _this = this ;
@@ -415,17 +474,12 @@
                     }
                 });
             },
-            handleSearchFormReset() {    //重置 搜索列表 的值
-                this.searchForm.resetFields();
-            },
-            handleTableChange(pagination, filters, sorter) {    //表格变动-页码跳转/排序/筛选
+            handleTableChange(pagination, filters, sorter) {
+                //表格变动-页码跳转/排序/筛选
                 this.tableConf.pagination = pagination ;
                 this.tableConf.filters = filters ;
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
-            },
-            dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
-                return this.$refs.employeeInfoCreateFormRef.employeeInfoCreateForm;
             },
             getFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);

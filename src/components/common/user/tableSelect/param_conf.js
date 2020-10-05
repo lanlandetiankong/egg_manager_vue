@@ -22,7 +22,7 @@ const columns = [{
     title: '所属部门',
     align:textAlignDefault,
     dataIndex: 'belongDepartment.name',
-    sorter:true,
+    sorter:false,
     key: 'belongDepartment.name',
 }, {
     title: '类型',

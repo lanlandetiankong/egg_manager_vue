@@ -15,6 +15,7 @@
                 :maxSize="userTableSelect.conf.maxSize"
                 :minSize="userTableSelect.conf.minSize"
                 :checkIdList="userTableSelect.conf.checkIdList"
+                :searchFlagConf="userTableSelect.conf.searchFlagConf"
             />
         </a-modal>
     </div>
@@ -34,6 +35,7 @@
             }
         },
         data(){
+            var _this = this ;
             return {
                 modalConf:{
                     title:'设置管理员',
@@ -43,8 +45,53 @@
                     conf:{
                         maxSize:1,
                         minSize:1,
-                        checkIdList: []
-                    }
+                        checkIdList: [],
+                        searchFlagConf:{
+                            belongTenantId:{
+                                show:true,
+                                search:false,
+                                modifyVal:false,
+                                defaultVal:_this.$props.tenantId
+                            },
+                            belongDepartmentId: {
+                                show:true,
+                                search:true,
+                                modifyVal:true,
+                                defaultVal:''
+                            },
+                            account: {
+                                show:true,
+                                search:true,
+                                modifyVal:true,
+                                defaultVal:''
+                            },
+                            nickName: {
+                                show:true,
+                                search:true,
+                                modifyVal:true,
+                                defaultVal:''
+                            },
+                            email: {
+                                show:true,
+                                search:true,
+                                modifyVal:true,
+                                defaultVal:''
+                            },
+                            userType: {
+                                show:true,
+                                search:true,
+                                modifyVal:true,
+                                defaultVal:''
+                            },
+                            locked: {
+                                show:true,
+                                search:true,
+                                modifyVal:true,
+                                defaultVal:''
+                            }
+                        }
+                    },
+
                 }
             }
         },
@@ -57,14 +104,16 @@
         computed:{
 
         },
-        created(){
-
-        },
-        mounted(){
-
-        },
         watch:{
-
+            visible:{
+                handler(val,oval){  //隐藏与展示弹窗时监听
+                    if(val == true){
+                        console.log("here");
+                    }
+                },
+                deep: true,
+                immediate:true
+            }
         }
     }
 </script>
