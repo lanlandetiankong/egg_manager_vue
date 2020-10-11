@@ -12,6 +12,6 @@ export const DashBoardApi = {
             onlySelf:onlySelf
         }
         //查询所有职务信息
-        return axios.post('/announcement/getSomeAnnouncements',qs.stringify(obj)).then(res => res.data);
+        return axios.post('/announcement/queryFilteredPage',qs.stringify(obj)).then(res => res.data);
     }
 }

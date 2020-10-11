@@ -17,7 +17,7 @@ export const AnnouncementAllListApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有公告标签信息
-        return axios.post('/announcement_tag/getAllAnnouncementTagEnums',qs.stringify(obj)).then(res => res.data);
+        return axios.post('/announcement_tag/gainEnumSelect',qs.stringify(obj)).then(res => res.data);
     },
     getAllAnnouncements(queryArr,pagination,sorter) {
         var sortObj = {}
@@ -31,19 +31,19 @@ export const AnnouncementAllListApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有公告信息
-        return axios.post('/announcement/getAllAnnouncementDtos',qs.stringify(obj)).then(res => res.data);
+        return axios.post('/announcement/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
     batchDelAnnouncement(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
-        return axios.post("/announcement/batchDelAnnouncementByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/announcement/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     delOneAnnouncement(delId) {  //删除
         var obj = {
             delId:delId
         }
-        return axios.post("/announcement/delOneAnnouncementByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/announcement/deleteById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
 
 }
