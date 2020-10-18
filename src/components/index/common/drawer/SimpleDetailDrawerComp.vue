@@ -12,7 +12,7 @@
                     <span slot="description">
                         <template v-if="item.hasError === true">    <!-- 异常处理 -->
                             <a-tag color="#f50">
-                                Error: {{item.errorMsg}}
+                                Error: {{item.msg}}
                             </a-tag>
                         </template>
                         <template v-else>
@@ -101,7 +101,7 @@
                             fieldValTemp = enumValMap[fieldVal] ;
                             if(typeof fieldValTemp == "undefined"){
                                 fieldResObj.hasError = true ;
-                                fieldResObj.errorMsg = _this.drawerFieldConf.msgConf.undefinedEnum ;
+                                fieldResObj.msg = _this.drawerFieldConf.msgConf.undefinedEnum ;
                             }
                         }
                     }   else if(DrawerFieldTypeEnum.Date == fieldType){ //日期类型

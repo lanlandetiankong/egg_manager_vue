@@ -340,7 +340,7 @@
                 ModuleManagerApi.batchDelDefineModule(delIds).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            this.$message.success(res.info);
+                            this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -351,7 +351,7 @@
                 ModuleManagerApi.delOneDefineModule(delId).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            _this.$message.success(res.info);
+                            _this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -456,7 +456,7 @@
                         ModuleManagerApi.addDefineModuleByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
-                                    this.$message.success(res.info);
+                                    this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;
@@ -474,7 +474,7 @@
                         ModuleManagerApi.updateDefineModuleByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
-                                    this.$message.success(res.info);
+                                    this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;

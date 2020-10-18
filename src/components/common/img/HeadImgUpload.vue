@@ -94,12 +94,12 @@
                     let fileListLen = info.fileList.length ;
                     var resp = info.fileList[fileListLen-1].response ;
                     if(resp.hasError == false){
-                        var fileResBeanTemp  = resp.fileResBean ;
+                        var fileResBeanTemp  = resp.moreAttribute.fileResBean ;
                         this.uploadConf.imageUri =  fileResBeanTemp.fileUri ;
                         this.uploadConf.uploadImgObj = fileResBeanTemp ;
                         this.dealImgUriToReal() ;
                     }   else {
-                        this.$message.error(resp.errorMsg);
+                        this.$message.error(resp.msg);
                     }
                     this.uploadConf.loading = false;
                 }

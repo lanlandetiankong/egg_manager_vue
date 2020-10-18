@@ -485,7 +485,7 @@
                 EmpInfoApi.batchDelUserAccount(delIds).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            this.$message.success(res.info);
+                            this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -496,7 +496,7 @@
                 EmpInfoApi.delOneUserAccount(delId).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            _this.$message.success(res.info);
+                            _this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -508,7 +508,7 @@
                 EmpInfoApi.batchChangeLockStateUserAccount(delIds,lockFlag).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            this.$message.success(res.info);
+                            this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -519,7 +519,7 @@
                 EmpInfoApi.lockStateChangeOneUserAccount(delId,lockFlag).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            _this.$message.success(res.info);
+                            _this.$message.success(res.msg);
                             var tableDatas = _this.tableConf.data ;
                             var tableDatasTemp = [] ;
                             var lockedVal = lockFlag ? 1 : 0;
@@ -798,7 +798,7 @@
                         EmpInfoApi.addUserAccountByForm(values,avatarUrl).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
-                                    this.$message.success(res.info);
+                                    this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;
@@ -816,7 +816,7 @@
                         EmpInfoApi.updateUserAccountByForm(values,avatarUrl).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
-                                    this.$message.success(res.info);
+                                    this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;
@@ -936,7 +936,7 @@
                     var closeDialogFlag = true ;
                     if (res) {
                         if (res.hasError == false) {  //异常已经有预处理了
-                            this.$message.success(res.info);
+                            this.$message.success(res.msg);
                         } else {
                             closeDialogFlag = false;
                         }
@@ -970,7 +970,7 @@
                     var closeDialogFlag = true ;
                     if (res) {
                         if (res.hasError == false) {  //异常已经有预处理了
-                            this.$message.success(res.info);
+                            this.$message.success(res.msg);
                         } else {
                             closeDialogFlag = false;
                         }

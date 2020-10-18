@@ -228,10 +228,10 @@
             },
             dealQuillImgExtendResponse(res){    //quill 图片上传回调
                 if(res.hasError == false){
-                    var fileResBean = res.fileResBean ;
+                    var fileResBean = res.moreAttribute.fileResBean ;
                     return fileResBean.filePrefix + fileResBean.fileUri
                 }   else {
-                    this.$message.error(res.errorMsg) ;
+                    this.$message.error(res.msg) ;
                 }
 
             },
@@ -275,7 +275,7 @@
                             if(_this.updateForm.flag == true){  //发布 更新后的 公告草稿
                                 AnnouncementCreateApi.addAnnouncementFromDraftByForm(_this.formObj).then((res) =>{
                                     if(res.hasError == false){
-                                        _this.$message.success(res.info) ;
+                                        _this.$message.success(res.msg) ;
                                         //关闭当前页面
                                         _this.doTagItemSelectedClose();
                                     }
@@ -283,7 +283,7 @@
                             }   else{   //直接发布
                                 AnnouncementCreateApi.addAnnouncementByForm(_this.formObj).then((res) =>{
                                     if(res.hasError == false){
-                                        _this.$message.success(res.info) ;
+                                        _this.$message.success(res.msg) ;
                                         //关闭当前页面
                                         _this.doTagItemSelectedClose();
                                     }
@@ -309,7 +309,7 @@
                             if(_this.updateForm.flag == true) {  //更新公告草稿
                                 AnnouncementCreateApi.updateAnnouncementDraftByForm(_this.formObj).then((res) =>{
                                     if(res.hasError == false){
-                                        _this.$message.success(res.info) ;
+                                        _this.$message.success(res.msg) ;
                                         //关闭当前页面
                                         _this.doTagItemSelectedClose();
                                     }
@@ -317,7 +317,7 @@
                             }   else {  //添加到 草稿
                                 AnnouncementCreateApi.addAnnouncementDraftByForm(_this.formObj).then((res) =>{
                                     if(res.hasError == false){
-                                        _this.$message.success(res.info) ;
+                                        _this.$message.success(res.msg) ;
                                         //关闭当前页面
                                         _this.doTagItemSelectedClose();
                                     }

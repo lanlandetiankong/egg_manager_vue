@@ -46,11 +46,11 @@
             handleLoginFormSubmit(e,loginForm,submitRes){
                 var _this = this ;
                 if(submitRes){
-                    if(submitRes.actionFlag == true){ //后台登录验证成功
-                        _this.handleSetUserTokenToCache(submitRes.accountToken);
+                    if(submitRes.hasError == false){ //后台登录验证成功
+                        _this.handleSetUserTokenToCache(submitRes.moreAttribute.accountToken);
                         _this.handleSetAuthorizationToCache(submitRes.authorization);
-                        _this.handleSetRouterUrlsToCache(submitRes.routerUrlSet);
-                        _this.handleSetGrantedPermissionsToCache(submitRes.permissionSet);
+                        _this.handleSetRouterUrlsToCache(submitRes.moreAttribute.routerUrlSet);
+                        _this.handleSetGrantedPermissionsToCache(submitRes.moreAttribute.permissionSet);
                         _this.handleMenuListToCache();
                         _this.$router.push("/index");
                     }

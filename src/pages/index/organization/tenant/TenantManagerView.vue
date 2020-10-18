@@ -308,7 +308,7 @@
                 TenantManagerApi.batchDelDefineTenant(delIds).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            this.$message.success(res.info);
+                            this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -319,7 +319,7 @@
                 TenantManagerApi.delOneDefineTenant(delId).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            _this.$message.success(res.info);
+                            _this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -424,7 +424,7 @@
                         TenantManagerApi.addDefineTenantByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
-                                    this.$message.success(res.info);
+                                    this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;
@@ -438,7 +438,7 @@
                         TenantManagerApi.updateDefineTenantByForm(values).then((res) => {
                             if (res) {
                                 if (res.hasError == false) {  //异常已经有预处理了
-                                    this.$message.success(res.info);
+                                    this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;

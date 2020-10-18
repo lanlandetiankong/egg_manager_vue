@@ -205,7 +205,7 @@ http.post = function (url, data, options) {
                             try {
                                 let jsonData = JSON.parse(this.result);  // 说明是普通对象数据，后台转换失败
                                 if (jsonData.hasError) {
-                                    message.error(jsonData.errorMsg);
+                                    message.error(jsonData.msg);
                                     reject(response);
                                 }   else {
                                     resolve(response);
@@ -219,9 +219,9 @@ http.post = function (url, data, options) {
                         let tempRespHasError = respData.hasError;
                         //Error:不放行
                         if (typeof(tempRespHasError) != "undefined" && tempRespHasError != null && tempRespHasError === true) {
-                            let tempRespInfo = respData.errorMsg;
+                            let tempRespInfo = respData.msg;
                             if(!tempRespInfo){
-                                tempRespInfo = respData.info ;
+                                tempRespInfo = '操作出现异常！' ;
                             }
                             if (typeof(tempRespInfo) != "undefined" && tempRespInfo != null && tempRespInfo.replace(/(^s*)|(s*$)/g, "").length != 0) {
                                 message.error(tempRespInfo);

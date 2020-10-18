@@ -313,7 +313,7 @@
                 AnnouncementMyDraftListApi.batchDelAnnouncementDraft(delIds).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            this.$message.success(res.info);
+                            this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -324,7 +324,7 @@
                 AnnouncementMyDraftListApi.delOneAnnouncementDraft(delId).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            _this.$message.success(res.info);
+                            _this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -336,7 +336,7 @@
                 AnnouncementMyDraftListApi.batchPublishAnnouncementDraft(publishIds).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            this.$message.success(res.info);
+                            this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
@@ -347,7 +347,7 @@
                 AnnouncementMyDraftListApi.publishOneAnnouncementDraft(delId).then((res) => {
                     if (res) {
                         if (res.hasError == false) {  //已经有对错误进行预处理
-                            _this.$message.success(res.info);
+                            _this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
                     }
