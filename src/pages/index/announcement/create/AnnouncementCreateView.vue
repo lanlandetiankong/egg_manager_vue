@@ -96,7 +96,7 @@
         data(){
             var _this = this ;
             //上传图片的路径
-            var uploadFieleUrl = "/commom_api/file/imgUpload/headImgUpload" ;
+            var uploadFieleUrl = "/commonApi/file/imgUpload/headImgUpload" ;
             //quill 富文本框 的默认配置
             var quillToolBarConf = this.$quillToolbarConfig.quillToolbarOptions;
             quillToolBarConf['container'] = container ;

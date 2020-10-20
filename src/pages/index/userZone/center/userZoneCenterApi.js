@@ -10,18 +10,18 @@ export const UserZoneCenterApi = {
         var params = {
             userAccountId:userAccountId
         }
-        return axios.post("/user/user_account/gainGrantedRole",qs.stringify(params)).then(res => res.data) ;
+        return axios.post("/user/userAccount/gainGrantedRole",qs.stringify(params)).then(res => res.data) ;
     },
     getAllPermissionByUserAccountId(userAccountId){  //根据用户id查询用户所拥有的权限列表
         var params = {
             userAccountId:userAccountId
         }
-        return axios.post("/user/user_account/gainGrantedPermission",qs.stringify(params)).then(res => res.data) ;
+        return axios.post("/user/userAccount/gainGrantedPermission",qs.stringify(params)).then(res => res.data) ;
     },
     getAllJobByUserAccountId(userAccountId){  //根据用户id查询用户所拥有的职务列表
         var params = {
             userAccountId:userAccountId
         }
-        return axios.post("/user/user_account/gainGrantedJob",qs.stringify(params)).then(res => res.data) ;
+        return axios.post("/user/userAccount/gainGrantedJob",qs.stringify(params)).then(res => res.data) ;
     },
 }

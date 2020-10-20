@@ -17,20 +17,20 @@ export const AnnouncementCreateApi = {
         return axios.post("/announcement/createFromDraft",qs.stringify(formObj));
     },
     addAnnouncementDraftByForm(formObj) {     //提交公告到草稿箱
-        return axios.post("/announcement_draft/createByForm",qs.stringify(formObj));
+        return axios.post("/announcementDraft/createByForm",qs.stringify(formObj));
     },
     updateAnnouncementDraftByForm(formObj) {     //更新公告草稿
         if(formObj){
             formObj["createTime"] = undefined;
             formObj["updateTime"] = undefined;
         }
-        return axios.post("/announcement_draft/updateByForm",qs.stringify(formObj));
+        return axios.post("/announcementDraft/updateByForm",qs.stringify(formObj));
     },
     getAnnouncementDraftById(draftId){  //根据 公告草稿id 取得公告草稿
         var params = {
             draftId:draftId
         }
-        return axios.post("/announcement_draft/queryOneById",qs.stringify(params));
+        return axios.post("/announcementDraft/queryOneById",qs.stringify(params));
     },
     getAllAnnouncementTagEnums() {  //取得 公告标签 列表
         var sortObj = {     //固定 order字段 排序
@@ -43,7 +43,7 @@ export const AnnouncementCreateApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有公告标签信息
-        return axios.post('/announcement_tag/gainEnumSelect',qs.stringify(obj)).then(res => res.data);
+        return axios.post('/announcementTag/gainEnumSelect',qs.stringify(obj)).then(res => res.data);
     },
 
 }

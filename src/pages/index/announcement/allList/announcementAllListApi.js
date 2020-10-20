@@ -17,7 +17,7 @@ export const AnnouncementAllListApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有公告标签信息
-        return axios.post('/announcement_tag/gainEnumSelect',qs.stringify(obj)).then(res => res.data);
+        return axios.post('/announcementTag/gainEnumSelect',qs.stringify(obj)).then(res => res.data);
     },
     getAllAnnouncements(queryArr,pagination,sorter) {
         var sortObj = {}

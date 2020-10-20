@@ -7,7 +7,7 @@ import qs from 'qs'
 
 export const CommonExcelCompApi = {
     uploadExcelModels(formData) {
-        return axios.post("/commom_api/file/excelUpload/excelModelUpload",formData,
+        return axios.post("/commonApi/file/excelUpload/excelModelUpload",formData,
             {
                 headers: {'Content-Type': 'multipart/form-data'}
             }
