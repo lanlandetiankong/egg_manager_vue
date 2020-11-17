@@ -71,7 +71,7 @@ const vueRouter = new VueRouter({
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRouterMap,
     beforeRouteLeave:(to, from, next) =>{
-        debugger;
+
         next();
     }
 })
@@ -79,7 +79,7 @@ const vueRouter = new VueRouter({
 vueRouter.beforeEach((to,from,next) => {
     var _this = this ;
     var passFlag = true ;
-    debugger;
+
     if(to && from){
         const toPath = to.fullPath ;
         if(defaultPassRouterUrls.indexOf(toPath) == -1){    //要访问的路径不在 [默认放行路径] ?

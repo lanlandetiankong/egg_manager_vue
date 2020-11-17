@@ -225,7 +225,7 @@
         watch:{
             formObj: {
                 handler (val, oval) {
-                    debugger;
+
                     var _this = this ;
                     _this.dealUpdateFormValue(val);
                 },
@@ -234,7 +234,7 @@
             },
             visible:{
                 handler(val,oval){  //隐藏与展示弹窗时监听
-                    debugger;
+
                     var _this = this ;
                     if(val === true){
                         if("create" == _this.actionType){   //打开=>创建

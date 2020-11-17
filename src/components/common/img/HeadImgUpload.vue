@@ -84,7 +84,7 @@
                 return (isJPG || isPng) && isLt2M;
             },
             handleUploadChange(info) {
-                debugger;
+
                 if (info.file.status === 'uploading') {
                     this.uploadConf.loading = true;
                     return;

@@ -27,7 +27,7 @@ export const PermissionManagerApi = {
         return axios.post("/define/definePermission/queryOneById",qs.stringify(params)).then(res => res.data) ;
     },
     addDefinePermissionByForm(formObj) {     //新增权限
-        debugger;
+
         if(formObj){
             if(formObj.codePrefix){
                 formObj.code = formObj.codePrefix[0] + formObj.code ;

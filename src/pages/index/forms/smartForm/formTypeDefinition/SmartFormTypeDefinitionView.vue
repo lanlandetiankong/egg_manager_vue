@@ -359,7 +359,7 @@
             },
             handleUpdateByFormBtnClick() {  //更新按钮-点击
                 var _this = this;
-                debugger ;
+
                 if (_this.tableCheckIdList.length < 1) {
                     this.$message.warning('请选择一行要更新的数据！');
                 } else if (_this.tableCheckIdList.length > 1) {

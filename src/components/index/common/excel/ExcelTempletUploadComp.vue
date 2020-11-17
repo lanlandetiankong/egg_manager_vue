@@ -108,7 +108,7 @@
                     if(res.hasError == false){
                         var fileUploaderBeanList = [...res.moreAttribute.fileUploaderBeanList] ;
                         if(typeof fileUploaderBeanList != "undefined" && fileUploaderBeanList != null){
-                            debugger;
+
                             fileUploaderBeanList = [...fileUploaderBeanList,..._this.fileList] ;
                             //确保文件列表是最新的
                             fileUploaderBeanList = fileUploaderBeanList.filter(file => {
