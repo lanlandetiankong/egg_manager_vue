@@ -228,7 +228,7 @@
             },
             dealQuillImgExtendResponse(res){    //quill 图片上传回调
                 if(res.hasError == false){
-                    var fileResBean = res.moreAttribute.fileResBean ;
+                    var fileResBean = res.fileResBean ;
                     return fileResBean.filePrefix + fileResBean.fileUri
                 }   else {
                     this.$message.error(res.msg) ;

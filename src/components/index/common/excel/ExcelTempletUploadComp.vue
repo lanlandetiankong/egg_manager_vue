@@ -106,7 +106,7 @@
                 this.uploading = true;
                 CommonExcelCompApi.uploadExcelModels(formData,this.uploadConf.processData).then((res) => {
                     if(res.hasError == false){
-                        var fileUploaderBeanList = [...res.moreAttribute.fileUploaderBeanList] ;
+                        var fileUploaderBeanList = [...res.fileUploaderBeanList] ;
                         if(typeof fileUploaderBeanList != "undefined" && fileUploaderBeanList != null){
 
                             fileUploaderBeanList = [...fileUploaderBeanList,..._this.fileList] ;

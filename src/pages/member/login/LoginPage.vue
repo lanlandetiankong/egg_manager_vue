@@ -47,10 +47,10 @@
                 var _this = this ;
                 if(submitRes){
                     if(submitRes.hasError == false){ //后台登录验证成功
-                        _this.handleSetUserTokenToCache(submitRes.moreAttribute.accountToken);
+                        _this.handleSetUserTokenToCache(submitRes.accountToken);
                         _this.handleSetAuthorizationToCache(submitRes.authorization);
-                        _this.handleSetRouterUrlsToCache(submitRes.moreAttribute.routerUrlSet);
-                        _this.handleSetGrantedPermissionsToCache(submitRes.moreAttribute.permissionSet);
+                        _this.handleSetRouterUrlsToCache(submitRes.routerUrlSet);
+                        _this.handleSetGrantedPermissionsToCache(submitRes.permissionSet);
                         _this.handleMenuListToCache();
                         _this.$router.push("/index");
                     }
