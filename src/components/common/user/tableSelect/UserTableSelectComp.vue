@@ -356,8 +356,8 @@
                 var _this = this ;
                 UserCommonApis.getAllUserType().then((res) => {
                     if(res && res.success == true){
-                        if(res.enumList){
-                            _this.searchConf.binding.userTypes = res.enumList ;
+                        if(res.enumData.list){
+                            _this.searchConf.binding.userTypes = res.enumData.list ;
                         }
                     }
                 })
@@ -366,8 +366,8 @@
                 var _this = this ;
                 UserTableSelectCompApi.getAllDefineTenantEnums().then((res) => {
                     if(res && res.success == true){
-                        if(res.enumList){
-                            _this.searchConf.binding.belongTenants = res.enumList ;
+                        if(res.enumData.list){
+                            _this.searchConf.binding.belongTenants = res.enumData.list ;
                         }
                     }
                 })
@@ -386,8 +386,8 @@
                 var _this = this ;
                 UserCommonApis.getAllUserLockStateType().then((res) => {
                     if(res && res.success == true){
-                        if(res.enumList){
-                            _this.searchConf.binding.lockStates = res.enumList ;
+                        if(res.enumData.list){
+                            _this.searchConf.binding.lockStates = res.enumData.list ;
                         }
                     }
                 })

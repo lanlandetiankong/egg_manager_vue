@@ -286,8 +286,8 @@
                 var _this = this ;
                 ModuleCommonApis.getAllModuleTypes().then((res) => {
                     if(res && res.success == true){
-                        if(res.enumList){
-                            _this.searchConf.binding.module.types = res.enumList ;
+                        if(res.enumData.list){
+                            _this.searchConf.binding.module.types = res.enumData.list ;
                         }
                     }
                 })

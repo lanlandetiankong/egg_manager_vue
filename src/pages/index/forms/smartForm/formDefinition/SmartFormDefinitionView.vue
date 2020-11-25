@@ -296,8 +296,8 @@
                 var _this = this ;
                 SmartFormDefinitionApi.getAllFormTypeEnums().then((res) => {
                     if(res && res.success == true){
-                        if(res.enumList){
-                            _this.searchConf.binding.form.formTypeList = res.enumList ;
+                        if(res.enumData.list){
+                            _this.searchConf.binding.form.formTypeList = res.enumData.list ;
                         }
                     }
                 })
