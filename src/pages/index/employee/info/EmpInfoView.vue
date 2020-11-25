@@ -452,7 +452,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 EmpInfoApi.getAllUserAccounts().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -467,7 +467,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 EmpInfoApi.getAllUserAccounts(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -484,7 +484,7 @@
                 var delIds = _this.tableCheckIdList;
                 EmpInfoApi.batchDelUserAccount(delIds).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success == true) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
@@ -495,7 +495,7 @@
                 var _this = this;
                 EmpInfoApi.delOneUserAccount(delId).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success == true) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
@@ -507,7 +507,7 @@
                 var delIds = _this.tableCheckIdList;
                 EmpInfoApi.batchChangeLockStateUserAccount(delIds,lockFlag).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success == true) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
@@ -518,7 +518,7 @@
                 var _this = this;
                 EmpInfoApi.lockStateChangeOneUserAccount(delId,lockFlag).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success == true) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
                             var tableDatas = _this.tableConf.data ;
                             var tableDatasTemp = [] ;
@@ -557,7 +557,7 @@
             dealGetUserTypeEnumList(){  //取得 用户类型-枚举列表
                 var _this = this ;
                 UserCommonApis.getAllUserType().then((res) => {
-                    if(res && res.hasError == false){
+                    if(res && res.success == true){
                         if(res.enumList){
                             _this.searchConf.binding.userTypes = res.enumList ;
                         }
@@ -567,7 +567,7 @@
             dealGetDefineTenantEnumList(){  //取得 所属租户-枚举列表
                 var _this = this ;
                 EmpInfoApi.getAllDefineTenantEnums().then((res) => {
-                    if(res && res.hasError == false){
+                    if(res && res.success == true){
                         if(res.enumList){
                             _this.searchConf.binding.belongTenants = res.enumList ;
                         }
@@ -577,9 +577,9 @@
             dealGetDefineDepartmentTreeData(){  //取得 所属租户-枚举列表
                 var _this = this ;
                 EmpInfoApi.getAllDefineDepartmentTrees().then((res) => {
-                    if(res && res.hasError == false){
-                        if(res.resultList){
-                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.resultList ;
+                    if(res && res.success == true){
+                        if(res.gridList){
+                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.gridList ;
                         }
                     }
                 })
@@ -587,7 +587,7 @@
             dealGetLockStateEnumList(){  //取得 用户锁定状态-枚举列表
                 var _this = this ;
                 UserCommonApis.getAllUserLockStateType().then((res) => {
-                    if(res && res.hasError == false){
+                    if(res && res.success == true){
                         if(res.enumList){
                             _this.searchConf.binding.lockStates = res.enumList ;
                         }
@@ -597,10 +597,10 @@
             dealGetAllRoleList(){  //取得 所有的角色定义
                 var _this = this ;
                 return EmpInfoApi.getAllDefineRoles().then((res) => {
-                    if(res && res.hasError == false){
-                        if(res.resultList){
-                            _this.dialogGrantRoleObj.all = res.resultList ;
-                            _this.dealAllRoleItemToTransferDataSource(res.resultList);
+                    if(res && res.success == true){
+                        if(res.gridList){
+                            _this.dialogGrantRoleObj.all = res.gridList ;
+                            _this.dealAllRoleItemToTransferDataSource(res.gridList);
                         }
                     }
                 })
@@ -608,10 +608,10 @@
             dealGetAllJobList(){  //取得 所有的职务定义
                 var _this = this ;
                 return EmpInfoApi.getAllDefineJobs().then((res) => {
-                    if(res && res.hasError == false){
-                        if(res.resultList){
-                            _this.dialogGrantJobObj.all = res.resultList ;
-                            _this.dealAllJobItemToTransferDataSource(res.resultList);
+                    if(res && res.success == true){
+                        if(res.gridList){
+                            _this.dialogGrantJobObj.all = res.gridList ;
+                            _this.dealAllJobItemToTransferDataSource(res.gridList);
                         }
                     }
                 })
@@ -672,10 +672,10 @@
                 if (selectRowId) {
                     EmpInfoApi.getAllRoleByUserAccountId(selectRowId).then((res) => {
                         if(res){
-                            _this.dialogGrantRoleObj.checked = res.resultList;
+                            _this.dialogGrantRoleObj.checked = res.gridList;
                             var checkIdListTemp = [] ;
-                            if(res.resultList && res.resultList.length > 0){
-                                jquery.each(res.resultList,function (idx,val) {
+                            if(res.gridList && res.gridList.length > 0){
+                                jquery.each(res.gridList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }
@@ -698,10 +698,10 @@
                 if (selectRowId) {
                     EmpInfoApi.getAllJobByUserAccountId(selectRowId).then((res) => {
                         if(res){
-                            _this.dialogGrantJobObj.checked = res.resultList;
+                            _this.dialogGrantJobObj.checked = res.gridList;
                             var checkIdListTemp = [] ;
-                            if(res.resultList && res.resultList.length > 0){
-                                jquery.each(res.resultList,function (idx,val) {
+                            if(res.gridList && res.gridList.length > 0){
+                                jquery.each(res.gridList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }
@@ -797,7 +797,7 @@
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
                         EmpInfoApi.addUserAccountByForm(values,avatarUrl).then((res) => {
                             if (res) {
-                                if (res.hasError == false) {  //异常已经有预处理了
+                                if (res.success == true) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {
@@ -815,7 +815,7 @@
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
                         EmpInfoApi.updateUserAccountByForm(values,avatarUrl).then((res) => {
                             if (res) {
-                                if (res.hasError == false) {  //异常已经有预处理了
+                                if (res.success == true) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {
@@ -935,7 +935,7 @@
                 EmpInfoApi.grantRoleToUser(userAccountId,targetIdList).then((res) =>{
                     var closeDialogFlag = true ;
                     if (res) {
-                        if (res.hasError == false) {  //异常已经有预处理了
+                        if (res.success == true) {  //异常已经有预处理了
                             this.$message.success(res.msg);
                         } else {
                             closeDialogFlag = false;
@@ -969,7 +969,7 @@
                 EmpInfoApi.grantJobToUser(userAccountId,targetIdList).then((res) =>{
                     var closeDialogFlag = true ;
                     if (res) {
-                        if (res.hasError == false) {  //异常已经有预处理了
+                        if (res.success == true) {  //异常已经有预处理了
                             this.$message.success(res.msg);
                         } else {
                             closeDialogFlag = false;
@@ -1007,7 +1007,7 @@
             },
             handleImportDataModalSubmit(formData,processData){  //[数据导入] 弹窗提交
                 EmpInfoApi.doImportDataFromExcel(formData).then((res) => {
-                    if(res.hasError == false){
+                    if(res.success == true){
                         //console.log(res);
                         this.uploadExcelModelconf.visible = false ;
                     }

@@ -295,7 +295,7 @@
             dealGetFormTypeList(){  //取得 表单类型
                 var _this = this ;
                 SmartFormDefinitionApi.getAllFormTypeEnums().then((res) => {
-                    if(res && res.hasError == false){
+                    if(res && res.success == true){
                         if(res.enumList){
                             _this.searchConf.binding.form.formTypeList = res.enumList ;
                         }
@@ -307,7 +307,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 SmartFormDefinitionApi.getDataPage().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -322,7 +322,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 SmartFormDefinitionApi.getDataPage(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -339,7 +339,7 @@
                 var delIds = _this.tableCheckIdList;
                 SmartFormDefinitionApi.batchDelByIds(delIds).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success == true) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
@@ -350,7 +350,7 @@
                 var _this = this;
                 SmartFormDefinitionApi.delOneById(delId).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success == true) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
@@ -455,7 +455,7 @@
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
                         SmartFormDefinitionApi.addByForm(values).then((res) => {
                             if (res) {
-                                if (res.hasError == false) {  //异常已经有预处理了
+                                if (res.success == true) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {
@@ -473,7 +473,7 @@
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
                         SmartFormDefinitionApi.updateByForm(values).then((res) => {
                             if (res) {
-                                if (res.hasError == false) {  //异常已经有预处理了
+                                if (res.success == true) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
                                     _this.handleSearchFormQuery(); //表格重新搜索
                                 } else {

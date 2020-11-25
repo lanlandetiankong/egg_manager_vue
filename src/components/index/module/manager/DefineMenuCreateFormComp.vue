@@ -217,8 +217,8 @@
             handleUpdateActionInit(){   //弹窗展示为[更新-操作]的初始化
                 var _this = this ;
                 MenuCreateFormApi.getDefineMenuTreeFilterChildrens(_this.formObj.fid).then((res) => { //更新 上级菜单 树
-                    if(res && res.hasError == false){
-                        _this.treeSelectConf.parentId.selftTreeData  = res.resultList ;
+                    if(res && res.success == true){
+                        _this.treeSelectConf.parentId.selftTreeData  = res.gridList ;
                     }
                 })
             },

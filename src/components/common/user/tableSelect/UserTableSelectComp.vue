@@ -294,7 +294,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 UserTableSelectCompApi.getAllUserAccounts().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -309,7 +309,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 UserTableSelectCompApi.getAllUserAccounts(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -355,7 +355,7 @@
             dealGetUserTypeEnumList(){  //取得 用户类型-枚举列表
                 var _this = this ;
                 UserCommonApis.getAllUserType().then((res) => {
-                    if(res && res.hasError == false){
+                    if(res && res.success == true){
                         if(res.enumList){
                             _this.searchConf.binding.userTypes = res.enumList ;
                         }
@@ -365,7 +365,7 @@
             dealGetDefineTenantEnumList(){  //取得 所属租户-枚举列表
                 var _this = this ;
                 UserTableSelectCompApi.getAllDefineTenantEnums().then((res) => {
-                    if(res && res.hasError == false){
+                    if(res && res.success == true){
                         if(res.enumList){
                             _this.searchConf.binding.belongTenants = res.enumList ;
                         }
@@ -375,9 +375,9 @@
             dealGetDefineDepartmentTreeData(){  //取得 所属租户-枚举列表
                 var _this = this ;
                 UserTableSelectCompApi.getAllDefineDepartmentTrees().then((res) => {
-                    if(res && res.hasError == false){
-                        if(res.resultList){
-                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.resultList ;
+                    if(res && res.success == true){
+                        if(res.gridList){
+                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.gridList ;
                         }
                     }
                 })
@@ -385,7 +385,7 @@
             dealGetLockStateEnumList(){  //取得 用户锁定状态-枚举列表
                 var _this = this ;
                 UserCommonApis.getAllUserLockStateType().then((res) => {
-                    if(res && res.hasError == false){
+                    if(res && res.success == true){
                         if(res.enumList){
                             _this.searchConf.binding.lockStates = res.enumList ;
                         }
@@ -395,10 +395,10 @@
             dealGetAllRoleList(){  //取得 所有的角色定义
                 var _this = this ;
                 return UserTableSelectCompApi.getAllDefineRoles().then((res) => {
-                    if(res && res.hasError == false){
-                        if(res.resultList){
-                            _this.dialogGrantRoleObj.all = res.resultList ;
-                            _this.dealAllRoleItemToTransferDataSource(res.resultList);
+                    if(res && res.success == true){
+                        if(res.gridList){
+                            _this.dialogGrantRoleObj.all = res.gridList ;
+                            _this.dealAllRoleItemToTransferDataSource(res.gridList);
                         }
                     }
                 })
@@ -406,10 +406,10 @@
             dealGetAllJobList(){  //取得 所有的职务定义
                 var _this = this ;
                 return UserTableSelectCompApi.getAllDefineJobs().then((res) => {
-                    if(res && res.hasError == false){
-                        if(res.resultList){
-                            _this.dialogGrantJobObj.all = res.resultList ;
-                            _this.dealAllJobItemToTransferDataSource(res.resultList);
+                    if(res && res.success == true){
+                        if(res.gridList){
+                            _this.dialogGrantJobObj.all = res.gridList ;
+                            _this.dealAllJobItemToTransferDataSource(res.gridList);
                         }
                     }
                 })

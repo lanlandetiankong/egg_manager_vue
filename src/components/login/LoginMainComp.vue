@@ -173,7 +173,7 @@
                 if(verifyFlag == true){
                     LoginMainCompApi.submitLoginFormByAccount(this.loginForm).then((res) => {
 
-                        if(res.hasError == false){
+                        if(res.success == true){
                             this.$emit('login-form-submit',e,this.loginForm,res);
                         }
                     });

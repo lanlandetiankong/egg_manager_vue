@@ -204,7 +204,7 @@
                 if(userTokenObj){
                     UserZoneCenterApi.getAllRoleByUserAccountId(userTokenObj.userAccountId).then((res) => {
                         if (res) {
-                            this.dataObj.role.checkArr = res.resultList;
+                            this.dataObj.role.checkArr = res.gridList;
                         }
                     })
                 }
@@ -214,7 +214,7 @@
                 if(userTokenObj){
                     UserZoneCenterApi.getAllPermissionByUserAccountId(userTokenObj.userAccountId).then((res) => {
                         if (res) {
-                            this.dataObj.permission.checkArr = res.resultList;
+                            this.dataObj.permission.checkArr = res.gridList;
                         }
                     })
                 }
@@ -224,7 +224,7 @@
                 if(userTokenObj){
                     UserZoneCenterApi.getAllJobByUserAccountId(userTokenObj.userAccountId).then((res) => {
                         if (res) {
-                            this.dataObj.job.checkArr = res.resultList;
+                            this.dataObj.job.checkArr = res.gridList;
                         }
                     })
                 }

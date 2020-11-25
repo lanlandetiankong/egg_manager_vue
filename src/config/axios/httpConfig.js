@@ -204,11 +204,11 @@ http.post = function (url, data, options) {
                         fileReader.onload = function() {
                             try {
                                 let jsonData = JSON.parse(this.result);  // 说明是普通对象数据，后台转换失败
-                                if (jsonData.hasError) {
+                                if (jsonData.success) {
+                                    resolve(response);
+                                }   else {
                                     message.error(jsonData.msg);
                                     reject(response);
-                                }   else {
-                                    resolve(response);
                                 }
                             } catch (err) {   // 解析成对象失败，说明是正常的文件流
                                 resolve(response);
@@ -216,9 +216,9 @@ http.post = function (url, data, options) {
                         };
                         fileReader.readAsText(respData);    //触发onload
                     }   else {
-                        let tempRespHasError = respData.hasError;
+                        let successFlag = respData.success;
                         //Error:不放行
-                        if (typeof(tempRespHasError) != "undefined" && tempRespHasError != null && tempRespHasError === true) {
+                        if (typeof(successFlag) != "undefined" && successFlag != null && successFlag === false) {
                             let tempRespInfo = respData.msg;
                             if(!tempRespInfo){
                                 tempRespInfo = '操作出现异常！' ;
@@ -234,11 +234,11 @@ http.post = function (url, data, options) {
                             }
                             resolve(response);
                         } else {
-                            let respHasWarning = respData.hasWarning;
-                            if (typeof(respHasWarning) == "undefined" || respHasWarning == null) {
-                                respHasWarning = false;
+                            let warningFlag = respData.warning;
+                            if (typeof(warningFlag) == "undefined" || warningFlag == null) {
+                                warningFlag = false;
                             }
-                            //respData.hasWarning = respHasWarning;
+                            //respData.warning = warningFlag;
                             //Warning或正常:放行
                             resolve(response);
                         }

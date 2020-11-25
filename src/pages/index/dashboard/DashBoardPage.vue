@@ -70,8 +70,8 @@
             dealInitAnnouncementListTab(){  //公告列表-初始化
                 var announcementListTemp = this.tabConf.announcementList ;
                 DashBoardApi.getSomeAnnouncementList(announcementListTemp.limitSize,false).then((res) => {
-                    if (res.hasError == false) {  //已经有对错误进行预处理
-                        announcementListTemp.dataList = res.resultList ;
+                    if (res.success == true) {  //已经有对错误进行预处理
+                        announcementListTemp.dataList = res.gridList ;
                     }
                 })
             },

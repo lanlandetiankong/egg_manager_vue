@@ -105,7 +105,7 @@
                 formData = jsObjectToFormData(this.uploadConf.processData,formData);
                 this.uploading = true;
                 CommonExcelCompApi.uploadExcelModels(formData,this.uploadConf.processData).then((res) => {
-                    if(res.hasError == false){
+                    if(res.success == true){
                         var fileUploaderBeanList = [...res.fileUploaderBeanList] ;
                         if(typeof fileUploaderBeanList != "undefined" && fileUploaderBeanList != null){
 
