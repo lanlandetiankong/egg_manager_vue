@@ -11,7 +11,7 @@
                         />
                         <a-card-meta>
                             <span slot="title">
-                                <a-tag color="blue">{{userTokenCacheObj.nickName}}</a-tag>
+                                <a-tag color="blue">{{userTokenCacheObj.userName}}</a-tag>
                             </span>
                         </a-card-meta>
                     </a-card>

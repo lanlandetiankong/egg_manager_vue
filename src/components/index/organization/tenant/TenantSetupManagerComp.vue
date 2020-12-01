@@ -65,7 +65,7 @@
                                 modifyVal:true,
                                 defaultVal:''
                             },
-                            nickName: {
+                            userName: {
                                 show:true,
                                 search:true,
                                 modifyVal:true,

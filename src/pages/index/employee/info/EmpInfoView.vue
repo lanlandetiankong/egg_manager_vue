@@ -44,7 +44,7 @@
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
                                 <a-form-item label="用户名">
-                                    <a-input v-decorator="searchConf.paramConf.nickName"/>
+                                    <a-input v-decorator="searchConf.paramConf.userName"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
@@ -317,7 +317,7 @@
                         belongTenantId: ["belongTenantId", {rules: []}],
                         belongDepartmentId: ["belongDepartmentId", {rules: []}],
                         account: ["account", {rules: []}],
-                        nickName: ["nickName", {rules: []}],
+                        userName: ["userName", {rules: []}],
                         email: ["email", {rules: []}],
                         userType: ["userType", {rules: []}],
                         locked: ["locked", {rules: []}]
@@ -361,7 +361,7 @@
                     actionType: "create"
                 },
                 dialogFormObj: {
-                    nickName: '',
+                    userName: '',
                     account: '',
                     email: '',
                     userType: '',
@@ -370,7 +370,7 @@
                     locked:'0'
                 },
                 dialogFormDefaultObj:{  //新建时的默认值设置
-                    nickName: '',
+                    userName: '',
                     account: '',
                     email: '',
                     userType: '',

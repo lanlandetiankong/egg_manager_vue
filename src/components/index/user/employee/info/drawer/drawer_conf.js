@@ -9,11 +9,11 @@ var employeeInfoDetailKeyMap = new Map();
 export  const EmployeeInfoDetailDrawerConf = {
     undefinedKeyName:"未定义属性",
     undefinedEnumKeyValue:"预期之外的枚举值",
-    showKeyArr:['account','nickName',"email","userTypeStr","locked","remark","remark","remark","remark","remark","remark"],
+    showKeyArr:['account','userName',"email","userTypeStr","locked","remark","remark","remark","remark","remark","remark"],
     keyNameMapObj:{
         fid:"id",
         account:"账号",
-        nickName:"姓名",
+        userName:"姓名",
         userTypeStr:"用户类型",
         locked:"是否锁定",
         remark:"备注",

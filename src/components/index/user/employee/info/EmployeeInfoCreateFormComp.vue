@@ -47,7 +47,7 @@
                 <a-form-item label="用户名"
                              v-bind="formItemLayout"
                 >
-                    <a-input v-decorator="formFieldConf.nickName"/>
+                    <a-input v-decorator="formFieldConf.userName"/>
                 </a-form-item>
                 <a-form-item label="邮箱"
                              v-bind="formItemLayout"
@@ -97,7 +97,7 @@
                 account:[
                     {required:true,message:'请填写账号!'}
                 ],
-                nickName:[
+                userName:[
                     {required:true,message:'请填写昵称!'}
                 ],
                 email:[
@@ -128,7 +128,7 @@
                 },
                 formFieldConf:{
                     account: ["account", {rules:paramsRules.account}],
-                    nickName: ["nickName", {rules: paramsRules.nickName}],
+                    userName: ["userName", {rules: paramsRules.userName}],
                     email: ["email", {rules: paramsRules.email}],
                     avatarUrl: ["avatarUrl", {rules: paramsRules.avatarUrl}],
                     belongTenantId: ["belongTenantId", {rules: paramsRules.belongTenantId}],
@@ -154,9 +154,9 @@
                             ...formObj,
                             value: formObj.account,
                         }),
-                        nickName: _this.$form.createFormField({
+                        userName: _this.$form.createFormField({
                             ...formObj,
-                            value: formObj.nickName,
+                            value: formObj.userName,
                         }),
                         email: _this.$form.createFormField({
                             ...formObj,
@@ -235,9 +235,9 @@
                             ..._this.formObj,
                             value: _this.formObj.account
                         }),
-                        nickName: this.$form.createFormField({
+                        userName: this.$form.createFormField({
                             ..._this.formObj,
-                            value: _this.formObj.nickName
+                            value: _this.formObj.userName
                         }),
                         email: this.$form.createFormField({
                             ..._this.formObj,

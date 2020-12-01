@@ -25,8 +25,8 @@ export  const DefineRoleDetailDrawerConf = {
             type:DrawerFieldTypeEnum.String
         },
         CommonFieldConfArr.remark,
-        CommonFieldConfArr.createUserNickName,
-        CommonFieldConfArr.lastModifyerNickName,
+        CommonFieldConfArr.createUserName,
+        CommonFieldConfArr.lastModifyerName,
         CommonFieldConfArr.createDate,
         CommonFieldConfArr.updateTime
     ]

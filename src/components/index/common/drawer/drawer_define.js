@@ -54,16 +54,16 @@ export const CommonFieldConfArr = {
             date:CommonDateFormatTypeObj.yMdhms_cn
         }
     },
-    createUserNickName:{
-        fieldKey:"createUserNickName",
-        fieldKeySplitArr:['createUser','nickName'],
+    createUserName:{
+        fieldKey:"createUserName",
+        fieldKeySplitArr:['createUser','userName'],
         fieldName:"创建人",
         type:DrawerFieldTypeEnum.String,
         isNeedSplit:true
     },
-    lastModifyerNickName:{
-        fieldKey:"lastModifyerNickName",
-        fieldKeySplitArr:['lastModifyer','nickName'],
+    lastModifyerName:{
+        fieldKey:"lastModifyerName",
+        fieldKeySplitArr:['lastModifyer','userName'],
         fieldName:"最后修改人",
         type:DrawerFieldTypeEnum.String,
         isNeedSplit:true
@@ -86,13 +86,13 @@ export const CommonFieldConfArr = {
             date:CommonDateFormatTypeObj.yMdhms_cn
         }
     },
-    createUserNickNameOfMO:{
-        fieldKey:"createUserNickName",
+    createUserNameOfMO:{
+        fieldKey:"createUserName",
         fieldName:"创建人",
         type:DrawerFieldTypeEnum.String
     },
-    lastModifyerNickNameOfMO:{
-        fieldKey:"lastModifyerNickName",
+    lastModifyerNameOfMO:{
+        fieldKey:"lastModifyerName",
         fieldName:"最后修改人",
         type:DrawerFieldTypeEnum.String
     }

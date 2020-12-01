@@ -9,9 +9,9 @@ const columns = [{
 },  {
     title: '姓名',
     align:textAlignDefault,
-    dataIndex: 'nickName',
+    dataIndex: 'userName',
     sorter:true,
-    key: 'nickName',
+    key: 'userName',
 }, {
     title: '所属租户',
     align:textAlignDefault,
@@ -56,8 +56,8 @@ const searchFormQueryConfObj = {
         matching:'like',
         value:''
     },
-    nickName:{
-        fieldName:'nickName',
+    userName:{
+        fieldName:'userName',
         matching:'like',
         value:''
     },

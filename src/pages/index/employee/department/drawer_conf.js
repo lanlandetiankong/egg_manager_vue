@@ -38,8 +38,8 @@ export  const EmployeeDepartmentDetailDrawerConf = {
         },
         CommonFieldConfArr.description,
         CommonFieldConfArr.remark,
-        CommonFieldConfArr.createUserNickName,
-        CommonFieldConfArr.lastModifyerNickName,
+        CommonFieldConfArr.createUserName,
+        CommonFieldConfArr.lastModifyerName,
         CommonFieldConfArr.createDate,
         CommonFieldConfArr.updateTime
     ]
