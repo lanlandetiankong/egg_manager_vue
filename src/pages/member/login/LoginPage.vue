@@ -45,12 +45,13 @@
         methods:{
             handleLoginFormSubmit(e,loginForm,submitRes){
                 var _this = this ;
+                debugger;
                 if(submitRes){
-                    if(submitRes.hasError == false){ //后台登录验证成功
-                        _this.handleSetUserTokenToCache(submitRes.moreAttribute.accountToken);
+                    if(submitRes.success){ //后台登录验证成功
+                        _this.handleSetUserTokenToCache(submitRes.accountToken);
                         _this.handleSetAuthorizationToCache(submitRes.authorization);
-                        _this.handleSetRouterUrlsToCache(submitRes.moreAttribute.routerUrlSet);
-                        _this.handleSetGrantedPermissionsToCache(submitRes.moreAttribute.permissionSet);
+                        _this.handleSetRouterUrlsToCache(submitRes.routerUrlSet);
+                        _this.handleSetGrantedPermissionsToCache(submitRes.permissionSet);
                         _this.handleMenuListToCache();
                         _this.$router.push("/index");
                     }
@@ -76,7 +77,8 @@
             handleMenuListToCache(){  //将后台的[菜单配置]更新到 VueRouter配置中
                 var _this = this ;
                 LoginMainApi.doGetAllMenu().then(res => {
-                    if(res.hasError == false){
+                    debugger;
+                    if(res.success){
                         var menuList = res.resultList;
                         var urlMap = res.resultMap ;
                         this.$store.dispatch('doDelAllViews') ; //登录前清空已访问页面的tag缓存

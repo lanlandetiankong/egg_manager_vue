@@ -217,7 +217,7 @@
             dealGetAllAnnouncementTagList(){    //取得所有的 公告标签
                 var _this = this ;
                 AnnouncementCreateApi.getAllAnnouncementTagEnums().then((res) =>{
-                    if(res.hasError == false){
+                    if(res.success){
                         _this.bindData.announcementTagList = res.enumList ;
                     }
                 })
@@ -227,8 +227,8 @@
                 //console.log("handleQuillEditorChange => ",e.text) ;
             },
             dealQuillImgExtendResponse(res){    //quill 图片上传回调
-                if(res.hasError == false){
-                    var fileResBean = res.moreAttribute.fileResBean ;
+                if(res.success){
+                    var fileResBean = res.fileResBean ;
                     return fileResBean.filePrefix + fileResBean.fileUri
                 }   else {
                     this.$message.error(res.msg) ;
@@ -274,7 +274,7 @@
                             console.log(_this.formObj);
                             if(_this.updateForm.flag == true){  //发布 更新后的 公告草稿
                                 AnnouncementCreateApi.addAnnouncementFromDraftByForm(_this.formObj).then((res) =>{
-                                    if(res.hasError == false){
+                                    if(res.success){
                                         _this.$message.success(res.msg) ;
                                         //关闭当前页面
                                         _this.doTagItemSelectedClose();
@@ -282,7 +282,7 @@
                                 })
                             }   else{   //直接发布
                                 AnnouncementCreateApi.addAnnouncementByForm(_this.formObj).then((res) =>{
-                                    if(res.hasError == false){
+                                    if(res.success){
                                         _this.$message.success(res.msg) ;
                                         //关闭当前页面
                                         _this.doTagItemSelectedClose();
@@ -308,7 +308,7 @@
                             _this.formObj = _this.dealFormValuesMapToObj(values) ;
                             if(_this.updateForm.flag == true) {  //更新公告草稿
                                 AnnouncementCreateApi.updateAnnouncementDraftByForm(_this.formObj).then((res) =>{
-                                    if(res.hasError == false){
+                                    if(res.success){
                                         _this.$message.success(res.msg) ;
                                         //关闭当前页面
                                         _this.doTagItemSelectedClose();
@@ -316,7 +316,7 @@
                                 })
                             }   else {  //添加到 草稿
                                 AnnouncementCreateApi.addAnnouncementDraftByForm(_this.formObj).then((res) =>{
-                                    if(res.hasError == false){
+                                    if(res.success){
                                         _this.$message.success(res.msg) ;
                                         //关闭当前页面
                                         _this.doTagItemSelectedClose();
@@ -343,7 +343,7 @@
                 var _this = this ;
                 if(fid){
                     AnnouncementCreateApi.getAnnouncementDraftById(fid).then((res) =>{
-                        if(res.hasError == false){
+                        if(res.success){
                             var resBean = res.bean ;
                             if(resBean){
                                 _this.formObj = resBean ;

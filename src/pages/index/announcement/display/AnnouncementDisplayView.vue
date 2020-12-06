@@ -66,7 +66,7 @@
             }
             if(_this.announcement.fid){
                 AnnouncementDisplayApi.getAnnouncementById(_this.announcement.fid).then((res) =>{
-                    if(res.hasError == false){
+                    if(res.success){
                         _this.announcement.obj = res.bean ;
                     }
                 });

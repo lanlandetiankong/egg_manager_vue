@@ -204,11 +204,11 @@ http.post = function (url, data, options) {
                         fileReader.onload = function() {
                             try {
                                 let jsonData = JSON.parse(this.result);  // 说明是普通对象数据，后台转换失败
-                                if (jsonData.hasError) {
+                                if (jsonData.success) {
+                                    resolve(response);
+                                }   else {
                                     message.error(jsonData.msg);
                                     reject(response);
-                                }   else {
-                                    resolve(response);
                                 }
                             } catch (err) {   // 解析成对象失败，说明是正常的文件流
                                 resolve(response);
@@ -216,13 +216,16 @@ http.post = function (url, data, options) {
                         };
                         fileReader.readAsText(respData);    //触发onload
                     }   else {
-                        let tempRespHasError = respData.hasError;
+                        let isSuccess = respData.success;
                         //Error:不放行
-                        if (typeof(tempRespHasError) != "undefined" && tempRespHasError != null && tempRespHasError === true) {
-                            let tempRespInfo = respData.msg;
-                            if(!tempRespInfo){
-                                tempRespInfo = '操作出现异常！' ;
+                        if (typeof(isSuccess) != "undefined" && isSuccess != null && isSuccess === true) {
+                            let respHasWarning = respData.hasWarning;
+                            if (typeof(respHasWarning) == "undefined" || respHasWarning == null) {
+                                respHasWarning = false;
                             }
+                            resolve(response);
+                        } else {
+                            let tempRespInfo = respData.msg ? respData.msg : "操作出现异常！";
                             if (typeof(tempRespInfo) != "undefined" && tempRespInfo != null && tempRespInfo.replace(/(^s*)|(s*$)/g, "").length != 0) {
                                 message.error(tempRespInfo);
                             }
@@ -232,14 +235,6 @@ http.post = function (url, data, options) {
                                     jumpToLoginPage(router);
                                 }
                             }
-                            resolve(response);
-                        } else {
-                            let respHasWarning = respData.hasWarning;
-                            if (typeof(respHasWarning) == "undefined" || respHasWarning == null) {
-                                respHasWarning = false;
-                            }
-                            //respData.hasWarning = respHasWarning;
-                            //Warning或正常:放行
                             resolve(response);
                         }
                     }

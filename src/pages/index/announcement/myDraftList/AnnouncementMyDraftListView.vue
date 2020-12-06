@@ -270,7 +270,7 @@
             dealGetAllAnnouncementTagList(){    //取得所有的 公告标签
                 var _this = this ;
                 AnnouncementMyDraftListApi.getAllAnnouncementTagEnums().then((res) =>{
-                    if(res.hasError == false){
+                    if(res.success){
                         _this.searchConf.binding.announcementTagList = res.enumList ;
                     }
                 })
@@ -312,7 +312,7 @@
                 var delIds = _this.tableCheckIdList;
                 AnnouncementMyDraftListApi.batchDelAnnouncementDraft(delIds).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
@@ -323,7 +323,7 @@
                 var _this = this;
                 AnnouncementMyDraftListApi.delOneAnnouncementDraft(delId).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
@@ -335,7 +335,7 @@
                 var publishIds = _this.tableCheckIdList;
                 AnnouncementMyDraftListApi.batchPublishAnnouncementDraft(publishIds).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }
@@ -346,7 +346,7 @@
                 var _this = this;
                 AnnouncementMyDraftListApi.publishOneAnnouncementDraft(delId).then((res) => {
                     if (res) {
-                        if (res.hasError == false) {  //已经有对错误进行预处理
+                        if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
                             _this.handleSearchFormQuery(); //表格重新搜索
                         }

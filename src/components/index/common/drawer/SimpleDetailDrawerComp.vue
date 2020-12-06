@@ -5,12 +5,12 @@
                 <a-list-item-meta
                     :key="item.fieldKey"
                 >
-                    <a-tag :color="item.hasError === false ? 'blue' : '#f50'"
+                    <a-tag :color="item.success ? 'blue' : '#f50'"
                            slot="title">
                         {{item.fieldName}}
                     </a-tag>
                     <span slot="description">
-                        <template v-if="item.hasError === true">    <!-- 异常处理 -->
+                        <template v-if="item.success">    <!-- 异常处理 -->
                             <a-tag color="#f50">
                                 Error: {{item.msg}}
                             </a-tag>
@@ -88,7 +88,7 @@
                     fieldName:fieldConfObj.fieldName,
                     fieldVal:fieldVal,
                     fieldType:fieldConfObj.type,
-                    hasError:false,
+                    success:true,
                     errorMsg:""
                 };
                 // ==> 字段值的temp及格式化处理
@@ -100,7 +100,7 @@
                         if(typeof enumValMap != "undefined" && enumValMap != null){
                             fieldValTemp = enumValMap[fieldVal] ;
                             if(typeof fieldValTemp == "undefined"){
-                                fieldResObj.hasError = true ;
+                                fieldResObj.success = false ;
                                 fieldResObj.msg = _this.drawerFieldConf.msgConf.undefinedEnum ;
                             }
                         }
