@@ -9,8 +9,7 @@ export const ModuleManagerApi = {
     getAllDefineModules(queryArr,pagination,sorter) {
         var sortObj = {}
         if(sorter){
-            sortObj['field'] = sorter.field ;
-            sortObj['order'] = sorter.order ;
+            sorter.field = sorter.order ;
         }
         var obj = {
             queryObj:JSON.stringify(queryArr),

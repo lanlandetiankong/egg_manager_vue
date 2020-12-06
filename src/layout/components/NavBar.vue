@@ -58,7 +58,7 @@
                 var userTokenCache = window.sessionStorage.getItem("userToken");
                 if(userTokenCache){
                     var userTokenObj = JSON.parse(userTokenCache);
-                    return userTokenObj.nickName ;
+                    return userTokenObj.userName ;
                 }   else {
                     return "未知用户";
                 }

@@ -26,8 +26,8 @@ export  const SmartFormDefinitionDrawerConf = {
             type:DrawerFieldTypeEnum.String
         },
         CommonFieldConfArr.remark,
-        CommonFieldConfArr.createUserNickNameOfMO,
-        CommonFieldConfArr.lastModifyerNickNameOfMO,
+        CommonFieldConfArr.createUserNameOfMO,
+        CommonFieldConfArr.lastModifyerNameOfMO,
         CommonFieldConfArr.createDateOfMO,
         CommonFieldConfArr.updateTimeOfMO
     ]

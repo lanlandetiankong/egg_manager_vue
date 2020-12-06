@@ -18,7 +18,7 @@ export  const EmployeeInfoDetailDrawerConf = {
             type:DrawerFieldTypeEnum.String
         },
         {
-            fieldKey:"nickName",
+            fieldKey:"userName",
             fieldName:"姓名",
             type:DrawerFieldTypeEnum.String
         },
@@ -51,8 +51,8 @@ export  const EmployeeInfoDetailDrawerConf = {
             }
         },
         CommonFieldConfArr.remark,
-        CommonFieldConfArr.createUserNickName,
-        CommonFieldConfArr.lastModifyerNickName,
+        CommonFieldConfArr.createUserName,
+        CommonFieldConfArr.lastModifyerName,
         CommonFieldConfArr.createDate,
         CommonFieldConfArr.updateTime
     ]

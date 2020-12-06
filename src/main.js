@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from '@/store/index'
+import VueI18n from 'vue-i18n'
 
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
@@ -34,7 +35,17 @@ Vue.config.productionTip = (process.env.NODE_ENV === 'development');
 Vue.use(Antd)
 Vue.use(VueScroll,VueScrollConf)
 Vue.use(VueQuillEditor)
+Vue.use(VueI18n)
 
+
+const i18n = new VueI18n({
+    locale: 'zh-CN',    // 语言标识
+    //this.$i18n.locale // 通过切换locale的值来实现语言切换
+    messages: {
+        'zh-CN': require('~Config/i18n/lang/zh'),   // 中文语言包
+        'en-US': require('~Config/i18n/lang/en')    // 英文语言包
+    }
+})
 
 //router每次跳转都刷新页面的处理
 //Vue.prototype.router = router;
@@ -42,6 +53,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   components: { App },
   template: '<App/>'
 })

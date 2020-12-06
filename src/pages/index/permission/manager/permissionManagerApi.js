@@ -9,8 +9,7 @@ export const PermissionManagerApi = {
     getAllDefinePermissions(queryArr,pagination,sorter) {
         var sortObj = {}
         if(sorter){
-            sortObj['field'] = sorter.field ;
-            sortObj['order'] = sorter.order ;
+            sorter.field = sorter.order ;
         }
         var obj = {
             queryObj:JSON.stringify(queryArr),
@@ -27,7 +26,7 @@ export const PermissionManagerApi = {
         return axios.post("/define/definePermission/queryOneById",qs.stringify(params)).then(res => res.data) ;
     },
     addDefinePermissionByForm(formObj) {     //新增权限
-        debugger;
+
         if(formObj){
             if(formObj.codePrefix){
                 formObj.code = formObj.codePrefix[0] + formObj.code ;
