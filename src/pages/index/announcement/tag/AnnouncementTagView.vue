@@ -254,7 +254,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 AnnouncementTagApi.getAllAnnouncementTags().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -269,7 +269,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 AnnouncementTagApi.getAllAnnouncementTags(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }

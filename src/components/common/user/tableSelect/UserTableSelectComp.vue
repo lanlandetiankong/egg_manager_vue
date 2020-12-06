@@ -294,7 +294,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 UserTableSelectCompApi.getAllUserAccounts().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -309,7 +309,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 UserTableSelectCompApi.getAllUserAccounts(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -376,8 +376,8 @@
                 var _this = this ;
                 UserTableSelectCompApi.getAllDefineDepartmentTrees().then((res) => {
                     if(res && res.success){
-                        if(res.resultList){
-                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.resultList ;
+                        if(res.gridList){
+                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.gridList ;
                         }
                     }
                 })
@@ -396,9 +396,9 @@
                 var _this = this ;
                 return UserTableSelectCompApi.getAllDefineRoles().then((res) => {
                     if(res && res.success){
-                        if(res.resultList){
-                            _this.dialogGrantRoleObj.all = res.resultList ;
-                            _this.dealAllRoleItemToTransferDataSource(res.resultList);
+                        if(res.gridList){
+                            _this.dialogGrantRoleObj.all = res.gridList ;
+                            _this.dealAllRoleItemToTransferDataSource(res.gridList);
                         }
                     }
                 })
@@ -407,9 +407,9 @@
                 var _this = this ;
                 return UserTableSelectCompApi.getAllDefineJobs().then((res) => {
                     if(res && res.success){
-                        if(res.resultList){
-                            _this.dialogGrantJobObj.all = res.resultList ;
-                            _this.dealAllJobItemToTransferDataSource(res.resultList);
+                        if(res.gridList){
+                            _this.dialogGrantJobObj.all = res.gridList ;
+                            _this.dealAllJobItemToTransferDataSource(res.gridList);
                         }
                     }
                 })

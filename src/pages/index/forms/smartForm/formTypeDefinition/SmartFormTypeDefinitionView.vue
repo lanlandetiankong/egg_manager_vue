@@ -266,7 +266,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 SmartFormTypeDefinitionApi.getDataPage().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -281,7 +281,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 SmartFormTypeDefinitionApi.getDataPage(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }

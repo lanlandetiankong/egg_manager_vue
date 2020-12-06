@@ -260,7 +260,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 EmpJobApi.getAllDefineJobs().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -275,7 +275,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 EmpJobApi.getAllDefineJobs(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }

@@ -161,7 +161,7 @@
                 var _this = this ;
                 EmployeeDepartmentCompsApi.getDefineDepartmentTreeFilterChildrens(_this.formObj.fid).then((res) => { //更新 上级部门 树
                     if(res && res.success){
-                        _this.treeSelectConf.parentId.selftTreeData  = res.resultList ;
+                        _this.treeSelectConf.parentId.selftTreeData  = res.gridList ;
                     }
                 })
             },

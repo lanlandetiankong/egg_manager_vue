@@ -71,7 +71,7 @@
                 var announcementListTemp = this.tabConf.announcementList ;
                 DashBoardApi.getSomeAnnouncementList(announcementListTemp.limitSize,false).then((res) => {
                     if (res.success) {  //已经有对错误进行预处理
-                        announcementListTemp.dataList = res.resultList ;
+                        announcementListTemp.dataList = res.gridList ;
                     }
                 })
             },

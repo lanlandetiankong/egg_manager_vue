@@ -289,8 +289,8 @@
                 var _this = this ;
                 DepartmentManagerApi.getAllDefineDepartmentTree().then((res) => {
                     if(res && res.success){
-                        if(res.resultList){
-                            _this.searchConf.treeSelectConf.parentId.treeData = res.resultList ;
+                        if(res.gridList){
+                            _this.searchConf.treeSelectConf.parentId.treeData = res.gridList ;
                         }
                     }
                 })
@@ -307,7 +307,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 DepartmentManagerApi.getAllDefineDepartments().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -322,7 +322,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 DepartmentManagerApi.getAllDefineDepartments(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }

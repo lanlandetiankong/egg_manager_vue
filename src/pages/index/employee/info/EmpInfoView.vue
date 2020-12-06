@@ -452,7 +452,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 EmpInfoApi.getAllUserAccounts().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -467,7 +467,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 EmpInfoApi.getAllUserAccounts(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -578,8 +578,8 @@
                 var _this = this ;
                 EmpInfoApi.getAllDefineDepartmentTrees().then((res) => {
                     if(res && res.success){
-                        if(res.resultList){
-                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.resultList ;
+                        if(res.gridList){
+                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.gridList ;
                         }
                     }
                 })
@@ -598,9 +598,9 @@
                 var _this = this ;
                 return EmpInfoApi.getAllDefineRoles().then((res) => {
                     if(res && res.success){
-                        if(res.resultList){
-                            _this.dialogGrantRoleObj.all = res.resultList ;
-                            _this.dealAllRoleItemToTransferDataSource(res.resultList);
+                        if(res.gridList){
+                            _this.dialogGrantRoleObj.all = res.gridList ;
+                            _this.dealAllRoleItemToTransferDataSource(res.gridList);
                         }
                     }
                 })
@@ -609,9 +609,9 @@
                 var _this = this ;
                 return EmpInfoApi.getAllDefineJobs().then((res) => {
                     if(res && res.success){
-                        if(res.resultList){
-                            _this.dialogGrantJobObj.all = res.resultList ;
-                            _this.dealAllJobItemToTransferDataSource(res.resultList);
+                        if(res.gridList){
+                            _this.dialogGrantJobObj.all = res.gridList ;
+                            _this.dealAllJobItemToTransferDataSource(res.gridList);
                         }
                     }
                 })
@@ -672,10 +672,10 @@
                 if (selectRowId) {
                     EmpInfoApi.getAllRoleByUserAccountId(selectRowId).then((res) => {
                         if(res){
-                            _this.dialogGrantRoleObj.checked = res.resultList;
+                            _this.dialogGrantRoleObj.checked = res.gridList;
                             var checkIdListTemp = [] ;
-                            if(res.resultList && res.resultList.length > 0){
-                                jquery.each(res.resultList,function (idx,val) {
+                            if(res.gridList && res.gridList.length > 0){
+                                jquery.each(res.gridList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }
@@ -698,10 +698,10 @@
                 if (selectRowId) {
                     EmpInfoApi.getAllJobByUserAccountId(selectRowId).then((res) => {
                         if(res){
-                            _this.dialogGrantJobObj.checked = res.resultList;
+                            _this.dialogGrantJobObj.checked = res.gridList;
                             var checkIdListTemp = [] ;
-                            if(res.resultList && res.resultList.length > 0){
-                                jquery.each(res.resultList,function (idx,val) {
+                            if(res.gridList && res.gridList.length > 0){
+                                jquery.each(res.gridList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }

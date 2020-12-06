@@ -79,8 +79,8 @@
                 LoginMainApi.doGetAllMenu().then(res => {
                     debugger;
                     if(res.success){
-                        var menuList = res.resultList;
-                        var urlMap = res.resultMap ;
+                        var menuList = res.gridList;
+                        var urlMap = res.dataMap ;
                         this.$store.dispatch('doDelAllViews') ; //登录前清空已访问页面的tag缓存
                         window.sessionStorage.setItem("grantedMenuList",JSON.stringify(menuList));
                         window.sessionStorage.setItem("grantedMenuUrlMap",JSON.stringify(urlMap));

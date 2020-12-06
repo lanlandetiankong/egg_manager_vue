@@ -218,7 +218,7 @@
                 var _this = this ;
                 MenuCreateFormApi.getDefineMenuTreeFilterChildrens(_this.formObj.fid).then((res) => { //更新 上级菜单 树
                     if(res && res.success){
-                        _this.treeSelectConf.parentId.selftTreeData  = res.resultList ;
+                        _this.treeSelectConf.parentId.selftTreeData  = res.gridList ;
                     }
                 })
             },

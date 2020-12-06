@@ -328,9 +328,9 @@
                 var _this = this ;
                 return PermissionRoleManagerApi.getAllDefinePermissions().then((res) => {
                     if(res && res.success){
-                        if(res.resultList){
-                            _this.dialogGrantPermissionObj.all = res.resultList ;
-                            _this.dealAllItemToTransferDataSource(res.resultList);
+                        if(res.gridList){
+                            _this.dialogGrantPermissionObj.all = res.gridList ;
+                            _this.dealAllItemToTransferDataSource(res.gridList);
                         }
                     }
                 })
@@ -339,8 +339,8 @@
                 var _this = this ;
                 return PermissionRoleManagerApi.getAllDefineMenuTree().then((res) => {
                     if(res && res.success){
-                        if(res.resultList){
-                            _this.dialogGrantMenusObj.treeData = res.resultList ;
+                        if(res.gridList){
+                            _this.dialogGrantMenusObj.treeData = res.gridList ;
                         }
                     }
                 })
@@ -381,7 +381,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 PermissionRoleManagerApi.getAllDefineRoles().then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -396,7 +396,7 @@
                 _this.dealChangeTableSearchLoadingState(true);
                 PermissionRoleManagerApi.getAllDefineRoles(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
-                        this.tableConf.data = res.resultList;
+                        this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
@@ -459,10 +459,10 @@
                 if (selectRowId) {
                     PermissionRoleManagerApi.getAllPermissionByRoleId(selectRowId).then((res) => {
                         if(res){
-                            _this.dialogGrantPermissionObj.checked = res.resultList;
+                            _this.dialogGrantPermissionObj.checked = res.gridList;
                             var checkIdListTemp = [] ;
-                            if(res.resultList && res.resultList.length > 0){
-                                jquery.each(res.resultList,function (idx,val) {
+                            if(res.gridList && res.gridList.length > 0){
+                                jquery.each(res.gridList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }
@@ -485,10 +485,10 @@
                 if (selectRowId) {
                     PermissionRoleManagerApi.getAllMenuByRoleId(selectRowId).then((res) => {
                         if(res){
-                            _this.dialogGrantMenusObj.checked = res.resultList;
+                            _this.dialogGrantMenusObj.checked = res.gridList;
                             var checkIdListTemp = [] ;
-                            if(res.resultList && res.resultList.length > 0){
-                                jquery.each(res.resultList,function (idx,val) {
+                            if(res.gridList && res.gridList.length > 0){
+                                jquery.each(res.gridList,function (idx,val) {
                                     checkIdListTemp.push(val.fid);
                                 })
                             }
