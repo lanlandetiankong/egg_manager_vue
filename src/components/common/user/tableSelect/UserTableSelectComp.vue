@@ -225,7 +225,7 @@
             }
         },
         data() {
-            debugger;
+
             var _this = this ;
             return {
                 searchConf: {
@@ -279,7 +279,7 @@
         },
         methods: {
             toggleSearchShowListFlag(){ //切换显示/隐藏
-                debugger;
+
                 this.searchConf.showListFlag = !this.searchConf.showListFlag ;
             },
             dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
@@ -326,7 +326,7 @@
                 var queryFieldArr = [] ;
                 if(queryObj) {
                     for (var key in queryObj){
-                        debugger;
+
                         var searchFieldObj = searchFormQueryConf[key];
                         var searchFlagConfItem = _this.searchFlagConf[key];
                         //是否可以作为搜索条件

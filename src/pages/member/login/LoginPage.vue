@@ -45,7 +45,7 @@
         methods:{
             handleLoginFormSubmit(e,loginForm,submitRes){
                 var _this = this ;
-                debugger;
+
                 if(submitRes){
                     if(submitRes.success){ //后台登录验证成功
                         _this.handleSetUserTokenToCache(submitRes.accountToken);
@@ -77,7 +77,7 @@
             handleMenuListToCache(){  //将后台的[菜单配置]更新到 VueRouter配置中
                 var _this = this ;
                 LoginMainApi.doGetAllMenu().then(res => {
-                    debugger;
+
                     if(res.success){
                         var menuList = res.gridList;
                         var urlMap = res.dataMap ;

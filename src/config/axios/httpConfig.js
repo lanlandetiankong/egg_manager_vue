@@ -252,7 +252,7 @@ http.post = function (url, data, options) {
 
 function jumpToLoginPage(router) {
     window.sessionStorage.removeItem("userToken");
-    debugger;
+
     if("/member/login" == router.app._route.fullPath){
         //当前已经是登录界面
     }   else {
