@@ -7,11 +7,10 @@ import qs from 'qs'
 
 export const AnnouncementMyCreateListApi = {
     getAllAnnouncementTagEnums() {  //取得 公告标签 列表
-        var sortObj = {     //固定 order字段 排序
-            field:"ordering",
-            order:"ascend"
+        const sortObj = {     //固定 order字段 排序
+            "ordering":true
         }
-        var obj = {
+        const obj = {
             queryObj:JSON.stringify([]),
             //paginationObj:JSON.stringify({}),
             sortObj:JSON.stringify(sortObj),

@@ -34,10 +34,7 @@ export const UserTableSelectCompApi = {
         return axios.post('/define/defineJob/queryPage', qs.stringify(obj)).then(res => res.data);
     },
     getAllDefineTenantEnums() {  //取得 租户 列表
-        var sortObj = {     //固定 order字段 排序
-            field: "orderNum",
-            order: "ascend"
-        }
+        var sortObj = {}
         var obj = {
             queryObj: JSON.stringify([]),
             //paginationObj:JSON.stringify({}),
@@ -47,10 +44,7 @@ export const UserTableSelectCompApi = {
         return axios.post('/organization/defineTenant/gainEnumSelect', qs.stringify(obj)).then(res => res.data);
     },
     getAllDefineDepartmentTrees() {  //取得 租户 列表
-        var sortObj = {     //固定 order字段 排序
-            field: "orderNum",
-            order: "ascend"
-        }
+        var sortObj = {}
         var obj = {
             queryObj: JSON.stringify([]),
         }

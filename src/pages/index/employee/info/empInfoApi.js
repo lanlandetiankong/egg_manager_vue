@@ -2,16 +2,14 @@
 import axios from '~Config/axios/httpConfig'
 //包装param参数
 import qs from 'qs';
-import {axiosForExcelUtil} from '~Utils/axios/axiosUtils'
+import {pageUtil,axiosForExcelUtil} from '~Utils/axios/axiosUtils'
 
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const EmpInfoApi = {
     getAllUserAccounts(queryArr, pagination, sorter) {
-        var sortObj = {}
-        if (sorter) {
-            sorter.field = sorter.order ;
-        }
+        var sortObj = pageUtil.parseSorterToObj(sorter);
+        debugger;
         var obj = {
             queryObj: JSON.stringify(queryArr),
             paginationObj: JSON.stringify(pagination),
@@ -107,10 +105,7 @@ export const EmpInfoApi = {
         return axios.post("/user/userAccount/grantJobToUser", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
     getAllDefineTenantEnums() {  //取得 租户 列表
-        var sortObj = {     //固定 order字段 排序
-            field: "orderNum",
-            order: "ascend"
-        }
+        var sortObj = {}
         var obj = {
             queryObj: JSON.stringify([]),
             //paginationObj:JSON.stringify({}),
@@ -120,10 +115,7 @@ export const EmpInfoApi = {
         return axios.post('/organization/defineTenant/gainEnumSelect', qs.stringify(obj)).then(res => res.data);
     },
     getAllDefineDepartmentTrees() {  //取得 租户 列表
-        var sortObj = {     //固定 order字段 排序
-            field: "orderNum",
-            order: "ascend"
-        }
+        var sortObj = {}
         var obj = {
             queryObj: JSON.stringify([]),
         }

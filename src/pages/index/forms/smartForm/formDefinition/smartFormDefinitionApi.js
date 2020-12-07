@@ -44,11 +44,8 @@ export const SmartFormDefinitionApi = {
         return axios.post("/forms/smartForm/formDefinition/delOneById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     getAllFormTypeEnums() {  //取得 租户 列表
-        var sortObj = {     //固定 order字段 排序
-            field: "ordering",
-            order: "ascend"
-        }
-        var obj = {
+        const sortObj = {}
+        const obj = {
             queryObj: JSON.stringify([]),
             //paginationObj:JSON.stringify({}),
             //sortObj:JSON.stringify(sortObj),
