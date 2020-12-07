@@ -56,11 +56,11 @@
                                 <a-button type="primary" html-type="submit" icon="search"
                                           :loading="searchConf.loadingFlag"
                                 >
-                                    搜索
+                                    {{$t('langMap.button.actions.query')}}
                                 </a-button>
                                 <a-button :style="{ marginLeft: '8px' }" icon="close-square"
                                           @click="handleSearchFormReset">
-                                    清空
+                                    {{$t('langMap.button.actions.reset')}}
                                 </a-button>
                             </a-col>
                         </a-row>

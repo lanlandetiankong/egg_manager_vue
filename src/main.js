@@ -39,11 +39,11 @@ Vue.use(VueI18n)
 
 
 const i18n = new VueI18n({
-    locale: 'zh-CN',    // 语言标识
+    locale: 'zh',    // 语言标识
     //this.$i18n.locale // 通过切换locale的值来实现语言切换
     messages: {
-        'zh-CN': require('~Config/i18n/lang/zh'),   // 中文语言包
-        'en-US': require('~Config/i18n/lang/en')    // 英文语言包
+        'zh': require('~Config/i18n/lang/zh'),   // 中文语言包
+        'en': require('~Config/i18n/lang/en')    // 英文语言包
     }
 })
 

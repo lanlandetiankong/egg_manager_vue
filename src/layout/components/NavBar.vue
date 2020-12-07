@@ -2,6 +2,14 @@
     <div>
         <a-row type="flex" align="middle" justify="end">
             <a-col :span=2>
+                <a-button v-if="langLocale==='zh'" @click="langChangeToZh">
+                    English
+                </a-button>
+                <a-button  v-else @click="langChangeToZh">
+                    中文
+                </a-button>
+            </a-col>
+            <a-col :span=2>
                 <a-row>
                     <a-tag color="blue">
                         {{loginUserName}}
@@ -50,8 +58,7 @@
             userInfo:Object
         },
         data() {
-            return {
-            }
+            return {}
         },
         computed:{
             loginUserName(){
@@ -73,6 +80,9 @@
                         return urlPrefix+avatarUrl ;
                     }
                 }
+            },
+            langLocale(){
+                return (this.$i18n.locale) ? this.$i18n.locale : 'zh' ;
             }
         },
         methods:{
@@ -83,6 +93,12 @@
                 }   else if(e.key == "user_center"){ //个人中心
                     _this.$emit('goToUserCenter',e);
                 }
+            },
+            langChangeToZh(){
+                debugger;
+                console.log(this.$i18n.locale)
+                let lang = this.$i18n.locale === 'zh' ? 'en' : 'zh'
+                this.$i18n.locale = lang ;
             }
         },
         mounted(){

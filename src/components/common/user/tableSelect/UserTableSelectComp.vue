@@ -92,7 +92,7 @@
                                 </search-filter-btn-comp>
                                 <a-button type="primary" html-type="submit" icon="search"
                                 >
-                                    搜索
+                                    {{$t('langMap.button.actions.query')}}
                                 </a-button>
                             </a-col>
                         </a-row>

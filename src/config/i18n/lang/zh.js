@@ -20,5 +20,5 @@ export const langMap = {
         config:{
             emptyData:'暂无数据'
         }
-    },
+    }
 }
