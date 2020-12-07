@@ -1,5 +1,24 @@
 export const langMap = {
     button:{
-        query:'搜索'
-    }
+        actions:{
+            query:'搜索',
+            reset:'重置',
+            addByForm:'新增',
+            updateByForm:'更新',
+            batchDelByIds:'删除',
+            delById:'删除',
+        }
+    },
+    table:{
+        header:{
+            operation:'操作',
+            detail:'详情',
+            description:'描述',
+            sortVal:'排序值',
+            type:'类型'
+        },
+        config:{
+            emptyData:'暂无数据'
+        }
+    },
 }

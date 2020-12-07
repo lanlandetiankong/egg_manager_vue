@@ -1,5 +1,6 @@
 export const langMap = {
     button:{
-        query:'Query'
+        query:'Query',
+        reset:'Reset'
     }
 }
