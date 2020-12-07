@@ -17,10 +17,10 @@
                     <a-tree-select
                         placeholder="选择上级部门"
                         showSearch allowClear
-                        :treeNodeFilterProp="treeSelectConf.parentId.treeNodeFilterProp"
-                        :treeDefaultExpandAll="treeSelectConf.parentId.treeDefaultExpandAll"
-                        v-decorator="formFieldConf.parentId"
-                        :treeData="treeSelectConf.parentId.selftTreeData"
+                        :treeNodeFilterProp="treeSelectConf.pid.treeNodeFilterProp"
+                        :treeDefaultExpandAll="treeSelectConf.pid.treeDefaultExpandAll"
+                        v-decorator="formFieldConf.pid"
+                        :treeData="treeSelectConf.pid.selftTreeData"
                         @change="handleParentTreeOfSearchChange"
                     >
                     </a-tree-select>
@@ -70,7 +70,7 @@
         },
         data(){
             var paramsRules ={
-                parentId:[
+                pid:[
                     {required:false,message:'请选择上级部门!'}
                 ],
                 name:[
@@ -101,7 +101,7 @@
                     },
                 },
                 formFieldConf:{
-                    parentId:["parentId",{rules:paramsRules.parentId}],
+                    pid:["pid",{rules:paramsRules.pid}],
                     name:["name",{rules:paramsRules.name}],
                     code:["code",{rules:paramsRules.code}],
                     orderNum:["orderNum",{rules:paramsRules.orderNum}],
@@ -110,7 +110,7 @@
                 },
                 defineDepartmentCreateForm:{},
                 treeSelectConf:{
-                    parentId:{
+                    pid:{
                         treeDefaultExpandAll:false,
                         treeNodeFilterProp:"title",
                         selftTreeData:[]
@@ -123,9 +123,9 @@
                 var _this = this ;
                if(typeof _this.defineDepartmentCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
                    _this.defineDepartmentCreateForm.updateFields({
-                       parentId: _this.$form.createFormField({
+                       pid: _this.$form.createFormField({
                            ...formObj,
-                           value: formObj.parentId,
+                           value: formObj.pid,
                        }),
                        name: _this.$form.createFormField({
                            ...formObj,
@@ -155,13 +155,13 @@
             },
             handleCreateActionInit(){   //弹窗展示为[创建-操作]的初始化
                 var _this = this ;
-                _this.treeSelectConf.parentId.selftTreeData = _this.parentSelectTrees ;
+                _this.treeSelectConf.pid.selftTreeData = _this.parentSelectTrees ;
             },
             handleUpdateActionInit(){   //弹窗展示为[更新-操作]的初始化
                 var _this = this ;
                 EmployeeDepartmentCompsApi.getDefineDepartmentTreeFilterChildrens(_this.formObj.fid).then((res) => { //更新 上级部门 树
                     if(res && res.success){
-                        _this.treeSelectConf.parentId.selftTreeData  = res.gridList ;
+                        _this.treeSelectConf.pid.selftTreeData  = res.gridList ;
                     }
                 })
             },
@@ -189,9 +189,9 @@
                 mapPropsToFields:() =>{
                     //console.log(_this.formObj);
                     return {
-                        parentId: this.$form.createFormField({
+                        pid: this.$form.createFormField({
                             ..._this.formObj,
-                            value: _this.formObj.parentId
+                            value: _this.formObj.pid
                         }),
                         name: this.$form.createFormField({
                             ..._this.formObj,

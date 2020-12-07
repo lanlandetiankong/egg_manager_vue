@@ -15,10 +15,10 @@
                                         style="width: 150px"
                                         placeholder="筛选上级部门"
                                         showSearch allowClear
-                                        :treeNodeFilterProp="searchConf.treeSelectConf.parentId.treeNodeFilterProp"
-                                        :treeDefaultExpandAll="searchConf.treeSelectConf.parentId.treeDefaultExpandAll"
-                                        v-decorator="searchConf.paramConf.parentId"
-                                        :treeData="searchConf.treeSelectConf.parentId.treeData"
+                                        :treeNodeFilterProp="searchConf.treeSelectConf.pid.treeNodeFilterProp"
+                                        :treeDefaultExpandAll="searchConf.treeSelectConf.pid.treeDefaultExpandAll"
+                                        v-decorator="searchConf.paramConf.pid"
+                                        :treeData="searchConf.treeSelectConf.pid.treeData"
                                         @change="handleParentTreeOfSearchChange"
                                     >
                                     </a-tree-select>
@@ -141,7 +141,7 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                :parentSelectTrees="searchConf.treeSelectConf.parentId.treeData"
+                :parentSelectTrees="searchConf.treeSelectConf.pid.treeData"
                 @createFormCancel="handleDefineDepartmentCreateFormCancel"
                 @createFormSubmit="handleDefineDepartmentCreateFormSubmit"
             >
@@ -188,7 +188,7 @@
                     loadingFlag:false,
                     defaultColSpan: 8,
                     paramConf: {
-                        parentId: ["parentId", {rules: []}],
+                        pid: ["pid", {rules: []}],
                         name: ["name", {rules: []}],
                         code: ["code", {rules: []}],
                         level: ["level", {rules: []}],
@@ -197,7 +197,7 @@
                         remark:["remark",{rules: []}]
                     },
                     treeSelectConf:{
-                        parentId:{
+                        pid:{
                             treeDefaultExpandAll:false,
                             treeNodeFilterProp:"title",
                             treeData:[]
@@ -235,7 +235,7 @@
                     level:0,
                     orderNum:0,
                     description:'',
-                    parentId:'',
+                    pid:'',
                     type: ''
                 },
                 drawerConf:{
@@ -285,12 +285,12 @@
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.defineDepartmentCreateFormRef.defineDepartmentCreateForm;
             },
-            dealGetParentIdTreeData(){  //取得 部门定义-树形数据
+            dealGetPidTreeData(){  //取得 部门定义-树形数据
                 var _this = this ;
                 DepartmentManagerApi.getAllDefineDepartmentTree().then((res) => {
                     if(res && res.success){
                         if(res.gridList){
-                            _this.searchConf.treeSelectConf.parentId.treeData = res.gridList ;
+                            _this.searchConf.treeSelectConf.pid.treeData = res.gridList ;
                         }
                     }
                 })
@@ -538,7 +538,7 @@
         },
         created(){
             this.dealGetAllDefineDepartment();
-            this.dealGetParentIdTreeData();
+            this.dealGetPidTreeData();
         },
         destroyed(){
             console.log("部门管理-页面销毁 ...")

@@ -42,8 +42,8 @@ const columns = [{
 
 
 const searchFormQueryConfObj = {
-    parentId:{
-        fieldName:'parentId',
+    pid:{
+        fieldName:'pid',
         matching:'equals',
         value:''
     },

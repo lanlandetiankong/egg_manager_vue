@@ -76,8 +76,8 @@ const searchFormQueryConfObj = {
         matching:'like',
         value:''
     },
-    parentId:{
-        fieldName:'parentId',
+    pid:{
+        fieldName:'pid',
         matching:'equals',
         value:''
     },

@@ -17,10 +17,10 @@
                     <a-tree-select
                         placeholder="选择上级菜单"
                         showSearch allowClear
-                        :treeNodeFilterProp="treeSelectConf.parentId.treeNodeFilterProp"
-                        :treeDefaultExpandAll="treeSelectConf.parentId.treeDefaultExpandAll"
-                        v-decorator="formFieldConf.parentId"
-                        :treeData="treeSelectConf.parentId.selftTreeData"
+                        :treeNodeFilterProp="treeSelectConf.pid.treeNodeFilterProp"
+                        :treeDefaultExpandAll="treeSelectConf.pid.treeDefaultExpandAll"
+                        v-decorator="formFieldConf.pid"
+                        :treeData="treeSelectConf.pid.selftTreeData"
                         @change="handleParentTreeOfSearchChange"
                     >
                     </a-tree-select>
@@ -107,7 +107,7 @@
                 iconName:[
                     {required:true,message:'请填写图标名!'}
                 ],
-                parentId:[
+                pid:[
                     {required:false,message:'请选择上级菜单!'}
                 ],
                 label:[
@@ -140,7 +140,7 @@
                 formFieldConf:{
                     menuName:["menuName",{rules:paramsRules.menuName}],
                     iconName:["iconName",{rules:paramsRules.iconName}],
-                    parentId:["parentId",{rules:paramsRules.parentId}],
+                    pid:["pid",{rules:paramsRules.pid}],
                     label:["label",{rules:paramsRules.label}],
                     orderNum:["orderNum",{rules:paramsRules.orderNum}],
                     urlJumpType:["urlJumpType",{rules:paramsRules.urlJumpType}],
@@ -151,7 +151,7 @@
                 defineMenuCreateForm:{},
                 formValObj:{},
                 treeSelectConf:{
-                    parentId:{
+                    pid:{
                         treeDefaultExpandAll:false,
                         treeNodeFilterProp:"title",
                         selftTreeData:[]
@@ -176,9 +176,9 @@
                            ...formObj,
                            value: formObj.iconName,
                        }),
-                       parentId: _this.$form.createFormField({
+                       pid: _this.$form.createFormField({
                            ...formObj,
-                           value: formObj.parentId,
+                           value: formObj.pid,
                        }),
                        label: _this.$form.createFormField({
                            ...formObj,
@@ -212,13 +212,13 @@
             },
             handleCreateActionInit(){   //弹窗展示为[创建-操作]的初始化
                 var _this = this ;
-                _this.treeSelectConf.parentId.selftTreeData = _this.parentSelectTrees ;
+                _this.treeSelectConf.pid.selftTreeData = _this.parentSelectTrees ;
             },
             handleUpdateActionInit(){   //弹窗展示为[更新-操作]的初始化
                 var _this = this ;
                 MenuCreateFormApi.getDefineMenuTreeFilterChildrens(_this.formObj.fid).then((res) => { //更新 上级菜单 树
                     if(res && res.success){
-                        _this.treeSelectConf.parentId.selftTreeData  = res.gridList ;
+                        _this.treeSelectConf.pid.selftTreeData  = res.gridList ;
                     }
                 })
             },
@@ -265,9 +265,9 @@
                             ..._this.formObj,
                             value: _this.formObj.iconName
                         }),
-                        parentId: this.$form.createFormField({
+                        pid: this.$form.createFormField({
                             ..._this.formObj,
-                            value: _this.formObj.parentId
+                            value: _this.formObj.pid
                         }),
                         label: this.$form.createFormField({
                             ..._this.formObj,

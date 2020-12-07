@@ -20,10 +20,10 @@
                                         style="width: 150px"
                                         placeholder="筛选上级菜单"
                                         showSearch allowClear
-                                        :treeNodeFilterProp="searchConf.treeSelectConf.parentId.treeNodeFilterProp"
-                                        :treeDefaultExpandAll="searchConf.treeSelectConf.parentId.treeDefaultExpandAll"
-                                        v-decorator="searchConf.paramConf.parentId"
-                                        :treeData="searchConf.treeSelectConf.parentId.treeData"
+                                        :treeNodeFilterProp="searchConf.treeSelectConf.pid.treeNodeFilterProp"
+                                        :treeDefaultExpandAll="searchConf.treeSelectConf.pid.treeDefaultExpandAll"
+                                        v-decorator="searchConf.paramConf.pid"
+                                        :treeData="searchConf.treeSelectConf.pid.treeData"
                                         @change="handleParentTreeOfSearchChange"
                                     >
                                     </a-tree-select>
@@ -170,7 +170,7 @@
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
                 :menuUrlJumpTypes="searchConf.binding.menu.urlJumpTypes"
-                :parentSelectTrees="searchConf.treeSelectConf.parentId.treeData"
+                :parentSelectTrees="searchConf.treeSelectConf.pid.treeData"
                 @createFormCancel="handleDefineMenuCreateFormCancel"
                 @createFormSubmit="handleDefineMenuCreateFormSubmit"
             >
@@ -230,7 +230,7 @@
                     defaultColSpan: 8,
                     paramConf: {
                         menuName: ["menuName", {rules: []}],
-                        parentId: ["parentId", {rules: []}],
+                        pid: ["pid", {rules: []}],
                         label: ["label", {rules: []}],
                         routerUrl: ["routerUrl", {rules: []}],
                         hrefUrl: ["hrefUrl", {rules: []}],
@@ -246,7 +246,7 @@
 
                     },
                     treeSelectConf:{
-                        parentId:{
+                        pid:{
                             treeDefaultExpandAll:false,
                             treeNodeFilterProp:"title",
                             treeData:[]
@@ -285,7 +285,7 @@
                 },
                 dialogFormObj: {
                     menuName: '',
-                    parentId:'',
+                    pid:'',
                     label: '',
                     orderNum:0,
                     iconName:'',
@@ -360,12 +360,12 @@
                     }
                 })
             },
-            dealGetParentIdTreeData(){  //取得 菜单定义-树形数据
+            dealGetPidTreeData(){  //取得 菜单定义-树形数据
                 var _this = this ;
                 MenuManagerApi.getAllDefineMenuTree().then((res) => {
                     if(res && res.success){
                         if(res.gridList){
-                            _this.searchConf.treeSelectConf.parentId.treeData = res.gridList ;
+                            _this.searchConf.treeSelectConf.pid.treeData = res.gridList ;
                         }
                     }
                 })
@@ -665,7 +665,7 @@
         created(){
             this.dealGetAllDefineMenus();
             this.dealGetMenuTypeEnumList();
-            this.dealGetParentIdTreeData();
+            this.dealGetPidTreeData();
         },
         destroyed(){
             console.log("菜单管理-页面销毁 ...")

@@ -112,7 +112,7 @@
                 smartFormDefinitionCreateForm:{},
                 formValObj:{},
                 treeSelectConf:{
-                    parentId:{
+                    pid:{
                         treeDefaultExpandAll:false,
                         treeNodeFilterProp:"title",
                         selftTreeData:[]
