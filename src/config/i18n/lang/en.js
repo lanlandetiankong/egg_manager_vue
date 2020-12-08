@@ -128,4 +128,16 @@ export const langMap = {
             pleaseEnterTitle:'Please enterTitle'
         }
     },
+    message:{
+        warning:{
+            pleaseSelectAtLeastOnePieceOfUpdateData:'Please select at least one piece of update data！',
+            pleaseSelectAtMostOnePieceOfUpdateData:'Please select at most one piece of update data！',
+            pleaseSpecifyAtMostOnePieceOfDataToDelete:'Please specify at most one piece of data to delete！',
+            failedDueToNotGettingId:'Failed due to not getting id !',
+            isConfirmDeleteSelectedRow:'Are you confirm delete selected row？',
+            invalidDeleteOperation:'Invalid delete operation！',
+            openInvalidRowDetails:'Open invalid row details！',
+            actionOfCancelDelete:'Action:Cancel delete'
+        }
+    }
 }

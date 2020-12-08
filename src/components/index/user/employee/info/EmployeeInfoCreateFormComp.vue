@@ -13,7 +13,7 @@
                 layout="vertical"
                 :form="employeeInfoCreateForm"
             >
-                <a-form-item :label="$t('langMap.table.fields.common.belongTenant')"
+                <a-form-item :label="$t('langMap.table.fields.tenant.belongTenant')"
                              v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear

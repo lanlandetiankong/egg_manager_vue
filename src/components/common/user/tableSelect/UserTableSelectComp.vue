@@ -13,7 +13,7 @@
                             <a-col :span="searchConf.defaultColSpan"
                                    v-show="searchFlagConf.belongTenantId.show"
                             >
-                                <a-form-item :label="$t('langMap.table.fields.common.belongTenant')">
+                                <a-form-item :label="$t('langMap.table.fields.tenant.belongTenant')">
                                     <a-select showSearch allowClear
                                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"

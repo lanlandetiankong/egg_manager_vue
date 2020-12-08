@@ -10,7 +10,7 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.belongTenant')">
+                                <a-form-item :label="$t('langMap.table.fields.tenant.belongTenant')">
                                     <a-select showSearch allowClear
                                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
