@@ -18,7 +18,10 @@ export const langMap = {
             type:'Type'
         },
         config:{
-            emptyData:'Empty Data'
+            emptyData:'Empty Data',
+        },
+        fields:{
+            code:'Code'
         }
-    }
+    },
 }

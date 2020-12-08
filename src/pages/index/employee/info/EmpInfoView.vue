@@ -10,9 +10,9 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="所属租户">
+                                <a-form-item :label="$t('langMap.table.commonFields.belongTenant')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :options="searchConf.binding.belongTenants"
@@ -23,9 +23,9 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="所属部门">
+                                <a-form-item :label="$t('langMap.table.commonFields.belongDepartment')">
                                     <a-tree-select
-                                        placeholder="选择部门"
+                                        :placeholder="$t('langMap.commons.forms.chooseDepartment')"
                                         style="width: 150px"
                                         showSearch allowClear
                                         v-decorator="searchConf.paramConf.belongDepartmentId"
@@ -38,24 +38,24 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="账号">
+                                <a-form-item :label="$t('langMap.table.commonFields.userAccount')">
                                     <a-input v-decorator="searchConf.paramConf.account" />
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="用户名">
+                                <a-form-item :label="$t('langMap.table.commonFields.nickName')">
                                     <a-input v-decorator="searchConf.paramConf.nickName"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="邮箱">
+                                <a-form-item :label="$t('langMap.table.commonFields.email')">
                                     <a-input v-decorator="searchConf.paramConf.email"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="类型">
+                                <a-form-item :label="$t('langMap.table.commonFields.type')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :options="searchConf.binding.userTypes"
@@ -66,9 +66,9 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="锁定状态">
+                                <a-form-item :label="$t('langMap.table.commonFields.lockStatus')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :options="searchConf.binding.lockStates"
@@ -106,64 +106,64 @@
                     <a-col>
                         <a-button type="primary" icon="user-add"
                                   @click="handleAddUserAccountBtnClick">
-                            新增
+                            {{$t('langMap.button.actions.addByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="edit"
                                   @click="handleUpdateUserAccountBtnClick">
-                            更新
+                            {{$t('langMap.button.actions.updateByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="user-delete"
                                   @click="handleEmployeeInfoBatchDeleteByIds">
-                            删除
+                            {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="book"
                                   @click="handleUserGrantRoleById">
-                            分配角色
+                            {{$t('langMap.button.actions.assigningRoles')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="book"
                                   @click="handleUserGrantJobById">
-                            设置职务
+                            {{$t('langMap.button.actions.setPosition')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button icon="lock"
                             @click="handleEmployeeInfoBatchLockByIds(this,true)" >
-                            锁定用户
+                            {{$t('langMap.button.actions.lockUser')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button icon="unlock"
                             @click="handleEmployeeInfoBatchLockByIds(this,false)">
-                            解除锁定
+                            {{$t('langMap.button.actions.unlockUser')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-dropdown>
                             <a-menu slot="overlay" @click="handleExportListToExcel">
-                                <a-menu-item key="checkToExcel"><a-icon type="check-square" />导出已选为Excel</a-menu-item>
-                                <a-menu-item key="allToExcel"><a-icon type="arrow-down" />导出全部为Excel</a-menu-item>
+                                <a-menu-item key="checkToExcel"><a-icon type="check-square" />{{$t('langMap.button.actions.exportSelectedAsExcel')}}</a-menu-item>
+                                <a-menu-item key="allToExcel"><a-icon type="arrow-down" />{{$t('langMap.button.actions.exportAllAsExcel')}}</a-menu-item>
                             </a-menu>
-                            <a-button style="margin-left: 8px"><a-icon type="down-circle" />导出 </a-button>
+                            <a-button style="margin-left: 8px"><a-icon type="down-circle" />{{$t('langMap.button.actions.exportData')}} </a-button>
                         </a-dropdown>
                     </a-col>
                     <a-col>
                         <a-button icon="upload"
                                   @click="() =>{uploadExcelModelconf.visible = true}">
-                            导入
+                            {{$t('langMap.button.actions.importData')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-switch
-                            checkedChildren="展示搜索"
-                            unCheckedChildren="隐藏搜索"
+                            :checkedChildren="$t('langMap.table.config.showQuery')"
+                            :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showListFlag"
@@ -175,7 +175,7 @@
         <a-divider/>
         <div>
             <a-table
-                :locale="{emptyText:'暂无数据'}"
+                :locale="{emptyText:$t('langMap.table.config.emptyData')}"
                 :pagination="tableConf.pagination"
                 :rowKey="item => item.fid"
                 :columns="tableConf.columns"
@@ -200,18 +200,18 @@
                 <template slot="action" slot-scope="text,record">
                     <span>
                         <a @click="handleEmployeeInfoDetailDrawerShow($event,record)">
-                            详情
+                            {{$t('langMap.drawer.actions.detail')}}
                         </a>
                         <a-divider type="vertical" />
                         <a-dropdown>
                               <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
-                                    <a-menu-item key="recordDel">删除</a-menu-item>
+                                    <a-menu-item key="recordDel">{{$t('langMap.button.actions.delById')}}</a-menu-item>
                                     <a-menu-item v-if="record.locked == 0" key="recordLock">锁定</a-menu-item>
                                     <a-menu-item v-else-if="record.locked == 1" key="recordUnlock">解锁</a-menu-item>
                                     <a-menu-item key="grantRole">分配角色</a-menu-item>
                                     <a-menu-item key="grantJob">设置职务</a-menu-item>
                               </a-menu>
-                              <a-button> 操作 <a-icon type="down" /> </a-button>
+                              <a-button> {{$t('langMap.button.actions.operate')}} <a-icon type="down" /> </a-button>
                         </a-dropdown>
                     </span>
                 </template>

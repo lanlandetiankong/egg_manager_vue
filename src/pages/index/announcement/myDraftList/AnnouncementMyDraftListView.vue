@@ -10,19 +10,19 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="标题">
+                                <a-form-item :label="$t('langMap.table.commonFields.title')">
                                     <a-input v-decorator="searchConf.paramConf.title"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="关键字">
+                                <a-form-item :label="$t('langMap.table.commonFields.keyword')">
                                     <a-input v-decorator="searchConf.paramConf.keyWord"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="标签">
+                                <a-form-item :label="$t('langMap.table.commonFields.tag')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :options="searchConf.binding.announcementTagList"
@@ -33,7 +33,7 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="内容">
+                                <a-form-item :label="$t('langMap.table.commonFields.content')">
                                     <a-input v-decorator="searchConf.paramConf.content"/>
                                 </a-form-item>
                             </a-col>
@@ -77,13 +77,13 @@
                     <a-col>
                         <a-button type="danger" icon="delete"
                                   @click="handleAnnouncementDraftBatchDeleteByIds">
-                            删除
+                            {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-switch
-                            checkedChildren="展示搜索"
-                            unCheckedChildren="隐藏搜索"
+                            :checkedChildren="$t('langMap.table.config.showQuery')"
+                            :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showListFlag"
@@ -95,7 +95,7 @@
             <!-- 表格-区域 -->
             <div>
                 <a-table
-                    :locale="{emptyText:'暂无数据'}"
+                    :locale="{emptyText:$t('langMap.table.config.emptyData')}"
                     :pagination="tableConf.pagination"
                     :rowKey="item => item.fid"
                     :columns="tableConf.columns"
@@ -116,12 +116,12 @@
                     <template slot="action" slot-scope="text,record">
                         <span>
                             <a @click="handleAnnouncementDraftDetailDrawerShow($event,record)">
-                                详情
+                                {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
                             <a-dropdown>
                                 <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
-                                    <a-menu-item key="recordDel">删除</a-menu-item>
+                                    <a-menu-item key="recordDel">{{$t('langMap.button.actions.delById')}}</a-menu-item>
                                     <a-menu-item key="publish">发布</a-menu-item>
                                 </a-menu>
                                 <a-button> 操作 <a-icon type="down" /> </a-button>

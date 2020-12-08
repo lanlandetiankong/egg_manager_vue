@@ -8,7 +8,7 @@
                 :rowKey="item => item.fid"
             >
                 <a-list-item slot="renderItem" slot-scope="item,index" :style="layoutConf.listItem.styleConf">
-                    <a slot="actions" @click="handleViewAnnouncementItemClick($event,item)">查看</a>
+                    <a slot="actions" @click="handleViewAnnouncementItemClick($event,item)">{{$t('langMap.button.actions.lookOver')}}</a>
                     <a-list-item-meta
                     >
                         <span slot="title">{{item.title}}</span>

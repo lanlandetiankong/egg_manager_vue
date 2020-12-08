@@ -10,15 +10,15 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="菜单名">
+                                <a-form-item :label="$t('langMap.table.commonFields.menuName')">
                                     <a-input v-decorator="searchConf.paramConf.menuName"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="上级菜单">
+                                <a-form-item :label="$t('langMap.table.commonFields.superiorName')">
                                     <a-tree-select
                                         style="width: 150px"
-                                        placeholder="筛选上级菜单"
+                                        :placeholder="$t('langMap.button.placeholder.filterSuperiors')"
                                         showSearch allowClear
                                         :treeNodeFilterProp="searchConf.treeSelectConf.pid.treeNodeFilterProp"
                                         :treeDefaultExpandAll="searchConf.treeSelectConf.pid.treeDefaultExpandAll"
@@ -30,24 +30,24 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="标注">
+                                <a-form-item :label="$t('langMap.table.commonFields.label')">
                                     <a-input v-decorator="searchConf.paramConf.label"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="路由地址">
+                                <a-form-item :label="$t('langMap.table.commonFields.routerUrl')">
                                     <a-input v-decorator="searchConf.paramConf.routerUrl"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="外部地址">
+                                <a-form-item :label="$t('langMap.table.commonFields.hrefUrl')">
                                     <a-input v-decorator="searchConf.paramConf.hrefUrl"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="类型">
+                                <a-form-item :label="$t('langMap.table.commonFields.type')">
                                     <a-select showSearch allowClear
-                                          placeholder="请选择"
+                                          :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                           style="width: 180px"
                                           optionFilterProp="children"
                                           :options="searchConf.binding.menu.urlJumpTypes"
@@ -58,7 +58,7 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="备注">
+                                <a-form-item :label="$t('langMap.table.commonFields.remark')">
                                     <a-input v-decorator="searchConf.paramConf.remark"/>
                                 </a-form-item>
                             </a-col>
@@ -90,32 +90,32 @@
                     <a-col>
                         <a-button type="primary" icon="plus"
                                   @click="handleAddDefineMenuBtnClick">
-                            新增
+                            {{$t('langMap.button.actions.addByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="edit"
                                   @click="handleUpdateDefineMenuBtnClick">
-                            更新
+                            {{$t('langMap.button.actions.updateByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button icon="upload"
                                   @click="handleUploadExcelModeltnClick"
                         >
-                            上传导出Excel模板
+                            {{$t('langMap.button.actions.uploadExportExcelTemplate')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
                                   @click="handleDefineMenuBatchDeleteByIds">
-                            删除
+                            {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-switch
-                            checkedChildren="展示搜索"
-                            unCheckedChildren="隐藏搜索"
+                            :checkedChildren="$t('langMap.table.config.showQuery')"
+                            :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showListFlag"
@@ -127,7 +127,7 @@
             <!-- 表格-区域 -->
             <div>
                 <a-table
-                    :locale="{emptyText:'暂无数据'}"
+                    :locale="{emptyText:$t('langMap.table.config.emptyData')}"
                     :pagination="tableConf.pagination"
                     :rowKey="item => item.fid"
                     :bordered="tableConf.bordered"
@@ -152,10 +152,10 @@
                     <template slot="action" slot-scope="text,record">
                         <span>
                             <a @click="handleDefineMenuDetailDrawerShow($event,record)">
-                                详情
+                                {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
-                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">{{$t('langMap.button.actions.delById')}}</a-button>
                         </span>
                     </template>
                 </a-table>

@@ -5,7 +5,7 @@
             :maskClosable=false
             :title="modalCompTitle"
             :okText="modalCompOkTest"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('createFormCancel')}"
             @ok="() => { $emit('createFormSubmit')}"
         >
@@ -13,16 +13,16 @@
                 layout="vertical"
                 :form="employeeJobCreateForm"
             >
-                <a-form-item label="职务名"
+                <a-form-item :label="$t('langMap.table.commonFields.jobName')"
                     v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item label="类型"
+                <a-form-item :label="$t('langMap.table.commonFields.type')"
                      v-bind="formItemLayout"
                 >
                     <a-select allowClear
-                              placeholder="请选择"
+                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="typeEnumArr"
                               :filterOption="getTypeFilterOption"
@@ -30,12 +30,12 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item label="描述"
+                <a-form-item :label="$t('langMap.table.commonFields.description')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.description"/>
                 </a-form-item>
-                <a-form-item label="备注"
+                <a-form-item :label="$t('langMap.table.commonFields.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

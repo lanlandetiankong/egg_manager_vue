@@ -5,7 +5,7 @@
             :maskClosable=false
             :title="modalCompTitle"
             :okText="modalCompOkTest"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('createFormCancel')}"
             @ok="() => { $emit('createFormSubmit')}"
         >
@@ -13,22 +13,22 @@
                 layout="vertical"
                 :form="announcementTagCreateForm"
             >
-                <a-form-item label="标签名"
+                <a-form-item :label="$t('langMap.table.commonFields.tagName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item label="描述"
+                <a-form-item :label="$t('langMap.table.commonFields.description')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.description"/>
                 </a-form-item>
-                <a-form-item label="排序"
+                <a-form-item :label="$t('langMap.table.commonFields.sortVal')"
                      v-bind="formItemLayout"
                 >
                     <a-input-number v-decorator="formFieldConf.ordering"/>
                 </a-form-item>
-                <a-form-item label="备注"
+                <a-form-item :label="$t('langMap.table.commonFields.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

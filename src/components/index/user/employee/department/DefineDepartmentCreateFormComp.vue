@@ -5,7 +5,7 @@
             :maskClosable=false
             :title="modalCompTitle"
             :okText="modalCompOkTest"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('createFormCancel')}"
             @ok="() => { $emit('createFormSubmit')}"
         >
@@ -13,9 +13,9 @@
                 layout="vertical"
                 :form="defineDepartmentCreateForm"
             >
-                <a-form-item label="上级部门">
+                <a-form-item :label="$t('langMap.table.commonFields.superiorName')">
                     <a-tree-select
-                        placeholder="选择上级部门"
+                        :placeholder="$t('langMap.button.placeholder.filterSuperiors')"
                         showSearch allowClear
                         :treeNodeFilterProp="treeSelectConf.pid.treeNodeFilterProp"
                         :treeDefaultExpandAll="treeSelectConf.pid.treeDefaultExpandAll"
@@ -25,27 +25,27 @@
                     >
                     </a-tree-select>
                 </a-form-item>
-                <a-form-item label="部门名"
+                <a-form-item :label="$t('langMap.table.commonFields.name')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item label="编码"
+                <a-form-item :label="$t('langMap.table.commonFields.code')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.code"/>
                 </a-form-item>
-                <a-form-item label="排序"
+                <a-form-item :label="$t('langMap.table.commonFields.sortVal')"
                              v-bind="formItemLayout"
                 >
                     <a-input-number v-decorator="formFieldConf.orderNum"/>
                 </a-form-item>
-                <a-form-item label="描述"
+                <a-form-item :label="$t('langMap.table.commonFields.description')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.description"/>
                 </a-form-item>
-                <a-form-item label="备注"
+                <a-form-item :label="$t('langMap.table.commonFields.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>
@@ -168,7 +168,7 @@
         },
         computed:{
             modalCompTitle() {
-                return "create" == this.actionType ?  "创建新部门" : "更新部门信息" ;
+                return "create" == this.actionType ?  "创建部门" : "更新部门信息" ;
             },
             modalCompOkTest(){
                 return "create" == this.actionType ?  "创建" : "更新" ;

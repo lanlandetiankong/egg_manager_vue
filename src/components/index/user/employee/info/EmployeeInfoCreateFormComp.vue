@@ -5,7 +5,7 @@
             :maskClosable=false
             :title="modalCompTitle"
             :okText="modalCompOkTest"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('createFormCancel')}"
             @ok="handleCreateFormSubmit"
         >
@@ -13,11 +13,11 @@
                 layout="vertical"
                 :form="employeeInfoCreateForm"
             >
-                <a-form-item label="所属租户"
+                <a-form-item :label="$t('langMap.table.commonFields.belongTenant')"
                              v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear
-                              placeholder="请选择"
+                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="belongTenants"
                               :filterOption="getBelongTenantFilterOption"
@@ -25,11 +25,11 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item label="所属部门"
+                <a-form-item :label="$t('langMap.table.commonFields.belongDepartment')"
                              v-bind="formItemLayout"
                 >
                     <a-tree-select
-                        placeholder="选择部门"
+                        :placeholder="$t('langMap.commons.forms.chooseDepartment')"
                         showSearch allowClear
                         v-decorator="formFieldConf.belongDepartmentId"
                         :treeNodeFilterProp="treeSelectConf.belongDepartmentId.treeNodeFilterProp"
@@ -39,22 +39,22 @@
                     >
                     </a-tree-select>
                 </a-form-item>
-                <a-form-item label="账号"
+                <a-form-item :label="$t('langMap.table.commonFields.userAccount')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.account"/>
                 </a-form-item>
-                <a-form-item label="用户名"
+                <a-form-item :label="$t('langMap.table.commonFields.nickName')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.userName"/>
                 </a-form-item>
-                <a-form-item label="邮箱"
+                <a-form-item :label="$t('langMap.table.commonFields.email')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.email"/>
                 </a-form-item>
-                <a-form-item label="头像"
+                <a-form-item :label="$t('langMap.table.commonFields.avatarUrl')"
                              v-bind="formItemLayout"
                 >
                     <head-img-upload
@@ -64,7 +64,7 @@
                     >
                     </head-img-upload>
                 </a-form-item>
-                <a-form-item label="是否锁定用户"
+                <a-form-item :label="$t('langMap.table.commonFields.lockStatus')"
                              v-bind="formItemLayout"
                 >
                     <a-radio-group buttonStyle="solid"

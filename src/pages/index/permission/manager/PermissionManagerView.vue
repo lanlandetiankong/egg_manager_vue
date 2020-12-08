@@ -10,19 +10,19 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="权限名">
+                                <a-form-item :label="$t('langMap.table.commonFields.permissionName')">
                                     <a-input v-decorator="searchConf.paramConf.name"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="编码">
+                                <a-form-item :label="$t('langMap.table.commonFields.code')">
                                     <a-input v-decorator="searchConf.paramConf.code"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="类型">
+                                <a-form-item :label="$t('langMap.table.commonFields.type')">
                                     <a-select showSearch allowClear
-                                          placeholder="请选择"
+                                          :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                           style="width: 180px"
                                           optionFilterProp="children"
                                           :options="searchConf.binding.permission.types"
@@ -33,9 +33,9 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="是否已启用">
+                                <a-form-item :label="$t('langMap.table.commonFields.startUsingStatus')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :options="searchConf.binding.switchEnums"
@@ -46,7 +46,7 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="备注">
+                                <a-form-item :label="$t('langMap.table.commonFields.remark')">
                                     <a-input v-decorator="searchConf.paramConf.remark"/>
                                 </a-form-item>
                             </a-col>
@@ -78,7 +78,7 @@
                     <a-col>
                         <a-button type="primary" icon="plus"
                                   @click="handleAddDefinePermissionBtnClick">
-                            新增
+                            {{$t('langMap.button.actions.addByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
@@ -86,25 +86,25 @@
                                   v-show="mixin_handlePermissionDomShow('PermCtrl:Permission_Add')"
                                   @click="handleUpdateDefinePermissionBtnClick"
                         >
-                            更新
+                            {{$t('langMap.button.actions.updateByForm')}}
                         </a-button>
                     </a-col>
                     <a-col >
                         <a-button type="danger" icon="delete"
                                   @click="handleDefinePermissionBatchDeleteByIds">
-                            删除
+                            {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="check"
                                   @click="handleDefinePermissionBatchEnusreByIds">
-                            启用
+                            {{$t('langMap.button.actions.startUsing')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-switch
-                            checkedChildren="展示搜索"
-                            unCheckedChildren="隐藏搜索"
+                            :checkedChildren="$t('langMap.table.config.showQuery')"
+                            :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showListFlag"
@@ -116,7 +116,7 @@
             <!-- 表格-区域 -->
             <div>
                 <a-table
-                    :locale="{emptyText:'暂无数据'}"
+                    :locale="{emptyText:$t('langMap.table.config.emptyData')}"
                     :pagination="tableConf.pagination"
                     :rowKey="item => item.fid"
                     :columns="tableConf.columns"
@@ -138,11 +138,11 @@
                     <template slot="action" slot-scope="text,record">
                         <span>
                             <a @click="handleDefinePermissionDetailDrawerShow($event,record)">
-                                详情
+                                {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
                             <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)" v-show="record.ensure != 1">
-                                删除
+                                {{$t('langMap.button.actions.delById')}}
                             </a-button>
                         </span>
                     </template>

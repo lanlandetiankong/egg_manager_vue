@@ -13,9 +13,9 @@
                             <a-col :span="searchConf.defaultColSpan"
                                    v-show="searchFlagConf.belongTenantId.show"
                             >
-                                <a-form-item label="所属租户">
+                                <a-form-item :label="$t('langMap.table.commonFields.belongTenant')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :disabled="!searchFlagConf.belongTenantId.modifyVal"
@@ -27,9 +27,9 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="所属部门">
+                                <a-form-item :label="$t('langMap.table.commonFields.belongDepartment')">
                                     <a-tree-select
-                                        placeholder="选择部门"
+                                        :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                         style="width: 150px"
                                         showSearch allowClear
                                         v-decorator="searchConf.paramConf.belongDepartmentId"
@@ -42,24 +42,24 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="账号">
+                                <a-form-item :label="$t('langMap.table.commonFields.userAccount')">
                                     <a-input v-decorator="searchConf.paramConf.account" />
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="用户名">
+                                <a-form-item :label="$t('langMap.table.commonFields.nickName')">
                                     <a-input v-decorator="searchConf.paramConf.nickName"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="邮箱">
+                                <a-form-item :label="$t('langMap.table.commonFields.email')">
                                     <a-input v-decorator="searchConf.paramConf.email"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="类型">
+                                <a-form-item :label="$t('langMap.table.commonFields.type')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :options="searchConf.binding.userTypes"
@@ -70,9 +70,9 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="锁定状态">
+                                <a-form-item :label="$t('langMap.table.commonFields.lockStatus')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :options="searchConf.binding.lockStates"
@@ -114,7 +114,7 @@
         <!-- 表格内容 -->
         <div>
             <a-table
-                :locale="{emptyText:'暂无数据'}"
+                :locale="{emptyText:$t('langMap.table.config.emptyData')}"
                 :pagination="tableConf.pagination"
                 :rowKey="item => item.fid"
                 :columns="tableConf.columns"

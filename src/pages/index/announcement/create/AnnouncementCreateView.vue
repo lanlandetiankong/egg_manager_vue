@@ -5,22 +5,22 @@
                 <a-col :span="3">
                     <a-button size="large" icon="inbox"
                               @click="handleCreateAnnouncementDraft"
-                    >存为草稿</a-button>
+                    >{{$t('langMap.button.actions.saveAsDraft')}}</a-button>
                 </a-col>
                 <a-col :span="3">
                     <a-button size="large" type="primary" icon="check"
                               @click="handleCreateAnnouncement"
-                    >发布</a-button>
+                    >{{$t('langMap.button.actions.publish')}}</a-button>
                 </a-col>
             </a-row>
             <br/>
             <a-row>
                 <a-col :span="2">
-                    <a-button size="large">标题：</a-button>
+                    <a-button size="large">{{$t('langMap.table.commonFields.title')}}</a-button>
                 </a-col>
                 <a-col :span="22">
                     <a-input  allowClear size="large"
-                             placeholder="请输入标题"
+                              :placeholder="$t('langMap.commons.forms.pleaseEnterTitle')"
                              v-model="formObj.title"
                     />
                 </a-col>
@@ -32,14 +32,14 @@
             >
                 <a-row :type="formLayout.row.type">
                     <a-col :span="formLayout.defaultColSpan">
-                        <a-form-item label="关键字">
+                        <a-form-item :label="$t('langMap.table.commonFields.keyword')">
                             <a-input v-decorator="formFieldConf.keyWord"/>
                         </a-form-item>
                     </a-col>
                     <a-col :span="formLayout.defaultColSpan">
-                        <a-form-item label="发布部门">
+                        <a-form-item :label="$t('langMap.table.commonFields.publishDepartment')">
                             <a-select showSearch allowClear
-                                      placeholder="请选择"
+                                      :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                       style="width: 180px"
                                       optionFilterProp="children"
                                       :options="[]"
@@ -52,10 +52,10 @@
                 </a-row>
                 <a-row :type="formLayout.row.type">
                     <a-col :span="formLayout.dblColSpan">
-                        <a-form-item label="标签">
+                        <a-form-item :label="$t('langMap.table.commonFields.tag')">
                             <a-select showSearch allowClear
                                       mode="multiple"
-                                      placeholder="请选择"
+                                      :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                       style="width: 360px"
                                       optionFilterProp="children"
                                       :options="bindData.announcementTagList"

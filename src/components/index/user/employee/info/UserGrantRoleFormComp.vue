@@ -5,7 +5,7 @@
             :maskClosable=false
             :title="modalConf.title"
             :okText="modalConf.okText"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('grantRoleFormCancel')}"
             @ok="handleDialogSubmit"
         >
@@ -23,7 +23,7 @@
                 @selectChange="handleTransfeSelectChange"
             >
                 <span slot="notFoundContent">
-                    无数据
+                    {{$t('langMap.table.config.emptyData')}}
                 </span>
             </a-transfer>
         </a-modal>

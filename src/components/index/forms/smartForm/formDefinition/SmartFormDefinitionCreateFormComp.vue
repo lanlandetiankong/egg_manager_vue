@@ -5,7 +5,7 @@
             :maskClosable=false
             :title="modalCompTitle"
             :okText="modalCompOkTest"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('createFormCancel')}"
             @ok="() => { $emit('createFormSubmit')}"
         >
@@ -13,21 +13,21 @@
                 layout="horizontal"
                 :form="smartFormDefinitionCreateForm"
             >
-                <a-form-item label="表单名称"
+                <a-form-item :label="$t('langMap.table.commonFields.formName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item label="表单标题"
+                <a-form-item :label="$t('langMap.table.commonFields.formTitle')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.title"/>
                 </a-form-item>
-                <a-form-item label="表单类型"
+                <a-form-item :label="$t('langMap.table.commonFields.type')"
                              v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear
-                              placeholder="请选择"
+                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="formTypeList"
                               :filterOption="getSelectCommonFilterOption"
@@ -35,17 +35,17 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item label="描述"
+                <a-form-item :label="$t('langMap.table.commonFields.description')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.description"/>
                 </a-form-item>
-                <a-form-item label="排序值"
+                <a-form-item :label="$t('langMap.table.header.sortVal')"
                              v-bind="formItemLayout"
                 >
                     <a-input-number v-decorator="formFieldConf.orderNum"/>
                 </a-form-item>
-                <a-form-item label="备注"
+                <a-form-item :label="$t('langMap.table.commonFields.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

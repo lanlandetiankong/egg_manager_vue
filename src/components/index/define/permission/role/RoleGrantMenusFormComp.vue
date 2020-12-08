@@ -5,7 +5,7 @@
             :maskClosable=false
             :title="modalConf.title"
             :okText="modalConf.okText"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('grantMenusFormCancel')}"
             @ok="handleDialogSubmit"
         >

@@ -10,17 +10,17 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="类型名">
+                                <a-form-item :label="$t('langMap.table.commonFields.type')">
                                     <a-input v-decorator="searchConf.paramConf.name"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="描述">
+                                <a-form-item :label="$t('langMap.table.commonFields.description')">
                                     <a-input v-decorator="searchConf.paramConf.description"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="备注">
+                                <a-form-item :label="$t('langMap.table.commonFields.remark')">
                                     <a-input v-decorator="searchConf.paramConf.remark"/>
                                 </a-form-item>
                             </a-col>
@@ -52,25 +52,25 @@
                     <a-col>
                         <a-button type="primary" icon="plus"
                                   @click="handleAddByFormBtnClick">
-                            新增
+                            {{$t('langMap.button.actions.addByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="edit"
                                   @click="handleUpdateByFormBtnClick">
-                            更新
+                            {{$t('langMap.button.actions.updateByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
                                   @click="handleBatchDelByIdsBtnClick">
-                            删除
+                            {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-switch
-                            checkedChildren="展示搜索"
-                            unCheckedChildren="隐藏搜索"
+                            :checkedChildren="$t('langMap.table.config.showQuery')"
+                            :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showListFlag"
@@ -82,7 +82,7 @@
             <!-- 表格-区域 -->
             <div>
                 <a-table
-                    :locale="{emptyText:'暂无数据'}"
+                    :locale="{emptyText:$t('langMap.table.config.emptyData')}"
                     :pagination="tableConf.pagination"
                     :rowKey="item => item.fid"
                     :columns="tableConf.columns"
@@ -105,10 +105,10 @@
                     <template slot="action" slot-scope="text,record">
                         <span>
                             <a @click="handleDetailDrawerShow($event,record)">
-                                详情
+                                {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
-                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                            <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">{{$t('langMap.button.actions.delById')}}</a-button>
                         </span>
                     </template>
                 </a-table>

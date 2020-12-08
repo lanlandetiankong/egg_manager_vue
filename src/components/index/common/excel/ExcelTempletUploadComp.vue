@@ -4,8 +4,8 @@
             :visible="visible"
             :maskClosable=false
             :title="modalCompTitle"
-            okText="确认提交"
-            cancelText="取消"
+            :okText="$t('langMap.button.actions.confirmSubmit')"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('modalCancel')}"
             @ok="handleModalSubmit"
         >

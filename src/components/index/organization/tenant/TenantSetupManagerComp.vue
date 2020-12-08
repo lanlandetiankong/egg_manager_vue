@@ -7,7 +7,7 @@
             :okText="modalConf.okText"
             :width="1000"
             :centered="true"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('setupManagerCancel')}"
             @ok="handleSubmit"
         >

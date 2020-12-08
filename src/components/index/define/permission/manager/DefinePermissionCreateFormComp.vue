@@ -5,7 +5,7 @@
             :maskClosable=false
             :title="modalCompTitle"
             :okText="modalCompOkTest"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('createFormCancel')}"
             @ok="() => { $emit('createFormSubmit')}"
         >
@@ -13,12 +13,12 @@
                 layout="vertical"
                 :form="definePermissionCreateForm"
             >
-                <a-form-item label="权限名"
+                <a-form-item :label="$t('langMap.table.commonFields.permissionName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item label="编码"
+                <a-form-item :label="$t('langMap.table.commonFields.code')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.code" :readonly="formObj.ensure == 1">
@@ -32,11 +32,11 @@
                         </a-select>
                     </a-input>
                 </a-form-item>
-                <a-form-item label="类型"
+                <a-form-item :label="$t('langMap.table.commonFields.type')"
                      v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear
-                              placeholder="请选择"
+                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="permissionTypes"
                               :filterOption="getPermissionTypeFilterOption"
@@ -44,7 +44,7 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item label="备注"
+                <a-form-item :label="$t('langMap.table.commonFields.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

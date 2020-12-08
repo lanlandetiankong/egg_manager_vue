@@ -11,10 +11,10 @@
                     v-model="loginForm.userAccount"
                 >
                     <template slot="label">
-                        <span class="formBaseCls">账号</span>
+                        <span class="formBaseCls">{{$t('langMap.button.member.account')}}</span>
                     </template>
                     <a-input
-                        placeholder="请输入用户账号"
+                        :placeholder="$t('langMap.button.placeholder.pleaseEnterUserAccount')"
                         v-model="loginForm.userAccount"
                     >
                         <a-icon
@@ -30,11 +30,11 @@
                     v-model="loginForm.password"
                 >
                     <template slot="label">
-                        <span class="formBaseCls">密码</span>
+                        <span class="formBaseCls">{{$t('langMap.button.member.password')}}</span>
                     </template>
                     <a-input
                         type="password"
-                        placeholder="请输入用户密码"
+                        :placeholder="$t('langMap.button.placeholder.pleaseEnterUserPwd')"
                         v-model="loginForm.password"
                     >
                         <a-icon
@@ -50,7 +50,7 @@
                     :wrapper-col="loginFormConf.wrapperCol"
                 >
                     <template slot="label">
-                        <span class="formBaseCls">验证码</span>
+                        <span class="formBaseCls">{{$t('langMap.button.member.verificationCode')}}</span>
                     </template>
                     <Verify
                         ref="loginVerifyRef"
@@ -73,7 +73,7 @@
                     <a-row>
                         <a-col :span=6>
                             <a-switch
-                                checkedChildren="记住我"
+                                :checkedChildren="$t('langMap.button.member.rememberMe')"
                                 unCheckedChildren=""
                             >
                             </a-switch>
@@ -85,7 +85,7 @@
                                       html-type="submit"
                                       :disabled="hasLoginFormError()"
                             >
-                                登陆
+                                {{$t('langMap.button.member.login')}}
                             </a-button>
                         </a-col>
                     </a-row>
@@ -93,10 +93,10 @@
             </a-form>
             <a-row type="flex" align="middle" justify="end">
                 <a-col :span=6>
-                    <router-link :to="othersRouters.register.to">注册账号</router-link>
+                    <router-link :to="othersRouters.register.to">{{$t('langMap.button.member.registerAnAccount')}}</router-link>
                 </a-col>
                 <a-col :span=6>
-                    <router-link :to="othersRouters.forgetPassword.to">忘记密码</router-link>
+                    <router-link :to="othersRouters.forgetPassword.to">{{$t('langMap.button.member.forgetPassword')}}</router-link>
                 </a-col>
             </a-row>
         </div>

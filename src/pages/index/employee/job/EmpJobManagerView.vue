@@ -10,14 +10,14 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="职务名">
+                                <a-form-item :label="$t('langMap.table.commonFields.name')">
                                     <a-input v-decorator="searchConf.paramConf.name" />
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="类型">
+                                <a-form-item :label="$t('langMap.table.commonFields.type')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :options="searchConf.binding.types"
@@ -28,12 +28,12 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="描述">
+                                <a-form-item :label="$t('langMap.table.commonFields.description')">
                                     <a-input v-decorator="searchConf.paramConf.description"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="备注">
+                                <a-form-item :label="$t('langMap.table.commonFields.remark')">
                                     <a-input v-decorator="searchConf.paramConf.remark"/>
                                 </a-form-item>
                             </a-col>
@@ -65,25 +65,25 @@
                     <a-col>
                         <a-button type="primary" icon="user-add"
                                   @click="handleAddDefineJobBtnClick">
-                            新增
+                            {{$t('langMap.button.actions.addByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="edit"
                                   @click="handleUpdateDefineJobBtnClick">
-                            更新
+                            {{$t('langMap.button.actions.updateByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="user-delete"
                                   @click="handleEmployeeJobBatchDeleteByIds">
-                            删除
+                            {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-switch
-                            checkedChildren="展示搜索"
-                            unCheckedChildren="隐藏搜索"
+                            :checkedChildren="$t('langMap.table.config.showQuery')"
+                            :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showListFlag"
@@ -95,7 +95,7 @@
         <a-divider/>
         <div>
             <a-table
-                :locale="{emptyText:'暂无数据'}"
+                :locale="{emptyText:$t('langMap.table.config.emptyData')}"
                 :pagination="tableConf.pagination"
                 :rowKey="item => item.fid"
                 :columns="tableConf.columns"
@@ -112,14 +112,14 @@
                 <template slot="action" slot-scope="text,record">
                     <span>
                         <a @click="handleEmployeeJobDetailDrawerShow($event,record)">
-                            详情
+                            {{$t('langMap.drawer.actions.detail')}}
                         </a>
                         <a-divider type="vertical" />
                         <a-dropdown>
                               <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
-                                    <a-menu-item key="recordDel">删除</a-menu-item>
+                                    <a-menu-item key="recordDel">{{$t('langMap.button.actions.delById')}}</a-menu-item>
                               </a-menu>
-                              <a-button> 操作 <a-icon type="down" /> </a-button>
+                              <a-button> {{$t('langMap.button.actions.operate')}} <a-icon type="down" /> </a-button>
                         </a-dropdown>
                     </span>
                 </template>

@@ -5,7 +5,7 @@
             :maskClosable=false
             :title="modalCompTitle"
             :okText="modalCompOkTest"
-            cancelText="取消"
+            :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('createFormCancel')}"
             @ok="() => { $emit('createFormSubmit')}"
         >
@@ -13,9 +13,9 @@
                 layout="vertical"
                 :form="defineMenuCreateForm"
             >
-                <a-form-item label="上级菜单">
+                <a-form-item :label="$t('langMap.table.commonFields.superiorName')">
                     <a-tree-select
-                        placeholder="选择上级菜单"
+                        :placeholder="$t('langMap.button.placeholder.filterSuperiors')"
                         showSearch allowClear
                         :treeNodeFilterProp="treeSelectConf.pid.treeNodeFilterProp"
                         :treeDefaultExpandAll="treeSelectConf.pid.treeDefaultExpandAll"
@@ -25,12 +25,12 @@
                     >
                     </a-tree-select>
                 </a-form-item>
-                <a-form-item label="菜单名"
+                <a-form-item :label="$t('langMap.table.commonFields.menuName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.menuName"/>
                 </a-form-item>
-                <a-form-item label="图标"
+                <a-form-item :label="$t('langMap.table.commonFields.iconName')"
                              v-bind="formItemLayout"
                 >
                     <span>
@@ -41,21 +41,21 @@
                     </span>
                     <a-input v-decorator="formFieldConf.iconName"/>
                 </a-form-item>
-                <a-form-item label="标注"
+                <a-form-item :label="$t('langMap.table.commonFields.label')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.label"/>
                 </a-form-item>
-                <a-form-item label="排序值"
+                <a-form-item :label="$t('langMap.table.header.sortVal')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.orderNum"/>
                 </a-form-item>
-                <a-form-item label="跳转类型"
+                <a-form-item :label="$t('langMap.table.commonFields.urlJumpType')"
                              v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear
-                              placeholder="请选择"
+                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="menuUrlJumpTypes"
                               :filterOption="getMenuTypeFilterOption"
@@ -63,17 +63,17 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item label="路由Url"
+                <a-form-item :label="$t('langMap.table.commonFields.routerUrl')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.routerUrl"/>
                 </a-form-item>
-                <a-form-item label="外部Url"
+                <a-form-item :label="$t('langMap.table.commonFields.hrefUrl')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.hrefUrl"/>
                 </a-form-item>
-                <a-form-item label="备注"
+                <a-form-item :label="$t('langMap.table.commonFields.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

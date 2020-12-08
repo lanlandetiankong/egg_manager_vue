@@ -10,19 +10,19 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="标题">
+                                <a-form-item :label="$t('langMap.table.commonFields.title')">
                                     <a-input v-decorator="searchConf.paramConf.title"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="关键字">
+                                <a-form-item :label="$t('langMap.table.commonFields.keyword')">
                                     <a-input v-decorator="searchConf.paramConf.keyWord"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="标签">
+                                <a-form-item :label="$t('langMap.table.commonFields.tag')">
                                     <a-select showSearch allowClear
-                                              placeholder="请选择"
+                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
                                               optionFilterProp="children"
                                               :options="searchConf.binding.announcementTagList"
@@ -33,7 +33,7 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item label="内容">
+                                <a-form-item :label="$t('langMap.table.commonFields.content')">
                                     <a-input v-decorator="searchConf.paramConf.content"/>
                                 </a-form-item>
                             </a-col>
@@ -65,13 +65,13 @@
                     <a-col>
                         <a-button type="danger" icon="delete"
                                   @click="handleAnnouncementBatchDeleteByIds">
-                            删除
+                            {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-switch
-                            checkedChildren="展示搜索"
-                            unCheckedChildren="隐藏搜索"
+                            :checkedChildren="$t('langMap.table.config.showQuery')"
+                            :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showListFlag"
@@ -83,7 +83,7 @@
             <!-- 表格-区域 -->
             <div>
                 <a-table
-                    :locale="{emptyText:'暂无数据'}"
+                    :locale="{emptyText:$t('langMap.table.config.emptyData')}"
                     :pagination="tableConf.pagination"
                     :rowKey="item => item.fid"
                     :columns="tableConf.columns"
@@ -102,10 +102,10 @@
                     </span>
                     <template slot="action" slot-scope="text,record">
                         <a @click="handleAnnouncementDetailDrawerShow($event,record)">
-                                详情
+                                {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
-                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">删除</a-button>
+                        <a-button type="danger" size="small" @click="handleDeleteOneById(record.fid)">{{$t('langMap.button.actions.delById')}}</a-button>
                     </template>
                 </a-table>
             </div>
