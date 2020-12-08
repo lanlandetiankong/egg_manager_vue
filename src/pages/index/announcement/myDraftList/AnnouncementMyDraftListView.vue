@@ -392,7 +392,7 @@
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
-                    _this.$message.warning("请选择至少一条要删除的数据！");
+                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSpecifyAtMostOnePieceOfDataToDelete'));
                 } else {
                     _this.$confirm({
                         content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
@@ -402,7 +402,7 @@
                             _this.dealBatchDelAnnouncementDraft();
                         },
                         onCancel() {
-                            _this.$message.info("操作：取消删除");
+                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
                         }
                     })
                 }
@@ -411,18 +411,18 @@
                 var _this = this;
                 if (delId) {
                     _this.$confirm({
-                        content: '是否确认删除所选行？',
+                        content: this.$t('langMap.message.warning.isConfirmDeleteSelectedRow'),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info("操作：取消删除");
+                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
                         }
                     })
                 } else {
-                    _this.$message.warning("无效删除操作！");
+                    _this.$message.warning(_this.$t('langMap.message.warning.invalidDeleteOperation'));
                 }
             },
             handleAnnouncementDraftBatchPublishByIds(e) {     // 批量发布
@@ -487,7 +487,7 @@
                     if (selectRowId) {
                         _this.dealGoToAnnouncementCreateView(selectRowId) ;
                     }   else {
-                        this.$message.warning('操作失败！未取得有效的行id！');
+                        this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
                     }
                 }
             },
@@ -503,7 +503,7 @@
                     this.drawerConf.detail.announcementDraft.dataObj = record ;
                     this.drawerConf.detail.announcementDraft.visible = true ;
                 }   else {
-                    this.$message.error("打开无效的行详情！");
+                    this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
             handleAnnouncementDraftDetailDrawerClose(e){ //Drawer-公告草稿 详情关闭

@@ -126,5 +126,17 @@ export const langMap = {
             chooseDepartment:'选择部门',
             pleaseEnterTitle:'请输入标题'
         }
+    },
+    message:{
+        warning:{
+            pleaseSelectAtLeastOnePieceOfUpdateData:'请选择至少一行更新数据！',
+            pleaseSelectAtMostOnePieceOfUpdateData:'请选择至多一行更新数据！',
+            pleaseSpecifyAtMostOnePieceOfDataToDelete:'请选择至少一条要删除的数据',
+            failedDueToNotGettingId:'操作失败！未取得有效的id！',
+            isConfirmDeleteSelectedRow:'是否确认删除所选行？',
+            invalidDeleteOperation:'无效删除操作！',
+            openInvalidRowDetails:'打开无效的行详情！',
+            actionOfCancelDelete:'操作:取消删除'
+        }
     }
 }

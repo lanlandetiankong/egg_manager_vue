@@ -684,7 +684,7 @@
                         }
                     })
                 } else {
-                    this.$message.warning('操作失败！未取得有效的角色id！');
+                    this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
                 }
             },
             dealUserGrantJobsById(selectRowId){        //设置职务页面弹窗-封装方法
@@ -710,7 +710,7 @@
                         }
                     })
                 } else {
-                    this.$message.warning('操作失败！未取得有效的职务id！');
+                    this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
                 }
             },
             handleSearchFormQuery(e) {   //表格-搜索
@@ -762,9 +762,9 @@
             handleUpdateUserAccountBtnClick() {  //更新用户按钮-点击
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning('请选择一行要更新的数据！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectAtLeastOnePieceOfUpdateData'));
                 } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning('请选择至多一行要更新的数据！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectAtMostOnePieceOfUpdateData'));
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
@@ -778,7 +778,7 @@
                             }
                         })
                     } else {
-                        this.$message.warning('操作失败！未取得有效的用户id！');
+                        this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
                     }
                 }
             },
@@ -838,7 +838,7 @@
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
-                    _this.$message.warning("请选择至少一条要删除的数据！");
+                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSpecifyAtMostOnePieceOfDataToDelete'));
                 } else {
                     _this.$confirm({
                         content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
@@ -848,7 +848,7 @@
                             _this.dealBatchDelUserAccount();
                         },
                         onCancel() {
-                            _this.$message.info("操作：取消删除");
+                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
                         }
                     })
                 }
@@ -857,18 +857,18 @@
                 var _this = this;
                 if (delId) {
                     _this.$confirm({
-                        content: '是否确认删除所选行？',
+                        content: this.$t('langMap.message.warning.isConfirmDeleteSelectedRow'),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info("操作：取消删除");
+                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
                         }
                     })
                 } else {
-                    _this.$message.warning("无效删除操作！");
+                    _this.$message.warning(_this.$t('langMap.message.warning.invalidDeleteOperation'));
                 }
             },
             handleEmployeeInfoBatchLockByIds(e,lockFlag) {  // 批量锁定
@@ -1019,7 +1019,7 @@
                     this.drawerConf.detail.employeeInfo.dataObj = record ;
                     this.drawerConf.detail.employeeInfo.visible = true ;
                 }   else {
-                    this.$message.error("打开无效的行详情！");
+                    this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
             handleEmployeeInfoDetailDrawerClose(e){ //Drawer-用户定义 详情关闭

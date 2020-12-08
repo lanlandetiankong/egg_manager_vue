@@ -14,6 +14,8 @@ export const langMap = {
             delById:'Delete',
             authorize:'Authorize',
             assigningRoles:'Assigning roles',
+            assigningPermissions:'Assigning permissions',
+            authorizationMenu:'Authorization menu',
             setPosition:'Set position',
             setAdminManager:'Set admin manager',
             importData:'Import data',
@@ -116,7 +118,8 @@ export const langMap = {
                 formName:'Form name',
                 formTitle:'Form title',
             }
-        }
+        },
+
     },
     commons:{
         forms:{
@@ -124,5 +127,5 @@ export const langMap = {
             chooseDepartment:'Choose department',
             pleaseEnterTitle:'Please enterTitle'
         }
-    }
+    },
 }
