@@ -14,6 +14,8 @@ export const langMap = {
             delById:'删除',
             authorize:'授权',
             assigningRoles:'分配角色',
+            assigningPermissions:'分配权限',
+            authorizationMenu:'授权菜单',
             setPosition:'设置职务',
             setAdminManager:'设置管理员',
             importData:'导入',

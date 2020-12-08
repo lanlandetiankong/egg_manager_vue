@@ -4,7 +4,7 @@
             :visible="visible"
             :maskClosable=false
             :title="modalConf.title"
-            :okText="modalConf.okText"
+            :okText="$t('langMap.button.actions.confirmSubmit')"
             :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('grantJobFormCancel')}"
             @ok="handleDialogSubmit"
@@ -49,7 +49,6 @@
             return {
                 modalConf:{
                     title:'设置职务',
-                    okText:'确认提交'
                 },
                 transferConf:{
                     initFlag:false,

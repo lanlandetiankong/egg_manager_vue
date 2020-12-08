@@ -83,13 +83,13 @@
                     <a-col>
                         <a-button type="primary" icon="book"
                                   @click="handleDefineRoleGrantPermissionsById">
-                            分配权限
+                            {{$t('langMap.button.actions.assigningPermissions')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="book"
                                   @click="handleDefineRoleGrantMenusById">
-                            授权菜单
+                            {{$t('langMap.button.actions.authorizationMenu')}}
                         </a-button>
                     </a-col>
                     <a-col>

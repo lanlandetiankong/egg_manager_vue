@@ -4,7 +4,7 @@
             :visible="visible"
             :maskClosable=false
             :title="modalCompTitle"
-            :okText="modalCompOkTest"
+            :okText="$t('langMap.button.actions.confirmSubmit')"
             :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('createFormCancel')}"
             @ok="() => { $emit('createFormSubmit')}"
@@ -225,10 +225,7 @@
         },
         computed:{
             modalCompTitle() {
-                return "create" == this.actionType ?  "创建新菜单" : "更新菜单信息" ;
-            },
-            modalCompOkTest(){
-                return "create" == this.actionType ?  "创建" : "更新" ;
+                return "create" == this.actionType ?  this.$t('langMap.button.actions.addByForm') : this.$t('langMap.button.actions.updateByForm') ;
             }
         },
         created(){

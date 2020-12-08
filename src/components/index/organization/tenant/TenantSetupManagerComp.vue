@@ -4,7 +4,7 @@
             :visible="visible"
             :maskClosable=false
             :title="modalConf.title"
-            :okText="modalConf.okText"
+            :okText="$t('langMap.button.actions.confirmSubmit')"
             :width="1000"
             :centered="true"
             :cancelText="$t('langMap.button.actions.cancel')"
@@ -39,7 +39,6 @@
             return {
                 modalConf:{
                     title:'设置管理员',
-                    okText:'确认提交'
                 },
                 userTableSelect:{
                     conf:{

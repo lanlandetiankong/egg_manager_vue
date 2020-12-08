@@ -4,7 +4,7 @@
             :visible="visible"
             :maskClosable=false
             :title="modalConf.title"
-            :okText="modalConf.okText"
+            :okText="$t('langMap.button.actions.confirmSubmit')"
             :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('grantRoleFormCancel')}"
             @ok="handleDialogSubmit"
