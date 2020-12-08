@@ -13,12 +13,12 @@
                 layout="vertical"
                 :form="employeeJobCreateForm"
             >
-                <a-form-item :label="$t('langMap.table.commonFields.jobName')"
+                <a-form-item :label="$t('langMap.table.fields.job.jobName')"
                     v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.type')"
+                <a-form-item :label="$t('langMap.table.fields.common.type')"
                      v-bind="formItemLayout"
                 >
                     <a-select allowClear
@@ -30,12 +30,12 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.description')"
+                <a-form-item :label="$t('langMap.table.fields.common.description')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.description"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.remark')"
+                <a-form-item :label="$t('langMap.table.fields.common.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

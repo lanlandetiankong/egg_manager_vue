@@ -10,12 +10,12 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.menuName')">
+                                <a-form-item :label="$t('langMap.table.fields.menu.menuName')">
                                     <a-input v-decorator="searchConf.paramConf.menuName"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.superiorName')">
+                                <a-form-item :label="$t('langMap.table.fields.common.superiorName')">
                                     <a-tree-select
                                         style="width: 150px"
                                         :placeholder="$t('langMap.button.placeholder.filterSuperiors')"
@@ -30,22 +30,22 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.label')">
+                                <a-form-item :label="$t('langMap.table.fields.common.label')">
                                     <a-input v-decorator="searchConf.paramConf.label"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.routerUrl')">
+                                <a-form-item :label="$t('langMap.table.fields.menu.routerUrl')">
                                     <a-input v-decorator="searchConf.paramConf.routerUrl"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.hrefUrl')">
+                                <a-form-item :label="$t('langMap.table.fields.menu.hrefUrl')">
                                     <a-input v-decorator="searchConf.paramConf.hrefUrl"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.type')">
+                                <a-form-item :label="$t('langMap.table.fields.common.type')">
                                     <a-select showSearch allowClear
                                           :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                           style="width: 180px"
@@ -58,7 +58,7 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.remark')">
+                                <a-form-item :label="$t('langMap.table.fields.common.remark')">
                                     <a-input v-decorator="searchConf.paramConf.remark"/>
                                 </a-form-item>
                             </a-col>

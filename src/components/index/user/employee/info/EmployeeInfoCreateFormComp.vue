@@ -13,7 +13,7 @@
                 layout="vertical"
                 :form="employeeInfoCreateForm"
             >
-                <a-form-item :label="$t('langMap.table.commonFields.belongTenant')"
+                <a-form-item :label="$t('langMap.table.fields.common.belongTenant')"
                              v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear
@@ -25,7 +25,7 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.belongDepartment')"
+                <a-form-item :label="$t('langMap.table.fields.department.belongDepartment')"
                              v-bind="formItemLayout"
                 >
                     <a-tree-select
@@ -39,22 +39,22 @@
                     >
                     </a-tree-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.userAccount')"
+                <a-form-item :label="$t('langMap.table.fields.user.userAccount')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.account"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.nickName')"
+                <a-form-item :label="$t('langMap.table.fields.user.nickName')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.userName"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.email')"
+                <a-form-item :label="$t('langMap.table.fields.user.email')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.email"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.avatarUrl')"
+                <a-form-item :label="$t('langMap.table.fields.user.avatarUrl')"
                              v-bind="formItemLayout"
                 >
                     <head-img-upload
@@ -64,7 +64,7 @@
                     >
                     </head-img-upload>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.lockStatus')"
+                <a-form-item :label="$t('langMap.table.fields.common.lockStatus')"
                              v-bind="formItemLayout"
                 >
                     <a-radio-group buttonStyle="solid"

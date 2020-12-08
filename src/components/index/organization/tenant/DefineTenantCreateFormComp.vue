@@ -13,17 +13,17 @@
                 layout="vertical"
                 :form="defineTenantCreateForm"
             >
-                <a-form-item :label="$t('langMap.table.commonFields.name')"
+                <a-form-item :label="$t('langMap.table.fields.common.name')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.code')"
+                <a-form-item :label="$t('langMap.table.fields.common.code')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.code"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.remark')"
+                <a-form-item :label="$t('langMap.table.fields.common.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

@@ -10,17 +10,17 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.title')">
+                                <a-form-item :label="$t('langMap.table.fields.common.title')">
                                     <a-input v-decorator="searchConf.paramConf.title"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.keyword')">
+                                <a-form-item :label="$t('langMap.table.fields.common.keyword')">
                                     <a-input v-decorator="searchConf.paramConf.keyWord"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.tag')">
+                                <a-form-item :label="$t('langMap.table.fields.common.tag')">
                                     <a-select showSearch allowClear
                                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
@@ -33,7 +33,7 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.content')">
+                                <a-form-item :label="$t('langMap.table.fields.common.content')">
                                     <a-input v-decorator="searchConf.paramConf.content"/>
                                 </a-form-item>
                             </a-col>

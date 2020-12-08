@@ -13,22 +13,22 @@
                 layout="vertical"
                 :form="announcementTagCreateForm"
             >
-                <a-form-item :label="$t('langMap.table.commonFields.tagName')"
+                <a-form-item :label="$t('langMap.table.fields.common.tagName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.description')"
+                <a-form-item :label="$t('langMap.table.fields.common.description')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.description"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.sortVal')"
+                <a-form-item :label="$t('langMap.table.fields.common.sortVal')"
                      v-bind="formItemLayout"
                 >
                     <a-input-number v-decorator="formFieldConf.ordering"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.remark')"
+                <a-form-item :label="$t('langMap.table.fields.common.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

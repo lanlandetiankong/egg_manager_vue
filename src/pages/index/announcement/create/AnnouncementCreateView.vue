@@ -16,7 +16,7 @@
             <br/>
             <a-row>
                 <a-col :span="2">
-                    <a-button size="large">{{$t('langMap.table.commonFields.title')}}</a-button>
+                    <a-button size="large">{{$t('langMap.table.fields.common.title')}}</a-button>
                 </a-col>
                 <a-col :span="22">
                     <a-input  allowClear size="large"
@@ -32,12 +32,12 @@
             >
                 <a-row :type="formLayout.row.type">
                     <a-col :span="formLayout.defaultColSpan">
-                        <a-form-item :label="$t('langMap.table.commonFields.keyword')">
+                        <a-form-item :label="$t('langMap.table.fields.common.keyword')">
                             <a-input v-decorator="formFieldConf.keyWord"/>
                         </a-form-item>
                     </a-col>
                     <a-col :span="formLayout.defaultColSpan">
-                        <a-form-item :label="$t('langMap.table.commonFields.publishDepartment')">
+                        <a-form-item :label="$t('langMap.table.fields.department.publishDepartment')">
                             <a-select showSearch allowClear
                                       :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                       style="width: 180px"
@@ -52,7 +52,7 @@
                 </a-row>
                 <a-row :type="formLayout.row.type">
                     <a-col :span="formLayout.dblColSpan">
-                        <a-form-item :label="$t('langMap.table.commonFields.tag')">
+                        <a-form-item :label="$t('langMap.table.fields.common.tag')">
                             <a-select showSearch allowClear
                                       mode="multiple"
                                       :placeholder="$t('langMap.commons.forms.pleaseChoose')"

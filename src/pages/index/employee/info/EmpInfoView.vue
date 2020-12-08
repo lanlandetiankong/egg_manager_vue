@@ -10,7 +10,7 @@
                     >
                         <a-row :gutter="6">
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.belongTenant')">
+                                <a-form-item :label="$t('langMap.table.fields.common.belongTenant')">
                                     <a-select showSearch allowClear
                                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
@@ -23,7 +23,7 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.belongDepartment')">
+                                <a-form-item :label="$t('langMap.table.fields.department.belongDepartment')">
                                     <a-tree-select
                                         :placeholder="$t('langMap.commons.forms.chooseDepartment')"
                                         style="width: 150px"
@@ -38,22 +38,22 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.userAccount')">
+                                <a-form-item :label="$t('langMap.table.fields.user.userAccount')">
                                     <a-input v-decorator="searchConf.paramConf.account" />
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.nickName')">
+                                <a-form-item :label="$t('langMap.table.fields.user.nickName')">
                                     <a-input v-decorator="searchConf.paramConf.nickName"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.email')">
+                                <a-form-item :label="$t('langMap.table.fields.user.email')">
                                     <a-input v-decorator="searchConf.paramConf.email"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.type')">
+                                <a-form-item :label="$t('langMap.table.fields.common.type')">
                                     <a-select showSearch allowClear
                                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"
@@ -66,7 +66,7 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.commonFields.lockStatus')">
+                                <a-form-item :label="$t('langMap.table.fields.common.lockStatus')">
                                     <a-select showSearch allowClear
                                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                               style="width: 180px"

@@ -13,7 +13,7 @@
                 layout="vertical"
                 :form="defineDepartmentCreateForm"
             >
-                <a-form-item :label="$t('langMap.table.commonFields.superiorName')">
+                <a-form-item :label="$t('langMap.table.fields.common.superiorName')">
                     <a-tree-select
                         :placeholder="$t('langMap.button.placeholder.filterSuperiors')"
                         showSearch allowClear
@@ -25,27 +25,27 @@
                     >
                     </a-tree-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.name')"
+                <a-form-item :label="$t('langMap.table.fields.common.name')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.code')"
+                <a-form-item :label="$t('langMap.table.fields.common.code')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.code"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.sortVal')"
+                <a-form-item :label="$t('langMap.table..fields.common.Val')"
                              v-bind="formItemLayout"
                 >
                     <a-input-number v-decorator="formFieldConf.orderNum"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.description')"
+                <a-form-item :label="$t('langMap.table.fields.common.description')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.description"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.remark')"
+                <a-form-item :label="$t('langMap.table.fields.common.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

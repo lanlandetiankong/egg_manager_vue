@@ -13,17 +13,17 @@
                 layout="horizontal"
                 :form="smartFormDefinitionCreateForm"
             >
-                <a-form-item :label="$t('langMap.table.commonFields.formName')"
+                <a-form-item :label="$t('langMap.table.fields.form.formName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.formTitle')"
+                <a-form-item :label="$t('langMap.table.fields.form.formTitle')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.title"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.type')"
+                <a-form-item :label="$t('langMap.table.fields.common.type')"
                              v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear
@@ -35,7 +35,7 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.description')"
+                <a-form-item :label="$t('langMap.table.fields.common.description')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.description"/>
@@ -45,7 +45,7 @@
                 >
                     <a-input-number v-decorator="formFieldConf.orderNum"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.remark')"
+                <a-form-item :label="$t('langMap.table.fields.common.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>

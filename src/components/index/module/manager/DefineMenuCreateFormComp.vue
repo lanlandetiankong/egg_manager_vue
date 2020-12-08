@@ -13,7 +13,7 @@
                 layout="vertical"
                 :form="defineMenuCreateForm"
             >
-                <a-form-item :label="$t('langMap.table.commonFields.superiorName')">
+                <a-form-item :label="$t('langMap.table.fields.common.superiorName')">
                     <a-tree-select
                         :placeholder="$t('langMap.button.placeholder.filterSuperiors')"
                         showSearch allowClear
@@ -25,12 +25,12 @@
                     >
                     </a-tree-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.menuName')"
+                <a-form-item :label="$t('langMap.table.fields.menu.menuName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.menuName"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.iconName')"
+                <a-form-item :label="$t('langMap.table.fields.menu.iconName')"
                              v-bind="formItemLayout"
                 >
                     <span>
@@ -41,7 +41,7 @@
                     </span>
                     <a-input v-decorator="formFieldConf.iconName"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.label')"
+                <a-form-item :label="$t('langMap.table.fields.common.label')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.label"/>
@@ -51,7 +51,7 @@
                 >
                     <a-input v-decorator="formFieldConf.orderNum"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.urlJumpType')"
+                <a-form-item :label="$t('langMap.table.fields.menu.urlJumpType')"
                              v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear
@@ -63,17 +63,17 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.routerUrl')"
+                <a-form-item :label="$t('langMap.table.fields.menu.routerUrl')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.routerUrl"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.hrefUrl')"
+                <a-form-item :label="$t('langMap.table.fields.menu.hrefUrl')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.hrefUrl"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.commonFields.remark')"
+                <a-form-item :label="$t('langMap.table.fields.common.remark')"
                      v-bind="formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>
