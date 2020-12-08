@@ -35,10 +35,10 @@
                     <a-menu slot="overlay" @click="handleMoreSettingClick">
                         <a-menu-item key="user_loginout"
                         >
-                            退出登录
+                            {{$t('langMap.button.member.logOut')}}
                         </a-menu-item>
                         <a-menu-item key="user_center">
-                            个人中心
+                            {{$t('langMap.button.member.ersonalCenter')}}
                         </a-menu-item>
                     </a-menu>
                 </a-dropdown>
@@ -95,8 +95,6 @@
                 }
             },
             langChangeToZh(){
-                debugger;
-                console.log(this.$i18n.locale)
                 let lang = this.$i18n.locale === 'zh' ? 'en' : 'zh'
                 this.$i18n.locale = lang ;
             }

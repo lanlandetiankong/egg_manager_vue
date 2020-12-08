@@ -34,6 +34,8 @@ export const langMap = {
             password:'Password',
             rememberMe:'Remember me',
             login:'Login',
+            logOut:'Log out',
+            ersonalCenter:'Personal Center',
             registerAnAccount:'Register an account',
             forgetPassword:'Forget password',
             verificationCode:'Verification code'

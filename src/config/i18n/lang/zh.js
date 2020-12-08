@@ -34,6 +34,8 @@ export const langMap = {
             password:'密码',
             rememberMe:'记住我',
             login:'登录',
+            logOut:'退出登录',
+            ersonalCenter:'个人中心',
             registerAnAccount:'注册账号',
             forgetPassword:'忘记密码',
             verificationCode:'验证码'

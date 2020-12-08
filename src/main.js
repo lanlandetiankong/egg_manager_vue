@@ -40,12 +40,13 @@ Vue.use(VueI18n)
 
 const i18n = new VueI18n({
     locale: 'zh',    // 语言标识
-    //this.$i18n.locale // 通过切换locale的值来实现语言切换
     messages: {
-        'zh': require('~Config/i18n/lang/zh'),   // 中文语言包
-        'en': require('~Config/i18n/lang/en')    // 英文语言包
+        'zh': require('~Config/i18n/lang/zh'),
+        'en': require('~Config/i18n/lang/en')
     }
 })
+
+window.vuei18n = i18n ;
 
 //router每次跳转都刷新页面的处理
 //Vue.prototype.router = router;
