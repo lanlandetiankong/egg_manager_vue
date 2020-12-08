@@ -49,6 +49,7 @@
 
 <script>
     import constantParams from '~Config/constantParams' ;
+    import {i18nUtil} from "@/config/i18n/i18nUtil";
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
     export default {
@@ -97,6 +98,7 @@
             langChangeToZh(){
                 let lang = this.$i18n.locale === 'zh' ? 'en' : 'zh'
                 this.$i18n.locale = lang ;
+                i18nUtil.reflushCache(this.$i18n.locale);
             }
         },
         mounted(){

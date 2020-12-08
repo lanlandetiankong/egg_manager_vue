@@ -2,7 +2,6 @@ import axios from 'axios'
 import router from '@/router/index'
 import baseURL from './baseUrl'
 import {message, Spin,notification} from 'ant-design-vue'
-
 const http = {};
 const defaultNotificationMsg = {
     success:"提示",
@@ -84,7 +83,8 @@ instance.interceptors.request.use(
             console.log("employee is loginout");
         }
         config.headers['authorization'] = cfgAuthorization;
-        return config
+        //刷新并设置当前语言到cookie
+        return config ;
     },
     error => {
         return Promise.reject(error)
