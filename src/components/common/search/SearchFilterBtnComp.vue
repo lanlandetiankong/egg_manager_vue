@@ -3,7 +3,7 @@
               v-show="showFlag"
               @click="() =>{$emit('btnClick')}"
     >
-        过滤
+        {{$t('langMap.button.actions.filter')}}
     </a-button>
 </template>
 

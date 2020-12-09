@@ -402,7 +402,7 @@
                 },
                 uploadExcelModelconf:{
                     visible:false,
-                    title:"导入数据Excel文件上传",
+                    title:this.$t('langMap.button.actions.uploadDataExcel'),
                     limitSize:1,
                     limitMinSize:1,
                     moreData:{

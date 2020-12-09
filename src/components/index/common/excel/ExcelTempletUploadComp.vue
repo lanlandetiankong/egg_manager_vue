@@ -93,7 +93,7 @@
                 if(this.dealVerifyIsExcel(file.name) === true){
                     this.fileList = [...this.fileList, file];
                 }   else {
-                    this.$message.warning("所选文件不是Excel，请正确选择.xls或.xlsx格式的Excel文件") ;
+                    this.$message.warning(this.$t('langMap.commons.valueMap.uploader.popover.message.excel')) ;
                 }
                 return false;
             },

@@ -130,10 +130,10 @@
                 </span>
                 <span slot="locked" slot-scope="record">
                     <a-tag v-if="record.locked == 1" color="red" :key="record.fid">
-                        已锁定
+                        {{$t('langMap.commons.enums.lockStatus.locked')}}
                     </a-tag>
                     <a-tag v-else-if="record.locked == 0" color="blue" :key="record.fid">
-                        未锁定
+                        {{$t('langMap.commons.enums.lockStatus.unlock')}}
                     </a-tag>
                 </span>
             </a-table>

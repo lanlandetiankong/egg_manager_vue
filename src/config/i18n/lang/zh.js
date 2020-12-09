@@ -24,6 +24,7 @@ export const langMap = {
             exportSelectedAsExcel:'导出已选为Excel',
             exportAllAsExcel:'导出所有为Excel',
             uploadExportExcelTemplate:'上传导出excel模板',
+            uploadDataExcel:'导入数据Excel文件上传',
             lockUser:'锁定用户',
             unlockUser:'解锁用户',
             lock:'锁定',
@@ -31,7 +32,8 @@ export const langMap = {
             startUsing:'启用',
             publish:'发布',
             saveAsDraft:'存为草稿',
-            goToIndexPage:'回到首页'
+            goToIndexPage:'回到首页',
+            filter:'过滤',
         },
         member:{
             account:'账号',
@@ -145,7 +147,11 @@ export const langMap = {
         forms:{
             pleaseChoose:'请选择',
             chooseDepartment:'选择部门',
-            pleaseEnterTitle:'请输入标题'
+            pleaseEnterTitle:'请输入标题',
+            tips:{
+                lookUpIcon:'点击查看可选图标',
+                selectedIcon:'已选图标'
+            }
         },
         enums:{
             lockStatus:{
@@ -169,7 +175,9 @@ export const langMap = {
                     uploading:'上传中...',
                     confirmUpload:'确认上传'
                 },
+                atLeastNumberOfFiles:'请至少选择{0}个文件后提交！',
                 maximumNumberOfFiles:'选择最多{0}个Excel文件',
+                rangeSizeOfFiles:' 请选择{0}至{1}个Excel文件',
                 popover:{
                     prompt:'上传提示',
                     message:{

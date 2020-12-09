@@ -20,17 +20,17 @@
                 >
                     <a-button :disabled="fileList.length >= limitSize"> <a-icon type="upload" />
                         <template v-if="limitSize == limitMinSize">
-                            请选择{{limitSize}}个Excel文件
+                            {{$t('langMap.commons.valueMap.uploader.popover.maximumNumberOfFiles',limitSize)}}
                         </template>
                         <template v-else>
-                            请选择{{limitMinSize}}至{{limitSize}}个Excel文件
+                            {{$t('langMap.commons.valueMap.uploader.popover.rangeSizeOfFiles',limitMinSize,limitSize)}}
                         </template>
 
                     </a-button>
                 </a-upload>
-                <a-popover title="上传提示" trigger="hover" placement="leftBottom">
+                <a-popover :title="$t('langMap.commons.valueMap.uploader.popover.prompt')" trigger="hover" placement="leftBottom">
                     <template slot="content">
-                        <a-alert message="请正确选择.xls或.xlsx格式的Excel文件" type="warning" showIcon />
+                        <a-alert :message="$t('langMap.commons.valueMap.uploader.popover.message.excel')" type="warning" showIcon />
                     </template>
                     <a-button
                         type="primary"
@@ -103,7 +103,7 @@
                 if(this.dealVerifyIsExcel(file.name) === true){
                     this.fileList = [...this.fileList, file];
                 }   else {
-                    this.$message.warning("所选文件不是Excel，请正确选择.xls或.xlsx格式的Excel文件") ;
+                    this.$message.warning(this.$t('langMap.commons.valueMap.uploader.popover.message.excel')) ;
                 }
                 return false;
             },
@@ -118,7 +118,7 @@
                 var _this = this ;
                 const { fileList } = this;
                 if(fileList.length < _this.limitMinSize){
-                    _this.$message.warning("请至少选择"+_this.limitMinSize+"个文件后提交！");
+                    _this.$message.warning(_this.$t('langMap.commons.valueMap.uploader.popover.atLeastNumberOfFiles',_this.limitMinSize));
                     return false ;
                 }
                 var formData = new FormData();

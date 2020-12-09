@@ -34,9 +34,9 @@
                              v-bind="formItemLayout"
                 >
                     <span>
-                        <a target="_blank" href="https://www.antdv.com/components/icon-cn/">点击查看可选图标</a>
+                        <a target="_blank" href="https://www.antdv.com/components/icon-cn/">{{$t('langMap.commons.forms.tips.lookUpIcon')}}</a>
                         <span v-show="typeof formValObj.iconName != 'undefined' && formValObj.iconName.length > 0">
-                            (已选图标:&nbsp;&nbsp; <a-icon :type="formValObj.iconName"/> &nbsp;&nbsp;)
+                            ( {{$t('langMap.commons.forms.tips.selectedIcon')}} :&nbsp;&nbsp; <a-icon :type="formValObj.iconName"/> &nbsp;&nbsp;)
                         </span>
                     </span>
                     <a-input v-decorator="formFieldConf.iconName"/>

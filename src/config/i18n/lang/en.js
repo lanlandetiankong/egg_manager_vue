@@ -24,6 +24,7 @@ export const langMap = {
             exportSelectedAsExcel:'Export selected as excel',
             exportAllAsExcel:'Export all as excel',
             uploadExportExcelTemplate:'Upload export excel template',
+            uploadDataExcel:'Import data Excel file upload',
             lockUser:'Lock user',
             unlockUser:'Unlock user',
             lock:'Lock',
@@ -31,7 +32,8 @@ export const langMap = {
             startUsing:'Start using',
             publish:'Publish',
             saveAsDraft:'Save as draft',
-            goToIndexPage:'Go to index page'
+            goToIndexPage:'Go to index page',
+            filter:'Filter',
         },
         member:{
             account:'Account',
@@ -170,6 +172,7 @@ export const langMap = {
                     confirmUpload:'Confirm upload'
                 },
                 maximumNumberOfFiles:'Select up to {0} Excel file',
+                rangeSizeOfFiles:' Select up to {0}-{1} Excel files',
                 popover:{
                     prompt:'Upload tips',
                     message:{
