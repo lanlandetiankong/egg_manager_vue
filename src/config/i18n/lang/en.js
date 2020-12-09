@@ -27,7 +27,8 @@ export const langMap = {
             unlockUser:'Unlock user',
             startUsing:'Start using',
             publish:'Publish',
-            saveAsDraft:'Save as draft'
+            saveAsDraft:'Save as draft',
+            goToIndexPage:'Go to index page'
         },
         member:{
             account:'Account',
@@ -132,14 +133,38 @@ export const langMap = {
     },
     message:{
         warning:{
+            pleaseSelectTheOnlyRowOfDataForUpdate:'Please select the only row of data for update！',
+            pleaseSelectTheOnlyRowOfDataForDelete:'Please select the only row of data for delete！',
+            pleaseSelectTheOnlyRowOfDataForStartUsing:'Please select the only row of data for start using！',
+            pleaseSelectTheOnlyRowOfDataForSetPosition:'Please select the only row of data for set position！',
+            pleaseSelectTheOnlyRowOfDataForLock:'Please select the only row of data for lock！',
+            pleaseSelectTheOnlyRowOfDataForAssigningPermissions:'Please select the only row of data for assigning permissions！',
+            pleaseSelectTheOnlyRowOfDataForAuthorizationMenu:'Please select the only row of data for authorization menu！',
+            pleaseSelectTheOnlyRowOfDataForUploadExcelTemplate:'Please select the only row of data for upload excel template！',
+            pleaseSelectTheOnlyRowOfDataForExport:'Please select the only row of data for export！',
             pleaseSelectAtLeastOnePieceOfUpdateData:'Please select at least one piece of update data！',
             pleaseSelectAtMostOnePieceOfUpdateData:'Please select at most one piece of update data！',
             pleaseSpecifyAtMostOnePieceOfDataToDelete:'Please specify at most one piece of data to delete！',
-            failedDueToNotGettingId:'Failed due to not getting id !',
-            isConfirmDeleteSelectedRow:'Are you confirm delete selected row？',
             invalidDeleteOperation:'Invalid delete operation！',
+            invalidLockOperation:'Invalid lock operation！',
+            invalidPublishOperation:'Invalid publish operation！',
             openInvalidRowDetails:'Open invalid row details！',
-            actionOfCancelDelete:'Action:Cancel delete'
+        },
+        error:{
+            failedDueToNotGettingId:'Failed due to not getting id !',
+            wrongVerificationCode:'Wrong verification code！',
+            unknownExportCommand:'Unknown export command！',
+            currentPageDoesNotSupportExportOperations:'Current page does not support export operations！',
+            pageNotFound:'Page not found！',
+        },
+        confirm:{
+            isConfirmDeleteSelectedRow:'Are you confirm delete selected row？',
+        },
+        info:{
+            actionOfCancelDelete:'Action:Cancel delete',
+            actionOfCancelLock:'Action:Cancel Lock',
+            actionOfCancelStartUsing:'Action:Cancel start using',
+            actionOfCancelPublish:'Action:Cancel publish',
         }
     }
 }

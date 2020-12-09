@@ -471,7 +471,7 @@
                         }
                     })
                 }   else {
-                    this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
+                    this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                 }
             },
             dealDefineRoleGrantMenusById(selectRowId){        //[授权菜单]页面弹窗-封装方法
@@ -497,7 +497,7 @@
                         }
                     })
                 }   else {
-                    this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
+                    this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                 }
             },
             handleSearchFormQuery(e) {
@@ -527,9 +527,9 @@
             handleUpdateDefineRoleBtnClick() {  //更新权限按钮-点击
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectAtLeastOnePieceOfUpdateData'));
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectAtMostOnePieceOfUpdateData'));
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
@@ -543,7 +543,7 @@
                             }
                         })
                     } else {
-                        this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
+                        this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                     }
                 }
             },
@@ -551,7 +551,7 @@
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
-                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSpecifyAtMostOnePieceOfDataToDelete'));
+                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForDelete'));
                 } else {
                     _this.$confirm({
                         content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
@@ -561,7 +561,7 @@
                             _this.dealBatchDelDefineRole();
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
                         }
                     })
                 }
@@ -569,9 +569,9 @@
             handleDefineRoleGrantPermissionsById(e) {     // 分配权限
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning('请选择一行要分配权限的角色！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForAssigningPermissions'));
                 } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning('请选择至多一行要分配权限的角色！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForAssigningPermissions'));
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     //封装方法 处理
@@ -581,9 +581,9 @@
             handleDefineRoleGrantMenusById(e) {     // [授权菜单]
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning('请选择一行要授权菜单的角色！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForAuthorizationMenu'));
                 } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning('请选择至多一行要授权菜单的角色！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForAuthorizationMenu'));
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     //封装方法 处理
@@ -690,14 +690,14 @@
                 var _this = this;
                 if (delId) {
                     _this.$confirm({
-                        content: this.$t('langMap.message.warning.isConfirmDeleteSelectedRow'),
+                        content: this.$t('langMap.message.confirm.isConfirmDeleteSelectedRow'),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
                         }
                     })
                 } else {

@@ -392,7 +392,7 @@
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
-                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSpecifyAtMostOnePieceOfDataToDelete'));
+                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForDelete'));
                 } else {
                     _this.$confirm({
                         content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
@@ -402,7 +402,7 @@
                             _this.dealBatchDelAnnouncementDraft();
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
                         }
                     })
                 }
@@ -411,14 +411,14 @@
                 var _this = this;
                 if (delId) {
                     _this.$confirm({
-                        content: this.$t('langMap.message.warning.isConfirmDeleteSelectedRow'),
+                        content: this.$t('langMap.message.confirm.isConfirmDeleteSelectedRow'),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
                         }
                     })
                 } else {
@@ -429,7 +429,7 @@
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
-                    _this.$message.warning("请选择至少一条要发布的公告！");
+                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else {
                     _this.$confirm({
                         content: '是否确认发布所选的' + selectDelIds.length + "条公告？",
@@ -439,7 +439,7 @@
                             _this.dealBatchPublishAnnouncementDraft();
                         },
                         onCancel() {
-                            _this.$message.info("操作：取消发布");
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelPublish'));
                         }
                     })
                 }
@@ -455,11 +455,11 @@
                             _this.dealPublishOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info("操作：取消发布");
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelPublish'));
                         }
                     })
                 } else {
-                    _this.$message.warning("无效发布操作！");
+                    _this.$message.warning(_this.$t('langMap.message.warning.invalidPublishOperation'));
                 }
             },
             handleTableChange(pagination, filters, sorter) {    //表格变动-页码跳转/排序/筛选
@@ -479,15 +479,15 @@
             handleGoToAnnouncementCreateView(){     //跳转到 [新建公告] 页面
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning('请选择一行要编辑的数据！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 }   else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning('请选择至多一行要编辑的数据！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 }   else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
                         _this.dealGoToAnnouncementCreateView(selectRowId) ;
                     }   else {
-                        this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
+                        this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                     }
                 }
             },

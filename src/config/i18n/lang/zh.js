@@ -27,7 +27,8 @@ export const langMap = {
             unlockUser:'解锁用户',
             startUsing:'启用',
             publish:'发布',
-            saveAsDraft:'存为草稿'
+            saveAsDraft:'存为草稿',
+            goToIndexPage:'回到首页'
         },
         member:{
             account:'账号',
@@ -131,14 +132,35 @@ export const langMap = {
     },
     message:{
         warning:{
-            pleaseSelectAtLeastOnePieceOfUpdateData:'请选择至少一行更新数据！',
-            pleaseSelectAtMostOnePieceOfUpdateData:'请选择至多一行更新数据！',
-            pleaseSpecifyAtMostOnePieceOfDataToDelete:'请选择至少一条要删除的数据',
-            failedDueToNotGettingId:'操作失败！未取得有效的id！',
-            isConfirmDeleteSelectedRow:'是否确认删除所选行？',
+            pleaseSelectTheOnlyRowOfDataForUpdate:'请选择唯一待更新的行！',
+            pleaseSelectTheOnlyRowOfDataForDelete:'请选择唯一待删除的行！',
+            pleaseSelectTheOnlyRowOfDataForStartUsing:'请选择唯一待启用的行！',
+            pleaseSelectTheOnlyRowOfDataForSetPosition:'请选择唯一待设置职务的行！',
+            pleaseSelectTheOnlyRowOfDataForLock:'请选择唯一待锁定的行！',
+            pleaseSelectTheOnlyRowOfDataForAssigningPermissions:'请选择唯一待分配权限的行！',
+            pleaseSelectTheOnlyRowOfDataForAuthorizationMenu:'请选择唯一待授权菜单的行！',
+            pleaseSelectTheOnlyRowOfDataForUploadExcelTemplate:'请选择唯一待上传Excel模板的行！',
+            pleaseSelectTheOnlyRowOfDataForExport:'请选择唯一待导出的行！',
             invalidDeleteOperation:'无效删除操作！',
+            invalidLockOperation:'无效加锁操作！',
+            invalidPublishOperation:'无效发布操作！',
             openInvalidRowDetails:'打开无效的行详情！',
-            actionOfCancelDelete:'操作:取消删除'
+        },
+        error:{
+            failedDueToNotGettingId:'操作失败！未取得有效的id！',
+            wrongVerificationCode:'验证码错误！',
+            unknownExportCommand:'未知导出命令！',
+            currentPageDoesNotSupportExportOperations:'当前页面不支持导出操作！',
+            pageNotFound:'页面未找到！',
+        },
+        confirm:{
+            isConfirmDeleteSelectedRow:'是否确认删除所选行？',
+        },
+        info:{
+            actionOfCancelDelete:'操作:取消删除',
+            actionOfCancelLock:'操作:取消锁定',
+            actionOfCancelStartUsing:'操作:取消启用',
+            actionOfCancelPublish:'操作:取消发布',
         }
     }
 }

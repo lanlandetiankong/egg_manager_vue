@@ -462,9 +462,9 @@
             handleUpdateDefinePermissionBtnClick() {  //更新权限按钮-点击
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectAtLeastOnePieceOfUpdateData'));
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectAtMostOnePieceOfUpdateData'));
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
@@ -478,7 +478,7 @@
                             }
                         })
                     } else {
-                        this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
+                        this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                     }
                 }
             },
@@ -486,7 +486,7 @@
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
-                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSpecifyAtMostOnePieceOfDataToDelete'));
+                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForDelete'));
                 } else {
                     var selectDelRows = _this.tableCheckRowList ;
                     var delAbleFlag = true ;    //是否可删除
@@ -505,7 +505,7 @@
                                 _this.dealBatchDelDefinePermission();
                             },
                             onCancel() {
-                                _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
+                                _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
                             }
                         })
                     }   else {
@@ -517,7 +517,7 @@
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
-                    _this.$message.warning("请选择至少一条要启用的数据！");
+                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForStartUsing'));
                 } else {
                     _this.$confirm({
                         content: '权限一旦启用后无法禁用！请再次确认是否启用所选的' + selectDelIds.length + "条数据？",
@@ -527,7 +527,7 @@
                             _this.dealBatchEnusreDefinePermission();
                         },
                         onCancel() {
-                            _this.$message.info("操作：取消启用");
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelStartUsing'));
                         }
                     })
                 }
@@ -588,14 +588,14 @@
                 var _this = this;
                 if (delId) {
                     _this.$confirm({
-                        content: this.$t('langMap.message.warning.isConfirmDeleteSelectedRow'),
+                        content: this.$t('langMap.message.confirm.isConfirmDeleteSelectedRow'),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
                         }
                     })
                 } else {

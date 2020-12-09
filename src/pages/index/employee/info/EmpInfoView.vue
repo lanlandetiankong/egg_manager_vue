@@ -684,7 +684,7 @@
                         }
                     })
                 } else {
-                    this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
+                    this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                 }
             },
             dealUserGrantJobsById(selectRowId){        //设置职务页面弹窗-封装方法
@@ -710,7 +710,7 @@
                         }
                     })
                 } else {
-                    this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
+                    this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                 }
             },
             handleSearchFormQuery(e) {   //表格-搜索
@@ -762,9 +762,9 @@
             handleUpdateUserAccountBtnClick() {  //更新用户按钮-点击
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectAtLeastOnePieceOfUpdateData'));
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectAtMostOnePieceOfUpdateData'));
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
@@ -778,7 +778,7 @@
                             }
                         })
                     } else {
-                        this.$message.warning(this.$t('langMap.message.warning.failedDueToNotGettingId'));
+                        this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                     }
                 }
             },
@@ -838,7 +838,7 @@
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
-                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSpecifyAtMostOnePieceOfDataToDelete'));
+                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForDelete'));
                 } else {
                     _this.$confirm({
                         content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
@@ -848,7 +848,7 @@
                             _this.dealBatchDelUserAccount();
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
                         }
                     })
                 }
@@ -857,14 +857,14 @@
                 var _this = this;
                 if (delId) {
                     _this.$confirm({
-                        content: this.$t('langMap.message.warning.isConfirmDeleteSelectedRow'),
+                        content: this.$t('langMap.message.confirm.isConfirmDeleteSelectedRow'),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.warning.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
                         }
                     })
                 } else {
@@ -875,7 +875,7 @@
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
-                    _this.$message.warning("请选择至少一条要锁定的用户！");
+                    _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForLock'));
                 } else {
                     _this.$confirm({
                         content: '是否确认锁定所选的' + selectDelIds.length + "个用户？",
@@ -885,7 +885,7 @@
                             _this.dealBatchLockUserAccount(lockFlag);
                         },
                         onCancel() {
-                            _this.$message.info("操作：取消锁定");
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelLock'));
                         }
                     })
                 }
@@ -901,11 +901,11 @@
                             _this.dealChangeLockOneRowById(delId,lockFlag);
                         },
                         onCancel() {
-                            _this.$message.info("操作：取消锁定");
+                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelLock'));
                         }
                     })
                 } else {
-                    _this.$message.warning("无效锁定操作！");
+                    _this.$message.warning(_this.$t('langMap.message.warning.invalidLockOperation'));
                 }
             },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
@@ -917,9 +917,9 @@
             handleUserGrantRoleById(e) {     // 用户分配角色
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning('请选择一行要分配角色的数据！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning('请选择至多一行要分配角色的数据！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     //封装方法 处理
@@ -951,9 +951,9 @@
             handleUserGrantJobById(e) {     // 用户设置职务
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
-                    this.$message.warning('请选择一行要设置职务的数据！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForSetPosition'));
                 } else if (_this.tableCheckIdList.length > 1) {
-                    this.$message.warning('请选择至多一行要设置职务的数据！');
+                    this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForSetPosition'));
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     //封装方法 处理
@@ -989,17 +989,17 @@
                     if(e.key == "checkToExcel"){    //导出已勾选项
                         var checkIds = _this.tableCheckIdList ;
                         if(!checkIds || checkIds.length == 0){
-                            this.$message.error("请至少选择一条要导出的数据！");
+                            this.$message.error(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForExport'));
                         }   else {
                             EmpInfoApi.exportCheckToExcel(curMenuId,checkIds);
                         }
                     }   else if(e.key == "allToExcel"){ //导出所有
                         EmpInfoApi.exportAllToExcel(curMenuId);
                     }   else {
-                        this.$message.error("未知导出命令！");
+                        this.$message.error(this.$t('langMap.message.error.unknownExportCommand'));
                     }
                 }   else {
-                    this.$message.error("当前页面不支持导出操作！");
+                    this.$message.error(this.$t('langMap.message.error.currentPageDoesNotSupportExportOperations'));
                 }
             },
             handleImportDataModalCancel(){  //[数据导入] 弹窗取消

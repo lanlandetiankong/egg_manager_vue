@@ -163,7 +163,7 @@
                 var _this = this ;
                 _this.dealTriggerVerify();
                 if(_this.verifyConf.more.success == false){
-                    _this.$message.error("验证码未填写或错误！");
+                    _this.$message.error(this.$t('langMap.message.error.wrongVerificationCode'));
                 }
                 return _this.verifyConf.more.success ;
             },

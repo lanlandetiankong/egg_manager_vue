@@ -9,10 +9,10 @@
             </div>
             <div class="bullshit">
                 <div class="bullshit__oops">OOPS!</div>
-                <div class="bullshit__headline">{{ message }}</div>
+                <div class="bullshit__headline">{{$t('langMap.message.error.currentPageDoesNotSupportExportOperations') }}</div>
                 <div class="bullshit__info">请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告</div>
                 <a-button icon="arrow-left" type="primary" @click="() => {this.$router.back(-1)}">
-                    返回首页
+                    {{$t('langMap.button.actions.goToIndexPage')}}
                 </a-button>
             </div>
         </div>
@@ -32,9 +32,6 @@
             }
         },
         computed: {
-            message() {
-                return '页面不存在......'
-            }
         }
     }
 </script>
