@@ -1,5 +1,5 @@
 <template>
-    <a-button v-if="langLocale==='zh'" @click="langChangeToZh">
+    <a-button v-if="langLocale==='zh-CN'" @click="langChangeToZh">
         English
     </a-button>
     <a-button  v-else @click="langChangeToZh">
@@ -18,12 +18,12 @@
         },
         computed:{
             langLocale(){
-                return (this.$i18n.locale) ? this.$i18n.locale : 'zh' ;
+                return (this.$i18n.locale) ? this.$i18n.locale : 'zh-CN' ;
             }
         },
         methods:{
             langChangeToZh(){
-                let lang = this.$i18n.locale === 'zh' ? 'en' : 'zh'
+                let lang = this.$i18n.locale === 'zh-CN' ? 'en-US' : 'zh-CN'
                 this.$i18n.locale = lang ;
                 i18nUtil.reflushCache(this.$i18n.locale);
                 //手动更新那些npm组件的内容

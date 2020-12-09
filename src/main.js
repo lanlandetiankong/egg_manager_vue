@@ -42,10 +42,10 @@ Vue.use(VueI18n)
 Vue.use(VueCookies)
 
 const i18n = new VueI18n({
-    locale: 'zh',    // 语言标识
+    locale: 'zh-CN',    // 语言标识
     messages: {
-        'zh': require('~Config/i18n/lang/zh'),
-        'en': require('~Config/i18n/lang/en')
+        'zh-CN': require('~Config/i18n/lang/zh-CN'),
+        'en-US': require('~Config/i18n/lang/en-US')
     }
 })
 
