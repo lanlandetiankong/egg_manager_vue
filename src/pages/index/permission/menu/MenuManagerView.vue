@@ -295,7 +295,7 @@
                 drawerConf:{
                     detail:{
                         defineMenu:{
-                            title:"菜单定义详情",
+                            title:this.$t('langMap.drawer.title.detailForDefineMenu'),
                             closable:true,
                             visible:false,
                             placement:"right",

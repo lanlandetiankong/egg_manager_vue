@@ -50,6 +50,21 @@ export const langMap = {
     drawer:{
         actions:{
             detail:'Detail'
+        },
+        title:{
+            detailForEmployeeInfo:'Detail for employee info',
+            detailForAnnouncement:'Detail for announcement',
+            detailForAnnouncementTag:'Detail for announcement tag',
+            detailForAnnouncementDraft:'Detail for announcement draft',
+            detailForDefineMenu:'Detail for define menu',
+            detailForDefineDepartment:'Detail for define department',
+            detailForDefineModule:'Detail for define module',
+            detailForDefineRole:'Detail for define role',
+            detailForDefineJob:'Detail for define job',
+            detailForDefinePermission:'Detail for define permission',
+            detailForDefineTenant:'Detail for define tenant ',
+            detailForDefineForm:'Detail for define form ',
+            detailForDefineFormType:'Detail for define form type',
         }
     },
     table:{

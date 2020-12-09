@@ -206,7 +206,7 @@
                 drawerConf:{
                     detail:{
                         defaultGridItem:{
-                            title:"表单类型详情",
+                            title:this.$t('langMap.drawer.title.detailForDefineFormType'),
                             closable:true,
                             visible:false,
                             placement:"right",

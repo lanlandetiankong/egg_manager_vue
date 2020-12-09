@@ -50,6 +50,21 @@ export const langMap = {
     drawer:{
         actions:{
             detail:'详情'
+        },
+        title:{
+            detailForEmployeeInfo:'用户定义详情',
+            detailForAnnouncement:'公告信息详情',
+            detailForAnnouncementTag:'公告标签详情',
+            detailForAnnouncementDraft:'公告草稿详情',
+            detailForDefineMenu:'菜单定义详情',
+            detailForDefineDepartment:'部门定义详情',
+            detailForDefineModule:'模块定义详情',
+            detailForDefineRole:'角色定义详情',
+            detailForDefineJob:'职务详情',
+            detailForDefinePermission:'权限定义详情',
+            detailForDefineTenant:'租户信息详情',
+            detailForDefineForm:'表单定义详情',
+            detailForDefineFormType:'表单类型定义详情',
         }
     },
     table:{

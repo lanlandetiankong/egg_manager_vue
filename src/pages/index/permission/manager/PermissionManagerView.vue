@@ -261,7 +261,7 @@
                 drawerConf:{
                     detail:{
                         definePermission:{
-                            title:"权限定义详情",
+                            title:this.$t('langMap.drawer.title.detailForDefinePermission'),
                             closable:true,
                             visible:false,
                             placement:"right",

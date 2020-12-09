@@ -414,7 +414,7 @@
                 drawerConf:{
                     detail:{
                        employeeInfo:{
-                           title:"用户定义详情",
+                           title:this.$t('langMap.drawer.title.detailForEmployeeInfo'),
                            closable:true,
                            visible:false,
                            placement:"right",

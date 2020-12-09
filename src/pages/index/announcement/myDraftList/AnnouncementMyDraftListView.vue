@@ -216,7 +216,7 @@
                 drawerConf:{
                     detail:{
                         announcementDraft:{
-                            title:"公告草稿详情",
+                            title:this.$t('langMap.drawer.title.detailForAnnouncementDraft'),
                             closable:true,
                             visible:false,
                             placement:"right",

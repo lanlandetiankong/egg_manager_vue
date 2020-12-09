@@ -123,7 +123,7 @@
                 >
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleEmployeeDepartmentDetailDrawerShow($event,record)">
+                            <a @click="handleDefineDepartmentDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -147,22 +147,22 @@
             >
             </define-department-create-form-comp>
             <a-drawer
-                :title="drawerConf.detail.employeeDepartment.title"
-                :closeable="drawerConf.detail.employeeDepartment.closable"
-                :visible="drawerConf.detail.employeeDepartment.visible"
-                :placement="drawerConf.detail.employeeDepartment.placement"
-                :mask="drawerConf.detail.employeeDepartment.mask"
-                :maskStyle="drawerConf.detail.employeeDepartment.maskStyle"
-                :wrapStyle="drawerConf.detail.employeeDepartment.wrapStyle"
-                :drawerStyle="drawerConf.detail.employeeDepartment.drawerStyle"
-                :bodyStyle="drawerConf.detail.employeeDepartment.bodyStyle"
-                :maskClosable="drawerConf.detail.employeeDepartment.maskClosable"
-                @close="handleEmployeeDepartmentDetailDrawerClose"
+                :title="drawerConf.detail.defineDepartment.title"
+                :closeable="drawerConf.detail.defineDepartment.closable"
+                :visible="drawerConf.detail.defineDepartment.visible"
+                :placement="drawerConf.detail.defineDepartment.placement"
+                :mask="drawerConf.detail.defineDepartment.mask"
+                :maskStyle="drawerConf.detail.defineDepartment.maskStyle"
+                :wrapStyle="drawerConf.detail.defineDepartment.wrapStyle"
+                :drawerStyle="drawerConf.detail.defineDepartment.drawerStyle"
+                :bodyStyle="drawerConf.detail.defineDepartment.bodyStyle"
+                :maskClosable="drawerConf.detail.defineDepartment.maskClosable"
+                @close="handleDefineDepartmentDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.employeeDepartment.dataObj"
-                    :visible="drawerConf.detail.employeeDepartment.visible"
-                    :drawerFieldConf="drawerConf.detail.employeeDepartment.drawerFieldConf"
+                    :dataObj="drawerConf.detail.defineDepartment.dataObj"
+                    :visible="drawerConf.detail.defineDepartment.visible"
+                    :drawerFieldConf="drawerConf.detail.defineDepartment.drawerFieldConf"
                 />
             </a-drawer>
         </div>
@@ -170,7 +170,7 @@
 </template>
 <script>
     import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import {EmployeeDepartmentDetailDrawerConf} from './drawer_conf.js'
+    import {DefineDepartmentDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
@@ -240,8 +240,8 @@
                 },
                 drawerConf:{
                     detail:{
-                        employeeDepartment:{
-                            title:"部门定义详情",
+                        defineDepartment:{
+                            title:this.$t('langMap.drawer.title.detailForDefineDepartment'),
                             closable:true,
                             visible:false,
                             placement:"right",
@@ -260,7 +260,7 @@
                             },
                             maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
-                            drawerFieldConf:EmployeeDepartmentDetailDrawerConf
+                            drawerFieldConf:DefineDepartmentDetailDrawerConf
                         },
                     },
                 },
@@ -524,16 +524,16 @@
             handleParentTreeOfSearchChange(value){  //[上级部门] SelectTree cchange事件
                 console.log("handleParentTreeOfSearchChange",value);
             },
-            handleEmployeeDepartmentDetailDrawerShow(e,record){   //Drawer-部门定义 详情展示
+            handleDefineDepartmentDetailDrawerShow(e,record){   //Drawer-部门定义 详情展示
                 if(typeof record != "undefined"){
-                    this.drawerConf.detail.employeeDepartment.dataObj = record ;
-                    this.drawerConf.detail.employeeDepartment.visible = true ;
+                    this.drawerConf.detail.defineDepartment.dataObj = record ;
+                    this.drawerConf.detail.defineDepartment.visible = true ;
                 }   else {
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleEmployeeDepartmentDetailDrawerClose(e){ //Drawer-部门定义 详情关闭
-                this.drawerConf.detail.employeeDepartment.visible = false ;
+            handleDefineDepartmentDetailDrawerClose(e){ //Drawer-部门定义 详情关闭
+                this.drawerConf.detail.defineDepartment.visible = false ;
             }
         },
         created(){

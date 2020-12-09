@@ -198,7 +198,7 @@
                 drawerConf:{
                     detail:{
                         announcementTag:{
-                            title:"公告标签详情",
+                            title:this.$t('langMap.drawer.title.detailForAnnouncementTag'),
                             closable:true,
                             visible:false,
                             placement:"right",

@@ -234,7 +234,7 @@
                 drawerConf:{
                     detail:{
                         defaultGridItem:{
-                            title:"表单定义详情",
+                            title:this.$t('langMap.drawer.title.detailForDefineForm'),
                             closable:true,
                             visible:false,
                             placement:"right",

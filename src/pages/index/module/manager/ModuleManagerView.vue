@@ -228,7 +228,7 @@
                 drawerConf:{
                     detail:{
                         defineModule:{
-                            title:"部门详情",
+                            title:this.$t('langMap.drawer.title.detailForDefineModule'),
                             closable:true,
                             visible:false,
                             placement:"right",

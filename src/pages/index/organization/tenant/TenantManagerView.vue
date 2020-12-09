@@ -219,7 +219,7 @@
                 drawerConf:{
                     detail:{
                         defineTenant:{
-                            title:"租户信息详情",
+                            title:this.$t('langMap.drawer.title.detailForDefineTenant'),
                             closable:true,
                             visible:false,
                             placement:"right",

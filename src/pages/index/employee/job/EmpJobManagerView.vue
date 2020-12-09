@@ -222,7 +222,7 @@
                 drawerConf:{
                     detail:{
                         employeeJob:{
-                            title:"职务详情",
+                            title:this.$t('langMap.drawer.title.detailForDefineJob'),
                             closable:true,
                             visible:false,
                             placement:"right",

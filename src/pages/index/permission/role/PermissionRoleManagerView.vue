@@ -278,7 +278,7 @@
                 drawerConf:{
                     detail:{
                         defineRole:{
-                            title:"租户信息详情",
+                            title:this.$t('langMap.drawer.title.detailForDefineRole'),
                             closable:true,
                             visible:false,
                             placement:"right",
