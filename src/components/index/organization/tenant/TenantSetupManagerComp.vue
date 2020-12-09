@@ -3,7 +3,7 @@
         <a-modal
             :visible="visible"
             :maskClosable=false
-            :title="modalConf.title"
+            :title="$t('langMap.button.actions.setAdminManager')"
             :okText="$t('langMap.button.actions.confirmSubmit')"
             :width="1000"
             :centered="true"
@@ -37,9 +37,6 @@
         data(){
             var _this = this ;
             return {
-                modalConf:{
-                    title:'设置管理员',
-                },
                 userTableSelect:{
                     conf:{
                         maxSize:1,

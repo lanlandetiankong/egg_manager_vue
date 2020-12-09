@@ -3,7 +3,7 @@
         <a-modal
             :visible="visible"
             :maskClosable=false
-            :title="modalConf.title"
+            :title="$t('langMap.button.actions.authorizationMenu')"
             :okText="$t('langMap.button.actions.confirmSubmit')"
             :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('grantMenusFormCancel')}"
@@ -33,10 +33,6 @@
         },
         data() {
             return {
-                modalConf:{
-                    title:'授权菜单',
-                    okText:'确认提交'
-                },
                 treeConf:{
                     selectable:false,
                     expandedKeys: [],

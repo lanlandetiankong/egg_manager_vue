@@ -396,7 +396,7 @@
                     _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForDelete'));
                 } else {
                     _this.$confirm({
-                        content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
+                        content: _this.$t('langMap.message.confirm.isConfirmDeleteWhatSelectedRow',[selectDelIds.length]),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {

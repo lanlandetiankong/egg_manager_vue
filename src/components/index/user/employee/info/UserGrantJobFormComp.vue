@@ -3,7 +3,7 @@
         <a-modal
             :visible="visible"
             :maskClosable=false
-            :title="modalConf.title"
+            :title="$t('langMap.button.actions.setPosition')"
             :okText="$t('langMap.button.actions.confirmSubmit')"
             :cancelText="$t('langMap.button.actions.cancel')"
             @cancel="() => { $emit('grantJobFormCancel')}"
@@ -47,20 +47,12 @@
         },
         data(){
             return {
-                modalConf:{
-                    title:'设置职务',
-                },
                 transferConf:{
                     initFlag:false,
-                    titleArr:['未选择','已选择'],
-                    locale:{
-                        itemUnit:'项',
-                        itemsUnit: '项',
-                        notFoundContent: '列表为空',
-                        searchPlaceholder:'在此处搜索'
-                    },
+                    titleArr:this.$t('langMap.commons.valueMap.transferConf.titleArr'),
+                    locale:this.$t('langMap.commons.valueMap.transferConf.locale'),
                     targetKeys:[],
-                    operations:['选择','取消'],
+                    operations:this.$t('langMap.commons.valueMap.transferConf.operations'),
                     showSearch:true,
                     dataSourceArr:[],
                     selectedKeys:[]

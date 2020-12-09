@@ -65,13 +65,13 @@
                     <a-col>
                         <a-button type="primary" icon="check"
                                   @click="handleAnnouncementDraftBatchPublishByIds">
-                            直接发布
+                            {{$t('langMap.button.actions.publish')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="check"
                                   @click="handleGoToAnnouncementCreateView">
-                            编辑
+                            {{$t('langMap.button.actions.edit')}}
                         </a-button>
                     </a-col>
                     <a-col>
@@ -395,7 +395,7 @@
                     _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForDelete'));
                 } else {
                     _this.$confirm({
-                        content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
+                        content: _this.$t('langMap.message.confirm.isConfirmDeleteWhatSelectedRow',[selectDelIds.length]),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
@@ -432,7 +432,7 @@
                     _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
                 } else {
                     _this.$confirm({
-                        content: '是否确认发布所选的' + selectDelIds.length + "条公告？",
+                        content: _this.$t('langMap.message.confirm.isConfirmPublishWhatSelectedRow',[selectDelIds.length]),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
@@ -448,7 +448,7 @@
                 var _this = this;
                 if (delId) {
                     _this.$confirm({
-                        content: '是否确认发布所选行？',
+                        content: _this.$t('langMap.message.confirm.isConfirmPublishSelectedRow'),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {

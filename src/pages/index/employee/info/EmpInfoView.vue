@@ -191,10 +191,10 @@
                 </span>
                 <span slot="locked" slot-scope="record">
                     <a-tag v-if="record.locked == 1" color="red" :key="record.fid">
-                        已锁定
+                        {{$t('langMap.commons.enums.lockStatus.locked')}}
                     </a-tag>
                     <a-tag v-else-if="record.locked == 0" color="blue" :key="record.fid">
-                        未锁定
+                        {{$t('langMap.commons.enums.lockStatus.unlock')}}
                     </a-tag>
                 </span>
                 <template slot="action" slot-scope="text,record">
@@ -206,10 +206,10 @@
                         <a-dropdown>
                               <a-menu slot="overlay" @click="handleTableActionGroupClick($event,record)">
                                     <a-menu-item key="recordDel">{{$t('langMap.button.actions.delById')}}</a-menu-item>
-                                    <a-menu-item v-if="record.locked == 0" key="recordLock">锁定</a-menu-item>
-                                    <a-menu-item v-else-if="record.locked == 1" key="recordUnlock">解锁</a-menu-item>
-                                    <a-menu-item key="grantRole">分配角色</a-menu-item>
-                                    <a-menu-item key="grantJob">设置职务</a-menu-item>
+                                    <a-menu-item v-if="record.locked == 0" key="recordLock">{{$t('langMap.button.actions.lockUser')}}</a-menu-item>
+                                    <a-menu-item v-else-if="record.locked == 1" key="recordUnlock">{{$t('langMap.button.actions.unlockUser')}}</a-menu-item>
+                                    <a-menu-item key="grantRole">{{$t('langMap.button.actions.assigningRoles')}}</a-menu-item>
+                                    <a-menu-item key="grantJob">{{$t('langMap.button.actions.setPosition')}}</a-menu-item>
                               </a-menu>
                               <a-button> {{$t('langMap.button.actions.operate')}} <a-icon type="down" /> </a-button>
                         </a-dropdown>
@@ -841,7 +841,7 @@
                     _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForDelete'));
                 } else {
                     _this.$confirm({
-                        content: '是否确认删除所选的' + selectDelIds.length + "条数据？",
+                        content: _this.$t('langMap.message.confirm.isConfirmDeleteWhatSelectedRow',[selectDelIds.length]),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
@@ -878,7 +878,7 @@
                     _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForLock'));
                 } else {
                     _this.$confirm({
-                        content: '是否确认锁定所选的' + selectDelIds.length + "个用户？",
+                        content: _this.$t('langMap.message.confirm.isConfirmLockWhatSelectedRow',[selectDelIds.length]),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {
@@ -894,7 +894,7 @@
                 var _this = this;
                 if (delId) {
                     _this.$confirm({
-                        content: '是否确认锁定所选用户？',
+                        content: _this.$t('langMap.message.confirm.isConfirmLockWhatSelectedRow'),
                         okText: '确认',
                         cancelText: '取消',
                         onOk() {

@@ -70,8 +70,8 @@
                     <a-radio-group buttonStyle="solid"
                                    v-decorator="formFieldConf.locked"
                     >
-                        <a-radio-button value="1">锁定</a-radio-button>
-                        <a-radio-button value="0">不锁定</a-radio-button>
+                        <a-radio-button value="1">{{$t('langMap.button.actions.lock')}}</a-radio-button>
+                        <a-radio-button value="0">{{$t('langMap.button.actions.unlock')}}</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
             </a-form>

@@ -10,6 +10,7 @@ export const langMap = {
             operate:'Operate',
             addByForm:'Create',
             updateByForm:'Update',
+            edit:'Edit',
             batchDelByIds:'Batch Delete',
             delById:'Delete',
             authorize:'Authorize',
@@ -25,6 +26,8 @@ export const langMap = {
             uploadExportExcelTemplate:'Upload export excel template',
             lockUser:'Lock user',
             unlockUser:'Unlock user',
+            lock:'Lock',
+            unlock:'Unlock',
             startUsing:'Start using',
             publish:'Publish',
             saveAsDraft:'Save as draft',
@@ -137,13 +140,30 @@ export const langMap = {
                 formTitle:'Form title',
             }
         },
-
     },
     commons:{
         forms:{
             pleaseChoose:'Please choose',
             chooseDepartment:'Choose department',
             pleaseEnterTitle:'Please enterTitle'
+        },
+        enums:{
+            lockStatus:{
+                locked:'locked',
+                unlock:'unlock'
+            }
+        },
+        valueMap:{
+            transferConf:{
+                titleArr:['Not selected','chosen'],
+                locale:{
+                    itemUnit:'Item',
+                    itemsUnit: 'Items',
+                    notFoundContent: 'List is empty',
+                    searchPlaceholder:'Search here'
+                },
+                operations:['Select','Cancel']
+            }
         }
     },
     message:{
@@ -157,9 +177,6 @@ export const langMap = {
             pleaseSelectTheOnlyRowOfDataForAuthorizationMenu:'Please select the only row of data for authorization menu！',
             pleaseSelectTheOnlyRowOfDataForUploadExcelTemplate:'Please select the only row of data for upload excel template！',
             pleaseSelectTheOnlyRowOfDataForExport:'Please select the only row of data for export！',
-            pleaseSelectAtLeastOnePieceOfUpdateData:'Please select at least one piece of update data！',
-            pleaseSelectAtMostOnePieceOfUpdateData:'Please select at most one piece of update data！',
-            pleaseSpecifyAtMostOnePieceOfDataToDelete:'Please specify at most one piece of data to delete！',
             invalidDeleteOperation:'Invalid delete operation！',
             invalidLockOperation:'Invalid lock operation！',
             invalidPublishOperation:'Invalid publish operation！',
@@ -174,6 +191,11 @@ export const langMap = {
         },
         confirm:{
             isConfirmDeleteSelectedRow:'Are you confirm delete selected row？',
+            isConfirmDeleteWhatSelectedRow:'Are you sure to delete the selected {0} row？',
+            isConfirmPublishSelectedRow:'Are you confirm publish selected row？',
+            isConfirmPublishWhatSelectedRow:'Are you sure to publish the selected {0} row？',
+            isConfirmLockSelectedRow:'Are you confirm lock selected row？',
+            isConfirmLockWhatSelectedRow:'Are you sure to lock the selected {0} row？',
         },
         info:{
             actionOfCancelDelete:'Action:Cancel delete',

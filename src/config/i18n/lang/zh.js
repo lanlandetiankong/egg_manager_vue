@@ -10,6 +10,7 @@ export const langMap = {
             operate:'操作',
             addByForm:'新增',
             updateByForm:'更新',
+            edit:'编辑',
             batchDelByIds:'批量删除',
             delById:'删除',
             authorize:'授权',
@@ -25,6 +26,8 @@ export const langMap = {
             uploadExportExcelTemplate:'上传导出excel模板',
             lockUser:'锁定用户',
             unlockUser:'解锁用户',
+            lock:'锁定',
+            unlock:'解锁',
             startUsing:'启用',
             publish:'发布',
             saveAsDraft:'存为草稿',
@@ -143,6 +146,24 @@ export const langMap = {
             pleaseChoose:'请选择',
             chooseDepartment:'选择部门',
             pleaseEnterTitle:'请输入标题'
+        },
+        enums:{
+            lockStatus:{
+                locked:'已锁定',
+                unlock:'未锁定'
+            }
+        },
+        valueMap:{
+            transferConf:{
+                titleArr:['未选择','已选择'],
+                locale:{
+                    itemUnit:'项',
+                    itemsUnit: '项',
+                    notFoundContent: '列表为空',
+                    searchPlaceholder:'在此处搜索'
+                },
+                operations:['选择','取消']
+            }
         }
     },
     message:{
@@ -169,7 +190,12 @@ export const langMap = {
             pageNotFound:'页面未找到！',
         },
         confirm:{
-            isConfirmDeleteSelectedRow:'是否确认删除所选行？',
+            isConfirmDeleteSelectedRow:'是否确认删除所选数据？',
+            isConfirmDeleteWhatSelectedRow:'是否确认删除所选的{0}条数据？',
+            isConfirmPublishSelectedRow:'是否确认发布所选数据？',
+            isConfirmPublishWhatSelectedRow:'是否确认发布所选的{0}条数据？',
+            isConfirmLockSelectedRow:'是否确认锁定所选数据？',
+            isConfirmLockWhatSelectedRow:'是否确认锁定所选的{0}条数据？',
         },
         info:{
             actionOfCancelDelete:'操作:取消删除',
