@@ -34,6 +34,7 @@ export const langMap = {
             saveAsDraft:'Save as draft',
             goToIndexPage:'Go to index page',
             filter:'Filter',
+            switchToNextOne:'Switch to the next one'
         },
         member:{
             account:'Account',
@@ -44,7 +45,7 @@ export const langMap = {
             ersonalCenter:'Personal Center',
             registerAnAccount:'Register an account',
             forgetPassword:'Forget password',
-            verificationCode:'Verification code'
+            verificationCode:'Captcha'
         },
         placeholder:{
             pleaseEnterUserAccount:'Please enter user account',

@@ -2,12 +2,7 @@
     <div>
         <a-row type="flex" align="middle" justify="end">
             <a-col :span=2>
-                <a-button v-if="langLocale==='zh'" @click="langChangeToZh">
-                    English
-                </a-button>
-                <a-button  v-else @click="langChangeToZh">
-                    中文
-                </a-button>
+                <i18n-change-comp />
             </a-col>
             <a-col :span=2>
                 <a-row>
@@ -49,12 +44,12 @@
 
 <script>
     import constantParams from '~Config/constantParams' ;
-    import {i18nUtil} from "~Config/i18n/i18nUtil";
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
+    import I18nChangeComp from '~Components/i18n/I18nChangeComp.vue'
     export default {
         name: "NavBar",
-        components: {ARow, ACol},
+        components: {I18nChangeComp, ARow, ACol},
         props: {
             userInfo:Object
         },
@@ -81,9 +76,6 @@
                         return urlPrefix+avatarUrl ;
                     }
                 }
-            },
-            langLocale(){
-                return (this.$i18n.locale) ? this.$i18n.locale : 'zh' ;
             }
         },
         methods:{
@@ -94,19 +86,11 @@
                 }   else if(e.key == "user_center"){ //个人中心
                     _this.$emit('goToUserCenter',e);
                 }
-            },
-            langChangeToZh(){
-                let lang = this.$i18n.locale === 'zh' ? 'en' : 'zh'
-                this.$i18n.locale = lang ;
-                i18nUtil.reflushCache(this.$i18n.locale);
             }
         },
-        mounted(){
-
-        }
+        mounted(){}
     }
 </script>
-
 <style lang="less" scoped>
     .trigger {
         font-size: 18px;

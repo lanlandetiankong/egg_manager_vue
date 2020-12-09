@@ -71,14 +71,17 @@
                     :wrapper-col="loginFormConf.wrapperCol"
                 >
                     <a-row>
-                        <a-col :span=6>
+                        <a-col :span=5>
+                            <i18n-change-comp />
+                        </a-col>
+                        <a-col :span=7>
                             <a-switch
                                 :checkedChildren="$t('langMap.button.member.rememberMe')"
                                 unCheckedChildren=""
                             >
                             </a-switch>
                         </a-col>
-                        <a-col :span=18>
+                        <a-col :span=12>
                             <a-button block
                                       icon="login"
                                       type="primary"
@@ -92,10 +95,10 @@
                 </a-form-item>
             </a-form>
             <a-row type="flex" align="middle" justify="end">
-                <a-col :span=6>
+                <a-col :span=9>
                     <router-link :to="othersRouters.register.to">{{$t('langMap.button.member.registerAnAccount')}}</router-link>
                 </a-col>
-                <a-col :span=6>
+                <a-col :span=9>
                     <router-link :to="othersRouters.forgetPassword.to">{{$t('langMap.button.member.forgetPassword')}}</router-link>
                 </a-col>
             </a-row>
@@ -109,12 +112,12 @@
     import ACol from "ant-design-vue/es/grid/Col";
 
     import Verify from 'vue2-verify'
-
     import {LoginMainCompApi} from './_LoginMainCompApi'
+    import I18nChangeComp from "@/components/i18n/I18nChangeComp";
 
     export default {
         name: "LoginMainComp",
-        components: {ACol, ARow, AFormItem,Verify},
+        components: {I18nChangeComp, ACol, ARow, AFormItem,Verify},
         props:{
             othersRouters:{
                 type:Object,

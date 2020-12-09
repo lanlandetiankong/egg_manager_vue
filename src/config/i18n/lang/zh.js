@@ -34,6 +34,7 @@ export const langMap = {
             saveAsDraft:'存为草稿',
             goToIndexPage:'回到首页',
             filter:'过滤',
+            switchToNextOne:'下一张'
         },
         member:{
             account:'账号',
