@@ -499,8 +499,8 @@
                     if(delAbleFlag === true){
                         _this.$confirm({
                             content: _this.$t('langMap.message.confirm.isConfirmDeleteWhatSelectedRow',[selectDelIds.length]),
-                            okText: '确认',
-                            cancelText: '取消',
+                            okText: _this.$t('langMap.button.actions.confirm'),
+                            cancelText: _this.$t('langMap.button.actions.cancel'),
                             onOk() {
                                 _this.dealBatchDelDefinePermission();
                             },
@@ -509,7 +509,7 @@
                             }
                         })
                     }   else {
-                        _this.$message.warning("所选项中包含已启用的项，请取消勾选所有已启用的项后重试！");
+                        _this.$message.warning(_this.$t('langMap.message.warning.doNotAllowSelectionOfStartUsing'));
                     }
                 }
             },
@@ -520,9 +520,9 @@
                     _this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForStartUsing'));
                 } else {
                     _this.$confirm({
-                        content: '权限一旦启用后无法禁用！请再次确认是否启用所选的' + selectDelIds.length + "条数据？",
-                        okText: '确认',
-                        cancelText: '取消',
+                        content: _this.$t('langMap.message.confirm.isConfirmStartUsingWhatSelectedRow',[selectDelIds.length]),
+                        okText: _this.$t('langMap.button.actions.confirm'),
+                        cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
                             _this.dealBatchEnusreDefinePermission();
                         },
@@ -589,8 +589,8 @@
                 if (delId) {
                     _this.$confirm({
                         content: this.$t('langMap.message.confirm.isConfirmDeleteSelectedRow'),
-                        okText: '确认',
-                        cancelText: '取消',
+                        okText: _this.$t('langMap.button.actions.confirm'),
+                        cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
                             _this.dealDelOneRowById(delId);
                         },

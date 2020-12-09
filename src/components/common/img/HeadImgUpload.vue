@@ -76,10 +76,10 @@
                 const isLt2M = file.size / this.largeSizeComp ;
                 if(isJPG || isPng){
                     if (!isLt2M) {
-                        this.$message.error('图片文件必须小鱼2MB!');
+                        this.$message.error(this.$t('langMap.commons.valueMap.uploader.popover.message.image.limitSize',2));
                     }
                 }   else {
-                    this.$message.error('只允许上传.jpg类型的文件!');
+                    this.$message.error(this.$t('langMap.commons.valueMap.uploader.popover.message.image.onlySupportJpg'));
                 }
                 return (isJPG || isPng) && isLt2M;
             },

@@ -18,11 +18,13 @@
                     :data="uploadConf.processData"
                     @change="handleUploadChange"
                 >
-                    <a-button :disabled="fileList.length >= limitSize"> <a-icon type="upload" /> 选择最多{{limitSize}}个Excel文件 </a-button>
+                    <a-button :disabled="fileList.length >= limitSize"> <a-icon type="upload" />
+                        {{$t('langMap.commons.valueMap.uploader.popover.maximumNumberOfFiles',limitSize)}}
+                    </a-button>
                 </a-upload>
-                <a-popover title="上传提示" trigger="hover" placement="leftBottom">
+                <a-popover :title="$t('langMap.commons.valueMap.uploader.popover.prompt')" trigger="hover" placement="leftBottom">
                     <template slot="content">
-                        <a-alert message="请正确选择.xls或.xlsx格式的Excel文件" type="warning" showIcon />
+                        <a-alert :message="$t('langMap.commons.valueMap.uploader.popover.message.excel')" type="warning" showIcon />
                     </template>
                     <a-button
                         type="primary"
@@ -31,7 +33,7 @@
                         :loading="uploading"
                         style="margin-top: 16px"
                     >
-                        {{uploading ? '上传中...' : '确认上传' }}
+                        {{uploading ? $t('langMap.commons.valueMap.uploader.status.uploading') : $t('langMap.commons.valueMap.uploader.status.confirmUpload') }}
                     </a-button>
                 </a-popover>
             </div>

@@ -40,7 +40,7 @@
                         v-show="false"
                         style="margin-top: 16px"
                     >
-                        {{uploading ? '上传中...' : '确认上传' }}
+                        {{uploading ? $t('langMap.commons.valueMap.uploader.status.uploading') : $t('langMap.commons.valueMap.uploader.status.confirmUpload') }}
                     </a-button>
                 </a-popover>
             </div>

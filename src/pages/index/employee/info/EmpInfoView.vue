@@ -842,8 +842,8 @@
                 } else {
                     _this.$confirm({
                         content: _this.$t('langMap.message.confirm.isConfirmDeleteWhatSelectedRow',[selectDelIds.length]),
-                        okText: '确认',
-                        cancelText: '取消',
+                        okText: _this.$t('langMap.button.actions.confirm'),
+                        cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
                             _this.dealBatchDelUserAccount();
                         },
@@ -858,8 +858,8 @@
                 if (delId) {
                     _this.$confirm({
                         content: this.$t('langMap.message.confirm.isConfirmDeleteSelectedRow'),
-                        okText: '确认',
-                        cancelText: '取消',
+                        okText: _this.$t('langMap.button.actions.confirm'),
+                        cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
                             _this.dealDelOneRowById(delId);
                         },
@@ -879,8 +879,8 @@
                 } else {
                     _this.$confirm({
                         content: _this.$t('langMap.message.confirm.isConfirmLockWhatSelectedRow',[selectDelIds.length]),
-                        okText: '确认',
-                        cancelText: '取消',
+                        okText: _this.$t('langMap.button.actions.confirm'),
+                        cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
                             _this.dealBatchLockUserAccount(lockFlag);
                         },
@@ -895,8 +895,8 @@
                 if (delId) {
                     _this.$confirm({
                         content: _this.$t('langMap.message.confirm.isConfirmLockWhatSelectedRow'),
-                        okText: '确认',
-                        cancelText: '取消',
+                        okText: _this.$t('langMap.button.actions.confirm'),
+                        cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
                             _this.dealChangeLockOneRowById(delId,lockFlag);
                         },

@@ -531,8 +531,8 @@
                 } else {
                     _this.$confirm({
                         content: _this.$t('langMap.message.confirm.isConfirmDeleteWhatSelectedRow',[selectDelIds.length]),
-                        okText: '确认',
-                        cancelText: '取消',
+                        okText: _this.$t('langMap.button.actions.confirm'),
+                        cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
                             _this.dealBatchDelDefineMenu();
                         },
@@ -628,8 +628,8 @@
                 if (delId) {
                     _this.$confirm({
                         content: this.$t('langMap.message.confirm.isConfirmDeleteSelectedRow'),
-                        okText: '确认',
-                        cancelText: '取消',
+                        okText: _this.$t('langMap.button.actions.confirm'),
+                        cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
                             _this.dealDelOneRowById(delId);
                         },

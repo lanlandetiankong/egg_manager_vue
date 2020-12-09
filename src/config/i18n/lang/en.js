@@ -163,6 +163,23 @@ export const langMap = {
                     searchPlaceholder:'Search here'
                 },
                 operations:['Select','Cancel']
+            },
+            uploader:{
+                status:{
+                    uploading:'Uploading...',
+                    confirmUpload:'Confirm upload'
+                },
+                maximumNumberOfFiles:'Select up to {0} Excel file',
+                popover:{
+                    prompt:'Upload tips',
+                    message:{
+                        excel:'Please select the .xls or .xlsx format Excel file correctly',
+                        image:{
+                            limitSize:'Picture file must be less than {0}MB!',
+                            onlySupportJpg:'Only .jpg files are allowed to upload!'
+                        }
+                    }
+                }
             }
         }
     },
@@ -181,6 +198,7 @@ export const langMap = {
             invalidLockOperation:'Invalid lock operation！',
             invalidPublishOperation:'Invalid publish operation！',
             openInvalidRowDetails:'Open invalid row details！',
+            doNotAllowSelectionOfStartUsing:'The selected item contains enabled items. Please uncheck all enabled items and try again！',
         },
         error:{
             failedDueToNotGettingId:'Failed due to not getting id !',
@@ -196,6 +214,7 @@ export const langMap = {
             isConfirmPublishWhatSelectedRow:'Are you sure to publish the selected {0} row？',
             isConfirmLockSelectedRow:'Are you confirm lock selected row？',
             isConfirmLockWhatSelectedRow:'Are you sure to lock the selected {0} row？',
+            isConfirmStartUsingWhatSelectedRow:'Once enabled, it cannot be disabled! Please confirm again whether to enable the selected {0} row?',
         },
         info:{
             actionOfCancelDelete:'Action:Cancel delete',

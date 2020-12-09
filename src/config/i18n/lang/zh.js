@@ -163,6 +163,23 @@ export const langMap = {
                     searchPlaceholder:'在此处搜索'
                 },
                 operations:['选择','取消']
+            },
+            uploader:{
+                status:{
+                    uploading:'上传中...',
+                    confirmUpload:'确认上传'
+                },
+                maximumNumberOfFiles:'选择最多{0}个Excel文件',
+                popover:{
+                    prompt:'上传提示',
+                    message:{
+                        excel:'请正确选择.xls或.xlsx格式的Excel文件',
+                        image:{
+                            limitSize:'图片文件必须小于{0}MB!',
+                            onlySupportJpg:'只允许上传.jpg类型的文件!'
+                        }
+                    }
+                }
             }
         }
     },
@@ -181,6 +198,7 @@ export const langMap = {
             invalidLockOperation:'无效加锁操作！',
             invalidPublishOperation:'无效发布操作！',
             openInvalidRowDetails:'打开无效的行详情！',
+            doNotAllowSelectionOfStartUsing:'所选项中包含已启用的项，请取消勾选所有已启用的项后重试！',
         },
         error:{
             failedDueToNotGettingId:'操作失败！未取得有效的id！',
@@ -196,6 +214,7 @@ export const langMap = {
             isConfirmPublishWhatSelectedRow:'是否确认发布所选的{0}条数据？',
             isConfirmLockSelectedRow:'是否确认锁定所选数据？',
             isConfirmLockWhatSelectedRow:'是否确认锁定所选的{0}条数据？',
+            isConfirmStartUsingWhatSelectedRow:'一旦启用后将无法禁用！请再次确认是否启用所选的{0}条数据？',
         },
         info:{
             actionOfCancelDelete:'操作:取消删除',
