@@ -231,5 +231,21 @@ export const langMap = {
             actionOfCancelStartUsing:'操作:取消启用',
             actionOfCancelPublish:'操作:取消发布',
         }
+    },
+    http:{
+        notify:{
+            message:{
+                success:'信息:',
+                warning:'警告:',
+                error:'错误!'
+            },
+            description:{
+                requestError:'请求出错',
+                grantFailed:'获取授权失败,请重新登录!',
+                accessDenied:'拒绝访问',
+                resourceNotFound:'请求错误,未找到该资源',
+                serverDistracted:'服务器开小差了'
+            }
+        }
     }
 }

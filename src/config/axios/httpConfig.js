@@ -2,12 +2,9 @@ import axios from 'axios'
 import router from '@/router/index'
 import baseURL from './baseUrl'
 import {message, Spin,notification} from 'ant-design-vue'
+import {i18nUtil} from "~Config/i18n/i18nUtil";
 const http = {};
-const defaultNotificationMsg = {
-    success:"提示",
-    warning:'提示',
-    error:'错误！'
-}
+
 //基础访问url
 var instance = axios.create({
     timeout: 50000,
@@ -20,32 +17,32 @@ var instance = axios.create({
         switch (status) {
             case 400:
                 notification.error({
-                    message:defaultNotificationMsg.error,
-                    description:'请求出错!'
+                    message:i18nUtil.getKey('langMap.http.notify.message.error'),
+                    description:i18nUtil.getKey('langMap.http.notify.description.requestError')
                 })
                 break
             case 401:
                 notification.warning({
-                    message:defaultNotificationMsg.warning,
-                    description:'授权失败，请重新登录'
+                    message:i18nUtil.getKey('langMap.http.notify.message.warning'),
+                    description:i18nUtil.getKey('langMap.http.notify.description.grantFailed')
                 })
                 return;
             case 403:
                 notification.warning({
-                    message:defaultNotificationMsg.warning,
-                    description:'拒绝访问'
+                    message:i18nUtil.getKey('langMap.http.notify.message.warning'),
+                    description:i18nUtil.getKey('langMap.http.notify.description.accessDenied')
                 })
                 break
             case 404:
                 notification.warning({
-                    message:defaultNotificationMsg.warning,
-                    description:'请求错误,未找到该资源'
+                    message:i18nUtil.getKey('langMap.http.notify.message.warning'),
+                    description:i18nUtil.getKey('langMap.http.notify.description.resourceNotFound')
                 })
                 break
             case 500:
                 notification.error({
-                    message:defaultNotificationMsg.error,
-                    description:'服务端错误'
+                    message:i18nUtil.getKey('langMap.http.notify.message.error'),
+                    description:i18nUtil.getKey('langMap.http.notify.description.serverDistracted')
                 })
                 break
         }
@@ -115,8 +112,8 @@ instance.interceptors.response.use(
                     case 403:
                         if(1==2) {       //已在create axios 时定义了处理
                             notification.error({
-                                message:defaultNotificationMsg.warning,
-                                description:"登录过期，请重新登录！"
+                                message:i18nUtil.getKey('langMap.http.notify.message.error'),
+                                description:i18nUtil.getKey('langMap.http.notify.description.grantFailed')
                             });
                         }
                         // 清除token
@@ -126,8 +123,8 @@ instance.interceptors.response.use(
                     case 404:
                         if(1==2){       //已在create axios 时定义了处理
                             notification.warning({
-                                message:defaultNotificationMsg.warning,
-                                description:"网络请求不存在"
+                                message:i18nUtil.getKey('langMap.http.notify.message.warning'),
+                                description:i18nUtil.getKey('langMap.http.notify.description.resourceNotFound')
                             });
                         }
                         break;
@@ -135,8 +132,8 @@ instance.interceptors.response.use(
                     default:
                         if(1==2) {       //已在create axios 时定义了处理
                             notification.error({
-                                message:defaultNotificationMsg.warning,
-                                description:"操作出现异常！"
+                                message:i18nUtil.getKey('langMap.http.notify.message.error'),
+                                description:i18nUtil.getKey('langMap.http.notify.description.requestError')
                             });
                         }
                 }
@@ -144,8 +141,8 @@ instance.interceptors.response.use(
             }
         }   else {
             notification.error({
-                message:defaultNotificationMsg.warning,
-                description:"响应错误或服务器异常!请联系管理员！"
+                message:i18nUtil.getKey('langMap.http.notify.message.error'),
+                description:i18nUtil.getKey('langMap.http.notify.description.serverDistracted')
             });
         }
     }
@@ -168,7 +165,7 @@ http.get = function (url, options) {
                     resolve(response.data)
                 } else {
                     notification.error({
-                        message:defaultNotificationMsg.warning,
+                        message:i18nUtil.getKey('langMap.http.notify.message.error'),
                         description:response.msg
                     });
                     reject(response.msg)
@@ -178,10 +175,10 @@ http.get = function (url, options) {
                 console.log(e)
             }, err => {
                 notification.error({
-                    message:defaultNotificationMsg.warning,
-                    description:"请求错误或服务器异常!请联系管理员！"
+                    message:i18nUtil.getKey('langMap.http.notify.message.error'),
+                    description:i18nUtil.getKey('langMap.http.notify.description.serverDistracted')
                 });
-                reject(err)
+                reject(err);
             })
     })
 }

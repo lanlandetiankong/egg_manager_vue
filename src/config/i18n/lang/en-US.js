@@ -226,5 +226,21 @@ export const langMap = {
             actionOfCancelStartUsing:'Action:Cancel start using',
             actionOfCancelPublish:'Action:Cancel publish',
         }
+    },
+    http:{
+        notify:{
+            message:{
+                success:'Info:',
+                warning:'Warning:',
+                error:'Error:'
+            },
+            description:{
+                requestError:'Request error',
+                grantFailed:'Authorization failed. Please login again!',
+                accessDenied:'Access denied',
+                resourceNotFound:'Request error,the resource was not found',
+                serverDistracted:'The server is out of order'
+            }
+        }
     }
 }

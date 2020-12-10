@@ -33,7 +33,10 @@
              * 手动更新那些npm组件的内容
              */
             manualUpdateText(){
-                document.getElementsByClassName('verify-change-code')[0].innerHTML = this.$t('langMap.button.actions.switchToNextOne') ;
+                const verifyDom = document.getElementsByClassName('verify-change-code');
+                if(verifyDom && verifyDom[0]){
+                    verifyDom[0].innerHTML = this.$t('langMap.button.actions.switchToNextOne') ;
+                }
             }
         }
     }
