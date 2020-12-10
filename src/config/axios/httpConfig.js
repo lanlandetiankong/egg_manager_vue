@@ -192,7 +192,11 @@ http.post = function (url, data, options) {
         instance
             .post(url, data, options)
             .then((response) => {
-                var respData = response.data ;
+                if(typeof response == "undefined"){
+                    reject(response) ;
+                    return false ;
+                }
+                const respData = response.data ;
                 //loadingInstance.close();
                 //对返回结果的预先处理
                 if (respData) {
