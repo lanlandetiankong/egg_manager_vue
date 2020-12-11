@@ -19,6 +19,7 @@ function getVueI18n() {
         if(vuei18nTmp){
             window.vuei18n = vuei18nTmp ;
         }
+        return vuei18nTmp;
     }
 }
 

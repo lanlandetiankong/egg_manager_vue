@@ -3,14 +3,14 @@
         <a-list itemLayout="horizontal" :dataSource="dataObjArr">
             <a-list-item slot="renderItem" slot-scope="item, index">
                 <a-list-item-meta
-                    :key="item.fieldKey"
+                    :key="item.fieldName"
                 >
                     <a-tag :color="item.success ? 'blue' : '#f50'"
                            slot="title">
-                        {{item.fieldName}}
+                        {{item.fieldLabel}}
                     </a-tag>
                     <span slot="description">
-                        <template v-if="item.success">    <!-- 异常处理 -->
+                        <template v-if="!item.success">    <!-- 异常处理 -->
                             <a-tag color="#f50">
                                 Error: {{item.msg}}
                             </a-tag>
@@ -46,6 +46,9 @@
         },
         data() {
             return {
+                msgConf:{
+                    undefinedEnum:DrawerFieldTypeEnum.undefinedEnumKeyValue
+                },
             };
         },
         methods: {
@@ -58,11 +61,12 @@
             },
             dealGetFieldConfValue(obj,fieldConfObj){    //根据配置取得字段的值
                 var _this = this ;
-                var fieldVal = obj[fieldConfObj.fieldKey];
+                debugger;
+                var fieldVal = obj[fieldConfObj.fieldName];
                 //是否需要拆分fieldKey字段数组并遍历取值,如未设置则为否
                 var isNeedSplitTemp = _this.dealEmptyToDefaultVal(fieldConfObj.isNeedSplit,false);
                 if(isNeedSplitTemp === true){
-                    var fieldKeySplitArrTemp = _this.dealEmptyToDefaultVal(fieldConfObj.fieldKeySplitArr,[fieldConfObj.fieldKey]);
+                    var fieldKeySplitArrTemp = _this.dealEmptyToDefaultVal(fieldConfObj.fieldKeySplitArr,[fieldConfObj.fieldName]);
                     if(fieldKeySplitArrTemp.length > 1){
                         var fieldValObj = obj[fieldKeySplitArrTemp[0]] ;
                         fieldVal = _this.dealRecurveGetRealValue(fieldKeySplitArrTemp,fieldValObj,0);
@@ -82,10 +86,11 @@
             },
             dealGetFieldObjFromConf(fieldConfObj,fieldVal){  //尝试从配置中取得 fieldVal的 其他处理方式后
                 var _this = this;
+                debugger;
                 var fieldResObj = {     //默认的返回对象
-                    fieldKey:fieldConfObj.fieldKey,
-                    fieldKeySplitArr:fieldConfObj.fieldKeySplitArr,
                     fieldName:fieldConfObj.fieldName,
+                    fieldKeySplitArr:fieldConfObj.fieldKeySplitArr,
+                    fieldLabel:fieldConfObj.fieldLabel,
                     fieldVal:fieldVal,
                     fieldType:fieldConfObj.type,
                     success:true,
@@ -101,7 +106,7 @@
                             fieldValTemp = enumValMap[fieldVal] ;
                             if(typeof fieldValTemp == "undefined"){
                                 fieldResObj.success = false ;
-                                fieldResObj.msg = _this.drawerFieldConf.msgConf.undefinedEnum ;
+                                fieldResObj.msg = _this.msgConf.undefinedEnum ;
                             }
                         }
                     }   else if(DrawerFieldTypeEnum.Date == fieldType){ //日期类型
@@ -122,25 +127,25 @@
                 fieldResObj.fieldVal = fieldValTemp ;
                 return fieldResObj ;
             },
-            dealDataObjToArr(obj){  //将object转化为展示的数组
-                var dataObjArr = [] ;
-                if(typeof this.drawerFieldConf != "undefined" && this.drawerFieldConf != null){
-                    var showFieldArr = this.drawerFieldConf.showFieldArr;
-                    var keyNameMapObj = this.drawerFieldConf.keyNameMapObj;
-                    var undefinedKeyName = this.drawerFieldConf.undefinedKeyName;
-                    if(typeof showFieldArr != "undefined" && showFieldArr != null){
-                        for (var i in showFieldArr){
-                            var fieldConfObj = showFieldArr[i] ;
-                            var visibleVal = this.dealEmptyToDefaultVal(fieldConfObj.visible,true);
-                            if(visibleVal === true){
-                                var fieldVal = this.dealGetFieldConfValue(obj,fieldConfObj);
-                                var fieldResObj = this.dealGetFieldObjFromConf(fieldConfObj,fieldVal);
+            dealDataObjToArr(obj) {  //将object转化为展示的数组
+                var dataObjArr = [];
+                if (typeof this.drawerFieldConf != "undefined" && this.drawerFieldConf != null) {
+                    var fieldConfKeys = Object.keys(this.drawerFieldConf);
+                    for (var idx in fieldConfKeys) {
+                        debugger;
+                        var fieldConfKey = fieldConfKeys[idx] ;
+                        if (obj.hasOwnProperty(fieldConfKey)) {
+                            var fieldConfObj = this.drawerFieldConf[fieldConfKey];
+                            var visibleVal = this.dealEmptyToDefaultVal(fieldConfObj.visible, true);
+                            if (visibleVal === true) {
+                                var fieldVal = this.dealGetFieldConfValue(obj, fieldConfObj);
+                                var fieldResObj = this.dealGetFieldObjFromConf(fieldConfObj, fieldVal);
                                 dataObjArr.push(fieldResObj);
                             }
                         }
                     }
                 }
-                return dataObjArr ;
+                return dataObjArr;
             }
         },
         computed:{
