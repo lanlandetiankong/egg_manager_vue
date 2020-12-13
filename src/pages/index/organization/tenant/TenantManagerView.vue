@@ -148,11 +148,10 @@
     </div>
 </template>
 <script>
-    import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import {DefineTenantDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {TenantManagerApi} from './tenantManagerApi.js'
 
     import DefineTenantCreateFormComp from '~Components/index/organization/tenant/DefineTenantCreateFormComp'
@@ -162,8 +161,26 @@
     export default {
         name: "TenantManagerView",
         components: { ACol, AFormItem,DefineTenantCreateFormComp,TenantSetupManagerComp,SimpleDetailDrawerComp},
+        mixins:[EggCommonMixin],
         data() {
+            const textAlignDefault = 'left' ;
+            //字段配置(Query/Drawer)
+            const fieldInfoConfObj = {
+                name:{
+                    fieldLabel:this.$t('langMap.table.fields.tenant.tenantName'),
+                    fieldName:'name', matching:'like',
+                },
+                code:{
+                    fieldLabel:this.$t('langMap.table.fields.common.code'),
+                    fieldName:'code', matching:'like',
+                },
+                remark:{
+                    fieldLabel:this.$t('langMap.table.fields.common.remark'),
+                    fieldName:'remark', matching:'like',
+                }
+            };
             return {
+                fieldInfoConf:fieldInfoConfObj,
                 searchConf:{
                     showListFlag:false,
                     loadingFlag:false,
@@ -177,7 +194,25 @@
                 searchForm:this.$form.createForm(this,{name:'search_form'}),
                 tableConf: {
                     data: [],
-                    columns: tableColumns,
+                    columns: [{
+                        title: '租户名',
+                        align:textAlignDefault,
+                        dataIndex: 'name',
+                        key: 'name'
+                    }, {
+                        title: '编码',
+                        align:textAlignDefault,
+                        dataIndex: 'code',
+                        key: 'code',
+                    },  {
+                        title:'操作',
+                        align:textAlignDefault,
+                        dataIndex:"operation",
+                        key:'operation',
+                        fixed:'right',
+                        width:220,
+                        scopedSlots: { customRender: 'action' }
+                    }],
                     loading: false,
                     pagination: {
                         current:1,
@@ -238,7 +273,7 @@
                             },
                             maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
-                            drawerFieldConf:DefineTenantDetailDrawerConf
+                            drawerFieldConf:fieldInfoConfObj
                         },
                     },
                 },
@@ -325,23 +360,6 @@
                     }
                 })
             },
-            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
-                var _this = this ;
-                var queryFieldArr = [] ;
-                if(queryObj) {
-                    for (var key in queryObj){
-                        var searchFieldObj = searchFormQueryConf[key];
-                        if(searchFieldObj){
-                            const queryVal = queryObj[key] ;
-                            if(queryVal || queryVal == 0){
-                                searchFieldObj['value'] = queryObj[key];
-                                queryFieldArr.push(searchFieldObj);
-                            }
-                        }
-                    }
-                }
-                return queryFieldArr ;
-            },
             handleSearchFormQuery(e) {
                 var _this = this ;
                 if (e) {
@@ -352,7 +370,7 @@
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                         _this.dealQueryDefineTenants(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });

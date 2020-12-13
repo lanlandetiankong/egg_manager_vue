@@ -195,8 +195,7 @@
 </template>
 
 <script>
-    import {tableColumns,searchFormQueryConf} from './param_conf.js';
-    import {DefineRoleDetailDrawerConf} from './drawer_conf.js'
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {PermissionRoleManagerApi} from './permissionRoleManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
 
@@ -207,8 +206,29 @@
     export default {
         name: "PermissionRoleManagerView",
         components: {RoleGrantPermissionFormComp, DefineRoleCreateFormComp,SimpleDetailDrawerComp,RoleGrantMenusFormComp},
+        mixins:[EggCommonMixin],
         data(){
+            const textAlignDefault = 'left';
+            const fieldInfoConfObj = {
+                name:{
+                    fieldLabel:this.$t('langMap.table.fields.permission.permissionName'),
+                    fieldName:'name', matching:'like'
+                },
+                code:{
+                    fieldLabel:this.$t('langMap.table.fields.common.code'),
+                    fieldName:'code', matching:'like',
+                },
+                type:{
+                    fieldLabel:this.$t('langMap.table.fields.common.type'),
+                    fieldName:'type',matching:'equals',
+                },
+                remark:{
+                    fieldLabel:this.$t('langMap.table.fields.common.remark'),
+                    fieldName:'remark', matching:'like',
+                }
+            };
             return {
+                fieldInfoConf:fieldInfoConfObj,
                 searchConf:{
                     showListFlag:false,
                     loadingFlag:false,
@@ -228,7 +248,30 @@
                 searchForm:this.$form.createForm(this,{name:'search_form'}),
                 tableConf: {
                     data: [],
-                    columns: tableColumns,
+                    columns: [{
+                        title: '角色名',
+                        align:textAlignDefault,
+                        dataIndex: 'name',
+                        key: 'name'
+                    }, {
+                        title: '编码',
+                        align:textAlignDefault,
+                        dataIndex: 'code',
+                        key: 'code',
+                    }, {
+                        title: '类型',
+                        align:textAlignDefault,
+                        key: 'typeStr',
+                        scopedSlots: { customRender: 'typeStr' },
+                    }, {
+                        title:'操作',
+                        align:textAlignDefault,
+                        dataIndex:"operation",
+                        key:'operation',
+                        fixed:'right',
+                        width:220,
+                        scopedSlots: { customRender: 'action' }
+                    }],
                     loading: false,
                     pagination: {
                         current:1,
@@ -297,7 +340,7 @@
                             },
                             maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
-                            drawerFieldConf:DefineRoleDetailDrawerConf
+                            drawerFieldConf:fieldInfoConfObj
                         },
                     },
                 },
@@ -431,23 +474,6 @@
                     }
                 })
             },
-            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
-                var _this = this ;
-                var queryFieldArr = [] ;
-                if(queryObj) {
-                    for (var key in queryObj){
-                        var searchFieldObj = searchFormQueryConf[key];
-                        if(searchFieldObj){
-                            const queryVal = queryObj[key] ;
-                            if(queryVal || queryVal == 0){
-                                searchFieldObj['value'] = queryObj[key];
-                                queryFieldArr.push(searchFieldObj);
-                            }
-                        }
-                    }
-                }
-                return queryFieldArr ;
-            },
             dealDefineRoleGrantPermissionsById(selectRowId){        //授权页面弹窗-封装方法
                 var _this = this ;
                 if(_this.dialogGrantPermissionConf.initFlag == false){  //第一次进行分配权限时进行 所有权限 的数据加载
@@ -510,7 +536,7 @@
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                         _this.dealQueryDefineRoles(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });

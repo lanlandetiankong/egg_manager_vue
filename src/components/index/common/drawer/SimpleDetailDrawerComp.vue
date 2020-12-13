@@ -86,7 +86,12 @@
             },
             dealGetFieldObjFromConf(fieldConfObj,fieldVal){  //尝试从配置中取得 fieldVal的 其他处理方式后
                 var _this = this;
-                debugger;
+                fieldConfObj.drawerAble =_this.dealEmptyToDefaultVal(fieldConfObj.drawerAble,true);
+                if(fieldConfObj.drawerAble != true){
+                    return null ;
+                }
+                fieldConfObj.fieldLabel = (fieldConfObj.fieldLabel) ? fieldConfObj.fieldLabel : '';
+                fieldConfObj.type = (fieldConfObj.type) ? fieldConfObj.type : DrawerFieldTypeEnum.String;
                 var fieldResObj = {     //默认的返回对象
                     fieldName:fieldConfObj.fieldName,
                     fieldKeySplitArr:fieldConfObj.fieldKeySplitArr,
@@ -140,7 +145,9 @@
                             if (visibleVal === true) {
                                 var fieldVal = this.dealGetFieldConfValue(obj, fieldConfObj);
                                 var fieldResObj = this.dealGetFieldObjFromConf(fieldConfObj, fieldVal);
-                                dataObjArr.push(fieldResObj);
+                                if(fieldResObj){
+                                    dataObjArr.push(fieldResObj);
+                                }
                             }
                         }
                     }

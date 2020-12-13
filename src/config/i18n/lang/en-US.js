@@ -113,10 +113,12 @@ export const langMap = {
                 email:'Email',
             },
             module:{
+                iconName:'Icon Value',
                 moduleName:'Module name',
             },
             menu:{
                 menuName:'Menu name',
+                parentMenuName:'Parent menu name',
                 urlJumpType:'Url jump type',
                 routerUrl:'Router url',
                 hrefUrl:'Href url',
@@ -130,6 +132,7 @@ export const langMap = {
                 publishDepartment:'Publish department',
             },
             tenant:{
+                tenantName:'Tenant Name',
                 belongTenant:'Belong tenant',
             },
             role:{

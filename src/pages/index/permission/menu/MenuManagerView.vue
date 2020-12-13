@@ -208,11 +208,10 @@
     </div>
 </template>
 <script>
-    import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import {DefineMenuDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {MenuManagerApi} from './menuManagerApi.js'
     import {ModuleCommonApis} from '~Apis/module/ModuleCommonApis.js'
 
@@ -222,8 +221,46 @@
     export default {
         name: "MenuManagerView",
         components: {DefineMenuCreateFormComp,SimpleDetailDrawerComp,ExcelTempletUploadComp, ACol, AFormItem},
+        mixins:[EggCommonMixin],
         data() {
+            const textAlignDefault = 'left';
+            //字段配置(Query/Drawer)
+            const fieldInfoConfObj = {
+                menuName:{
+                    fieldLabel:this.$t('langMap.table.fields.menu.menuName'),
+                    fieldName:'menuName',matching:'like'
+                },
+                pid:{
+                    fieldName:'pid',matching:'equals',drawerAble:false
+                },
+                parentMenuName:{
+                    fieldLabel:this.$t('langMap.table.fields.menu.parentMenuName'),
+                    fieldName:'parentMenuName',searchAble:false,
+                    fieldKeySplitArr:['parentMenu','menuName'],isNeedSplit:true
+                },
+                label:{
+                    fieldLabel:this.$t('langMap.table.fields.common.label'),
+                    fieldName:'label',matching:'like'
+                },
+                routerUrl:{
+                    fieldLabel:this.$t('langMap.table.fields.menu.routerUrl'),
+                    fieldName:'routerUrl',matching:'like'
+                },
+                hrefUrl:{
+                    fieldLabel:this.$t('langMap.table.fields.menu.hrefUrl'),
+                    fieldName:'name',matching:'like'
+                },
+                urlJumpType:{
+                    fieldLabel:this.$t('langMap.table.fields.menu.urlJumpType'),
+                    fieldName:'urlJumpType',matching:'like'
+                },
+                remark:{
+                    fieldLabel:this.$t('langMap.table.fields.common.remark'),
+                    fieldName:'remark',matching:'equals'
+                }
+            };
             return {
+                fieldInfoConf:fieldInfoConfObj,
                 searchConf:{
                     showListFlag:false,
                     loadingFlag:false,
@@ -256,7 +293,75 @@
                 searchForm:this.$form.createForm(this,{name:'search_form'}),
                 tableConf: {
                     data: [],
-                    columns: tableColumns,
+                    columns: [{
+                        title: this.$t('langMap.table.fields.menu.menuName'),
+                        align:textAlignDefault,
+                        dataIndex: 'menuName',
+                        key: 'menuName',
+                        width:100,
+                    },{
+                        title: this.$t('langMap.table.fields.menu.parentMenuName'),
+                        align:textAlignDefault,
+                        dataIndex: 'parentMenu.menuName',
+                        key: 'parentMenu.menuName',
+                        width:100,
+                    },{
+                        title: this.$t('langMap.table.fields.menu.iconName'),
+                        align:textAlignDefault,
+                        dataIndex: 'iconName',
+                        key: 'iconName',
+                        scopedSlots:{
+                            customRender:'iconRender'
+                        },
+                        width:60
+                    },{
+                        title: this.$t('langMap.table.fields.common.label'),
+                        align:textAlignDefault,
+                        dataIndex: 'label',
+                        key: 'label',
+                        width:70
+                    },{
+                        title: this.$t('langMap.table.fields.common.level'),
+                        align:textAlignDefault,
+                        dataIndex: 'level',
+                        key: 'level',
+                        width:70
+                    },{
+                        title:this.$t('langMap.table.fields.menu.urlJumpType'),
+                        align:textAlignDefault,
+                        dataIndex: 'urlJumpTypeStr',
+                        key: 'urlJumpTypeStr',
+                        width:120,
+                        scopedSlots:{
+                            customRender:'urlJumpTypeStrRender'
+                        }
+                    },{
+                        title: this.$t('langMap.table.fields.menu.routerUrl'),
+                        align:textAlignDefault,
+                        dataIndex: 'routerUrl',
+                        key: 'routerUrl',
+                        width:140
+                    },{
+                        title: this.$t('langMap.table.fields.menu.hrefUrl'),
+                        align:textAlignDefault,
+                        dataIndex: 'hrefUrl',
+                        key: 'hrefUrl',
+                        width:140
+                    },{
+                        title: this.$t('langMap.table.fields.common.sortVal'),
+                        align:textAlignDefault,
+                        dataIndex: 'orderNum',
+                        key: 'orderNum',
+                        width:70
+                    },{
+                        title:this.$t('langMap.table.header.operation'),
+                        align:textAlignDefault,
+                        dataIndex:"operation",
+                        key:'operation',
+                        fixed:'right',
+                        width:220,
+                        scopedSlots: { customRender: 'action' }
+                    }],
                     loading: false,
                     pagination: {
                         current:1,
@@ -314,7 +419,7 @@
                             },
                             maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
-                            drawerFieldConf:DefineMenuDetailDrawerConf
+                            drawerFieldConf:fieldInfoConfObj
                         },
                     },
                 },
@@ -436,23 +541,6 @@
                     }
                 })
             },
-            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
-                var _this = this ;
-                var queryFieldArr = [] ;
-                if(queryObj) {
-                    for (var key in queryObj){
-                        var searchFieldObj = searchFormQueryConf[key];
-                        if(searchFieldObj){
-                            const queryVal = queryObj[key] ;
-                            if(queryVal || queryVal == 0){
-                                searchFieldObj['value'] = queryObj[key];
-                                queryFieldArr.push(searchFieldObj);
-                            }
-                        }
-                    }
-                }
-                return queryFieldArr ;
-            },
             handleSearchFormQuery(e) {
                 var _this = this ;
                 if (e) {
@@ -463,7 +551,7 @@
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                         _this.dealQueryDefineMenus(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });

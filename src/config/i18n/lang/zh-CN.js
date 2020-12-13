@@ -113,10 +113,12 @@ export const langMap = {
                 email:'邮箱',
             },
             module:{
+                iconName:'图标值',
                 moduleName:'模块名',
             },
             menu:{
                 menuName:'菜单名称',
+                parentMenuName:'上级菜单名',
                 urlJumpType:'路由跳转类型',
                 routerUrl:'路由地址',
                 hrefUrl:'外部地址',
@@ -130,6 +132,7 @@ export const langMap = {
                 publishDepartment:'发布部门',
             },
             tenant:{
+                tenantName:'租户名',
                 belongTenant:'所属租户',
             },
             role:{
