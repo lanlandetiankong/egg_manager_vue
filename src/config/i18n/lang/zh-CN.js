@@ -105,12 +105,14 @@ export const langMap = {
                 styleVal:'样式',
                 tag:'标签',
                 tagName:'标签名',
+                lockedStatus:'锁状态'
             },
             user:{
                 userAccount:'账号',
                 nickName:'用户名',
                 avatarUrl:'头像',
                 email:'邮箱',
+                userType:'用户类型',
             },
             module:{
                 iconName:'图标值',
@@ -128,6 +130,8 @@ export const langMap = {
                 jobName:'职务名',
             },
             department:{
+                departmentName:'部门名',
+                parentDepartmentName:'上级部门名',
                 belongDepartment:'所属部门',
                 publishDepartment:'发布部门',
             },
@@ -144,6 +148,21 @@ export const langMap = {
             form:{
                 formName:'表单名',
                 formTitle:'表单标题',
+            },
+            formType:{
+                formTypeName:'表单名',
+            },
+            announcement:{
+                title:'标题',
+                keyWord:'关键字',
+                tagNameOfStr:'标签',
+                content:'内容',
+                publishDepartment:'发布部门'
+            },
+            announcementTag:{
+                tagName:'标签名',
+                ordering:'排序',
+                description:'描述'
             }
         }
     },

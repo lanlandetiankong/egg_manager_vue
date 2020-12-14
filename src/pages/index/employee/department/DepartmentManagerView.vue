@@ -169,20 +169,56 @@
     </div>
 </template>
 <script>
-    import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import {DefineDepartmentDetailDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
     import {DepartmentManagerApi} from './departmentManagerApi.js'
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
     import DefineDepartmentCreateFormComp from '~Components/index/user/employee/department/DefineDepartmentCreateFormComp';
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     export default {
         name: "DepartmentManagerView",
         components: {DefineDepartmentCreateFormComp,SimpleDetailDrawerComp,ACol, AFormItem},
+        mixins:[EggCommonMixin],
         data() {
+            const textAlignDefault = 'left' ;
+            //字段配置(Query/Drawer)
+            const fieldInfoConfObj = {
+                pid:{
+                    fieldName:'pid', matching:'equals', drawerAble:false
+                },
+                name:{
+                    fieldLabel:this.$t('langMap.table.fields.department.departmentName'),
+                    fieldName:'name', matching:'like',
+                },
+                pid:{
+                    fieldName:'pid', matching:'equals', drawerAble:false
+                },
+                parentDepartmentName:{
+                    fieldLabel:this.$t('langMap.table.fields.department.parentDepartmentName'),
+                    fieldName:'parentDepartmentName',searchAble:false,
+                    isNeedSplit:true,fieldKeySplitArr:['parentDepartment','name']
+                },
+                code:{
+                    fieldLabel:this.$t('langMap.table.fields.common.code'),
+                    fieldName:'code', matching:'like',
+                },
+                level:{
+                    fieldLabel:this.$t('langMap.table.fields.common.level'),
+                    fieldName:'level', matching:'equals',value:0
+                },
+                description:{
+                    fieldLabel:this.$t('langMap.table.fields.common.description'),
+                    fieldName:'description', matching:'like',
+                },
+                remark:{
+                    fieldLabel:this.$t('langMap.table.fields.common.remark'),
+                    fieldName:'remark', matching:'like',
+                }
+            };
             return {
+                fieldInfoConf:fieldInfoConfObj,
                 searchConf:{
                     showListFlag:false,
                     loadingFlag:false,
@@ -207,7 +243,46 @@
                 searchForm:this.$form.createForm(this,{name:'search_form'}),
                 tableConf: {
                     data: [],
-                    columns: tableColumns,
+                    columns: [{
+                        title: '部门名',
+                        align:textAlignDefault,
+                        dataIndex: 'name',
+                        key: 'name',
+                    }, {
+                        title: '上级部门名',
+                        align:textAlignDefault,
+                        dataIndex: 'parentDepartment.name',
+                        key: 'parentDepartment.name',
+                        width:100,
+                    },{
+                        title: '编码',
+                        align:textAlignDefault,
+                        dataIndex: 'code',
+                        key: 'code',
+                    },{
+                        title: '层级',
+                        align:textAlignDefault,
+                        dataIndex: 'level',
+                        key: 'level',
+                    },{
+                        title: '排序',
+                        align:textAlignDefault,
+                        dataIndex: 'orderNum',
+                        key: 'orderNum',
+                    },{
+                        title: '描述',
+                        align:textAlignDefault,
+                        dataIndex: 'description',
+                        key: 'description',
+                    },{
+                        title:'操作',
+                        align:textAlignDefault,
+                        dataIndex:"operation",
+                        key:'operation',
+                        fixed:'right',
+                        width:220,
+                        scopedSlots: { customRender: 'action' }
+                    }],
                     loading: false,
                     pagination: {
                         current:1,
@@ -260,7 +335,7 @@
                             },
                             maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
-                            drawerFieldConf:DefineDepartmentDetailDrawerConf
+                            drawerFieldConf:fieldInfoConfObj
                         },
                     },
                 },
@@ -357,23 +432,6 @@
                     }
                 })
             },
-            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
-                var _this = this ;
-                var queryFieldArr = [] ;
-                if(queryObj) {
-                    for (var key in queryObj){
-                        var searchFieldObj = searchFormQueryConf[key];
-                        if(searchFieldObj){
-                            const queryVal = queryObj[key] ;
-                            if(queryVal || queryVal == 0){
-                                searchFieldObj['value'] = queryObj[key];
-                                queryFieldArr.push(searchFieldObj);
-                            }
-                        }
-                    }
-                }
-                return queryFieldArr ;
-            },
             handleSearchFormQuery(e) {
                 var _this = this ;
                 if (e) {
@@ -384,7 +442,7 @@
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                         _this.dealQueryDefineDepartments(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });

@@ -137,17 +137,46 @@
     </div>
 </template>
 <script>
-    import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import {AnnouncementDetailDrawerConf} from './drawer_conf.js'
     import {AnnouncementAllListApi} from './announcementAllListApi'
+    import {DrawerFieldTypeEnum} from '~Components/index/common/drawer/drawer_define.js'
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     export default {
         name: "AnnouncementAllListView",
         components:{SimpleDetailDrawerComp},
+        mixins:[EggCommonMixin],
         data() {
+            const textAlignDefault = 'left' ;
+            //字段配置(Query/Drawer)
+            const fieldInfoConfObj = {
+                title:{
+                    fieldLabel:this.$t('langMap.table.fields.announcement.title'),
+                    fieldName:'title', matching:'like',
+                },
+                keyWord:{
+                    fieldLabel:this.$t('langMap.table.fields.announcement.keyWord'),
+                    fieldName:'keyWord', matching:'like',
+                },
+                tagIds:{
+                    fieldName:'tagIds', matching:'like',drawerAble:false,
+                },
+                tagNameOfStr:{
+                    fieldLabel:this.$t('langMap.table.fields.announcement.tagNameOfStr'),
+                    fieldName:'tagNameOfStr',searchAble:false,
+                },
+                content:{
+                    fieldLabel:this.$t('langMap.table.fields.announcement.content'),
+                    fieldName:'content', matching:'like',type:DrawerFieldTypeEnum.HtmlDom
+                },
+                remark:{
+                    fieldLabel:this.$t('langMap.table.fields.common.remark'),
+                    fieldName:'remark', matching:'like',
+                }
+            };
             return {
+                fieldInfoConf:fieldInfoConfObj,
                 searchConf:{
                     showListFlag:false,
                     loadingFlag:false,
@@ -165,7 +194,44 @@
                 searchForm:this.$form.createForm(this,{name:'search_form'}),
                 tableConf: {
                     data: [],
-                    columns: tableColumns,
+                    columns: [{
+                        title: '标题',
+                        align:textAlignDefault,
+                        dataIndex: 'title',
+                        width:100,
+                        key: 'title'
+                    }, {
+                        title: '关键字',
+                        align:textAlignDefault,
+                        dataIndex: 'keyWord',
+                        width:100,
+                        key: 'keyWord',
+                    },  {
+                        title: '标签',
+                        align:textAlignDefault,
+                        key: 'tagNames',
+                        width:150,
+                        scopedSlots: { customRender: 'tagNamesRender' },
+                    }, {
+                        title: '内容',
+                        align:textAlignDefault,
+                        dataIndex: 'shortContent',
+                        width:300,
+                        key: 'shortContent',
+                    }, {
+                        title: '发布部门',
+                        align:textAlignDefault,
+                        dataIndex: 'publishDepartment',
+                        width:100,
+                        key: 'publishDepartment',
+                    },{
+                        title:'操作',
+                        align:textAlignDefault,
+                        dataIndex:"operation",
+                        key:'operation',
+                        width:220,
+                        scopedSlots: { customRender: 'action' }
+                    }],
                     loading: false,
                     pagination: {
                         current:1,
@@ -216,7 +282,7 @@
                             },
                             maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
-                            drawerFieldConf:AnnouncementDetailDrawerConf
+                            drawerFieldConf:fieldInfoConfObj
                         },
                     },
                 },
@@ -311,23 +377,6 @@
                     }
                 })
             },
-            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
-                var _this = this ;
-                var queryFieldArr = [] ;
-                if(queryObj) {
-                    for (var key in queryObj){
-                        var searchFieldObj = searchFormQueryConf[key];
-                        if(searchFieldObj){
-                            const queryVal = queryObj[key] ;
-                            if(queryVal || queryVal == 0){
-                                searchFieldObj['value'] = queryObj[key];
-                                queryFieldArr.push(searchFieldObj);
-                            }
-                        }
-                    }
-                }
-                return queryFieldArr ;
-            },
             handleSearchFormQuery(e) {
                 var _this = this ;
                 if (e) {
@@ -338,7 +387,7 @@
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                         _this.dealQueryAnnouncements(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });

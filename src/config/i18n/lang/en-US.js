@@ -105,12 +105,14 @@ export const langMap = {
                 styleVal:'Style',
                 tag:'Tag',
                 tagName:'Tag name',
+                lockedStatus:'Lock Status'
             },
             user:{
                 userAccount:'User account',
                 nickName:'Nick name',
                 avatarUrl:'Avatar',
                 email:'Email',
+                userType:'User type',
             },
             module:{
                 iconName:'Icon Value',
@@ -128,6 +130,8 @@ export const langMap = {
                 jobName:'Job name',
             },
             department:{
+                departmentName:'Department name',
+                parentDepartmentName:' Parent department name',
                 belongDepartment:'Belong department',
                 publishDepartment:'Publish department',
             },
@@ -144,6 +148,21 @@ export const langMap = {
             form:{
                 formName:'Form name',
                 formTitle:'Form title',
+            },
+            formType:{
+                formTypeName:'Form type name',
+            },
+            announcement:{
+                title:'Title',
+                keyWord:'key word',
+                tagNameOfStr:'Tag Name',
+                content:'Content',
+                publishDepartment:'Publishing department'
+            },
+            announcementTag:{
+                tagName:'Tag Name',
+                ordering:'Ordering',
+                description:'Description'
             }
         },
     },
@@ -151,7 +170,11 @@ export const langMap = {
         forms:{
             pleaseChoose:'Please choose',
             chooseDepartment:'Choose department',
-            pleaseEnterTitle:'Please enterTitle'
+            pleaseEnterTitle:'Please enterTitle',
+            tips:{
+                lookUpIcon:'Click to view optional icons',
+                selectedIcon:'Selected icon'
+            }
         },
         enums:{
             lockStatus:{
@@ -175,6 +198,7 @@ export const langMap = {
                     uploading:'Uploading...',
                     confirmUpload:'Confirm upload'
                 },
+                atLeastNumberOfFiles:'Please select at least {0} files and submit!',
                 maximumNumberOfFiles:'Select up to {0} Excel file',
                 rangeSizeOfFiles:' Select up to {0}-{1} Excel files',
                 popover:{
@@ -192,27 +216,27 @@ export const langMap = {
     },
     message:{
         warning:{
-            pleaseSelectTheOnlyRowOfDataForUpdate:'Please select the only row of data for update！',
-            pleaseSelectTheOnlyRowOfDataForDelete:'Please select the only row of data for delete！',
-            pleaseSelectTheOnlyRowOfDataForStartUsing:'Please select the only row of data for start using！',
-            pleaseSelectTheOnlyRowOfDataForSetPosition:'Please select the only row of data for set position！',
-            pleaseSelectTheOnlyRowOfDataForLock:'Please select the only row of data for lock！',
-            pleaseSelectTheOnlyRowOfDataForAssigningPermissions:'Please select the only row of data for assigning permissions！',
-            pleaseSelectTheOnlyRowOfDataForAuthorizationMenu:'Please select the only row of data for authorization menu！',
-            pleaseSelectTheOnlyRowOfDataForUploadExcelTemplate:'Please select the only row of data for upload excel template！',
-            pleaseSelectTheOnlyRowOfDataForExport:'Please select the only row of data for export！',
-            invalidDeleteOperation:'Invalid delete operation！',
-            invalidLockOperation:'Invalid lock operation！',
-            invalidPublishOperation:'Invalid publish operation！',
-            openInvalidRowDetails:'Open invalid row details！',
-            doNotAllowSelectionOfStartUsing:'The selected item contains enabled items. Please uncheck all enabled items and try again！',
+            pleaseSelectTheOnlyRowOfDataForUpdate:'Please select the only row of data for update!',
+            pleaseSelectTheOnlyRowOfDataForDelete:'Please select the only row of data for delete!',
+            pleaseSelectTheOnlyRowOfDataForStartUsing:'Please select the only row of data for start using!',
+            pleaseSelectTheOnlyRowOfDataForSetPosition:'Please select the only row of data for set position!',
+            pleaseSelectTheOnlyRowOfDataForLock:'Please select the only row of data for lock!',
+            pleaseSelectTheOnlyRowOfDataForAssigningPermissions:'Please select the only row of data for assigning permissions!',
+            pleaseSelectTheOnlyRowOfDataForAuthorizationMenu:'Please select the only row of data for authorization menu!',
+            pleaseSelectTheOnlyRowOfDataForUploadExcelTemplate:'Please select the only row of data for upload excel template!',
+            pleaseSelectTheOnlyRowOfDataForExport:'Please select the only row of data for export!',
+            invalidDeleteOperation:'Invalid delete operation!',
+            invalidLockOperation:'Invalid lock operation!',
+            invalidPublishOperation:'Invalid publish operation!',
+            openInvalidRowDetails:'Open invalid row details!',
+            doNotAllowSelectionOfStartUsing:'The selected item contains enabled items. Please uncheck all enabled items and try again!',
         },
         error:{
             failedDueToNotGettingId:'Failed due to not getting id !',
-            wrongVerificationCode:'Wrong verification code！',
-            unknownExportCommand:'Unknown export command！',
-            currentPageDoesNotSupportExportOperations:'Current page does not support export operations！',
-            pageNotFound:'Page not found！',
+            wrongVerificationCode:'Wrong verification code!',
+            unknownExportCommand:'Unknown export command!',
+            currentPageDoesNotSupportExportOperations:'Current page does not support export operations!',
+            pageNotFound:'Page not found!',
         },
         confirm:{
             isConfirmDeleteSelectedRow:'Are you confirm delete selected row？',

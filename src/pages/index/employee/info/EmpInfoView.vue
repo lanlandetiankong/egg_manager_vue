@@ -285,12 +285,10 @@
 </template>
 <script>
     import jquery from 'jquery';
-    import BeeUtil from '~Assets/js/util/bee/BeeUtil.js' ;
-    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
-    import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import {EmployeeInfoDetailDrawerConf} from  './drawer_conf'
+
     import {EmpInfoApi} from './EmpInfoApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
     import EmployeeInfoCreateFormComp from '~Components/index/user/employee/info/EmployeeInfoCreateFormComp'
     import UserGrantRoleFormComp from '~Components/index/user/employee/info/UserGrantRoleFormComp';
@@ -308,7 +306,54 @@
             UserGrantJobFormComp, UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
         mixins:[EggCommonMixin],
         data() {
+            const textAlignDefault = 'left' ;
+            //字段配置(Query/Drawer)
+            const fieldInfoConfObj = {
+                account:{
+                    fieldLabel:this.$t('langMap.table.fields.user.userAccount'),
+                    fieldName:'account', matching:'like',
+                },
+                userName:{
+                    fieldLabel:this.$t('langMap.table.fields.user.nickName'),
+                    fieldName:'userName', matching:'like',
+                },
+                belongTenantName:{
+                    fieldLabel:this.$t('langMap.table.fields.tenant.belongTenant'),
+                },
+                belongDepartmentName:{
+                    fieldLabel:this.$t('langMap.table.fields.department.belongDepartment'),
+                    isNeedSplit:true,fieldKeySplitArr:['belongDepartment','name'],
+                },
+                email:{
+                    fieldLabel:this.$t('langMap.table.fields.user.email'),
+                    fieldName:'email', matching:'like',
+                },
+                userType:{
+                    fieldLabel:this.$t('langMap.table.fields.user.userType'),
+                    fieldName:'userType', matching:'equals',drawerAble:false
+                },
+                userTypeStr:{
+                    fieldLabel:this.$t('langMap.table.fields.user.userType'),
+                    searchAble:false
+                },
+                belongTenantId:{
+                    fieldName:'defineTenantId',matching:'equals', foreignName:'userTenant',drawerAble:false,
+                },
+                belongDepartmentId:{
+                    fieldName:'defineDepartmentId', matching:'equals', foreignName:'userDepartment',drawerAble:false,
+                },
+                locked:{
+                    fieldLabel:this.$t('langMap.table.fields.common.lockedStatus'),
+                    fieldName:'locked', matching:'equals',type:DrawerFieldTypeEnum.Enum,
+                    enumValMap:{"1":"已锁定", "0":"未锁定"}
+                },
+                remark:{
+                    fieldLabel:this.$t('langMap.table.fields.common.remark'),
+                    fieldName:'remark', matching:'like',
+                }
+            };
             return {
+                fieldInfoConf:fieldInfoConfObj,
                 searchConf: {
                     showListFlag:false,
                     loadingFlag: false,
@@ -339,7 +384,55 @@
                 searchForm: this.$form.createForm(this, {name: 'search_form'}),
                 tableConf: {
                     data: [],
-                    columns: tableColumns,
+                    columns: [{
+                        title: '账号',
+                        align:textAlignDefault,
+                        dataIndex: 'account',
+                        key: 'account',
+                        sorter:true,
+                        scopedSlots: { customRender: 'account' },
+                    },  {
+                        title: '姓名',
+                        align:textAlignDefault,
+                        dataIndex: 'userName',
+                        sorter:true,
+                        key: 'userName',
+                    }, {
+                        title: '所属租户',
+                        align:textAlignDefault,
+                        dataIndex: 'belongTenant.name',
+                        sorter:true,
+                        key: 'belongTenant.name',
+                    },  {
+                        title: '所属部门',
+                        align:textAlignDefault,
+                        dataIndex: 'belongDepartment.name',
+                        sorter:true,
+                        key: 'belongDepartment.name',
+                    }, {
+                        title: '邮箱',
+                        align:textAlignDefault,
+                        dataIndex: 'email',
+                        key: 'email',
+                    }, {
+                        title: '类型',
+                        align:textAlignDefault,
+                        key: 'userTypeStr',
+                        scopedSlots: { customRender: 'userTypeStr' },
+                    },{
+                        title: '锁定状态',
+                        align:textAlignDefault,
+                        key: 'locked',
+                        scopedSlots: { customRender: 'locked' },
+                    }, {
+                        title:'操作',
+                        align:textAlignDefault,
+                        dataIndex:"operation",
+                        key:'operation',
+                        fixed:'right',
+                        width:220,
+                        scopedSlots: { customRender: 'action' }
+                    }],
                     loading: false,
                     pagination: {
                         current:1,
@@ -433,7 +526,7 @@
                            },
                            maskClosable:true,  //点击蒙层是否关闭,
                            dataObj:{},
-                           drawerFieldConf:EmployeeInfoDetailDrawerConf
+                           drawerFieldConf:fieldInfoConfObj
                        },
                     },
                 },
@@ -536,23 +629,6 @@
                         }
                     }
                 })
-            },
-            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
-                var _this = this ;
-                var queryFieldArr = [] ;
-                if(queryObj) {
-                    for (var key in queryObj){
-                        var searchFieldObj = searchFormQueryConf[key];
-                        if(searchFieldObj){
-                            const queryVal = queryObj[key] ;
-                            if(queryVal || queryVal == 0){
-                                searchFieldObj['value'] = queryObj[key];
-                                queryFieldArr.push(searchFieldObj);
-                            }
-                        }
-                    }
-                }
-                return queryFieldArr ;
             },
             dealGetUserTypeEnumList(){  //取得 用户类型-枚举列表
                 var _this = this ;
@@ -723,7 +799,7 @@
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                         _this.dealQueryUserAccounts(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });

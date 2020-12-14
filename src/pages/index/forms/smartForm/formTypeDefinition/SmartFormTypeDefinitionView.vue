@@ -148,12 +148,11 @@
     </div>
 </template>
 <script>
-    import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import {SmartFormTypeDefinitionDrawerConf} from './drawer_conf.js'
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
     import {SmartFormTypeDefinitionApi} from './smartFormTypeDefinitionApi.js'
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
     import SmartFormTypeDefinitionCreateFormComp from "@/components/index/forms/smartForm/formTypeDefinition/SmartFormTypeDefinitionCreateFormComp";
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
@@ -161,8 +160,30 @@
     export default {
         name: "SmartFormTypeDefinitionView",
         components: {SmartFormTypeDefinitionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        mixins:[EggCommonMixin],
         data() {
+            const textAlignDefault = 'left' ;
+            //字段配置(Query/Drawer)
+            const fieldInfoConfObj = {
+                name:{
+                    fieldLabel:this.$t('langMap.table.fields.formType.formTypeName'),
+                    fieldName:'name', matching:'like'
+                },
+                description:{
+                    fieldLabel:this.$t('langMap.table.fields.common.description'),
+                    fieldName:'description', matching:'like'
+                },
+                orderNum:{
+                    fieldLabel:this.$t('langMap.table.fields.common.sortVal'),
+                    fieldName:'orderNum',searchAble:false
+                },
+                remark:{
+                    fieldLabel:this.$t('langMap.table.fields.common.remark'),
+                    fieldName:'remark', matching:'like'
+                }
+            };
             return {
+                fieldInfoConf:fieldInfoConfObj,
                 searchConf:{
                     showListFlag:false,
                     loadingFlag:false,
@@ -176,7 +197,30 @@
                 searchForm:this.$form.createForm(this,{name:'search_form'}),
                 tableConf: {
                     data: [],
-                    columns: tableColumns,
+                    columns: [{
+                        title: '类型名',
+                        align:textAlignDefault,
+                        dataIndex: 'name',
+                        key: 'name'
+                    }, {
+                        title: '描述',
+                        align:textAlignDefault,
+                        dataIndex: 'description',
+                        key: 'description'
+                    },{
+                        title: '排序',
+                        align:textAlignDefault,
+                        dataIndex: 'orderNum',
+                        key: 'orderNum'
+                    },{
+                        title:'操作',
+                        align:textAlignDefault,
+                        dataIndex:"operation",
+                        key:'operation',
+                        fixed:'right',
+                        width:220,
+                        scopedSlots: { customRender: 'action' }
+                    }],
                     loading: false,
                     pagination: {
                         current:1,
@@ -225,7 +269,7 @@
                             },
                             maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
-                            drawerFieldConf:SmartFormTypeDefinitionDrawerConf
+                            drawerFieldConf:fieldInfoConfObj
                         },
                     },
                 },
@@ -316,23 +360,6 @@
                     }
                 })
             },
-            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
-                var _this = this ;
-                var queryFieldArr = [] ;
-                if(queryObj) {
-                    for (var key in queryObj){
-                        var searchFieldObj = searchFormQueryConf[key];
-                        if(searchFieldObj){
-                            const queryVal = queryObj[key] ;
-                            if(queryVal || queryVal == 0){
-                                searchFieldObj['value'] = queryObj[key];
-                                queryFieldArr.push(searchFieldObj);
-                            }
-                        }
-                    }
-                }
-                return queryFieldArr ;
-            },
             handleSearchFormQuery(e) {
                 var _this = this ;
                 if (e) {
@@ -343,7 +370,7 @@
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                         _this.dealQueryGridData(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });

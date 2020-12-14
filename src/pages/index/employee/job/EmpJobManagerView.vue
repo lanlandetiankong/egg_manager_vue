@@ -160,10 +160,9 @@
 </template>
 
 <script>
-    import {tableColumns,searchFormQueryConf} from './param_conf.js'
-    import {EmployeeJobDetailDrawerConf} from  './drawer_conf'
     import {EmpJobApi} from './EmpJobApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
     import EmployeeJobCreateFormComp from '~Components/index/user/employee/job/EmployeeJobCreateFormComp'
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
@@ -173,8 +172,30 @@
     export default {
         name: "EmpJobManagerView",
         components: { AFormItem, ACol, EmployeeJobCreateFormComp,SimpleDetailDrawerComp},
+        mixins:[EggCommonMixin],
         data() {
+            const textAlignDefault = 'left' ;
+            //字段配置(Query/Drawer)
+            const fieldInfoConfObj = {
+                name:{
+                    fieldLabel:this.$t('langMap.table.fields.job.jobName'),
+                    fieldName:'name', matching:'like',
+                },
+                type:{
+                    fieldLabel:this.$t('langMap.table.fields.common.type'),
+                    fieldName:'type', matching:'equals',
+                },
+                description:{
+                    fieldLabel:this.$t('langMap.table.fields.common.description'),
+                    fieldName:'description', matching:'like',
+                },
+                remark:{
+                    fieldLabel:this.$t('langMap.table.fields.common.remark'),
+                    fieldName:'remark', matching:'like',
+                }
+            };
             return {
+                fieldInfoConf:fieldInfoConfObj,
                 searchConf: {
                     showListFlag:false,
                     loadingFlag: false,
@@ -192,7 +213,30 @@
                 searchForm: this.$form.createForm(this, {name: 'search_form'}),
                 tableConf: {
                     data: [],
-                    columns: tableColumns,
+                    columns: [{
+                        title: '职务名',
+                        align:textAlignDefault,
+                        dataIndex: 'name',
+                        key: 'name',
+                    }, {
+                        title: '类型',
+                        align:textAlignDefault,
+                        key: 'typeStr',
+                        scopedSlots: { customRender: 'typeStr' },
+                    },{
+                        title: '描述',
+                        align:textAlignDefault,
+                        dataIndex: 'description',
+                        key: 'description',
+                    },{
+                        title:'操作',
+                        align:textAlignDefault,
+                        dataIndex:"operation",
+                        key:'operation',
+                        fixed:'right',
+                        width:220,
+                        scopedSlots: { customRender: 'action' }
+                    }],
                     loading: false,
                     pagination: {
                         current:1,
@@ -241,7 +285,7 @@
                             },
                             maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
-                            drawerFieldConf:EmployeeJobDetailDrawerConf
+                            drawerFieldConf:fieldInfoConfObj
                         },
                     },
                 },
@@ -310,23 +354,6 @@
                     }
                 })
             },
-            dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
-                var _this = this ;
-                var queryFieldArr = [] ;
-                if(queryObj) {
-                    for (var key in queryObj){
-                        var searchFieldObj = searchFormQueryConf[key];
-                        if(searchFieldObj){
-                            const queryVal = queryObj[key] ;
-                            if(queryVal || queryVal == 0){
-                                searchFieldObj['value'] = queryObj[key];
-                                queryFieldArr.push(searchFieldObj);
-                            }
-                        }
-                    }
-                }
-                return queryFieldArr ;
-            },
             dealGetDefineJobTypeEnumList(){  //取得 职务类型-枚举列表
                 var _this = this ;
                 UserCommonApis.getAllDefineJobType().then((res) => {
@@ -358,7 +385,7 @@
                 this.searchForm.validateFields((err, values) => {
                     if (!err) {
                         //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
+                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                         _this.dealQueryDefineJobs(searchFieldArr,paginationTemp,sorterTemp);
                     }
                 });
