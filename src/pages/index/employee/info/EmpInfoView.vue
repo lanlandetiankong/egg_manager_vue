@@ -287,6 +287,7 @@
     import jquery from 'jquery';
 
     import {EmpInfoApi} from './EmpInfoApi'
+    import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
@@ -311,11 +312,11 @@
             const fieldInfoConfObj = {
                 account:{
                     fieldLabel:this.$t('langMap.table.fields.user.userAccount'),
-                    fieldName:'account', matching:'like',
+                    fieldName:'account', matching:QueryMatchType.like,
                 },
                 userName:{
                     fieldLabel:this.$t('langMap.table.fields.user.nickName'),
-                    fieldName:'userName', matching:'like',
+                    fieldName:'userName', matching:QueryMatchType.like,
                 },
                 belongTenantName:{
                     fieldLabel:this.$t('langMap.table.fields.tenant.belongTenant'),
@@ -326,30 +327,30 @@
                 },
                 email:{
                     fieldLabel:this.$t('langMap.table.fields.user.email'),
-                    fieldName:'email', matching:'like',
+                    fieldName:'email', matching:QueryMatchType.like,
                 },
                 userType:{
                     fieldLabel:this.$t('langMap.table.fields.user.userType'),
-                    fieldName:'userType', matching:'equals',drawerAble:false
+                    fieldName:'userType', matching:QueryMatchType.equals,drawerAble:false
                 },
                 userTypeStr:{
                     fieldLabel:this.$t('langMap.table.fields.user.userType'),
                     searchAble:false
                 },
                 belongTenantId:{
-                    fieldName:'defineTenantId',matching:'equals', foreignName:'userTenant',drawerAble:false,
+                    fieldName:'defineTenantId',matching:QueryMatchType.equals, foreignName:'userTenant',drawerAble:false,
                 },
                 belongDepartmentId:{
-                    fieldName:'defineDepartmentId', matching:'equals', foreignName:'userDepartment',drawerAble:false,
+                    fieldName:'defineDepartmentId', matching:QueryMatchType.equals, foreignName:'userDepartment',drawerAble:false,
                 },
                 locked:{
                     fieldLabel:this.$t('langMap.table.fields.common.lockedStatus'),
-                    fieldName:'locked', matching:'equals',type:DrawerFieldTypeEnum.Enum,
+                    fieldName:'locked', matching:QueryMatchType.equals,type:DrawerFieldTypeEnum.Enum,
                     enumValMap:{"1":"已锁定", "0":"未锁定"}
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
-                    fieldName:'remark', matching:'like',
+                    fieldName:'remark', matching:QueryMatchType.like,
                 }
             };
             return {

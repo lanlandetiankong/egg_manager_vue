@@ -144,7 +144,7 @@
 <script>
     import {AnnouncementTagApi} from './announcementTagApi.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
-
+    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
 
     import AnnouncementTagCreateFormComp from "~Components/index/announcement/tag/AnnouncementTagCreateFormComp";
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
@@ -158,19 +158,19 @@
             const fieldInfoConfObj = {
                 name:{
                     fieldLabel:this.$t('langMap.table.fields.announcementTag.tagName'),
-                    fieldName:'name', matching:'like',
+                    fieldName:'name', matching:QueryMatchType.like,
                 },
                 description:{
                     fieldLabel:this.$t('langMap.table.fields.announcementTag.description'),
-                    fieldName:'description', matching:'like',
+                    fieldName:'description', matching:QueryMatchType.like,
                 },
                 ordering:{
                     fieldLabel:this.$t('langMap.table.fields.announcementTag.ordering'),
-                    fieldName:'ordering', matching:'equals',
+                    fieldName:'ordering', matching:QueryMatchType.equals,
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
-                    fieldName:'remark', matching:'like',
+                    fieldName:'remark', matching:QueryMatchType.like,
                 }
             };
             return {

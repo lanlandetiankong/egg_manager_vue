@@ -40,22 +40,22 @@ const columns = [{
 const searchFormQueryConfObj = {
     title:{
         fieldName:'title',
-        matching:'like',
+        matching:QueryMatchType.like,
         value:''
     },
     keyWord:{
         fieldName:'keyWord',
-        matching:'like',
+        matching:QueryMatchType.like,
         value:''
     },
     tagIds:{
         fieldName:'tagIds',
-        matching:'like',
+        matching:QueryMatchType.like,
         value:''
     },
     content:{
         fieldName:'content',
-        matching:'like',
+        matching:QueryMatchType.like,
         value:''
     }
 }

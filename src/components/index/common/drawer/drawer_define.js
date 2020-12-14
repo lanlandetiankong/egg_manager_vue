@@ -11,6 +11,11 @@ export const DrawerFieldTypeEnum = {
     HtmlDom:"htmlDom"
 }
 
+export const QueryMatchType = {
+    like:'like',
+    equals:'equals'
+}
+
 
 /**
  * 通用的字段配置

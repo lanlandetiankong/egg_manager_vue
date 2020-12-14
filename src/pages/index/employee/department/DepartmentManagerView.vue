@@ -172,6 +172,7 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
+    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {DepartmentManagerApi} from './departmentManagerApi.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
@@ -186,14 +187,14 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 pid:{
-                    fieldName:'pid', matching:'equals', drawerAble:false
+                    fieldName:'pid', matching:QueryMatchType.equals, drawerAble:false
                 },
                 name:{
                     fieldLabel:this.$t('langMap.table.fields.department.departmentName'),
-                    fieldName:'name', matching:'like',
+                    fieldName:'name', matching:QueryMatchType.like,
                 },
                 pid:{
-                    fieldName:'pid', matching:'equals', drawerAble:false
+                    fieldName:'pid', matching:QueryMatchType.equals, drawerAble:false
                 },
                 parentDepartmentName:{
                     fieldLabel:this.$t('langMap.table.fields.department.parentDepartmentName'),
@@ -202,19 +203,19 @@
                 },
                 code:{
                     fieldLabel:this.$t('langMap.table.fields.common.code'),
-                    fieldName:'code', matching:'like',
+                    fieldName:'code', matching:QueryMatchType.like,
                 },
                 level:{
                     fieldLabel:this.$t('langMap.table.fields.common.level'),
-                    fieldName:'level', matching:'equals',value:0
+                    fieldName:'level', matching:QueryMatchType.equals,value:0
                 },
                 description:{
                     fieldLabel:this.$t('langMap.table.fields.common.description'),
-                    fieldName:'description', matching:'like',
+                    fieldName:'description', matching:QueryMatchType.like,
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
-                    fieldName:'remark', matching:'like',
+                    fieldName:'remark', matching:QueryMatchType.like,
                 }
             };
             return {

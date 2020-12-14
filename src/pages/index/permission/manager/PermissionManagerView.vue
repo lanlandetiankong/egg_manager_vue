@@ -195,7 +195,7 @@
     import {PermissionManagerApi} from './permissionManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
     import {BindingCommonApis} from '~Apis/common/CommonApis.js'
-    import {DrawerFieldTypeEnum} from '~Components/index/common/drawer/drawer_define.js'
+    import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
 
     import DefinePermissionCreateFormComp from "@/components/index/define/permission/manager/DefinePermissionCreateFormComp";
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
@@ -209,22 +209,22 @@
             const fieldInfoConfObj = {
                 name:{
                     fieldLabel:this.$t('langMap.table.fields.permission.permissionName'),
-                    fieldName:'name',matching:'like',type:DrawerFieldTypeEnum.String
+                    fieldName:'name',matching:QueryMatchType.like,type:DrawerFieldTypeEnum.String
                 },
                 code:{
                     fieldLabel:this.$t('langMap.table.fields.common.code'),
-                    fieldName:'code', matching:'like',type:DrawerFieldTypeEnum.String},
+                    fieldName:'code', matching:QueryMatchType.like,type:DrawerFieldTypeEnum.String},
                 type:{
                     fieldLabel:this.$t('langMap.table.fields.common.type'),
-                    fieldName:'type',matching:'equals',type:DrawerFieldTypeEnum.String
+                    fieldName:'type',matching:QueryMatchType.equals,type:DrawerFieldTypeEnum.String
                 },
                 ensure:{
                     fieldLabel:this.$t('langMap.table.fields.common.startUsingStatus'),
-                    fieldName:'ensure', matching:'equals',type:DrawerFieldTypeEnum.String
+                    fieldName:'ensure', matching:QueryMatchType.equals,type:DrawerFieldTypeEnum.String
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
-                    fieldName:'remark',matching:'like',type:DrawerFieldTypeEnum.String
+                    fieldName:'remark',matching:QueryMatchType.like,type:DrawerFieldTypeEnum.String
                 }
             };
             return {

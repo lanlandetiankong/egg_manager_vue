@@ -157,7 +157,7 @@
 </template>
 <script>
     import {AnnouncementMyCreateListApi} from './announcementMyCreateListApi'
-    import {DrawerFieldTypeEnum} from '~Components/index/common/drawer/drawer_define.js'
+    import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
@@ -172,14 +172,14 @@
             const fieldInfoConfObj = {
                 title:{
                     fieldLabel:this.$t('langMap.table.fields.announcement.title'),
-                    fieldName:'title', matching:'like',
+                    fieldName:'title', matching:QueryMatchType.like,
                 },
                 keyWord:{
                     fieldLabel:this.$t('langMap.table.fields.announcement.keyWord'),
-                    fieldName:'keyWord', matching:'like',
+                    fieldName:'keyWord', matching:QueryMatchType.like,
                 },
                 tagIds:{
-                    fieldName:'tagIds', matching:'like',drawerAble:false,
+                    fieldName:'tagIds', matching:QueryMatchType.like,drawerAble:false,
                 },
                 tagNameOfStr:{
                     fieldLabel:this.$t('langMap.table.fields.announcement.tagNameOfStr'),
@@ -187,11 +187,11 @@
                 },
                 content:{
                     fieldLabel:this.$t('langMap.table.fields.announcement.content'),
-                    fieldName:'content', matching:'like',type:DrawerFieldTypeEnum.HtmlDom
+                    fieldName:'content', matching:QueryMatchType.like,type:DrawerFieldTypeEnum.HtmlDom
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
-                    fieldName:'remark', matching:'like',
+                    fieldName:'remark', matching:QueryMatchType.like,
                 }
             };
             return {

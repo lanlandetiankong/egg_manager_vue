@@ -165,6 +165,7 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
+    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {ModuleManagerApi} from './moduleManagerApi.js'
     import {ModuleCommonApis} from '~Apis/module/ModuleCommonApis.js'
 
@@ -180,23 +181,23 @@
             const fieldInfoConfObj = {
                 name:{
                     fieldLabel:this.$t('langMap.table.fields.module.moduleName'),
-                    fieldName:'name',matching:'like',
+                    fieldName:'name',matching:QueryMatchType.like,
                 },
                 code:{
                     fieldLabel:this.$t('langMap.table.fields.common.code'),
-                    fieldName:'code',matching:'like'
+                    fieldName:'code',matching:QueryMatchType.like
                 },
                 iconVal:{
                     fieldLabel:this.$t('langMap.table.fields.module.iconName'),
-                    searchAble:false, fieldName:'iconVal',matching:'like'
+                    searchAble:false, fieldName:'iconVal',matching:QueryMatchType.like
                 },
                 type:{
                     fieldLabel:this.$t('langMap.table.fields.common.type'),
-                    fieldName:'type',matching:'equals',
+                    fieldName:'type',matching:QueryMatchType.equals,
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
-                    fieldName:'remark',matching:'like',
+                    fieldName:'remark',matching:QueryMatchType.like,
                 }
             };
             return {

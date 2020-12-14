@@ -35,39 +35,39 @@ const columns = [{
 const searchFormQueryConfObj = {
     account:{
         fieldName:'account',
-        matching:'like',
+        matching:QueryMatchType.like,
         value:''
     },
     userName:{
         fieldName:'userName',
-        matching:'like',
+        matching:QueryMatchType.like,
         value:''
     },
     email:{
         fieldName:'email',
-        matching:'like',
+        matching:QueryMatchType.like,
         value:''
     },
     userType:{
         fieldName:'userType',
-        matching:'equals',
+        matching:QueryMatchType.equals,
         value:''
     },
     belongTenantId:{
         fieldName:'defineTenantId',
-        matching:'equals',
+        matching:QueryMatchType.equals,
         foreignName:'userTenant',   //外表的关联查询
         value:''
     },
     belongDepartmentId:{
         fieldName:'defineDepartmentId',
-        matching:'equals',
+        matching:QueryMatchType.equals,
         foreignName:'userDepartment',
         value:''
     },
     locked:{
         fieldName:'locked',
-        matching:'equals',
+        matching:QueryMatchType.equals,
         value:''
     }
 }

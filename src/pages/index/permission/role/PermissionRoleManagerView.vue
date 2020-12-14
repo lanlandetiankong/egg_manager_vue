@@ -195,6 +195,7 @@
 </template>
 
 <script>
+    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {PermissionRoleManagerApi} from './permissionRoleManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
@@ -212,19 +213,19 @@
             const fieldInfoConfObj = {
                 name:{
                     fieldLabel:this.$t('langMap.table.fields.permission.permissionName'),
-                    fieldName:'name', matching:'like'
+                    fieldName:'name', matching:QueryMatchType.like
                 },
                 code:{
                     fieldLabel:this.$t('langMap.table.fields.common.code'),
-                    fieldName:'code', matching:'like',
+                    fieldName:'code', matching:QueryMatchType.like,
                 },
                 type:{
                     fieldLabel:this.$t('langMap.table.fields.common.type'),
-                    fieldName:'type',matching:'equals',
+                    fieldName:'type',matching:QueryMatchType.equals,
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
-                    fieldName:'remark', matching:'like',
+                    fieldName:'remark', matching:QueryMatchType.like,
                 }
             };
             return {

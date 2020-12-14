@@ -170,6 +170,7 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
+    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {SmartFormDefinitionApi} from './smartFormDefinitionApi.js'
 
@@ -186,19 +187,19 @@
             const fieldInfoConfObj = {
                 name:{
                     fieldLabel:this.$t('langMap.table.fields.form.formName'),
-                    fieldName:'name', matching:'like',
+                    fieldName:'name', matching:QueryMatchType.like,
                 },
                 title:{
                     fieldLabel:this.$t('langMap.table.fields.common.title'),
-                    fieldName:'title', matching:'like',
+                    fieldName:'title', matching:QueryMatchType.like,
                 },
                 description:{
                     fieldLabel:this.$t('langMap.table.fields.common.description'),
-                    fieldName:'description', matching:'like',
+                    fieldName:'description', matching:QueryMatchType.like,
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
-                    fieldName:'remark', matching:'like',
+                    fieldName:'remark', matching:QueryMatchType.like,
                 }
             };
             return {

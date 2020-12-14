@@ -160,6 +160,7 @@
 </template>
 
 <script>
+    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {EmpJobApi} from './EmpJobApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
@@ -179,19 +180,19 @@
             const fieldInfoConfObj = {
                 name:{
                     fieldLabel:this.$t('langMap.table.fields.job.jobName'),
-                    fieldName:'name', matching:'like',
+                    fieldName:'name', matching:QueryMatchType.like,
                 },
                 type:{
                     fieldLabel:this.$t('langMap.table.fields.common.type'),
-                    fieldName:'type', matching:'equals',
+                    fieldName:'type', matching:QueryMatchType.equals,
                 },
                 description:{
                     fieldLabel:this.$t('langMap.table.fields.common.description'),
-                    fieldName:'description', matching:'like',
+                    fieldName:'description', matching:QueryMatchType.like,
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
-                    fieldName:'remark', matching:'like',
+                    fieldName:'remark', matching:QueryMatchType.like,
                 }
             };
             return {
