@@ -109,7 +109,7 @@ export const langMap = {
             },
             user:{
                 userAccount:'账号',
-                nickName:'用户名',
+                userName:'用户名',
                 avatarUrl:'头像',
                 email:'邮箱',
                 userType:'用户类型',

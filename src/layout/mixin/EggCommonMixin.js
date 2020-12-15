@@ -33,7 +33,6 @@ export const EggCommonMixin = {
             return menuId ;
         },
         mixin_dealGetSearchFormQueryConf(queryConf,queryObj){
-            debugger;
             const queryFieldArr = [] ;
             if(queryObj) {
                 for (const key in queryObj){
@@ -45,7 +44,6 @@ export const EggCommonMixin = {
                     if(searchAbleVal == false){
                         continue ;
                     }
-                    debugger;
                     const queryVal = queryObj[key] ;
                     if(queryVal || queryVal == 0){
                         queryFieldArr.push({

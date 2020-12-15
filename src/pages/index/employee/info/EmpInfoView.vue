@@ -2,100 +2,12 @@
     <div>
         <div>
             <!-- 搜索区域 -->
-            <div v-show="searchConf.showListFlag">
-                <div>
-                    <a-form layout="inline"
-                            :form="searchForm"
-                            @submit="handleSearchFormQuery"
-                    >
-                        <a-row :gutter="6">
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.tenant.belongTenant')">
-                                    <a-select showSearch allowClear
-                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                                              style="width: 180px"
-                                              optionFilterProp="children"
-                                              :options="searchConf.binding.belongTenants"
-                                              :filterOption="getFilterOption"
-                                              v-decorator="searchConf.paramConf.belongTenantId"
-                                    >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.department.belongDepartment')">
-                                    <a-tree-select
-                                        :placeholder="$t('langMap.commons.forms.chooseDepartment')"
-                                        style="width: 150px"
-                                        showSearch allowClear
-                                        v-decorator="searchConf.paramConf.belongDepartmentId"
-                                        :treeNodeFilterProp="searchConf.treeSelectConf.belongDepartmentId.treeNodeFilterProp"
-                                        :treeDefaultExpandAll="searchConf.treeSelectConf.belongDepartmentId.treeDefaultExpandAll"
-                                        :treeData="searchConf.treeSelectConf.belongDepartmentId.treeData"
-                                        @change="handleBelongDepartmentOfSearchChange"
-                                    >
-                                    </a-tree-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.user.userAccount')">
-                                    <a-input v-decorator="searchConf.paramConf.account" />
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.user.nickName')">
-                                    <a-input v-decorator="searchConf.paramConf.nickName"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.user.email')">
-                                    <a-input v-decorator="searchConf.paramConf.email"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.type')">
-                                    <a-select showSearch allowClear
-                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                                              style="width: 180px"
-                                              optionFilterProp="children"
-                                              :options="searchConf.binding.userTypes"
-                                              :filterOption="getFilterOption"
-                                              v-decorator="searchConf.paramConf.userType"
-                                    >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.lockStatus')">
-                                    <a-select showSearch allowClear
-                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                                              style="width: 180px"
-                                              optionFilterProp="children"
-                                              :options="searchConf.binding.lockStates"
-                                              :filterOption="getFilterOption"
-                                              v-decorator="searchConf.paramConf.locked"
-                                    >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                        </a-row>
-                        <a-row>
-                            <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit" icon="search"
-                                          :loading="searchConf.loadingFlag"
-                                >
-                                    {{$t('langMap.button.actions.query')}}
-                                </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
-                                          @click="handleSearchFormReset">
-                                    {{$t('langMap.button.actions.reset')}}
-                                </a-button>
-                            </a-col>
-                        </a-row>
-                    </a-form>
-                </div>
-                <a-divider/>
-            </div>
+                <query-form-comp
+                    :showAble="searchConf.showAble"
+                    :loadingFlag="searchConf.loadingFlag"
+                    :formItemConf="searchConf.formItemConf"
+                    @execQuery="handleSearchFormQuery"
+                />
             <!-- 操作区域 -->
             <div>
                 <a-row
@@ -166,7 +78,7 @@
                             :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
-                            v-model="searchConf.showListFlag"
+                            v-model="searchConf.showAble"
                         ></a-switch>
                     </a-col>
                 </a-row>
@@ -224,8 +136,8 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                :belongTenants="searchConf.binding.belongTenants"
-                :belongDepartmentTrees="searchConf.treeSelectConf.belongDepartmentId.treeData"
+                :belongTenants="binding.belongTenants"
+                :belongDepartmentTrees="binding.belongDepartments"
                 @createFormCancel="handleEmployeeInfoCreateFormCancel"
                 @createFormSubmit="handleEmployeeInfoCreateFormSubmit"
             />
@@ -287,9 +199,12 @@
     import jquery from 'jquery';
 
     import {EmpInfoApi} from './EmpInfoApi'
+    import {FormItemTypeEnum} from "~Components/query/form_enum";
     import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
+
+    import QueryFormComp from '~Components/query/QueryFormComp'
 
     import EmployeeInfoCreateFormComp from '~Components/index/user/employee/info/EmployeeInfoCreateFormComp'
     import UserGrantRoleFormComp from '~Components/index/user/employee/info/UserGrantRoleFormComp';
@@ -300,9 +215,10 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
 
+
     export default {
         name: "EmpInfoView",
-        components: {
+        components: {QueryFormComp,
             SimpleDetailDrawerComp,ExcelImportDataComp,
             UserGrantJobFormComp, UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
         mixins:[EggCommonMixin],
@@ -315,7 +231,7 @@
                     fieldName:'account', matching:QueryMatchType.like,
                 },
                 userName:{
-                    fieldLabel:this.$t('langMap.table.fields.user.nickName'),
+                    fieldLabel:this.$t('langMap.table.fields.user.userName'),
                     fieldName:'userName', matching:QueryMatchType.like,
                 },
                 belongTenantName:{
@@ -356,33 +272,65 @@
             return {
                 fieldInfoConf:fieldInfoConfObj,
                 searchConf: {
-                    showListFlag:false,
+                    showAble:false,
                     loadingFlag: false,
-                    defaultColSpan: 8,
-                    paramConf: {
-                        belongTenantId: ["belongTenantId", {rules: []}],
-                        belongDepartmentId: ["belongDepartmentId", {rules: []}],
-                        account: ["account", {rules: []}],
-                        nickName: ["nickName", {rules: []}],
-                        email: ["email", {rules: []}],
-                        userType: ["userType", {rules: []}],
-                        locked: ["locked", {rules: []}]
-                    },
-                    binding:{
-                        belongTenants:[],
-                        belongDepartments:[],
-                        userTypes:[],
-                        lockStates:[]
-                    },
-                    treeSelectConf:{
+                    formItemConf:{
+                        belongTenantId:{
+                            key:'belongTenantId',
+                            formType:FormItemTypeEnum.Select,
+                            label:this.$t('langMap.table.fields.tenant.belongTenant'),
+                            decorator:["belongTenantId", {rules: []}],
+                            options:[]
+                        },
                         belongDepartmentId:{
+                            key:'belongDepartmentId',
+                            formType:FormItemTypeEnum.TreeSelect,
+                            label:this.$t('langMap.table.fields.department.belongDepartment'),
+                            decorator:["belongDepartmentId", {rules: []}],
                             treeDefaultExpandAll:false,
                             treeNodeFilterProp:"title",
                             treeData:[]
+                        },
+                        account:{
+                            key:'account',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.user.userAccount'),
+                            decorator:["account", {rules: []}],
+                        },
+                        userName:{
+                            key:'userName',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.user.userName'),
+                            decorator:["userName", {rules: []}],
+                        },
+                        email:{
+                            key:'email',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.user.email'),
+                            decorator:["email", {rules: []}],
+                        },
+                        userType:{
+                            key:'userType',
+                            formType:FormItemTypeEnum.Select,
+                            label:this.$t('langMap.table.fields.common.type'),
+                            decorator:["userType", {rules: []}],
+                            options:[]
+                        },
+                        locked:{
+                            key:'locked',
+                            formType:FormItemTypeEnum.Select,
+                            label:this.$t('langMap.table.fields.common.label'),
+                            decorator:["locked", {rules: []}],
+                            options:[]
                         }
                     }
                 },
-                searchForm: this.$form.createForm(this, {name: 'search_form'}),
+                binding:{
+                    belongTenants:[],
+                    belongDepartments:[],
+                    userTypes:[],
+                    lockStates:[]
+                },
                 tableConf: {
                     data: [],
                     columns: [{
@@ -455,7 +403,7 @@
                     actionType: "create"
                 },
                 dialogFormObj: {
-                    nickName: '',
+                    userName: '',
                     account: '',
                     email: '',
                     userType: '',
@@ -464,7 +412,7 @@
                     locked:'0'
                 },
                 dialogFormDefaultObj:{  //新建时的默认值设置
-                    nickName: '',
+                    userName: '',
                     account: '',
                     email: '',
                     userType: '',
@@ -635,8 +583,8 @@
                 var _this = this ;
                 UserCommonApis.getAllUserType().then((res) => {
                     if(res && res.success){
-                        if(res.enumList){
-                            _this.searchConf.binding.userTypes = res.enumList ;
+                        if(res.enumData){
+                            _this.binding.userTypes = res.enumData.list ;
                         }
                     }
                 })
@@ -645,8 +593,8 @@
                 var _this = this ;
                 EmpInfoApi.getAllDefineTenantEnums().then((res) => {
                     if(res && res.success){
-                        if(res.enumList){
-                            _this.searchConf.binding.belongTenants = res.enumList ;
+                        if(res.enumData){
+                            _this.binding.belongTenants = res.enumData.list ;
                         }
                     }
                 })
@@ -656,7 +604,7 @@
                 EmpInfoApi.getAllDefineDepartmentTrees().then((res) => {
                     if(res && res.success){
                         if(res.gridList){
-                            _this.searchConf.treeSelectConf.belongDepartmentId.treeData = res.gridList ;
+                            _this.binding.belongDepartments = res.gridList ;
                         }
                     }
                 })
@@ -665,8 +613,8 @@
                 var _this = this ;
                 UserCommonApis.getAllUserLockStateType().then((res) => {
                     if(res && res.success){
-                        if(res.enumList){
-                            _this.searchConf.binding.lockStates = res.enumList ;
+                        if(res.enumData){
+                            _this.binding.lockStates = res.enumData.list ;
                         }
                     }
                 })
@@ -790,20 +738,11 @@
                     this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                 }
             },
-            handleSearchFormQuery(e) {   //表格-搜索
-                if (e) {
-                    e.preventDefault();
-                }
-                var _this = this;
-                var paginationTemp = _this.tableConf.pagination ;
-                var sorterTemp = _this.tableConf.sorter ;
-                this.searchForm.validateFields((err, values) => {
-                    if (!err) {
-                        //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                        _this.dealQueryUserAccounts(searchFieldArr,paginationTemp,sorterTemp);
-                    }
-                });
+            handleSearchFormQuery(e,values) {   //表格-搜索
+                const _this = this;
+                //取得 bean 形式 的查询条件数组
+                const searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
+                _this.dealQueryUserAccounts(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleTableActionGroupClick(e,record){  //表格-更多操作：按key区分操作类型
                 var _this = this ;
@@ -1102,9 +1041,6 @@
             handleEmployeeInfoDetailDrawerClose(e){ //Drawer-用户定义 详情关闭
                 this.drawerConf.detail.employeeInfo.visible = false ;
             },
-            handleBelongDepartmentOfSearchChange(value){  //[所属部门] SelectTree cchange事件
-                //console.log("handleBelongDepartmentOfSearchChange",value);
-            },
         },
         computed: {
             rowSelection() {    //行选择
@@ -1127,6 +1063,19 @@
             this.dealGetDefineTenantEnumList();
             this.dealGetDefineDepartmentTreeData();
             this.dealGetLockStateEnumList();
+        },
+        watch:{
+            binding:{
+                handler (val, oval) {
+                    //绑定枚举值变化监听并处理
+                    this.searchConf.formItemConf.belongTenantId.options = this.binding.belongTenants ;
+                    this.searchConf.formItemConf.belongDepartmentId.treeData = this.binding.belongDepartments ;
+                    this.searchConf.formItemConf.userType.options = this.binding.userTypes ;
+                    this.searchConf.formItemConf.locked.options = this.binding.lockStates ;
+                },
+                deep: true,
+                immediate:true
+            }
         },
         destroyed(){
             console.log("员工信息??-页面销毁 ...");
