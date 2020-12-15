@@ -38,7 +38,7 @@
                 <a-form-item :label="$t('langMap.table..fields.common.Val')"
                              v-bind="formItemLayout"
                 >
-                    <a-input-number v-decorator="formFieldConf.orderNum"/>
+                    <a-input-number v-decorator="formFieldConf.weights"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.description')"
                              v-bind="formItemLayout"
@@ -79,7 +79,7 @@
                 code:[
                     {required:true,message:'请填写编码!'}
                 ],
-                orderNum:[
+                weights:[
                     {required:true,message:'请填写排序字段!'}
                 ],
                 description:[
@@ -104,7 +104,7 @@
                     pid:["pid",{rules:paramsRules.pid}],
                     name:["name",{rules:paramsRules.name}],
                     code:["code",{rules:paramsRules.code}],
-                    orderNum:["orderNum",{rules:paramsRules.orderNum}],
+                    weights:["weights",{rules:paramsRules.weights}],
                     description:["description",{rules:paramsRules.description}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
@@ -135,9 +135,9 @@
                            ...formObj,
                            value: formObj.code,
                        }),
-                       orderNum: _this.$form.createFormField({
+                       weights: _this.$form.createFormField({
                            ...formObj,
-                           value: formObj.orderNum,
+                           value: formObj.weights,
                        }),
                        description: _this.$form.createFormField({
                            ...formObj,
@@ -198,9 +198,9 @@
                             ..._this.formObj,
                             value: _this.formObj.code
                         }),
-                        orderNum: this.$form.createFormField({
+                        weights: this.$form.createFormField({
                             ..._this.formObj,
-                            value: _this.formObj.orderNum
+                            value: _this.formObj.weights
                         }),
                         description: this.$form.createFormField({
                             ..._this.formObj,

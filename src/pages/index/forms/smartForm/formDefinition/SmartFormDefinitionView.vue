@@ -242,8 +242,8 @@
                     },{
                         title: '排序',
                         align:textAlignDefault,
-                        dataIndex: 'orderNum',
-                        key: 'orderNum'
+                        dataIndex: 'weights',
+                        key: 'weights'
                     },{
                         title:'操作',
                         align:textAlignDefault,
@@ -278,7 +278,7 @@
                     title: '',
                     description:'',
                     formTypeId:undefined,
-                    orderNum:undefined,
+                    weights:undefined,
                     remark:''
                 },
                 drawerConf:{

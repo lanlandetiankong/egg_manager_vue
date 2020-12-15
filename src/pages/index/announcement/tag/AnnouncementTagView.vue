@@ -164,9 +164,9 @@
                     fieldLabel:this.$t('langMap.table.fields.announcementTag.description'),
                     fieldName:'description', matching:QueryMatchType.like,
                 },
-                ordering:{
-                    fieldLabel:this.$t('langMap.table.fields.announcementTag.ordering'),
-                    fieldName:'ordering', matching:QueryMatchType.equals,
+                weights:{
+                    fieldLabel:this.$t('langMap.table.fields.announcementTag.weights'),
+                    fieldName:'weights', matching:QueryMatchType.equals,
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
@@ -204,8 +204,8 @@
                     }, {
                         title: '序号',
                         align:textAlignDefault,
-                        dataIndex: 'ordering',
-                        key: 'ordering'
+                        dataIndex: 'weights',
+                        key: 'weights'
                     },{
                         title:'操作',
                         align:textAlignDefault,
@@ -238,7 +238,7 @@
                 dialogFormObj: {
                     name: '',
                     description: '',
-                    ordering:0
+                    weights:0
                 },
                 drawerConf:{
                     detail:{

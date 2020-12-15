@@ -8,7 +8,7 @@ import qs from 'qs'
 export const AnnouncementMyCreateListApi = {
     getAllAnnouncementTagEnums() {  //取得 公告标签 列表
         const sortObj = {     //固定 order字段 排序
-            "ordering":true
+            "weights":true
         }
         const obj = {
             queryObj:JSON.stringify([]),

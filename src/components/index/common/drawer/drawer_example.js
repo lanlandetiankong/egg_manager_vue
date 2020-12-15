@@ -12,13 +12,13 @@ import {DrawerFieldTypeEnum} from '~Components/index/common/drawer/drawer_define
 export  const DrawerFieldConfExample = {
     undefinedKeyName:"未定义属性",
     undefinedEnumKeyValue:"预期之外的枚举值",
-    showKeyArrs:['name','code',"level","orderNum","description","remark","createTime","updateTime"],
+    showKeyArrs:['name','code',"level","weights","description","remark","createTime","updateTime"],
     keyNameMapObj:{
         fid:"id",
         name:"部门名",
         code:"编码",
         level:"层级",
-        orderNum:"排序",
+        weights:"排序",
         description:"描述",
         remark:"备注",
         createTime:"创建时间",

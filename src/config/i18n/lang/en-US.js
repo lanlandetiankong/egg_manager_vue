@@ -161,7 +161,7 @@ export const langMap = {
             },
             announcementTag:{
                 tagName:'Tag Name',
-                ordering:'Ordering',
+                weights:'Weights',
                 description:'Description'
             }
         },

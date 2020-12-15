@@ -174,9 +174,9 @@
                     fieldLabel:this.$t('langMap.table.fields.common.description'),
                     fieldName:'description', matching:QueryMatchType.like
                 },
-                orderNum:{
+                weights:{
                     fieldLabel:this.$t('langMap.table.fields.common.sortVal'),
-                    fieldName:'orderNum',searchAble:false
+                    fieldName:'weights',searchAble:false
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
@@ -211,8 +211,8 @@
                     },{
                         title: '排序',
                         align:textAlignDefault,
-                        dataIndex: 'orderNum',
-                        key: 'orderNum'
+                        dataIndex: 'weights',
+                        key: 'weights'
                     },{
                         title:'操作',
                         align:textAlignDefault,
@@ -245,7 +245,7 @@
                 dialogFormObj: {
                     name: '',
                     description:'',
-                    orderNum:undefined,
+                    weights:undefined,
                     remark:''
                 },
                 drawerConf:{

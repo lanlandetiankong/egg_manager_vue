@@ -351,8 +351,8 @@
                     },{
                         title: this.$t('langMap.table.fields.common.sortVal'),
                         align:textAlignDefault,
-                        dataIndex: 'orderNum',
-                        key: 'orderNum',
+                        dataIndex: 'weights',
+                        key: 'weights',
                         width:70
                     },{
                         title:this.$t('langMap.table.header.operation'),
@@ -393,7 +393,7 @@
                     menuName: '',
                     pid:'',
                     label: '',
-                    orderNum:0,
+                    weights:0,
                     iconName:'',
                     styleVal:'',
                     typeVal: '',
@@ -566,7 +566,7 @@
                 _this.dialogFormConf.visible = true;   //显示弹窗
                 _this.dialogFormConf.actionType = "create";
                 _this.dialogFormObj = {
-                    orderNum:0
+                    weights:0
                 };
             },
             handleUpdateDefineMenuBtnClick() {  //更新菜单按钮-点击

@@ -49,7 +49,7 @@
                 <a-form-item :label="$t('langMap.table.header.sortVal')"
                              v-bind="formItemLayout"
                 >
-                    <a-input v-decorator="formFieldConf.orderNum"/>
+                    <a-input v-decorator="formFieldConf.weights"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.menu.urlJumpType')"
                              v-bind="formItemLayout"
@@ -142,7 +142,7 @@
                     iconName:["iconName",{rules:paramsRules.iconName}],
                     pid:["pid",{rules:paramsRules.pid}],
                     label:["label",{rules:paramsRules.label}],
-                    orderNum:["orderNum",{rules:paramsRules.orderNum}],
+                    weights:["weights",{rules:paramsRules.weights}],
                     urlJumpType:["urlJumpType",{rules:paramsRules.urlJumpType}],
                     routerUrl:["routerUrl",{rules:paramsRules.routerUrl}],
                     hrefUrl:["hrefUrl",{rules:paramsRules.hrefUrl}],
@@ -184,9 +184,9 @@
                            ...formObj,
                            value: formObj.label,
                        }),
-                       orderNum: _this.$form.createFormField({
+                       weights: _this.$form.createFormField({
                            ...formObj,
-                           value: formObj.orderNum,
+                           value: formObj.weights,
                        }),
                        urlJumpType: _this.$form.createFormField({
                            ...formObj,
@@ -270,9 +270,9 @@
                             ..._this.formObj,
                             value: _this.formObj.label
                         }),
-                        orderNum: this.$form.createFormField({
+                        weights: this.$form.createFormField({
                             ..._this.formObj,
-                            value: _this.formObj.orderNum
+                            value: _this.formObj.weights
                         }),
                         urlJumpType: this.$form.createFormField({
                             ..._this.formObj,

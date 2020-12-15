@@ -26,7 +26,7 @@
                 <a-form-item :label="$t('langMap.table.header.sortVal')"
                              v-bind="formItemLayout"
                 >
-                    <a-input-number v-decorator="formFieldConf.orderNum"/>
+                    <a-input-number v-decorator="formFieldConf.weights"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.remark')"
                      v-bind="formItemLayout"
@@ -60,7 +60,7 @@
                 description:[
                     {required:true,message:'请填写描述!'}
                 ],
-                orderNum:[
+                weights:[
                     {required:true,message:'请填写排序值!'}
                 ],
                 remark:[
@@ -81,7 +81,7 @@
                 formFieldConf:{
                     name:["name",{rules:paramsRules.name}],
                     description:["description",{rules:paramsRules.description}],
-                    orderNum:["orderNum",{rules:paramsRules.orderNum}],
+                    weights:["weights",{rules:paramsRules.weights}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
                 smartFormTypeDefinitionCreateForm:{},
@@ -109,9 +109,9 @@
                            ...formObj,
                            value: formObj.description,
                        }),
-                       orderNum: _this.$form.createFormField({
+                       weights: _this.$form.createFormField({
                            ...formObj,
-                           value: formObj.orderNum,
+                           value: formObj.weights,
                        }),
                        remark: _this.$form.createFormField({
                            ...formObj,
@@ -161,9 +161,9 @@
                             ..._this.formObj,
                             value: _this.formObj.description
                         }),
-                        orderNum: this.$form.createFormField({
+                        weights: this.$form.createFormField({
                             ..._this.formObj,
-                            value: _this.formObj.orderNum
+                            value: _this.formObj.weights
                         }),
                         remark: this.$form.createFormField({
                             ..._this.formObj,

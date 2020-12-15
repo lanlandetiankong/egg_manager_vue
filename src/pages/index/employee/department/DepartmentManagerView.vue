@@ -268,8 +268,8 @@
                     },{
                         title: '排序',
                         align:textAlignDefault,
-                        dataIndex: 'orderNum',
-                        key: 'orderNum',
+                        dataIndex: 'weights',
+                        key: 'weights',
                     },{
                         title: '描述',
                         align:textAlignDefault,
@@ -309,7 +309,7 @@
                     name: '',
                     code: '',
                     level:0,
-                    orderNum:0,
+                    weights:0,
                     description:'',
                     pid:'',
                     type: ''
@@ -458,7 +458,7 @@
                 _this.dialogFormConf.actionType = "create";
                 _this.dialogFormObj = {
                     level:0,
-                    orderNum:0,
+                    weights:0,
                 };
             },
             handleUpdateDefineDepartmentBtnClick() {  //更新部门按钮-点击
