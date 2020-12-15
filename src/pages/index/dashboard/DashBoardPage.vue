@@ -6,24 +6,22 @@
             :style="{ height: '300px'}"
             @change="handleTabChange"
         >
-            <a-tab-pane :tab="layoutConf.tab.list.announcementList.title"
-                        :key="layoutConf.tab.list.announcementList.key">
+            <a-tab-pane :tab="layoutConf.tab.conf.announcementList.title"
+                        :key="layoutConf.tab.conf.announcementList.key">
                 <announcement-list-comp
                     :dataList="tabConf.announcementList.dataList"
                     @viewItemClick="handleAnnouncementViewItemClick"
                 />
             </a-tab-pane>
-            <a-tab-pane :tab="layoutConf.tab.list.articleList.title"
-                        :key="layoutConf.tab.list.articleList.key">
-                文章列表 Todo
+            <a-tab-pane :tab="layoutConf.tab.conf.articleList.title"
+                        :key="layoutConf.tab.conf.articleList.key">
+                {{$t('langMap.commons.dashBoard.articleList')}} Todo
             </a-tab-pane>
         </a-tabs>
     </div>
 </template>
 
 <script>
-    import {tabConfList} from './param_conf.js'
-
     import {DashBoardApi} from './dashBoardApi.js'
 
     import AnnouncementListComp from '~Components/index/dashboard/announcement/AnnouncementListComp'
@@ -36,7 +34,18 @@
                 layoutConf:{
                     tab:{
                         mode: 'left',
-                        list:tabConfList,
+                        conf:{
+                            announcementList:{
+                                title: this.$t('langMap.commons.dashBoard.announcementList'),
+                                key: 'announcementList',
+                                initFlag:false
+                            },
+                            articleList:{
+                                title: this.$t('langMap.commons.dashBoard.articleList'),
+                                key: 'articleList',
+                                initFlag:false
+                            }
+                        },
                         defaultActiveKey:"announcementList"
                     }
                 },
@@ -51,7 +60,7 @@
         methods:{
             dealGetTabItem(tabKey){     //根据tab的key 取得tab对应的项
                 var _this = this;
-                var tabList = _this.layoutConf.tab.list ;
+                var tabList = _this.layoutConf.tab.conf ;
                 if(tabList){
                     var tabItem = tabList[tabKey];
                     if(tabItem){
@@ -62,7 +71,7 @@
             dealTabInit(tabKey){    //根据tab的key对tab对应的项 进行初始化
                 var _this = this ;
                 if(tabKey){
-                    if(tabKey == _this.layoutConf.tab.list.announcementList.key){      //公告列表
+                    if(tabKey == _this.layoutConf.tab.conf.announcementList.key){      //公告列表
                         _this.dealInitAnnouncementListTab();
                     }
                 }

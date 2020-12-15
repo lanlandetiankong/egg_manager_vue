@@ -212,6 +212,10 @@ export const langMap = {
                     }
                 }
             }
+        },
+        dashBoard:{
+            announcementList:'Announcement list',
+            articleList:'Article list',
         }
     },
     message:{

@@ -212,6 +212,10 @@ export const langMap = {
                     }
                 }
             }
+        },
+        dashBoard:{
+            announcementList:'公告列表',
+            articleList:'文章列表',
         }
     },
     message:{
