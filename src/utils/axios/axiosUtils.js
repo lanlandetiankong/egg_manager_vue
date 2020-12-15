@@ -3,7 +3,6 @@
 export const pageUtil = {
     parseSorterToObj(sorter){
         var obj = {} ;
-        debugger;
         if(typeof sorter == "undefined" || sorter == null || typeof (sorter.length) == "undefined"){
             return obj ;
         }   else if(typeof sorter.field =="undefined") {

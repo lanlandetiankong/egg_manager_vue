@@ -9,7 +9,6 @@ import {pageUtil,axiosForExcelUtil} from '~Utils/axios/axiosUtils'
 export const EmpInfoApi = {
     getAllUserAccounts(queryArr, pagination, sorter) {
         var sortObj = pageUtil.parseSorterToObj(sorter);
-        debugger;
         var obj = {
             queryObj: JSON.stringify(queryArr),
             paginationObj: JSON.stringify(pagination),

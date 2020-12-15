@@ -61,7 +61,6 @@
             },
             dealGetFieldConfValue(obj,fieldConfObj){    //根据配置取得字段的值
                 var _this = this ;
-                debugger;
                 var fieldVal = obj[fieldConfObj.fieldName];
                 //是否需要拆分fieldKey字段数组并遍历取值,如未设置则为否
                 var isNeedSplitTemp = _this.dealEmptyToDefaultVal(fieldConfObj.isNeedSplit,false);
@@ -137,7 +136,6 @@
                 if (typeof this.drawerFieldConf != "undefined" && this.drawerFieldConf != null) {
                     var fieldConfKeys = Object.keys(this.drawerFieldConf);
                     for (var idx in fieldConfKeys) {
-                        debugger;
                         var fieldConfKey = fieldConfKeys[idx] ;
                         if (obj.hasOwnProperty(fieldConfKey)) {
                             var fieldConfObj = this.drawerFieldConf[fieldConfKey];
