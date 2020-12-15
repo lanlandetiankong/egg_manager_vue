@@ -144,7 +144,6 @@
 <script>
     import jquery from 'jquery';
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
-    import {tableColumns,searchFormQueryConf} from './param_conf.js'
     import {UserTableSelectCompApi} from './userTableSelectCompApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
 
@@ -225,9 +224,39 @@
             }
         },
         data() {
-
             var _this = this ;
+            const textAlignDefault = 'left';
+            const fieldInfoConfObj = {
+                account:{
+                    fieldLabel:this.$t('langMap.table.fields.user.userAccount'),
+                    fieldName:'account', matching:QueryMatchType.like,
+                },
+                userName:{
+                    fieldLabel:this.$t('langMap.table.fields.user.userName'),
+                    fieldName:'userName', matching:QueryMatchType.like,
+                },
+                email:{
+                    fieldLabel:this.$t('langMap.table.fields.user.email'),
+                    fieldName:'email', matching:QueryMatchType.like,
+                },
+                userType:{
+                    fieldLabel:this.$t('langMap.table.fields.user.userType'),
+                    fieldName:'userType', matching:QueryMatchType.equals,drawerAble:false
+                },
+                belongTenantId:{
+                    fieldName:'defineTenantId',matching:QueryMatchType.equals, foreignName:'userTenant',drawerAble:false,
+                },
+                belongDepartmentId:{
+                    fieldName:'defineDepartmentId', matching:QueryMatchType.equals, foreignName:'userDepartment',drawerAble:false,
+                },
+                locked:{
+                    fieldLabel:this.$t('langMap.table.fields.common.lockedStatus'),
+                    fieldName:'locked', matching:QueryMatchType.equals,type:DrawerFieldTypeEnum.Enum,
+                    enumValMap:{"1":"已锁定", "0":"未锁定"}
+                }
+            };
             return {
+                fieldInfoConf:fieldInfoConfObj,
                 searchConf: {
                     showListFlag:false,
                     loadingFlag: false,
@@ -258,7 +287,43 @@
                 searchForm: this.$form.createForm(this, {name: 'search_form'}),
                 tableConf: {
                     data: [],
-                    columns: tableColumns,
+                    columns: [{
+                        title: this.$t('langMap.table.fields.user.userAccount'),
+                        align:textAlignDefault,
+                        dataIndex: 'account',
+                        key: 'account',
+                        sorter:true,
+                        scopedSlots: { customRender: 'account' },
+                    },  {
+                        title: this.$t('langMap.table.fields.user.userName'),
+                        align:textAlignDefault,
+                        dataIndex: 'userName',
+                        sorter:true,
+                        key: 'userName',
+                    }, {
+                        title: this.$t('langMap.table.fields.user.email'),
+                        align:textAlignDefault,
+                        dataIndex: 'email',
+                        key: 'email',
+                    }, {
+                        title: this.$t('langMap.table.fields.user.userType'),
+                        align:textAlignDefault,
+                        key: 'userTypeStr',
+                        scopedSlots: { customRender: 'userTypeStr' },
+                    },{
+                        title: this.$t('langMap.table.fields.common.lockedStatus'),
+                        align:textAlignDefault,
+                        key: 'locked',
+                        scopedSlots: { customRender: 'locked' },
+                    }, {
+                        title:this.$t('langMap.table.header.operation'),
+                        align:textAlignDefault,
+                        dataIndex:"operation",
+                        key:'operation',
+                        fixed:'right',
+                        width:220,
+                        scopedSlots: { customRender: 'action' }
+                    }],
                     loading: false,
                     pagination: {
                         current:1,
