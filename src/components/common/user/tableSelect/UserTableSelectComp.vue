@@ -47,8 +47,8 @@
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.user.nickName')">
-                                    <a-input v-decorator="searchConf.paramConf.nickName"/>
+                                <a-form-item :label="$t('langMap.table.fields.user.userName')">
+                                    <a-input v-decorator="searchConf.paramConf.userName"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="searchConf.defaultColSpan">
@@ -198,7 +198,7 @@
                     modifyVal:true,
                     defaultVal:''
                 },
-                nickName: {
+                userName: {
                     show:true,
                     search:true,
                     modifyVal:true,
@@ -236,7 +236,7 @@
                         belongTenantId: ["belongTenantId", {rules: [],initialValue:_this.$props.searchFlagConf.belongTenantId.defaultVal}],
                         belongDepartmentId: ["belongDepartmentId", {rules: [],initialValue:_this.$props.searchFlagConf.belongDepartmentId.defaultVal}],
                         account: ["account", {rules: [],initialValue:_this.$props.searchFlagConf.account.defaultVal}],
-                        nickName: ["nickName", {rules: [],initialValue:_this.$props.searchFlagConf.nickName.defaultVal}],
+                        userName: ["userName", {rules: [],initialValue:_this.$props.searchFlagConf.userName.defaultVal}],
                         email: ["email", {rules: [],initialValue:_this.$props.searchFlagConf.email.defaultVal}],
                         userType: ["userType", {rules: [],initialValue:_this.$props.searchFlagConf.userType.defaultVal}],
                         locked: ["locked", {rules: [],initialValue:_this.$props.searchFlagConf.locked.defaultVal}]

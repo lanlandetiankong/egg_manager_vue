@@ -44,7 +44,7 @@
                 >
                     <a-input v-decorator="formFieldConf.account"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.user.nickName')"
+                <a-form-item :label="$t('langMap.table.fields.user.userName')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.userName"/>
