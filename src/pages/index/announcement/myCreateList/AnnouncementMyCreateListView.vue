@@ -28,7 +28,7 @@
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showAble"
-                        ></a-switch>
+                        />
                     </a-col>
                 </a-row>
             </div>
@@ -83,7 +83,8 @@
                         :drawerFieldConf="drawerConf.detail.announcement.drawerFieldConf"
                     />
                 </a-drawer>
-            </div><!-- 弹窗dom-区域 -->
+            </div>
+            <!-- 弹窗dom-区域 -->
             <div>
                 <a-drawer
                     :title="drawerConf.detail.announcement.title"

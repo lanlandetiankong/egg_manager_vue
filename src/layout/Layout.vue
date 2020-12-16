@@ -21,7 +21,7 @@
                         :userInfo="navbarConf.userInfo"
                         @userLoginOut="handleUserLoginOut"
                         @goToUserCenter="handleGoToUserCenter"
-                    ></navbar>
+                    />
                 </a-layout-header>
                 <a-layout-content
                     :style="{ margin: '10px 0' }"
@@ -39,7 +39,7 @@
                     </tags-view>
                     <app-main
                         :style="{ padding: '5px', background: '#fff', textAlign: 'center' }"
-                    ></app-main>
+                    />
                 </a-layout-content>
             </a-layout>
         </a-layout>

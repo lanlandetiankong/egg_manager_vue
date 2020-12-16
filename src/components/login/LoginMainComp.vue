@@ -62,7 +62,7 @@
                         :showButton="verifyConf.picture.showButton"
                         @success="handleVerifySuccess"
                         @error="handleVerifyError"
-                    ></Verify>
+                    />
                 </a-form-item>
                 <a-form-item
                     label=" "

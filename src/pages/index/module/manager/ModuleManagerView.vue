@@ -40,7 +40,7 @@
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showAble"
-                        ></a-switch>
+                        />
                     </a-col>
                 </a-row>
             </div>

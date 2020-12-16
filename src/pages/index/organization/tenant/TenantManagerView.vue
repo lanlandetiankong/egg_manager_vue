@@ -46,7 +46,7 @@
                             size="large"
                             :style="{height:'30px'}"
                             v-model="searchConf.showAble"
-                        ></a-switch>
+                        />
                     </a-col>
                 </a-row>
             </div>
@@ -110,7 +110,7 @@
                 :tenantId="dialog.setupManager.conf.tenantId"
                 @setupManagerCancel="handleSetupManagerCancel"
                 @setupManagerSubmit="handleSetupManagerSubmit"
-            ></tenant-setup-manager-comp>
+            />
         </div>
     </div>
 </template>

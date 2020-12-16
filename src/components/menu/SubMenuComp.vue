@@ -3,7 +3,8 @@
         :key="props.menuInfo.key"
     >
     <span slot="title">
-        <a-icon :type="props.menuInfo.iconName" /><span>{{ props.menuInfo.name }}</span>
+        <a-icon :type="props.menuInfo.iconName" />
+        <span>{{ props.menuInfo.name }}</span>
     </span>
         <template v-for="item in props.menuInfo.children">
             <a-menu-item
