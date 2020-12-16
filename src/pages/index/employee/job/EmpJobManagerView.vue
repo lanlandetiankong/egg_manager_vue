@@ -215,22 +215,22 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: '职务名',
+                        title: this.$t('langMap.table.fields.job.jobName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name',
                     }, {
-                        title: '类型',
+                        title: this.$t('langMap.table.fields.common.type'),
                         align:textAlignDefault,
                         key: 'typeStr',
                         scopedSlots: { customRender: 'typeStr' },
                     },{
-                        title: '描述',
+                        title: this.$t('langMap.table.fields.common.description'),
                         align:textAlignDefault,
                         dataIndex: 'description',
                         key: 'description',
                     },{
-                        title:'操作',
+                        title:this.$t('langMap.table.header.operation'),
                         align:textAlignDefault,
                         dataIndex:"operation",
                         key:'operation',

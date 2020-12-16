@@ -165,7 +165,7 @@
                     fieldName:'description', matching:QueryMatchType.like,
                 },
                 weights:{
-                    fieldLabel:this.$t('langMap.table.fields.announcementTag.weights'),
+                    fieldLabel:this.$t('langMap.table.fields.common.weights'),
                     fieldName:'weights', matching:QueryMatchType.equals,
                 },
                 remark:{
@@ -192,22 +192,22 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: '标签名',
+                        title: this.$t('langMap.table.fields.announcementTag.tagName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name'
                     }, {
-                        title: '描述',
+                        title: this.$t('langMap.table.fields.announcementTag.description'),
                         align:textAlignDefault,
                         dataIndex: 'description',
                         key: 'description',
                     }, {
-                        title: '序号',
+                        title: this.$t('langMap.table.fields.common.weights'),
                         align:textAlignDefault,
                         dataIndex: 'weights',
                         key: 'weights'
                     },{
-                        title:'操作',
+                        title:this.$t('langMap.table.header.operation'),
                         align:textAlignDefault,
                         dataIndex:"operation",
                         key:'operation',

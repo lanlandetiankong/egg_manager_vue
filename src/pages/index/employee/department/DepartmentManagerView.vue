@@ -186,9 +186,6 @@
             const textAlignDefault = 'left' ;
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
-                pid:{
-                    fieldName:'pid', matching:QueryMatchType.equals, drawerAble:false
-                },
                 name:{
                     fieldLabel:this.$t('langMap.table.fields.department.departmentName'),
                     fieldName:'name', matching:QueryMatchType.like,
@@ -245,38 +242,38 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: '部门名',
+                        title: this.$t('langMap.table.fields.department.departmentName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name',
                     }, {
-                        title: '上级部门名',
+                        title: this.$t('langMap.table.fields.department.parentDepartmentName'),
                         align:textAlignDefault,
                         dataIndex: 'parentDepartment.name',
                         key: 'parentDepartment.name',
                         width:100,
                     },{
-                        title: '编码',
+                        title: this.$t('langMap.table.fields.common.code'),
                         align:textAlignDefault,
                         dataIndex: 'code',
                         key: 'code',
                     },{
-                        title: '层级',
+                        title: this.$t('langMap.table.fields.common.level'),
                         align:textAlignDefault,
                         dataIndex: 'level',
                         key: 'level',
                     },{
-                        title: '排序',
+                        title: this.$t('langMap.table.fields.common.weights'),
                         align:textAlignDefault,
                         dataIndex: 'weights',
                         key: 'weights',
                     },{
-                        title: '描述',
+                        title: this.$t('langMap.table.fields.common.description'),
                         align:textAlignDefault,
                         dataIndex: 'description',
                         key: 'description',
                     },{
-                        title:'操作',
+                        title:this.$t('langMap.table.header.operation'),
                         align:textAlignDefault,
                         dataIndex:"operation",
                         key:'operation',

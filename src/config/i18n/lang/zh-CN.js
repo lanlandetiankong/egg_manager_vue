@@ -105,7 +105,8 @@ export const langMap = {
                 styleVal:'样式',
                 tag:'标签',
                 tagName:'标签名',
-                lockedStatus:'锁状态'
+                lockedStatus:'锁状态',
+                weights:'排序',
             },
             user:{
                 userAccount:'账号',
@@ -161,7 +162,6 @@ export const langMap = {
             },
             announcementTag:{
                 tagName:'标签名',
-                weights:'排序',
                 description:'描述'
             }
         }

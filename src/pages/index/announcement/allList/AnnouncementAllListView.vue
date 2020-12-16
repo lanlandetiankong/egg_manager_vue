@@ -195,37 +195,37 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: '标题',
+                        title: this.$t('langMap.table.fields.announcement.title'),
                         align:textAlignDefault,
                         dataIndex: 'title',
                         width:100,
                         key: 'title'
                     }, {
-                        title: '关键字',
+                        title: this.$t('langMap.table.fields.announcement.keyWord'),
                         align:textAlignDefault,
                         dataIndex: 'keyWord',
                         width:100,
                         key: 'keyWord',
                     },  {
-                        title: '标签',
+                        title: this.$t('langMap.table.fields.announcement.tagNameOfStr'),
                         align:textAlignDefault,
                         key: 'tagNames',
                         width:150,
                         scopedSlots: { customRender: 'tagNamesRender' },
                     }, {
-                        title: '内容',
+                        title: this.$t('langMap.table.fields.announcement.content'),
                         align:textAlignDefault,
                         dataIndex: 'shortContent',
                         width:300,
                         key: 'shortContent',
                     }, {
-                        title: '发布部门',
+                        title: this.$t('langMap.table.fields.department.publishDepartment'),
                         align:textAlignDefault,
                         dataIndex: 'publishDepartment',
                         width:100,
                         key: 'publishDepartment',
                     },{
-                        title:'操作',
+                        title:this.$t('langMap.table.header.operation'),
                         align:textAlignDefault,
                         dataIndex:"operation",
                         key:'operation',

@@ -250,22 +250,22 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: '角色名',
+                        title: this.$t('langMap.table.fields.permission.permissionName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name'
                     }, {
-                        title: '编码',
+                        title: this.$t('langMap.table.fields.common.code'),
                         align:textAlignDefault,
                         dataIndex: 'code',
                         key: 'code',
                     }, {
-                        title: '类型',
+                        title: this.$t('langMap.table.fields.common.type'),
                         align:textAlignDefault,
                         key: 'typeStr',
                         scopedSlots: { customRender: 'typeStr' },
                     }, {
-                        title:'操作',
+                        title:this.$t('langMap.table.header.operation'),
                         align:textAlignDefault,
                         dataIndex:"operation",
                         key:'operation',

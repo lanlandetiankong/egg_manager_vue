@@ -222,17 +222,17 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: '模块名',
+                        title: this.$t('langMap.table.fields.module.moduleName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name'
                     }, {
-                        title: '编码',
+                        title: this.$t('langMap.table.fields.common.code'),
                         align:textAlignDefault,
                         dataIndex: 'code',
                         key: 'code'
                     }, {
-                        title: '图标',
+                        title: this.$t('langMap.table.fields.module.iconName'),
                         align:textAlignDefault,
                         dataIndex: 'iconVal',
                         key: 'iconVal',
@@ -240,12 +240,12 @@
                             customRender:'iconRender'
                         }
                     }, {
-                        title: '类型',
+                        title: this.$t('langMap.table.fields.common.type'),
                         align:textAlignDefault,
                         key: 'typeStr',
                         scopedSlots: { customRender: 'typeStr' },
                     },{
-                        title:'操作',
+                        title:this.$t('langMap.table.header.operation'),
                         align:textAlignDefault,
                         dataIndex:"operation",
                         key:'operation',

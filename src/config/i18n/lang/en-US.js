@@ -105,7 +105,8 @@ export const langMap = {
                 styleVal:'Style',
                 tag:'Tag',
                 tagName:'Tag name',
-                lockedStatus:'Lock Status'
+                lockedStatus:'Lock Status',
+                weights:'Weights',
             },
             user:{
                 userAccount:'User account',
@@ -161,7 +162,6 @@ export const langMap = {
             },
             announcementTag:{
                 tagName:'Tag Name',
-                weights:'Weights',
                 description:'Description'
             }
         },

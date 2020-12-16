@@ -199,22 +199,22 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: '类型名',
+                        title: this.$t('langMap.table.fields.formType.formTypeName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name'
                     }, {
-                        title: '描述',
+                        title: this.$t('langMap.table.fields.common.description'),
                         align:textAlignDefault,
                         dataIndex: 'description',
                         key: 'description'
                     },{
-                        title: '排序',
+                        title: this.$t('langMap.table.fields.common.sortVal'),
                         align:textAlignDefault,
                         dataIndex: 'weights',
                         key: 'weights'
                     },{
-                        title:'操作',
+                        title:this.$t('langMap.table.header.operation'),
                         align:textAlignDefault,
                         dataIndex:"operation",
                         key:'operation',
