@@ -6,7 +6,7 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const AnnouncementTagApi = {
-    getAllAnnouncementTags(queryArr,pagination,sorter) {
+    getPageQuery(queryArr,pagination,sorter) {
         var sortObj = {}
         if(sorter){
             sorter.field = sorter.order ;
@@ -19,25 +19,25 @@ export const AnnouncementTagApi = {
         //查询所有公告标签信息
         return axios.post('/announcementTag/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
-    getAnnouncementTagById(announcementTagId){  //根据公告标签id查询公告标签信息
+    getItemById(announcementTagId){  //根据公告标签id查询公告标签信息
         var params = {
             announcementTagId:announcementTagId
         }
         return axios.post("/announcementTag/queryOneById",qs.stringify(params)).then(res => res.data) ;
     },
-    addAnnouncementTagByForm(formObj) {     //新增公告标签
+    createByForm(formObj) {     //新增公告标签
         return axios.post("/announcementTag/createByForm",qs.stringify(formObj)).then(res => res.data);;
     },
-    updateAnnouncementTagByForm(formObj) {  //更新公告标签
+    updateByForm(formObj) {  //更新公告标签
         return axios.post("/announcementTag/updateByForm",qs.stringify(formObj)).then(res => res.data) ;
     },
-    batchDelAnnouncementTag(ids) {  //批量删除
+    batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
         return axios.post("/announcementTag/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
-    delOneAnnouncementTag(delId) {  //删除
+    deleteById(delId) {  //删除
         var obj = {
             delId:delId
         }

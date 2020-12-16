@@ -29,7 +29,7 @@
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="user-delete"
-                                  @click="handleEmployeeJobBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
@@ -64,7 +64,7 @@
                 </span>
                 <template slot="action" slot-scope="text,record">
                     <span>
-                        <a @click="handleEmployeeJobDetailDrawerShow($event,record)">
+                        <a @click="handleDetailDrawerShow($event,record)">
                             {{$t('langMap.drawer.actions.detail')}}
                         </a>
                         <a-divider type="vertical" />
@@ -86,8 +86,8 @@
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
                 :typeEnumArr="binding.types"
-                @createFormCancel="handleEmployeeJobCreateFormCancel"
-                @createFormSubmit="handleEmployeeJobCreateFormSubmit"
+                @createFormCancel="handleCreateFormCancel"
+                @createFormSubmit="handleCreateFormSubmit"
             />
             <a-drawer
                 :title="drawerConf.detail.employeeJob.title"
@@ -100,7 +100,7 @@
                 :drawerStyle="drawerConf.detail.employeeJob.drawerStyle"
                 :bodyStyle="drawerConf.detail.employeeJob.bodyStyle"
                 :maskClosable="drawerConf.detail.employeeJob.maskClosable"
-                @close="handleEmployeeJobDetailDrawerClose"
+                @close="handleDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
                     :dataObj="drawerConf.detail.employeeJob.dataObj"
@@ -275,7 +275,7 @@
             dealGetAllDefineJobs() {   //取得职务列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                EmpJobApi.getAllDefineJobs().then((res) => {
+                EmpJobApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -290,7 +290,7 @@
             dealQueryDefineJobs(queryFieldArr,pagination,sorter) {    //带查询条件 检索职务列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                EmpJobApi.getAllDefineJobs(queryFieldArr,pagination,sorter).then((res) => {
+                EmpJobApi.getPageQuery(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -307,7 +307,7 @@
             dealBatchDelDefineJobs() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                EmpJobApi.batchDelDefineJobs(delIds).then((res) => {
+                EmpJobApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -318,7 +318,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                EmpJobApi.delOneDefineJob(delId).then((res) => {
+                EmpJobApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -379,7 +379,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        EmpJobApi.getDefineJobById(selectRowId).then((res) => {
+                        EmpJobApi.getItemById(selectRowId).then((res) => {
                             var selectDefineRoleBean = res.bean;
                             if (selectDefineRoleBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
@@ -393,11 +393,11 @@
                     }
                 }
             },
-            handleEmployeeJobCreateFormCancel(e) {  // 创建/更新 职务表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新 职务表单->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleEmployeeJobCreateFormSubmit(e) {   // 创建/更新 职务表单->提交
+            handleCreateFormSubmit(e) {   // 创建/更新 职务表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -406,7 +406,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        EmpJobApi.addDefineJobByForm(values).then((res) => {
+                        EmpJobApi.createByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -424,7 +424,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        EmpJobApi.updateDefineJobByForm(values).then((res) => {
+                        EmpJobApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -444,7 +444,7 @@
 
                 });
             },
-            handleEmployeeJobBatchDeleteByIds(e) {  // 批量删除
+            handleBatchDeleteByIds(e) {  // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -484,7 +484,7 @@
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.employeeJobCreateFormRef.employeeJobCreateForm;
             },
-            handleEmployeeJobDetailDrawerShow(e,record){   //Drawer-职务定义 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-职务定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.employeeJob.dataObj = record ;
                     this.drawerConf.detail.employeeJob.visible = true ;
@@ -492,7 +492,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleEmployeeJobDetailDrawerClose(e){ //Drawer-职务定义 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-职务定义 详情关闭
                 this.drawerConf.detail.employeeJob.visible = false ;
             }
 

@@ -31,13 +31,13 @@
                     </a-col>
                     <a-col >
                         <a-button type="danger" icon="delete"
-                                  @click="handleDefinePermissionBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="check"
-                                  @click="handleDefinePermissionBatchEnusreByIds">
+                                  @click="handleBatchEnusreByIds">
                             {{$t('langMap.button.actions.startUsing')}}
                         </a-button>
                     </a-col>
@@ -77,7 +77,7 @@
                     </span>
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleDefinePermissionDetailDrawerShow($event,record)">
+                            <a @click="handleDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -99,8 +99,8 @@
                 :permissionTypes="binding.permissionTypes"
                 :permissonCodePrefixs="binding.codePrefixList"
                 :permissonCodePrefixDefaultChecks="binding.codePrefixDefaultChecks"
-                @createFormCancel="handleDefinePermissionCreateFormCancel"
-                @createFormSubmit="handleDefinePermissionCreateFormSubmit"
+                @createFormCancel="handleCreateFormCancel"
+                @createFormSubmit="handleCreateFormSubmit"
             >
             </define-permission-create-form-comp>
             <a-drawer
@@ -114,7 +114,7 @@
                 :drawerStyle="drawerConf.detail.definePermission.drawerStyle"
                 :bodyStyle="drawerConf.detail.definePermission.bodyStyle"
                 :maskClosable="drawerConf.detail.definePermission.maskClosable"
-                @close="handleDefinePermissionDetailDrawerClose"
+                @close="handleDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
                     :dataObj="drawerConf.detail.definePermission.dataObj"
@@ -356,7 +356,7 @@
             dealGetAllDefinePermissions() {   //取得权限列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                PermissionManagerApi.getAllDefinePermissions().then((res) => {
+                PermissionManagerApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -371,7 +371,7 @@
             dealQueryDefinePermissions(queryFieldList,pagination,sorter) {    //带查询条件 检索权限列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                PermissionManagerApi.getAllDefinePermissions(queryFieldList,pagination,sorter).then((res) => {
+                PermissionManagerApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -389,7 +389,7 @@
             dealBatchDelDefinePermission() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                PermissionManagerApi.batchDelDefinePermission(delIds).then((res) => {
+                PermissionManagerApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -401,7 +401,7 @@
             dealBatchEnusreDefinePermission() {  //批量启用
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                PermissionManagerApi.batchEnsureDefinePermission(delIds).then((res) => {
+                PermissionManagerApi.batchEnsureByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -412,7 +412,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                PermissionManagerApi.delOneDefinePermission(delId).then((res) => {
+                PermissionManagerApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -442,7 +442,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        PermissionManagerApi.getDefinePermissionById(selectRowId).then((res) => {
+                        PermissionManagerApi.getItemById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
@@ -456,7 +456,7 @@
                     }
                 }
             },
-            handleDefinePermissionBatchDeleteByIds(e) {     // 批量删除-确认框
+            handleBatchDeleteByIds(e) {     // 批量删除-确认框
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -487,7 +487,7 @@
                     }
                 }
             },
-            handleDefinePermissionBatchEnusreByIds(e) {     // 批量启用-确认框
+            handleBatchEnusreByIds(e) {     // 批量启用-确认框
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -506,11 +506,11 @@
                     })
                 }
             },
-            handleDefinePermissionCreateFormCancel(e) {  // 创建/更新 权限定义表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新 权限定义表单->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleDefinePermissionCreateFormSubmit(e) {   // 创建/更新 权限表单->提交
+            handleCreateFormSubmit(e) {   // 创建/更新 权限表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -519,7 +519,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        PermissionManagerApi.addDefinePermissionByForm(values).then((res) => {
+                        PermissionManagerApi.createByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -537,7 +537,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        PermissionManagerApi.updateDefinePermissionByForm(values).then((res) => {
+                        PermissionManagerApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -582,7 +582,7 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
-            handleDefinePermissionDetailDrawerShow(e,record){   //Drawer-租户定义 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-租户定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.definePermission.dataObj = record ;
                     this.drawerConf.detail.definePermission.visible = true ;
@@ -590,7 +590,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleDefinePermissionDetailDrawerClose(e){ //Drawer-租户定义 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-租户定义 详情关闭
                 this.drawerConf.detail.definePermission.visible = false ;
             }
         },

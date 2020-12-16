@@ -10,7 +10,7 @@ export const DepartmentManagerApi = {
         //查询所有部门信息(树结构)
         return axios.post('/define/defineDepartment/queryTreeSelect').then(res => res.data);
     },
-    getAllDefineDepartments(queryArr,pagination,sorter) {
+    getPageQuery(queryArr,pagination,sorter) {
         var sortObj = {}
         if(sorter){
             sorter.field = sorter.order ;
@@ -23,25 +23,25 @@ export const DepartmentManagerApi = {
         //查询所有部门信息
         return axios.post('/define/defineDepartment/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
-    getDefineDepartmentById(defineDepartmentId){  //根据部门id查询部门信息
+    getItemById(defineDepartmentId){  //根据部门id查询部门信息
         var params = {
             defineDepartmentId:defineDepartmentId
         }
         return axios.post("/define/defineDepartment/queryOneById",qs.stringify(params)).then(res => res.data) ;
     },
-    addDefineDepartmentByForm(formObj) {     //新增部门
+    createByForm(formObj) {     //新增部门
         return axios.post("/define/defineDepartment/createByForm",qs.stringify(formObj)).then(res => res.data);;
     },
-    updateDefineDepartmentByForm(formObj) {  //更新部门
+    updateByForm(formObj) {  //更新部门
         return axios.post("/define/defineDepartment/updateByForm",qs.stringify(formObj)).then(res => res.data) ;
     },
-    batchDelDefineDepartment(ids) {  //批量删除
+    batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
         return axios.post("/define/defineDepartment/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
-    delOneDefineDepartment(delId) {  //删除
+    deleteById(delId) {  //删除
         var obj = {
             delId:delId
         }

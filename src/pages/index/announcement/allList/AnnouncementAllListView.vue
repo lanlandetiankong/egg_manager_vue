@@ -17,7 +17,7 @@
                 >
                     <a-col>
                         <a-button type="danger" icon="delete"
-                                  @click="handleAnnouncementBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
@@ -55,7 +55,7 @@
                     </span>
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleAnnouncementDetailDrawerShow($event,record)">
+                            <a @click="handleDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -77,7 +77,7 @@
                     :drawerStyle="drawerConf.detail.announcement.drawerStyle"
                     :bodyStyle="drawerConf.detail.announcement.bodyStyle"
                     :maskClosable="drawerConf.detail.announcement.maskClosable"
-                    @close="handleAnnouncementDetailDrawerClose"
+                    @close="handleDetailDrawerClose"
                 >
                     <simple-detail-drawer-comp
                         :dataObj="drawerConf.detail.announcement.dataObj"
@@ -283,7 +283,7 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
             },
-            dealGetAllAnnouncementTagList(){    //取得所有的 公告标签
+            dealQueryAllAnnouncementTag(){    //取得所有的 公告标签
                 var _this = this ;
                 AnnouncementAllListApi.getAllAnnouncementTagEnums().then((res) =>{
                     if(res.success){
@@ -291,10 +291,10 @@
                     }
                 })
             },
-            dealGetAllAnnouncements() {   //取得公告列表
+            dealQueryAll() {   //取得公告列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                AnnouncementAllListApi.getAllAnnouncements().then((res) => {
+                AnnouncementAllListApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -306,10 +306,10 @@
                     _this.changeQueryLoading(false);
                 })
             },
-            dealQueryAnnouncements(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
+            dealPageQuery(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                AnnouncementAllListApi.getAllAnnouncements(queryFieldList,pagination,sorter).then((res) => {
+                AnnouncementAllListApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -323,10 +323,10 @@
                     _this.changeQueryLoading(false);
                 })
             },
-            dealBatchDelAnnouncement() {  //批量删除
+            dealBatchDel() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                AnnouncementAllListApi.batchDelAnnouncement(delIds).then((res) => {
+                AnnouncementAllListApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -337,7 +337,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                AnnouncementAllListApi.delOneAnnouncement(delId).then((res) => {
+                AnnouncementAllListApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -350,9 +350,9 @@
                 const _this = this;
                 //取得 bean 形式 的查询条件数组
                 const searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                _this.dealQueryAnnouncements(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
+                _this.dealPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
-            handleAnnouncementBatchDeleteByIds(e) {     // 批量删除
+            handleBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -363,7 +363,7 @@
                         okText: _this.$t('langMap.button.actions.confirm'),
                         cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
-                            _this.dealBatchDelAnnouncement();
+                            _this.dealBatchDel();
                         },
                         onCancel() {
                             _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
@@ -395,7 +395,7 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
-            handleAnnouncementDetailDrawerShow(e,record){   //Drawer-公告 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-公告 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.announcement.dataObj = record ;
                     this.drawerConf.detail.announcement.visible = true ;
@@ -403,7 +403,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleAnnouncementDetailDrawerClose(e){ //Drawer-公告 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-公告 详情关闭
                 this.drawerConf.detail.announcement.visible = false ;
             }
         },
@@ -418,8 +418,8 @@
             }
         },
         created(){
-            this.dealGetAllAnnouncements();
-            this.dealGetAllAnnouncementTagList();
+            this.dealQueryAll();
+            this.dealQueryAllAnnouncementTag();
         },
         destroyed(){
             console.log("所有公告-页面销毁 ...")

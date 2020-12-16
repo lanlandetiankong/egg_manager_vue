@@ -29,19 +29,19 @@
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
-                                  @click="handleDefineRoleBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="book"
-                                  @click="handleDefineRoleGrantPermissionsById">
+                                  @click="handleGrantPermissionsById">
                             {{$t('langMap.button.actions.assigningPermissions')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="book"
-                                  @click="handleDefineRoleGrantMenusById">
+                                  @click="handleGrantMenusById">
                             {{$t('langMap.button.actions.authorizationMenu')}}
                         </a-button>
                     </a-col>
@@ -76,7 +76,7 @@
 
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleDefineRoleDetailDrawerShow($event,record)">
+                            <a @click="handleDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -100,8 +100,8 @@
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
                 :roleTypes="binding.roleTypes"
-                @createFormCancel="handleDefineRoleCreateFormCancel"
-                @createFormSubmit="handleDefineRoleCreateFormSubmit"
+                @createFormCancel="handleCreateFormCancel"
+                @createFormSubmit="handleCreateFormSubmit"
             >
             </define-role-create-form-comp>
             <role-grant-permission-form-comp
@@ -135,7 +135,7 @@
                 :drawerStyle="drawerConf.detail.defineRole.drawerStyle"
                 :bodyStyle="drawerConf.detail.defineRole.bodyStyle"
                 :maskClosable="drawerConf.detail.defineRole.maskClosable"
-                @close="handleDefineRoleDetailDrawerClose"
+                @close="handleDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
                     :dataObj="drawerConf.detail.defineRole.dataObj"
@@ -388,7 +388,7 @@
             dealGetAllDefineRoles() {   //取得角色列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                PermissionRoleManagerApi.getAllDefineRoles().then((res) => {
+                PermissionRoleManagerApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -403,7 +403,7 @@
             dealQueryDefineRoles(queryFieldList,pagination,sorter) {    //带查询条件 检索角色列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                PermissionRoleManagerApi.getAllDefineRoles(queryFieldList,pagination,sorter).then((res) => {
+                PermissionRoleManagerApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -420,7 +420,7 @@
             dealBatchDelDefineRole() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                PermissionRoleManagerApi.batchDelDefineRole(delIds).then((res) => {
+                PermissionRoleManagerApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -431,7 +431,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                PermissionRoleManagerApi.delOneDefineRole(delId).then((res) => {
+                PermissionRoleManagerApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -513,7 +513,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        PermissionRoleManagerApi.getDefineRoleById(selectRowId).then((res) => {
+                        PermissionRoleManagerApi.getItemById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
@@ -527,7 +527,7 @@
                     }
                 }
             },
-            handleDefineRoleBatchDeleteByIds(e) {     // 批量删除
+            handleBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -546,7 +546,7 @@
                     })
                 }
             },
-            handleDefineRoleGrantPermissionsById(e) {     // 分配权限
+            handleGrantPermissionsById(e) {     // 分配权限
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
                     this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForAssigningPermissions'));
@@ -558,7 +558,7 @@
                     _this.dealDefineRoleGrantPermissionsById(selectRowId);
                 }
             },
-            handleDefineRoleGrantMenusById(e) {     // [授权菜单]
+            handleGrantMenusById(e) {     // [授权菜单]
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
                     this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForAuthorizationMenu'));
@@ -570,11 +570,11 @@
                     _this.dealDefineRoleGrantMenusById(selectRowId);
                 }
             },
-            handleDefineRoleCreateFormCancel(e) {  // 创建/更新 权限定义表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新 权限定义表单->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleDefineRoleCreateFormSubmit(e) {   // 创建/更新 权限表单->提交
+            handleCreateFormSubmit(e) {   // 创建/更新 权限表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -583,7 +583,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        PermissionRoleManagerApi.addDefineRoleByForm(values).then((res) => {
+                        PermissionRoleManagerApi.createByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -601,7 +601,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        PermissionRoleManagerApi.updateDefineRoleByForm(values).then((res) => {
+                        PermissionRoleManagerApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -698,7 +698,7 @@
                     _this.dealDefineRoleGrantPermissionsById(record.fid);
                 }
             },
-            handleDefineRoleDetailDrawerShow(e,record){   //Drawer-角色定义 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-角色定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.defineRole.dataObj = record ;
                     this.drawerConf.detail.defineRole.visible = true ;
@@ -706,7 +706,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleDefineRoleDetailDrawerClose(e){ //Drawer-角色定义 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-角色定义 详情关闭
                 this.drawerConf.detail.defineRole.visible = false ;
             }
         },

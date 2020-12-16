@@ -29,7 +29,7 @@
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
-                                  @click="handleDefineModuleBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
@@ -70,7 +70,7 @@
                     </span>
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleDefineModuleDetailDrawerShow($event,record)">
+                            <a @click="handleDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -88,8 +88,8 @@
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
                 :moduleTypes="binding.moduleTypes"
-                @createFormCancel="handleDefineModuleCreateFormCancel"
-                @createFormSubmit="handleDefineModuleCreateFormSubmit"
+                @createFormCancel="handleCreateFormCancel"
+                @createFormSubmit="handleCreateFormSubmit"
             >
             </define-module-create-form-comp>
             <a-drawer
@@ -103,7 +103,7 @@
                 :drawerStyle="drawerConf.detail.defineModule.drawerStyle"
                 :bodyStyle="drawerConf.detail.defineModule.bodyStyle"
                 :maskClosable="drawerConf.detail.defineModule.maskClosable"
-                @close="handleDefineModuleDetailDrawerClose"
+                @close="handleDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
                     :dataObj="drawerConf.detail.defineModule.dataObj"
@@ -317,7 +317,7 @@
             dealGetAllDefineModules() {   //取得模块列表
                 var _this = this;
                 _this.changeQueryLoading(true);
-                ModuleManagerApi.getAllDefineModules().then((res) => {
+                ModuleManagerApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -332,7 +332,7 @@
             dealQueryDefineModules(queryFieldList,pagination,sorter) {    //带查询条件 检索模块列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                ModuleManagerApi.getAllDefineModules(queryFieldList,pagination,sorter).then((res) => {
+                ModuleManagerApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -349,7 +349,7 @@
             dealBatchDelDefineModule() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                ModuleManagerApi.batchDelDefineModule(delIds).then((res) => {
+                ModuleManagerApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -360,7 +360,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                ModuleManagerApi.delOneDefineModule(delId).then((res) => {
+                ModuleManagerApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -390,7 +390,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        ModuleManagerApi.getDefineModuleById(selectRowId).then((res) => {
+                        ModuleManagerApi.getItemById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
@@ -404,7 +404,7 @@
                     }
                 }
             },
-            handleDefineModuleBatchDeleteByIds(e) {     // 批量删除
+            handleBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -423,11 +423,11 @@
                     })
                 }
             },
-            handleDefineModuleCreateFormCancel(e) {  // 创建/更新 模块定义表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新 模块定义表单->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleDefineModuleCreateFormSubmit(e) {   // 创建/更新 模块表单->提交
+            handleCreateFormSubmit(e) {   // 创建/更新 模块表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -436,7 +436,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        ModuleManagerApi.addDefineModuleByForm(values).then((res) => {
+                        ModuleManagerApi.createByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -454,7 +454,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        ModuleManagerApi.updateDefineModuleByForm(values).then((res) => {
+                        ModuleManagerApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -499,7 +499,7 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
-            handleDefineModuleDetailDrawerShow(e,record){   //Drawer-模块定义 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-模块定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.defineModule.dataObj = record ;
                     this.drawerConf.detail.defineModule.visible = true ;
@@ -507,7 +507,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleDefineModuleDetailDrawerClose(e){ //Drawer-模块定义 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-模块定义 详情关闭
                 this.drawerConf.detail.defineModule.visible = false ;
             }
         },

@@ -36,7 +36,7 @@
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
-                                  @click="handleDefineMenuBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
@@ -79,7 +79,7 @@
                     </span>
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleDefineMenuDetailDrawerShow($event,record)">
+                            <a @click="handleDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -99,8 +99,8 @@
                 :actionType="dialogFormConf.actionType"
                 :menuUrlJumpTypes="binding.urlJumpTypes"
                 :parentSelectTrees="binding.pidList"
-                @createFormCancel="handleDefineMenuCreateFormCancel"
-                @createFormSubmit="handleDefineMenuCreateFormSubmit"
+                @createFormCancel="handleCreateFormCancel"
+                @createFormSubmit="handleCreateFormSubmit"
             >
             </define-menu-create-form-comp>
             <a-drawer
@@ -114,7 +114,7 @@
                 :drawerStyle="drawerConf.detail.defineMenu.drawerStyle"
                 :bodyStyle="drawerConf.detail.defineMenu.bodyStyle"
                 :maskClosable="drawerConf.detail.defineMenu.maskClosable"
-                @close="handleDefineMenuDetailDrawerClose"
+                @close="handleDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
                     :dataObj="drawerConf.detail.defineMenu.dataObj"
@@ -418,7 +418,7 @@
             },
             dealGetPidTreeData(){  //取得 菜单定义-树形数据
                 var _this = this ;
-                MenuManagerApi.getAllDefineMenuTree().then((res) => {
+                MenuManagerApi.getTreeDataAll().then((res) => {
                     if(res && res.success){
                         if(res.gridList){
                             _this.binding.pidList = res.gridList ;
@@ -438,7 +438,7 @@
             dealGetAllDefineMenus() {   //取得菜单列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                MenuManagerApi.getAllDefineMenus().then((res) => {
+                MenuManagerApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -453,7 +453,7 @@
             dealQueryDefineMenus(queryFieldList,pagination,sorter) {    //带查询条件 检索菜单列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                MenuManagerApi.getAllDefineMenus(queryFieldList,pagination,sorter).then((res) => {
+                MenuManagerApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -471,7 +471,7 @@
             dealBatchDelDefineMenu() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                MenuManagerApi.batchDelDefineMenu(delIds).then((res) => {
+                MenuManagerApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -482,7 +482,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                MenuManagerApi.delOneDefineMenu(delId).then((res) => {
+                MenuManagerApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -515,7 +515,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        MenuManagerApi.getDefineMenuById(selectRowId).then((res) => {
+                        MenuManagerApi.getItemById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
                                 _this.dialogFormConf.initFlag = true ;  //弹窗初始化
@@ -549,7 +549,7 @@
                     }
                 }
             },
-            handleDefineMenuBatchDeleteByIds(e) {     // 批量删除
+            handleBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -568,11 +568,11 @@
                     })
                 }
             },
-            handleDefineMenuCreateFormCancel(e) {  // 创建/更新 菜单定义表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新 菜单定义表单->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleDefineMenuCreateFormSubmit(e) {   // 创建/更新 菜单表单->提交
+            handleCreateFormSubmit(e) {   // 创建/更新 菜单表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -581,7 +581,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        MenuManagerApi.addDefineMenuByForm(values).then((res) => {
+                        MenuManagerApi.createByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -599,7 +599,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        MenuManagerApi.updateDefineMenuByForm(values).then((res) => {
+                        MenuManagerApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -676,7 +676,7 @@
             handleParentTreeOfSearchChange(value){  //[上级菜单] SelectTree cchange事件
                 console.log("handleParentTreeOfSearchChange",value);
             },
-            handleDefineMenuDetailDrawerShow(e,record){   //Drawer-菜单定义 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-菜单定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.defineMenu.dataObj = record ;
                     this.drawerConf.detail.defineMenu.visible = true ;
@@ -684,7 +684,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleDefineMenuDetailDrawerClose(e){ //Drawer-菜单定义 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-菜单定义 详情关闭
                 this.drawerConf.detail.defineMenu.visible = false ;
             }
         },

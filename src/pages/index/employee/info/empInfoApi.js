@@ -7,7 +7,7 @@ import {pageUtil,axiosForExcelUtil} from '~Utils/axios/axiosUtils'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const EmpInfoApi = {
-    getAllUserAccounts(queryArr, pagination, sorter) {
+    getPageQuery(queryArr, pagination, sorter) {
         var sortObj = pageUtil.parseSorterToObj(sorter);
         var obj = {
             queryObj: JSON.stringify(queryArr),
@@ -17,46 +17,46 @@ export const EmpInfoApi = {
         //查询所有用户信息
         return axios.post('/user/userAccount/queryDtoPage', qs.stringify(obj)).then(res => res.data);
     },
-    getUserAccountById(userAccountId) {  //根据用户id查询用户信息
+    getItemById(userAccountId) {  //根据用户id查询用户信息
         var params = {
             accountId: userAccountId
         }
         return axios.post("/user/userAccount/queryOneById", qs.stringify(params)).then(res => res.data);
     },
-    addUserAccountByForm(formObj, avatarUrl) {     //新增用户
+    createByForm(formObj, avatarUrl) {     //新增用户
         formObj['avatarUrl'] = avatarUrl;
         var obj = {
             formObj: JSON.stringify(formObj),
         }
         return axios.post("/user/userAccount/createByForm", qs.stringify(obj)).then(res => res.data);;
     },
-    updateUserAccountByForm(formObj, avatarUrl) {  //更新用户
+    updateByForm(formObj, avatarUrl) {  //更新用户
         formObj['avatarUrl'] = avatarUrl;
         var obj = {
             formObj: JSON.stringify(formObj),
         }
         return axios.post("/user/userAccount/updateByForm", qs.stringify(obj)).then(res => res.data);
     },
-    batchDelUserAccount(ids) {  //批量删除
+    batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds: ids
         }
         return axios.post("/user/userAccount/batchDeleteByIds", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
-    delOneUserAccount(delId) {  //删除
+    deleteById(delId) {  //删除
         var obj = {
             delId: delId
         }
         return axios.post("/user/userAccount/deleteById", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
-    batchChangeLockStateUserAccount(ids, lockFlag) {  //批量锁定
+    batchLockByIds(ids, lockFlag) {  //批量锁定
         var obj = {
             lockIds: ids,
             lockFlag: lockFlag
         }
         return axios.post("/user/userAccount/batchUpdateLockByIds", qs.stringify(obj, {indices: false})).then(res => res.data);
     },
-    lockStateChangeOneUserAccount(lockId, lockFlag) {  //锁定
+    lockById(lockId, lockFlag) {  //锁定
         var obj = {
             lockId: lockId,
             lockFlag: lockFlag
@@ -154,7 +154,7 @@ export const EmpInfoApi = {
             axiosForExcelUtil.exportExcelDownload(response);
         });
     },
-    doImportDataFromExcel(formData){    //[导入数据]
+    importDataFromExcel(formData){    //[导入数据]
         return axios.post("/excel/userAccount/importData",formData,
             {
                 headers: {'Content-Type': 'multipart/form-data'}

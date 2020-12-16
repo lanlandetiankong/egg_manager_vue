@@ -29,7 +29,7 @@
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
-                                  @click="handleAnnouncementTagBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
@@ -64,7 +64,7 @@
                     </span>
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleAnnouncementTagDetailDrawerShow($event,record)">
+                            <a @click="handleDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -81,8 +81,8 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                @createFormCancel="handleAnnouncementTagCreateFormCancel"
-                @createFormSubmit="handleAnnouncementTagCreateFormSubmit"
+                @createFormCancel="handleCreateFormCancel"
+                @createFormSubmit="handleCreateFormSubmit"
             >
             </announcement-tag-create-form-comp>
             <a-drawer
@@ -96,7 +96,7 @@
                 :drawerStyle="drawerConf.detail.announcementTag.drawerStyle"
                 :bodyStyle="drawerConf.detail.announcementTag.bodyStyle"
                 :maskClosable="drawerConf.detail.announcementTag.maskClosable"
-                @close="handleAnnouncementTagDetailDrawerClose"
+                @close="handleDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
                     :dataObj="drawerConf.detail.announcementTag.dataObj"
@@ -276,7 +276,7 @@
             dealGetAllAnnouncementTags() {   //取得公告标签列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                AnnouncementTagApi.getAllAnnouncementTags().then((res) => {
+                AnnouncementTagApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -291,7 +291,7 @@
             dealQueryAnnouncementTags(queryFieldList,pagination,sorter) {    //带查询条件 检索公告标签列表
                 var _this = this;
                 _this.changeQueryLoading(true);
-                AnnouncementTagApi.getAllAnnouncementTags(queryFieldList,pagination,sorter).then((res) => {
+                AnnouncementTagApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -308,7 +308,7 @@
             dealBatchDelAnnouncementTag() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                AnnouncementTagApi.batchDelAnnouncementTag(delIds).then((res) => {
+                AnnouncementTagApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -319,7 +319,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                AnnouncementTagApi.delOneAnnouncementTag(delId).then((res) => {
+                AnnouncementTagApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -349,7 +349,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        AnnouncementTagApi.getAnnouncementTagById(selectRowId).then((res) => {
+                        AnnouncementTagApi.getItemById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
@@ -363,7 +363,7 @@
                     }
                 }
             },
-            handleAnnouncementTagBatchDeleteByIds(e) {     // 批量删除
+            handleBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -382,11 +382,11 @@
                     })
                 }
             },
-            handleAnnouncementTagCreateFormCancel(e) {  // 创建/更新 公告标签定义表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新 公告标签定义表单->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleAnnouncementTagCreateFormSubmit(e) {   // 创建/更新 公告标签表单->提交
+            handleCreateFormSubmit(e) {   // 创建/更新 公告标签表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -395,7 +395,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        AnnouncementTagApi.addAnnouncementTagByForm(values).then((res) => {
+                        AnnouncementTagApi.createByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -413,7 +413,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        AnnouncementTagApi.updateAnnouncementTagByForm(values).then((res) => {
+                        AnnouncementTagApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -458,7 +458,7 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
-            handleAnnouncementTagDetailDrawerShow(e,record){   //Drawer-公告标签 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-公告标签 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.announcementTag.dataObj = record ;
                     this.drawerConf.detail.announcementTag.visible = true ;
@@ -466,7 +466,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleAnnouncementTagDetailDrawerClose(e){ //Drawer-公告标签 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-公告标签 详情关闭
                 this.drawerConf.detail.announcementTag.visible = false ;
             }
         },

@@ -6,14 +6,14 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const MenuManagerApi = {
-    getAllDefineMenuTree() {
+    getTreeDataAll() {
         var obj = {
             withRoot:true  ,   //是否包含根节点
         }
         //查询所有菜单信息(树结构)
         return axios.post('/define/defineMenu/queryTreeSelect',qs.stringify(obj)).then(res => res.data);
     },
-    getAllDefineMenus(queryArr,pagination,sorter) {
+    getPageQuery(queryArr,pagination,sorter) {
         var sortObj = {}
         if(sorter){
             sorter.field = sorter.order ;
@@ -26,16 +26,16 @@ export const MenuManagerApi = {
         //查询所有菜单信息
         return axios.post('/define/defineMenu/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
-    getDefineMenuById(defineMenuId){  //根据菜单id查询菜单信息
+    getItemById(defineMenuId){  //根据菜单id查询菜单信息
         var params = {
             defineMenuId:defineMenuId
         }
         return axios.post("/define/defineMenu/queryOneById",qs.stringify(params)).then(res => res.data) ;
     },
-    addDefineMenuByForm(formObj) {     //新增菜单
+    createByForm(formObj) {     //新增菜单
         return axios.post("/define/defineMenu/createByForm",qs.stringify(formObj)).then(res => res.data);;
     },
-    updateDefineMenuByForm(formObj) {  //更新菜单
+    updateByForm(formObj) {  //更新菜单
         return axios.post("/define/defineMenu/updateByForm",qs.stringify(formObj)).then(res => res.data) ;
     },
     updateExcelModel(menuId,fileItem) {  //更新菜单的excel模板
@@ -43,13 +43,13 @@ export const MenuManagerApi = {
         fileItem['menuId'] = menuId ;
         return axios.post("/define/defineMenu/updateExcelModel",qs.stringify(fileItem)).then(res => res.data) ;
     },
-    batchDelDefineMenu(ids) {  //批量删除
+    batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
         return axios.post("/define/defineMenu/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
-    delOneDefineMenu(delId) {  //删除
+    deleteById(delId) {  //删除
         var obj = {
             delId:delId
         }

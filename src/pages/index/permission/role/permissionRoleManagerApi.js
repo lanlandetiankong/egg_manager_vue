@@ -6,7 +6,7 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const PermissionRoleManagerApi = {
-    getAllDefineRoles(queryArr,pagination,sorter) {
+    getPageQuery(queryArr,pagination,sorter) {
         var sortObj = {}
         if(sorter){
             sorter.field = sorter.order ;
@@ -19,7 +19,7 @@ export const PermissionRoleManagerApi = {
         //查询所有角色信息
         return axios.post('/define/defineRole/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
-    getDefineRoleById(defineRoleId){  //根据角色id查询角色信息
+    getItemById(defineRoleId){  //根据角色id查询角色信息
         var params = {
             defineRoleId:defineRoleId
         }
@@ -53,19 +53,19 @@ export const PermissionRoleManagerApi = {
         }
         return axios.post("/define/defineRole/gainAllMenuByRoleId",qs.stringify(params)).then(res => res.data) ;
     },
-    addDefineRoleByForm(formObj) {     //新增角色
+    createByForm(formObj) {     //新增角色
         return axios.post("/define/defineRole/createByForm",qs.stringify(formObj)).then(res => res.data);;
     },
-    updateDefineRoleByForm(formObj) {  //更新角色
+    updateByForm(formObj) {  //更新角色
         return axios.post("/define/defineRole/updateByForm",qs.stringify(formObj)).then(res => res.data) ;
     },
-    batchDelDefineRole(ids) {  //批量删除
+    batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
         return axios.post("/define/defineRole/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
-    delOneDefineRole(delId) {  //删除
+    deleteById(delId) {  //删除
         var obj = {
             delId:delId
         }

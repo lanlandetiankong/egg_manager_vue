@@ -29,7 +29,7 @@
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
-                                  @click="handleDefineTenantBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
@@ -65,7 +65,7 @@
                 >
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleDefineTenantDetailDrawerShow($event,record)">
+                            <a @click="handleDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -82,8 +82,8 @@
                 :visible="dialog.form.conf.visible"
                 :formObj="dialog.form.obj"
                 :actionType="dialog.form.conf.actionType"
-                @createFormCancel="handleDefineTenantCreateFormCancel"
-                @createFormSubmit="handleDefineTenantCreateFormSubmit"
+                @createFormCancel="handleCreateFormCancel"
+                @createFormSubmit="handleCreateFormSubmit"
             >
             </define-tenant-create-form-comp>
             <a-drawer
@@ -97,7 +97,7 @@
                 :drawerStyle="drawerConf.detail.defineTenant.drawerStyle"
                 :bodyStyle="drawerConf.detail.defineTenant.bodyStyle"
                 :maskClosable="drawerConf.detail.defineTenant.maskClosable"
-                @close="handleDefineTenantDetailDrawerClose"
+                @close="handleDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
                     :dataObj="drawerConf.detail.defineTenant.dataObj"
@@ -289,7 +289,7 @@
             dealGetAllDefineTenant() {   //取得租户列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                TenantManagerApi.getAllDefineTenants().then((res) => {
+                TenantManagerApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -304,7 +304,7 @@
             dealQueryDefineTenants(queryFieldList,pagination,sorter) {    //带查询条件 检索租户列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                TenantManagerApi.getAllDefineTenants(queryFieldList,pagination,sorter).then((res) => {
+                TenantManagerApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -321,7 +321,7 @@
             dealBatchDelDefineTenant() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                TenantManagerApi.batchDelDefineTenant(delIds).then((res) => {
+                TenantManagerApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -332,7 +332,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                TenantManagerApi.delOneDefineTenant(delId).then((res) => {
+                TenantManagerApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -362,7 +362,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        TenantManagerApi.getDefineTenantById(selectRowId).then((res) => {
+                        TenantManagerApi.getItemById(selectRowId).then((res) => {
                             var selectBean = res.bean;
                             if (selectBean) {
                                 _this.dialog.form.conf.visible = true;   //显示弹窗
@@ -376,7 +376,7 @@
                     }
                 }
             },
-            handleDefineTenantBatchDeleteByIds(e) {     // 批量删除
+            handleBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -395,11 +395,11 @@
                     })
                 }
             },
-            handleDefineTenantCreateFormCancel(e) {  // 创建/更新 租户定义表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新 租户定义表单->取消
                 var _this = this;
                 _this.dialog.form.conf.visible = false;
             },
-            handleDefineTenantCreateFormSubmit(e) {   // 创建/更新 租户表单->提交
+            handleCreateFormSubmit(e) {   // 创建/更新 租户表单->提交
                 var _this = this;
                 const dialogRefFormObj = _this.dealGetDialogRefFormObj();
                 dialogRefFormObj.validateFields((err, values) => {
@@ -408,7 +408,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialog.form.conf.actionType == "create") {        //新建-提交
-                        TenantManagerApi.addDefineTenantByForm(values).then((res) => {
+                        TenantManagerApi.createByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -422,7 +422,7 @@
                         })
                     } else if (_this.dialog.form.conf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialog.form.obj.fid;   //提交时，回填fid值
-                        TenantManagerApi.updateDefineTenantByForm(values).then((res) => {
+                        TenantManagerApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -466,7 +466,7 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
-            handleDefineTenantDetailDrawerShow(e,record){   //Drawer-租户定义 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-租户定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.defineTenant.dataObj = record ;
                     this.drawerConf.detail.defineTenant.visible = true ;
@@ -474,7 +474,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleDefineTenantDetailDrawerClose(e){ //Drawer-租户定义 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-租户定义 详情关闭
                 this.drawerConf.detail.defineTenant.visible = false ;
             },
             handleTenantSetupManagerBtnClick() {  //更新租户按钮-点击

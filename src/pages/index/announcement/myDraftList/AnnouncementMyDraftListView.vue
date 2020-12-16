@@ -17,7 +17,7 @@
                 >
                     <a-col>
                         <a-button type="primary" icon="check"
-                                  @click="handleAnnouncementDraftBatchPublishByIds">
+                                  @click="handleDraftBatchPublishByIds">
                             {{$t('langMap.button.actions.publish')}}
                         </a-button>
                     </a-col>
@@ -29,7 +29,7 @@
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
-                                  @click="handleAnnouncementDraftBatchDeleteByIds">
+                                  @click="handleDraftBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
@@ -68,7 +68,7 @@
 
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleAnnouncementDraftDetailDrawerShow($event,record)">
+                            <a @click="handleDraftDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -96,7 +96,7 @@
                     :drawerStyle="drawerConf.detail.announcementDraft.drawerStyle"
                     :bodyStyle="drawerConf.detail.announcementDraft.bodyStyle"
                     :maskClosable="drawerConf.detail.announcementDraft.maskClosable"
-                    @close="handleAnnouncementDraftDetailDrawerClose"
+                    @close="handleDraftDetailDrawerClose"
                 >
                     <simple-detail-drawer-comp
                         :dataObj="drawerConf.detail.announcementDraft.dataObj"
@@ -311,7 +311,7 @@
             dealGetMyAnnouncementDrafts() {   //取得公告列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                AnnouncementMyDraftListApi.getAllMyCreateAnnouncementDrafts().then((res) => {
+                AnnouncementMyDraftListApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -326,7 +326,7 @@
             dealQueryAnnouncementDrafts(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
                 var _this = this;
                 _this.changeQueryLoading(true);
-                AnnouncementMyDraftListApi.getAllMyCreateAnnouncementDrafts(queryFieldList,pagination,sorter).then((res) => {
+                AnnouncementMyDraftListApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -354,7 +354,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                AnnouncementMyDraftListApi.delOneAnnouncementDraft(delId).then((res) => {
+                AnnouncementMyDraftListApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -366,7 +366,7 @@
             dealBatchPublishAnnouncementDraft() {  //批量发布
                 var _this = this;
                 var publishIds = _this.tableCheckIdList;
-                AnnouncementMyDraftListApi.batchPublishAnnouncementDraft(publishIds).then((res) => {
+                AnnouncementMyDraftListApi.batchPublishByIds(publishIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -377,7 +377,7 @@
             },
             dealPublishOneRowById(delId) {   //根据id 将草稿的公告 发布
                 var _this = this;
-                AnnouncementMyDraftListApi.publishOneAnnouncementDraft(delId).then((res) => {
+                AnnouncementMyDraftListApi.publishOneById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -392,7 +392,7 @@
                 var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                 _this.dealQueryAnnouncementDrafts(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
-            handleAnnouncementDraftBatchDeleteByIds(e) {     // 批量删除
+            handleDraftBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -429,7 +429,7 @@
                     _this.$message.warning(_this.$t('langMap.message.warning.invalidDeleteOperation'));
                 }
             },
-            handleAnnouncementDraftBatchPublishByIds(e) {     // 批量发布
+            handleDraftBatchPublishByIds(e) {     // 批量发布
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -502,7 +502,7 @@
                 }
                 this.$router.push({ path: '/index/announcement/create', query: routeParam});
             },
-            handleAnnouncementDraftDetailDrawerShow(e,record){   //Drawer-公告草稿 详情展示
+            handleDraftDetailDrawerShow(e,record){   //Drawer-公告草稿 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.announcementDraft.dataObj = record ;
                     this.drawerConf.detail.announcementDraft.visible = true ;
@@ -510,7 +510,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleAnnouncementDraftDetailDrawerClose(e){ //Drawer-公告草稿 详情关闭
+            handleDraftDetailDrawerClose(e){ //Drawer-公告草稿 详情关闭
                 this.drawerConf.detail.announcementDraft.visible = false ;
             }
         },

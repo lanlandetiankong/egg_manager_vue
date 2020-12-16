@@ -29,7 +29,7 @@
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="delete"
-                                  @click="handleDefineDepartmentBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
@@ -59,7 +59,7 @@
                 >
                     <template slot="action" slot-scope="text,record">
                         <span>
-                            <a @click="handleDefineDepartmentDetailDrawerShow($event,record)">
+                            <a @click="handleDetailDrawerShow($event,record)">
                                 {{$t('langMap.drawer.actions.detail')}}
                             </a>
                             <a-divider type="vertical" />
@@ -78,8 +78,8 @@
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
                 :parentSelectTrees="binding.pidList"
-                @createFormCancel="handleDefineDepartmentCreateFormCancel"
-                @createFormSubmit="handleDefineDepartmentCreateFormSubmit"
+                @createFormCancel="handleCreateFormCancel"
+                @createFormSubmit="handleCreateFormSubmit"
             >
             </define-department-create-form-comp>
             <a-drawer
@@ -93,7 +93,7 @@
                 :drawerStyle="drawerConf.detail.defineDepartment.drawerStyle"
                 :bodyStyle="drawerConf.detail.defineDepartment.bodyStyle"
                 :maskClosable="drawerConf.detail.defineDepartment.maskClosable"
-                @close="handleDefineDepartmentDetailDrawerClose"
+                @close="handleDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
                     :dataObj="drawerConf.detail.defineDepartment.dataObj"
@@ -340,7 +340,7 @@
             dealGetAllDefineDepartment() {   //取得部门列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                DepartmentManagerApi.getAllDefineDepartments().then((res) => {
+                DepartmentManagerApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -355,7 +355,7 @@
             dealQueryDefineDepartments(queryFieldList,pagination,sorter) {    //带查询条件 检索部门列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                DepartmentManagerApi.getAllDefineDepartments(queryFieldList,pagination,sorter).then((res) => {
+                DepartmentManagerApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -372,7 +372,7 @@
             dealBatchDelDefineDepartment() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                DepartmentManagerApi.batchDelDefineDepartment(delIds).then((res) => {
+                DepartmentManagerApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -383,7 +383,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                DepartmentManagerApi.delOneDefineDepartment(delId).then((res) => {
+                DepartmentManagerApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -417,7 +417,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        DepartmentManagerApi.getDefineDepartmentById(selectRowId).then((res) => {
+                        DepartmentManagerApi.getItemById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
                                 _this.dialogFormConf.initFlag = true ;  //弹窗初始化
@@ -432,7 +432,7 @@
                     }
                 }
             },
-            handleDefineDepartmentBatchDeleteByIds(e) {     // 批量删除
+            handleBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -451,11 +451,11 @@
                     })
                 }
             },
-            handleDefineDepartmentCreateFormCancel(e) {  // 创建/更新 部门定义表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新 部门定义表单->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleDefineDepartmentCreateFormSubmit(e) {   // 创建/更新 部门表单->提交
+            handleCreateFormSubmit(e) {   // 创建/更新 部门表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -464,7 +464,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        DepartmentManagerApi.addDefineDepartmentByForm(values).then((res) => {
+                        DepartmentManagerApi.createByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -482,7 +482,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        DepartmentManagerApi.updateDefineDepartmentByForm(values).then((res) => {
+                        DepartmentManagerApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -530,7 +530,7 @@
             handleParentTreeOfSearchChange(value){  //[上级部门] SelectTree cchange事件
                 console.log("handleParentTreeOfSearchChange",value);
             },
-            handleDefineDepartmentDetailDrawerShow(e,record){   //Drawer-部门定义 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-部门定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.defineDepartment.dataObj = record ;
                     this.drawerConf.detail.defineDepartment.visible = true ;
@@ -538,7 +538,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleDefineDepartmentDetailDrawerClose(e){ //Drawer-部门定义 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-部门定义 详情关闭
                 this.drawerConf.detail.defineDepartment.visible = false ;
             }
         },

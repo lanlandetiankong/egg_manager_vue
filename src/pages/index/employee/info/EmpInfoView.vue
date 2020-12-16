@@ -29,7 +29,7 @@
                     </a-col>
                     <a-col>
                         <a-button type="danger" icon="user-delete"
-                                  @click="handleEmployeeInfoBatchDeleteByIds">
+                                  @click="handleBatchDeleteByIds">
                             {{$t('langMap.button.actions.batchDelByIds')}}
                         </a-button>
                     </a-col>
@@ -47,13 +47,13 @@
                     </a-col>
                     <a-col>
                         <a-button icon="lock"
-                            @click="handleEmployeeInfoBatchLockByIds(this,true)" >
+                            @click="handleBatchLockByIds(this,true)" >
                             {{$t('langMap.button.actions.lockUser')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button icon="unlock"
-                            @click="handleEmployeeInfoBatchLockByIds(this,false)">
+                            @click="handleBatchLockByIds(this,false)">
                             {{$t('langMap.button.actions.unlockUser')}}
                         </a-button>
                     </a-col>
@@ -111,7 +111,7 @@
                 </span>
                 <template slot="action" slot-scope="text,record">
                     <span>
-                        <a @click="handleEmployeeInfoDetailDrawerShow($event,record)">
+                        <a @click="handleDetailDrawerShow($event,record)">
                             {{$t('langMap.drawer.actions.detail')}}
                         </a>
                         <a-divider type="vertical" />
@@ -138,8 +138,8 @@
                 :actionType="dialogFormConf.actionType"
                 :belongTenants="binding.belongTenants"
                 :belongDepartmentTrees="binding.belongDepartments"
-                @createFormCancel="handleEmployeeInfoCreateFormCancel"
-                @createFormSubmit="handleEmployeeInfoCreateFormSubmit"
+                @createFormCancel="handleCreateFormCancel"
+                @createFormSubmit="handleCreateFormSubmit"
             />
             <user-grant-role-form-comp
                 v-if="dialogGrantRoleConf.initFlag == true"
@@ -184,7 +184,7 @@
                     :drawerStyle="drawerConf.detail.employeeInfo.drawerStyle"
                     :bodyStyle="drawerConf.detail.employeeInfo.bodyStyle"
                     :maskClosable="drawerConf.detail.employeeInfo.maskClosable"
-                    @close="handleEmployeeInfoDetailDrawerClose"
+                    @close="handleDetailDrawerClose"
             >
                 <simple-detail-drawer-comp
                     :dataObj="drawerConf.detail.employeeInfo.dataObj"
@@ -490,7 +490,7 @@
             dealGetAllUserAccounts() {   //取得用户列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                EmpInfoApi.getAllUserAccounts().then((res) => {
+                EmpInfoApi.getPageQuery().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -505,7 +505,7 @@
             dealQueryUserAccounts(queryFieldArr,pagination,sorter) {    //带查询条件 检索用户列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                EmpInfoApi.getAllUserAccounts(queryFieldArr,pagination,sorter).then((res) => {
+                EmpInfoApi.getPageQuery(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数
@@ -522,7 +522,7 @@
             dealBatchDelUserAccount() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                EmpInfoApi.batchDelUserAccount(delIds).then((res) => {
+                EmpInfoApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -533,7 +533,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                EmpInfoApi.delOneUserAccount(delId).then((res) => {
+                EmpInfoApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -545,7 +545,7 @@
             dealBatchLockUserAccount(lockFlag) {  //批量锁定
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                EmpInfoApi.batchChangeLockStateUserAccount(delIds,lockFlag).then((res) => {
+                EmpInfoApi.batchLockByIds(delIds,lockFlag).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -556,7 +556,7 @@
             },
             dealChangeLockOneRowById(delId,lockFlag) {   //根据id 锁定/解锁
                 var _this = this;
-                EmpInfoApi.lockStateChangeOneUserAccount(delId,lockFlag).then((res) => {
+                EmpInfoApi.lockById(delId,lockFlag).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -771,7 +771,7 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        EmpInfoApi.getUserAccountById(selectRowId).then((res) => {
+                        EmpInfoApi.getItemById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
                                 _this.dialogFormConf.visible = true;   //显示弹窗
@@ -785,11 +785,11 @@
                     }
                 }
             },
-            handleEmployeeInfoCreateFormCancel(e) {  // 创建/更新 用户表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新 用户表单->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleEmployeeInfoCreateFormSubmit(e,avatarUrl) {   // 创建/更新 用户表单->提交
+            handleCreateFormSubmit(e,avatarUrl) {   // 创建/更新 用户表单->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -798,7 +798,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        EmpInfoApi.addUserAccountByForm(values,avatarUrl).then((res) => {
+                        EmpInfoApi.createByForm(values,avatarUrl).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -816,7 +816,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        EmpInfoApi.updateUserAccountByForm(values,avatarUrl).then((res) => {
+                        EmpInfoApi.updateByForm(values,avatarUrl).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -837,7 +837,7 @@
                 });
 
             },
-            handleEmployeeInfoBatchDeleteByIds(e) {  // 批量删除
+            handleBatchDeleteByIds(e) {  // 批量删除
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -874,7 +874,7 @@
                     _this.$message.warning(_this.$t('langMap.message.warning.invalidDeleteOperation'));
                 }
             },
-            handleEmployeeInfoBatchLockByIds(e,lockFlag) {  // 批量锁定
+            handleBatchLockByIds(e,lockFlag) {  // 批量锁定
                 var _this = this;
                 var selectDelIds = _this.tableCheckIdList;
                 if (selectDelIds.length < 1) {
@@ -1006,7 +1006,7 @@
                 this.uploadExcelModelconf.visible = false ;
             },
             handleImportDataModalSubmit(formData,processData){  //[数据导入] 弹窗提交
-                EmpInfoApi.doImportDataFromExcel(formData).then((res) => {
+                EmpInfoApi.importDataFromExcel(formData).then((res) => {
                     if(res.success){
                         //console.log(res);
                         this.uploadExcelModelconf.visible = false ;
@@ -1014,7 +1014,7 @@
 
                 })
             },
-            handleEmployeeInfoDetailDrawerShow(e,record){   //Drawer-用户定义 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer-用户定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.employeeInfo.dataObj = record ;
                     this.drawerConf.detail.employeeInfo.visible = true ;
@@ -1022,7 +1022,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleEmployeeInfoDetailDrawerClose(e){ //Drawer-用户定义 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-用户定义 详情关闭
                 this.drawerConf.detail.employeeInfo.visible = false ;
             },
         },

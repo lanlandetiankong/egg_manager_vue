@@ -1,2 +1,22 @@
-升级antDesignVue版本
-npm update ant-design-vue --save
+
+getTreeDataAll
+
+getPageQuery
+getPageQueryOfMyCreate
+
+getItemById
+
+createByForm
+updateByForm
+
+batchDeleteByIds
+deleteById
+
+publishOneById
+batchPublishByIds
+
+batchLockByIds
+lockById
+
+batchEnsureByIds
+

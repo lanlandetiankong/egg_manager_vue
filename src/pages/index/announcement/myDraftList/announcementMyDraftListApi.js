@@ -18,7 +18,7 @@ export const AnnouncementMyDraftListApi = {
         //查询所有公告标签信息
         return axios.post('/announcementTag/gainEnumSelect',qs.stringify(obj)).then(res => res.data);
     },
-    getAllMyCreateAnnouncementDrafts(queryArr,pagination,sorter) {   //取得 所有公告
+    getPageQuery(queryArr,pagination,sorter) {   //取得 所有公告
         var sortObj = {}
         if(sorter){
             sorter.field = sorter.order ;
@@ -32,25 +32,25 @@ export const AnnouncementMyDraftListApi = {
         //查询所有公告信息
         return axios.post('/announcementDraft/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
-    batchDelAnnouncementDraft(ids) {  //批量删除
+    batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
         return axios.post("/announcementDraft/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
-    delOneAnnouncementDraft(delId) {  //删除
+    deleteById(delId) {  //删除
         var obj = {
             delId:delId
         }
         return axios.post("/announcementDraft/deleteById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
-    publishOneAnnouncementDraft(publishId) {  //草稿转发布
+    publishOneById(publishId) {  //草稿转发布
         var obj = {
             draftId:publishId
         }
         return axios.post("/announcementDraft/publishDraft",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
-    batchPublishAnnouncementDraft(ids) {  //批量发布
+    batchPublishByIds(ids) {  //批量发布
         var obj = {
             draftIds:ids
         }

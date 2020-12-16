@@ -19,25 +19,25 @@ export const EmpJobApi = {
         //查询所有职务信息
         return axios.post('/define/defineJob/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
-    getDefineJobById(defineJobId){  //根据职务id查询职务信息
+    getItemById(defineJobId){  //根据职务id查询职务信息
         var params = {
             defineJobId:defineJobId
         }
         return axios.post("/define/defineJob/queryOneById",qs.stringify(params)).then(res => res.data) ;
     },
-    addDefineJobByForm(formObj) {     //新增职务
+    createByForm(formObj) {     //新增职务
         return axios.post("/define/defineJob/createByForm",qs.stringify(formObj)).then(res => res.data);;
     },
-    updateDefineJobByForm(formObj) {  //更新职务
+    updateByForm(formObj) {  //更新职务
         return axios.post("/define/defineJob/updateByForm",qs.stringify(formObj)).then(res => res.data) ;
     },
-    batchDelDefineJobs(ids) {  //批量删除
+    batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
         return axios.post("/define/defineJob/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
-    delOneDefineJob(delId) {  //删除
+    deleteById(delId) {  //删除
         var obj = {
             delId:delId
         }
