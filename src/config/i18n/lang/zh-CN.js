@@ -53,6 +53,14 @@ export const langMap = {
             filterSuperiors:'筛选上级'
         }
     },
+    layout:{
+        tagsView:{
+            close:'关闭',
+            closeOther:'关闭其他',
+            closeAll:'关闭所有',
+            cancelOperation:'取消操作',
+        },
+    },
     drawer:{
         actions:{
             detail:'详情'

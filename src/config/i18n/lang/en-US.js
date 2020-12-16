@@ -53,6 +53,14 @@ export const langMap = {
             filterSuperiors:'Filter superiors'
         }
     },
+    layout:{
+        tagsView:{
+            close:'Close',
+            closeOther:'Close other',
+            closeAll:'Close all',
+            cancelOperation:'Cancel operation',
+        },
+    },
     drawer:{
         actions:{
             detail:'Detail'

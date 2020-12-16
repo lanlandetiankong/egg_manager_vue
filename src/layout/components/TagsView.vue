@@ -18,10 +18,10 @@
             </router-link>
         </vue-scroll>
         <ul class='contextmenu' v-show="contextMenuConf.visible" :style="{left:contextMenuConf.left+'px',top:contextMenuConf.top+'px'}">
-            <li @click="handleSelectedTagItemClose(selectedTag,$event)">关闭</li>
-            <li @click="handleOthersTagItemClose">关闭其他</li>
-            <li @click="handleAllTagItemClose">关闭所有</li>
-            <li @click="dealHiddentContextMenu">取消操作</li>
+            <li @click="handleSelectedTagItemClose(selectedTag,$event)">{{$t('langMap.layout.tagsView.close')}}</li>
+            <li @click="handleOthersTagItemClose">{{$t('langMap.layout.tagsView.closeOther')}}</li>
+            <li @click="handleAllTagItemClose">{{$t('langMap.layout.tagsView.closeAll')}}</li>
+            <li @click="dealHiddentContextMenu">{{$t('langMap.layout.tagsView.cancelOperation')}}</li>
         </ul>
     </div>
 </template>
