@@ -17,13 +17,13 @@
                 >
                     <a-col>
                         <a-button type="primary" icon="user-add"
-                                  @click="handleAddDefineJobBtnClick">
+                                  @click="handleCreateByForm">
                             {{$t('langMap.button.actions.addByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="edit"
-                                  @click="handleUpdateDefineJobBtnClick">
+                                  @click="handleUpdateByForm">
                             {{$t('langMap.button.actions.updateByForm')}}
                         </a-button>
                     </a-col>
@@ -289,7 +289,7 @@
                     _this.changeQueryLoading(false);
                 })
             },
-            dealBatchDelDefineJobs() {  //批量删除
+            dealBatchDeleteByIds() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
                 EmpJobApi.batchDeleteByIds(delIds).then((res) => {
@@ -349,13 +349,13 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
-            handleAddDefineJobBtnClick() {     //新增职务按钮-点击
+            handleCreateByForm() {     //新增职务按钮-点击
                 var _this = this;
                 _this.dialogFormConf.visible = true;   //显示弹窗
                 _this.dialogFormConf.actionType = "create";
                 _this.dialogFormObj = {};
             },
-            handleUpdateDefineJobBtnClick() {  //更新职务按钮-点击
+            handleUpdateByForm() {  //更新职务按钮-点击
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
                     this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
@@ -440,7 +440,7 @@
                         okText: _this.$t('langMap.button.actions.confirm'),
                         cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
-                            _this.dealBatchDelDefineJobs();
+                            _this.dealBatchDeleteByIds();
                         },
                         onCancel() {
                             _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));

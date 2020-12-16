@@ -17,13 +17,13 @@
                 >
                     <a-col>
                         <a-button type="primary" icon="plus"
-                                  @click="handleAddDefineDepartmentBtnClick">
+                                  @click="handleCreateByForm">
                             {{$t('langMap.button.actions.addByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="edit"
-                                  @click="handleUpdateDefineDepartmentBtnClick">
+                                  @click="handleUpdateByForm">
                             {{$t('langMap.button.actions.updateByForm')}}
                         </a-button>
                     </a-col>
@@ -354,7 +354,7 @@
                     _this.changeQueryLoading(false);
                 })
             },
-            dealBatchDelDefineDepartment() {  //批量删除
+            dealBatchDeleteByIds() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
                 DepartmentManagerApi.batchDeleteByIds(delIds).then((res) => {
@@ -383,7 +383,7 @@
                 var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                 _this.dealQueryDefineDepartments(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
-            handleAddDefineDepartmentBtnClick() {     //新增部门按钮-点击
+            handleCreateByForm() {     //新增部门按钮-点击
                 var _this = this;
                 _this.dialogFormConf.initFlag = true ;  //弹窗初始化
                 _this.dialogFormConf.visible = true;   //显示弹窗
@@ -393,7 +393,7 @@
                     weights:0,
                 };
             },
-            handleUpdateDefineDepartmentBtnClick() {  //更新部门按钮-点击
+            handleUpdateByForm() {  //更新部门按钮-点击
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
                     this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
@@ -428,7 +428,7 @@
                         okText: _this.$t('langMap.button.actions.confirm'),
                         cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
-                            _this.dealBatchDelDefineDepartment();
+                            _this.dealBatchDeleteByIds();
                         },
                         onCancel() {
                             _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));

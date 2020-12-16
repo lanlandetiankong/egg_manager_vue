@@ -325,7 +325,7 @@
                     _this.changeQueryLoading(false);
                 })
             },
-            dealBatchDelAnnouncementDraft() {  //批量删除
+            dealBatchDeleteByIds() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
                 AnnouncementMyDraftListApi.batchDelAnnouncementDraft(delIds).then((res) => {
@@ -388,7 +388,7 @@
                         okText: _this.$t('langMap.button.actions.confirm'),
                         cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {
-                            _this.dealBatchDelAnnouncementDraft();
+                            _this.dealBatchDeleteByIds();
                         },
                         onCancel() {
                             _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));

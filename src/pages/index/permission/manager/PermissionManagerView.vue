@@ -17,14 +17,14 @@
                 >
                     <a-col>
                         <a-button type="primary" icon="plus"
-                                  @click="handleAddDefinePermissionBtnClick">
+                                  @click="handleCreateByForm">
                             {{$t('langMap.button.actions.addByForm')}}
                         </a-button>
                     </a-col>
                     <a-col>
                         <a-button type="primary" icon="edit"
                                   v-show="mixin_handlePermissionDomShow('PermCtrl:Permission_Add')"
-                                  @click="handleUpdateDefinePermissionBtnClick"
+                                  @click="handleUpdateByForm"
                         >
                             {{$t('langMap.button.actions.updateByForm')}}
                         </a-button>
@@ -371,7 +371,7 @@
                     _this.changeQueryLoading(false);
                 })
             },
-            dealBatchDelDefinePermission() {  //批量删除
+            dealBatchDeleteByIds() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
                 PermissionManagerApi.batchDeleteByIds(delIds).then((res) => {
@@ -412,13 +412,13 @@
                 var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                 _this.dealQueryDefinePermissions(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
-            handleAddDefinePermissionBtnClick() {     //新增权限按钮-点击
+            handleCreateByForm() {     //新增权限按钮-点击
                 var _this = this;
                 _this.dialogFormConf.visible = true;   //显示弹窗
                 _this.dialogFormConf.actionType = "create";
                 _this.dialogFormObj = {};
             },
-            handleUpdateDefinePermissionBtnClick() {  //更新权限按钮-点击
+            handleUpdateByForm() {  //更新权限按钮-点击
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
                     this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
@@ -461,7 +461,7 @@
                             okText: _this.$t('langMap.button.actions.confirm'),
                             cancelText: _this.$t('langMap.button.actions.cancel'),
                             onOk() {
-                                _this.dealBatchDelDefinePermission();
+                                _this.dealBatchDeleteByIds();
                             },
                             onCancel() {
                                 _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
