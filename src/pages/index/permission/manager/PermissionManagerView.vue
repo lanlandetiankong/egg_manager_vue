@@ -323,9 +323,7 @@
                 var _this = this ;
                 PermissionCommonApis.getAllPermissionTypes().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.binding.permissionTypes = res.enumData ;
-                        }
+                        _this.binding.permissionTypes = res.enumData.list ;
                     }
                 })
             },
@@ -333,10 +331,8 @@
                 var _this = this ;
                 PermissionCommonApis.getAllPermissionCodePrefixs().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.binding.codePrefixList = res.enumData ;
-                            _this.binding.codePrefixDefaultChecks = res.enumDefaultCheckList ;
-                        }
+                        _this.binding.codePrefixList = res.enumData.list ;
+                        _this.binding.codePrefixDefaultChecks = res.enumData.checkeds ;
                     }
                 })
             },
@@ -344,9 +340,7 @@
                 var _this = this ;
                 BindingCommonApis.getSwitchEnumList().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.binding.switchEnums = res.enumData ;
-                        }
+                        _this.binding.switchEnums = res.enumData.list ;
                     }
                 })
             },

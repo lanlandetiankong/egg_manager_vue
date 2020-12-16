@@ -310,9 +310,7 @@
                 var _this = this ;
                 SmartFormDefinitionApi.getAllFormTypeEnums().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.binding.formTypeList = res.enumData ;
-                        }
+                        _this.binding.formTypeList = res.enumData.list ;
                     }
                 })
             },

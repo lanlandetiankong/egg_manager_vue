@@ -421,9 +421,7 @@
                 var _this = this ;
                 UserCommonApis.getAllUserType().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.searchConf.binding.userTypes = res.enumData ;
-                        }
+                        _this.searchConf.binding.userTypes = res.enumData.list ;
                     }
                 })
             },
@@ -431,9 +429,7 @@
                 var _this = this ;
                 UserTableSelectCompApi.getAllDefineTenantEnums().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.searchConf.binding.belongTenants = res.enumData ;
-                        }
+                        _this.searchConf.binding.belongTenants = res.enumData.list ;
                     }
                 })
             },
@@ -451,9 +447,7 @@
                 var _this = this ;
                 UserCommonApis.getAllUserLockStateType().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.searchConf.binding.lockStates = res.enumData ;
-                        }
+                        _this.searchConf.binding.lockStates = res.enumData.list ;
                     }
                 })
             },

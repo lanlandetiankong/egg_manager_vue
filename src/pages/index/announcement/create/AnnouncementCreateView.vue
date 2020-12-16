@@ -218,7 +218,7 @@
                 var _this = this ;
                 AnnouncementCreateApi.getAllAnnouncementTagEnums().then((res) =>{
                     if(res.success){
-                        _this.bindData.announcementTagList = res.enumData ;
+                        _this.bindData.announcementTagList = res.enumData.list ;
                     }
                 })
             },

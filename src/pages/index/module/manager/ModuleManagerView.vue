@@ -299,9 +299,7 @@
                 var _this = this ;
                 ModuleCommonApis.getAllModuleTypes().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.binding.moduleTypes = res.enumData ;
-                        }
+                        _this.binding.moduleTypes = res.enumData.list ;
                     }
                 })
             },

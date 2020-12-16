@@ -329,9 +329,7 @@
                 var _this = this ;
                 PermissionCommonApis.getAllRoleTypes().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.binding.roleTypes = res.enumData ;
-                        }
+                        _this.binding.roleTypes = res.enumData.list ;
                     }
                 })
             },

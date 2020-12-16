@@ -331,9 +331,7 @@
                 var _this = this ;
                 UserCommonApis.getAllDefineJobType().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.binding.types = res.enumData ;
-                        }
+                        _this.binding.types = res.enumData.list ;
                     }
                 })
             },

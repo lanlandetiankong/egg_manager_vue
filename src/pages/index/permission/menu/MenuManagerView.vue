@@ -412,9 +412,7 @@
                 var _this = this ;
                 ModuleCommonApis.getAllMenuUrlJumpTypes().then((res) => {
                     if(res && res.success){
-                        if(res.enumData){
-                            _this.binding.urlJumpTypes = res.enumData ;
-                        }
+                        _this.binding.urlJumpTypes = res.enumData.list ;
                     }
                 })
             },
