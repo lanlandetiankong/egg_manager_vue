@@ -286,21 +286,6 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
             },
-            dealGetAllDefineTenant() {   //取得租户列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                TenantManagerApi.getPageQuery().then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealQueryDefineTenants(queryFieldList,pagination,sorter) {    //带查询条件 检索租户列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
@@ -503,7 +488,7 @@
             }
         },
         created(){
-            this.dealGetAllDefineTenant();
+            this.handleSearchFormQuery();
         },
         destroyed(){
             console.log("租户管理-页面销毁 ...")

@@ -385,21 +385,6 @@
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.defineRoleCreateFormRef.defineRoleCreateForm;
             },
-            dealGetAllDefineRoles() {   //取得角色列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                PermissionRoleManagerApi.getPageQuery().then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealQueryDefineRoles(queryFieldList,pagination,sorter) {    //带查询条件 检索角色列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
@@ -736,7 +721,7 @@
             }
         },
         created(){
-            this.dealGetAllDefineRoles();
+            this.handleSearchFormQuery();
             this.dealGetRoleTypeEnumList();
         },
         destroyed(){

@@ -314,21 +314,6 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
             },
-            dealGetAllDefineModules() {   //取得模块列表
-                var _this = this;
-                _this.changeQueryLoading(true);
-                ModuleManagerApi.getPageQuery().then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealQueryDefineModules(queryFieldList,pagination,sorter) {    //带查询条件 检索模块列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
@@ -522,7 +507,7 @@
             }
         },
         created(){
-            this.dealGetAllDefineModules();
+            this.handleSearchFormQuery();
             this.dealGetModuleTypeEnumList();
         },
         destroyed(){

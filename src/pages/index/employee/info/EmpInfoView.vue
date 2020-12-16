@@ -487,21 +487,6 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
             },
-            dealGetAllUserAccounts() {   //取得用户列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                EmpInfoApi.getPageQuery().then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealQueryUserAccounts(queryFieldArr,pagination,sorter) {    //带查询条件 检索用户列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
@@ -1042,7 +1027,7 @@
             },
         },
         created(){
-            this.dealGetAllUserAccounts();
+            this.handleSearchFormQuery();
             this.dealGetUserTypeEnumList();
             this.dealGetDefineTenantEnumList();
             this.dealGetDefineDepartmentTreeData();

@@ -273,21 +273,6 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
             },
-            dealGetAllAnnouncementTags() {   //取得公告标签列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                AnnouncementTagApi.getPageQuery().then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealQueryAnnouncementTags(queryFieldList,pagination,sorter) {    //带查询条件 检索公告标签列表
                 var _this = this;
                 _this.changeQueryLoading(true);
@@ -472,7 +457,7 @@
         },
         watch:{},
         created(){
-            this.dealGetAllAnnouncementTags();
+            this.handleSearchFormQuery();
         },
         destroyed(){
             console.log("公告标签-页面销毁 ...")

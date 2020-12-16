@@ -435,21 +435,6 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
             },
-            dealGetAllDefineMenus() {   //取得菜单列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                MenuManagerApi.getPageQuery().then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealQueryDefineMenus(queryFieldList,pagination,sorter) {    //带查询条件 检索菜单列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
@@ -700,7 +685,7 @@
             }
         },
         created(){
-            this.dealGetAllDefineMenus();
+            this.handleSearchFormQuery();
             this.dealGetMenuTypeEnumList();
             this.dealGetPidTreeData();
         },

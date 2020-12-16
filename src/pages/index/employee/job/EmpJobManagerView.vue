@@ -272,21 +272,6 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
             },
-            dealGetAllDefineJobs() {   //取得职务列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                EmpJobApi.getPageQuery().then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealQueryDefineJobs(queryFieldArr,pagination,sorter) {    //带查询条件 检索职务列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
@@ -523,7 +508,7 @@
             }
         },
         created(){
-            this.dealGetAllDefineJobs();
+            this.handleSearchFormQuery();
             this.dealGetDefineJobTypeEnumList();
         },
         destroyed(){

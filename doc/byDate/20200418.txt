@@ -20,3 +20,5 @@ lockById
 
 batchEnsureByIds
 
+handleSearchFormQuery
+dealQueryGridData

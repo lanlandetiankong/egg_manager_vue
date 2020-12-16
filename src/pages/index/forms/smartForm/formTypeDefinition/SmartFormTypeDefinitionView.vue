@@ -281,21 +281,6 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
             },
-            dealGetAllGridData() {   //取得数据列表
-                var _this = this;
-                _this.changeQueryLoading(true);
-                SmartFormTypeDefinitionApi.getDataPage().then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealQueryGridData(queryFieldList,pagination,sorter) {    //带查询条件 检索数据列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
@@ -479,7 +464,7 @@
             }
         },
         created(){
-            this.dealGetAllGridData();
+            this.handleSearchFormQuery();
         },
         destroyed(){
             console.log("智能表单类型管理-页面销毁 ...")
