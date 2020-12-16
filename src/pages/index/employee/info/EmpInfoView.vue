@@ -2,12 +2,12 @@
     <div>
         <div>
             <!-- 搜索区域 -->
-                <query-form-comp
-                    :showAble="searchConf.showAble"
-                    :loadingFlag="searchConf.loadingFlag"
-                    :formItemConf="searchConf.formItemConf"
-                    @execQuery="handleSearchFormQuery"
-                />
+            <query-form-comp
+                :showAble="searchConf.showAble"
+                :loadingFlag="searchConf.loadingFlag"
+                :formItemConf="searchConf.formItemConf"
+                @execQuery="handleSearchFormQuery"
+            />
             <!-- 操作区域 -->
             <div>
                 <a-row
