@@ -1,47 +1,13 @@
 <template>
     <div>
         <div>
-            <!-- 复合搜索-区域 -->
-            <div v-show="searchConf.showListFlag">
-                <div>
-                    <a-form layout="inline"
-                        :form="searchForm"
-                        @submit="handleSearchFormQuery"
-                    >
-                        <a-row :gutter="6">
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.type')">
-                                    <a-input v-decorator="searchConf.paramConf.name"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.description')">
-                                    <a-input v-decorator="searchConf.paramConf.description"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.remark')">
-                                    <a-input v-decorator="searchConf.paramConf.remark"/>
-                                </a-form-item>
-                            </a-col>
-                        </a-row>
-                        <a-row>
-                            <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit" icon="search"
-                                          :loading="searchConf.loadingFlag"
-                                >
-                                    {{$t('langMap.button.actions.query')}}
-                                </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
-                                          @click="handleSearchFormReset">
-                                    {{$t('langMap.button.actions.reset')}}
-                                </a-button>
-                            </a-col>
-                        </a-row>
-                    </a-form>
-                </div>
-                <a-divider/>
-            </div>
+            <!-- 搜索区域 -->
+            <query-form-comp
+                :showAble="searchConf.showAble"
+                :loadingFlag="searchConf.loadingFlag"
+                :formItemConf="searchConf.formItemConf"
+                @execQuery="handleSearchFormQuery"
+            />
             <!-- 操作按钮-区域-->
             <div>
                 <a-row
@@ -73,7 +39,7 @@
                             :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
-                            v-model="searchConf.showListFlag"
+                            v-model="searchConf.showAble"
                         ></a-switch>
                     </a-col>
                 </a-row>
@@ -87,7 +53,7 @@
                     :rowKey="item => item.fid"
                     :columns="tableConf.columns"
                     :dataSource="tableConf.data"
-                    :loading="tableConf.loading"
+                    :loading="searchConf.loadingFlag"
                     :rowSelection="rowSelection"
                     @change="handleTableChange"
                 >
@@ -154,13 +120,15 @@
     import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {SmartFormTypeDefinitionApi} from './smartFormTypeDefinitionApi.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
+    import {FormItemTypeEnum} from "~Components/query/form_enum";
 
+    import QueryFormComp from '~Components/query/QueryFormComp'
     import SmartFormTypeDefinitionCreateFormComp from "@/components/index/forms/smartForm/formTypeDefinition/SmartFormTypeDefinitionCreateFormComp";
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     export default {
         name: "SmartFormTypeDefinitionView",
-        components: {SmartFormTypeDefinitionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        components: {QueryFormComp,SmartFormTypeDefinitionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -186,16 +154,29 @@
             return {
                 fieldInfoConf:fieldInfoConfObj,
                 searchConf:{
-                    showListFlag:false,
+                    showAble:false,
                     loadingFlag:false,
-                    defaultColSpan: 8,
-                    paramConf: {
-                        name: ["name", {rules: []}],
-                        description: ["description", {rules: []}],
-                        remark:["remark",{rules: []}]
+                    formItemConf:{
+                        name:{
+                            key:'name',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.formType.formTypeName'),
+                            decorator:["name", {rules: []}],
+                        },
+                        description:{
+                            key:'description',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.description'),
+                            decorator:["description", {rules: []}],
+                        },
+                        remark:{
+                            key:'remark',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.remark'),
+                            decorator:["remark", {rules: []}],
+                        }
                     }
                 },
-                searchForm:this.$form.createForm(this,{name:'search_form'}),
                 tableConf: {
                     data: [],
                     columns: [{
@@ -222,7 +203,6 @@
                         width:220,
                         scopedSlots: { customRender: 'action' }
                     }],
-                    loading: false,
                     pagination: {
                         current:1,
                         pageSize:10,
@@ -292,23 +272,18 @@
             }
         },
         methods: {
-            onSelectChange(selectedRowKeys) {
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.smartFormTypeDefinitionCreateFormCompRef.smartFormTypeDefinitionCreateForm;
             },
-            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+            changeQueryLoading(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
                     loadingFlag = false ;
                 }
                 this.searchConf.loadingFlag = loadingFlag;
-                this.tableConf.loading = loadingFlag;
             },
             dealGetAllGridData() {   //取得数据列表
                 var _this = this;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 SmartFormTypeDefinitionApi.getDataPage().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -316,14 +291,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealQueryGridData(queryFieldList,pagination,sorter) {    //带查询条件 检索数据列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 SmartFormTypeDefinitionApi.getDataPage(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -333,9 +308,9 @@
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealBatchDelByIdsBtnClick() {  //批量删除
@@ -361,23 +336,11 @@
                     }
                 })
             },
-            handleSearchFormQuery(e) {
+            handleSearchFormQuery(e,values) {
                 var _this = this ;
-                if (e) {
-                    e.preventDefault();
-                }
-                var paginationTemp = _this.tableConf.pagination ;
-                var sorterTemp = _this.tableConf.sorter ;
-                this.searchForm.validateFields((err, values) => {
-                    if (!err) {
-                        //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                        _this.dealQueryGridData(searchFieldArr,paginationTemp,sorterTemp);
-                    }
-                });
-            },
-            handleSearchFormReset() {    //重置 搜索列表 的值
-                this.searchForm.resetFields();
+                //取得 bean 形式 的查询条件数组
+                var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
+                _this.dealQueryGridData(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleAddByFormBtnClick() {     //新增按钮-点击
                 var _this = this;

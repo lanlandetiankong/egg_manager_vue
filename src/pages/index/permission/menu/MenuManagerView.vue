@@ -1,85 +1,13 @@
 <template>
     <div>
         <div>
-            <!-- 复合搜索-区域 -->
-            <div v-show="searchConf.showListFlag">
-                <div>
-                    <a-form layout="inline"
-                        :form="searchForm"
-                        @submit="handleSearchFormQuery"
-                    >
-                        <a-row :gutter="6">
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.menu.menuName')">
-                                    <a-input v-decorator="searchConf.paramConf.menuName"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.superiorName')">
-                                    <a-tree-select
-                                        style="width: 150px"
-                                        :placeholder="$t('langMap.button.placeholder.filterSuperiors')"
-                                        showSearch allowClear
-                                        :treeNodeFilterProp="searchConf.treeSelectConf.pid.treeNodeFilterProp"
-                                        :treeDefaultExpandAll="searchConf.treeSelectConf.pid.treeDefaultExpandAll"
-                                        v-decorator="searchConf.paramConf.pid"
-                                        :treeData="searchConf.treeSelectConf.pid.treeData"
-                                        @change="handleParentTreeOfSearchChange"
-                                    >
-                                    </a-tree-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.label')">
-                                    <a-input v-decorator="searchConf.paramConf.label"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.menu.routerUrl')">
-                                    <a-input v-decorator="searchConf.paramConf.routerUrl"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.menu.hrefUrl')">
-                                    <a-input v-decorator="searchConf.paramConf.hrefUrl"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.type')">
-                                    <a-select showSearch allowClear
-                                          :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                                          style="width: 180px"
-                                          optionFilterProp="children"
-                                          :options="searchConf.binding.menu.urlJumpTypes"
-                                          :filterOption="getMenuTypeFilterOption"
-                                          v-decorator="searchConf.paramConf.urlJumpType"
-                                    >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.remark')">
-                                    <a-input v-decorator="searchConf.paramConf.remark"/>
-                                </a-form-item>
-                            </a-col>
-                        </a-row>
-                        <a-row>
-                            <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit" icon="search"
-                                          :loading="searchConf.loadingFlag"
-                                >
-                                    {{$t('langMap.button.actions.query')}}
-                                </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
-                                          @click="handleSearchFormReset">
-                                    {{$t('langMap.button.actions.reset')}}
-                                </a-button>
-                            </a-col>
-                        </a-row>
-                    </a-form>
-                </div>
-                <a-divider/>
-            </div>
+            <!-- 搜索区域 -->
+            <query-form-comp
+                :showAble="searchConf.showAble"
+                :loadingFlag="searchConf.loadingFlag"
+                :formItemConf="searchConf.formItemConf"
+                @execQuery="handleSearchFormQuery"
+            />
             <!-- 操作按钮-区域-->
             <div>
                 <a-row
@@ -118,7 +46,7 @@
                             :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
-                            v-model="searchConf.showListFlag"
+                            v-model="searchConf.showAble"
                         ></a-switch>
                     </a-col>
                 </a-row>
@@ -133,7 +61,7 @@
                     :bordered="tableConf.bordered"
                     :columns="tableConf.columns"
                     :dataSource="tableConf.data"
-                    :loading="tableConf.loading"
+                    :loading="searchConf.loadingFlag"
                     :scroll="tableConf.scroll"
                     :rowSelection="rowSelection"
                     @change="handleTableChange"
@@ -169,8 +97,8 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                :menuUrlJumpTypes="searchConf.binding.menu.urlJumpTypes"
-                :parentSelectTrees="searchConf.treeSelectConf.pid.treeData"
+                :menuUrlJumpTypes="binding.urlJumpTypes"
+                :parentSelectTrees="binding.pidList"
                 @createFormCancel="handleDefineMenuCreateFormCancel"
                 @createFormSubmit="handleDefineMenuCreateFormSubmit"
             >
@@ -215,13 +143,15 @@
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {MenuManagerApi} from './menuManagerApi.js'
     import {ModuleCommonApis} from '~Apis/module/ModuleCommonApis.js'
+    import {FormItemTypeEnum} from "~Components/query/form_enum";
 
+    import QueryFormComp from '~Components/query/QueryFormComp'
     import DefineMenuCreateFormComp from "~Components/index/module/manager/DefineMenuCreateFormComp";
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     import ExcelTempletUploadComp from '~Components/index/common/excel/ExcelTempletUploadComp';
     export default {
         name: "MenuManagerView",
-        components: {DefineMenuCreateFormComp,SimpleDetailDrawerComp,ExcelTempletUploadComp, ACol, AFormItem},
+        components: {QueryFormComp,DefineMenuCreateFormComp,SimpleDetailDrawerComp,ExcelTempletUploadComp, ACol, AFormItem},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left';
@@ -262,36 +192,62 @@
             };
             return {
                 fieldInfoConf:fieldInfoConfObj,
+                binding:{
+                    urlJumpTypes:[],
+                    pidList:[]
+                },
                 searchConf:{
-                    showListFlag:false,
+                    showAble:false,
                     loadingFlag:false,
-                    defaultColSpan: 8,
-                    paramConf: {
-                        menuName: ["menuName", {rules: []}],
-                        pid: ["pid", {rules: []}],
-                        label: ["label", {rules: []}],
-                        routerUrl: ["routerUrl", {rules: []}],
-                        hrefUrl: ["hrefUrl", {rules: []}],
-                        urlJumpType: ["urlJumpType", {rules: []}],
-                        remark:["remark",{rules: []}]
-                    },
-                    binding:{
-                        menu:{
-                            urlJumpTypes:[]
-                        }
-                    },
-                    formObj:{
-
-                    },
-                    treeSelectConf:{
+                    formItemConf:{
+                        menuName:{
+                            key:'menuName',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.menu.menuName'),
+                            decorator:["menuName", {rules: []}],
+                        },
                         pid:{
+                            key:'pid',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.menu.parentMenuName'),
+                            decorator:["pid", {rules: []}],
                             treeDefaultExpandAll:false,
                             treeNodeFilterProp:"title",
                             treeData:[]
+                        },
+                        label:{
+                            key:'label',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.label'),
+                            decorator:["label", {rules: []}],
+                        },
+                        routerUrl:{
+                            key:'routerUrl',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.menu.routerUrl'),
+                            decorator:["routerUrl", {rules: []}],
+                        },
+                        hrefUrl:{
+                            key:'hrefUrl',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.menu.hrefUrl'),
+                            decorator:["hrefUrl", {rules: []}],
+                        },
+                        urlJumpType:{
+                            key:'urlJumpType',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.menu.urlJumpType'),
+                            decorator:["urlJumpType", {rules: []}],
+                            options:[]
+                        },
+                        remark:{
+                            key:'remark',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.remark'),
+                            decorator:["remark", {rules: []}],
                         }
                     }
                 },
-                searchForm:this.$form.createForm(this,{name:'search_form'}),
                 tableConf: {
                     data: [],
                     columns: [{
@@ -363,7 +319,6 @@
                         width:220,
                         scopedSlots: { customRender: 'action' }
                     }],
-                    loading: false,
                     pagination: {
                         current:1,
                         pageSize:10,
@@ -453,15 +408,12 @@
             }
         },
         methods: {
-            getMenuTypeFilterOption(input,option){
-                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
-            },
             dealGetMenuTypeEnumList(){  //取得 菜单url跳转类型-枚举列表
                 var _this = this ;
                 ModuleCommonApis.getAllMenuUrlJumpTypes().then((res) => {
                     if(res && res.success){
                         if(res.enumData){
-                            _this.searchConf.binding.menu.urlJumpTypes = res.enumData ;
+                            _this.binding.urlJumpTypes = res.enumData ;
                         }
                     }
                 })
@@ -471,7 +423,7 @@
                 MenuManagerApi.getAllDefineMenuTree().then((res) => {
                     if(res && res.success){
                         if(res.gridList){
-                            _this.searchConf.treeSelectConf.pid.treeData = res.gridList ;
+                            _this.binding.pidList = res.gridList ;
                         }
                     }
                 })
@@ -479,16 +431,15 @@
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.defineMenuCreateFormRef.defineMenuCreateForm;
             },
-            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+            changeQueryLoading(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
                     loadingFlag = false ;
                 }
                 this.searchConf.loadingFlag = loadingFlag;
-                this.tableConf.loading = loadingFlag;
             },
             dealGetAllDefineMenus() {   //取得菜单列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 MenuManagerApi.getAllDefineMenus().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -496,14 +447,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealQueryDefineMenus(queryFieldList,pagination,sorter) {    //带查询条件 检索菜单列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 MenuManagerApi.getAllDefineMenus(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -514,9 +465,9 @@
                         _this.tableCheckIdList = [] ;
                         _this.tableCheckRowList = [] ;
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealBatchDelDefineMenu() {  //批量删除
@@ -542,23 +493,11 @@
                     }
                 })
             },
-            handleSearchFormQuery(e) {
+            handleSearchFormQuery(e,values) {
                 var _this = this ;
-                if (e) {
-                    e.preventDefault();
-                }
-                var paginationTemp = _this.tableConf.pagination ;
-                var sorterTemp = _this.tableConf.sorter ;
-                this.searchForm.validateFields((err, values) => {
-                    if (!err) {
-                        //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                        _this.dealQueryDefineMenus(searchFieldArr,paginationTemp,sorterTemp);
-                    }
-                });
-            },
-            handleSearchFormReset() {    //重置 搜索列表 的值
-                this.searchForm.resetFields();
+                //取得 bean 形式 的查询条件数组
+                var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
+                _this.dealQueryDefineMenus(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleAddDefineMenuBtnClick() {     //新增菜单按钮-点击
                 var _this = this;
@@ -749,6 +688,17 @@
             },
             handleDefineMenuDetailDrawerClose(e){ //Drawer-菜单定义 详情关闭
                 this.drawerConf.detail.defineMenu.visible = false ;
+            }
+        },
+        watch:{
+            binding:{
+                handler (val, oval) {
+                    //绑定枚举值变化监听并处理
+                    this.searchConf.formItemConf.pid.treeData = this.binding.pidList ;
+                    this.searchConf.formItemConf.urlJumpType.options = this.binding.urlJumpTypes ;
+                },
+                deep: true,
+                immediate:true
             }
         },
         created(){

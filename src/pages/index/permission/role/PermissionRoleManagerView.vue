@@ -1,60 +1,13 @@
 <template>
     <div>
         <div>
-            <!-- 复合搜索-区域 -->
-            <div v-show="searchConf.showListFlag">
-                <div>
-                    <a-form layout="inline"
-                            :form="searchForm"
-                            @submit="handleSearchFormQuery"
-                    >
-                        <a-row :gutter="6">
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.permission.permissionName')">
-                                    <a-input v-decorator="searchConf.paramConf.name"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.code')">
-                                    <a-input v-decorator="searchConf.paramConf.code"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.type')">
-                                    <a-select showSearch allowClear
-                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                                              style="width: 180px"
-                                              optionFilterProp="children"
-                                              :options="searchConf.binding.role.types"
-                                              :filterOption="getRoleTypeFilterOption"
-                                              v-decorator="searchConf.paramConf.type"
-                                    >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.remark')">
-                                    <a-input v-decorator="searchConf.paramConf.remark"/>
-                                </a-form-item>
-                            </a-col>
-                        </a-row>
-                        <a-row>
-                            <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit" icon="search"
-                                          :loading="searchConf.loadingFlag"
-                                >
-                                    {{$t('langMap.button.actions.query')}}
-                                </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
-                                          @click="handleSearchFormReset">
-                                    {{$t('langMap.button.actions.reset')}}
-                                </a-button>
-                            </a-col>
-                        </a-row>
-                    </a-form>
-                </div>
-                <a-divider/>
-            </div>
+            <!-- 搜索区域 -->
+            <query-form-comp
+                :showAble="searchConf.showAble"
+                :loadingFlag="searchConf.loadingFlag"
+                :formItemConf="searchConf.formItemConf"
+                @execQuery="handleSearchFormQuery"
+            />
             <!-- 操作按钮-区域-->
             <div>
                 <a-row
@@ -98,7 +51,7 @@
                             :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
-                            v-model="searchConf.showListFlag"
+                            v-model="searchConf.showAble"
                         ></a-switch>
                     </a-col>
                 </a-row>
@@ -111,7 +64,7 @@
                     :rowKey="item => item.fid"
                     :columns="tableConf.columns"
                     :dataSource="tableConf.data"
-                    :loading="tableConf.loading"
+                    :loading="searchConf.loadingFlag"
                     :rowSelection="rowSelection"
                     @change="handleTableChange"
                 >
@@ -146,7 +99,7 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                :roleTypes="searchConf.binding.role.types"
+                :roleTypes="binding.roleTypes"
                 @createFormCancel="handleDefineRoleCreateFormCancel"
                 @createFormSubmit="handleDefineRoleCreateFormSubmit"
             >
@@ -199,14 +152,16 @@
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {PermissionRoleManagerApi} from './permissionRoleManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
+    import {FormItemTypeEnum} from "~Components/query/form_enum";
 
+    import QueryFormComp from '~Components/query/QueryFormComp'
     import DefineRoleCreateFormComp from '~Components/index/define/permission/role/DefineRoleCreateFormComp';
     import RoleGrantPermissionFormComp from '~Components/index/define/permission/role/RoleGrantPermissionFormComp';
     import RoleGrantMenusFormComp from '~Components/index/define/permission/role/RoleGrantMenusFormComp';
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     export default {
         name: "PermissionRoleManagerView",
-        components: {RoleGrantPermissionFormComp, DefineRoleCreateFormComp,SimpleDetailDrawerComp,RoleGrantMenusFormComp},
+        components: {QueryFormComp,RoleGrantPermissionFormComp, DefineRoleCreateFormComp,SimpleDetailDrawerComp,RoleGrantMenusFormComp},
         mixins:[EggCommonMixin],
         data(){
             const textAlignDefault = 'left';
@@ -230,23 +185,40 @@
             };
             return {
                 fieldInfoConf:fieldInfoConfObj,
+                binding:{
+                    roleTypes:[]
+                },
                 searchConf:{
-                    showListFlag:false,
+                    showAble:false,
                     loadingFlag:false,
-                    defaultColSpan: 8,
-                    paramConf: {
-                        name: ["name", {rules: []}],
-                        code: ["code", {rules: []}],
-                        type: ["type", {rules: []}],
-                        remark:["remark",{rules: []}]
-                    },
-                    binding:{
-                        role:{
-                            types:[]
+                    formItemConf:{
+                        name:{
+                            key:'name',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.permission.permissionName'),
+                            decorator:["name", {rules: []}],
+                        },
+                        code:{
+                            key:'code',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.code'),
+                            decorator:["code", {rules: []}],
+                        },
+                        type:{
+                            key:'type',
+                            formType:FormItemTypeEnum.Select,
+                            label:this.$t('langMap.table.fields.common.type'),
+                            decorator:["type", {rules: []}],
+                            options:[]
+                        },
+                        remark:{
+                            key:'remark',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.remark'),
+                            decorator:["remark", {rules: []}],
                         }
                     }
                 },
-                searchForm:this.$form.createForm(this,{name:'search_form'}),
                 tableConf: {
                     data: [],
                     columns: [{
@@ -273,7 +245,6 @@
                         width:220,
                         scopedSlots: { customRender: 'action' }
                     }],
-                    loading: false,
                     pagination: {
                         current:1,
                         pageSize:10,
@@ -348,22 +319,18 @@
             }
         },
         methods:{
-            getRoleTypeFilterOption(input,option){
-                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
-            },
-            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+            changeQueryLoading(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
                     loadingFlag = false ;
                 }
                 this.searchConf.loadingFlag = loadingFlag;
-                this.tableConf.loading = loadingFlag;
             },
             dealGetRoleTypeEnumList(){  //取得 用户类型-枚举列表
                 var _this = this ;
                 PermissionCommonApis.getAllRoleTypes().then((res) => {
                     if(res && res.success){
                         if(res.enumData){
-                            _this.searchConf.binding.role.types = res.enumData ;
+                            _this.binding.roleTypes = res.enumData ;
                         }
                     }
                 })
@@ -422,7 +389,7 @@
             },
             dealGetAllDefineRoles() {   //取得角色列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 PermissionRoleManagerApi.getAllDefineRoles().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -430,14 +397,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealQueryDefineRoles(queryFieldList,pagination,sorter) {    //带查询条件 检索角色列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 PermissionRoleManagerApi.getAllDefineRoles(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -447,9 +414,9 @@
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealBatchDelDefineRole() {  //批量删除
@@ -527,23 +494,11 @@
                     this.$message.warning(this.$t('langMap.message.error.failedDueToNotGettingId'));
                 }
             },
-            handleSearchFormQuery(e) {
+            handleSearchFormQuery(e,values) {
                 var _this = this ;
-                if (e) {
-                    e.preventDefault();
-                }
-                var paginationTemp = _this.tableConf.pagination ;
-                var sorterTemp = _this.tableConf.sorter ;
-                this.searchForm.validateFields((err, values) => {
-                    if (!err) {
-                        //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                        _this.dealQueryDefineRoles(searchFieldArr,paginationTemp,sorterTemp);
-                    }
-                });
-            },
-            handleSearchFormReset() {    //重置 搜索列表 的值
-                this.searchForm.resetFields();
+                //取得 bean 形式 的查询条件数组
+                var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
+                _this.dealQueryDefineRoles(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleAddDefineRoleBtnClick() {     //新增权限按钮-点击
                 var _this = this;
@@ -770,6 +725,16 @@
                         }
                     }),
                 };
+            }
+        },
+        watch:{
+            binding:{
+                handler (val, oval) {
+                    //绑定枚举值变化监听并处理
+                    this.searchConf.formItemConf.type.options = this.binding.roleTypes ;
+                },
+                deep: true,
+                immediate:true
             }
         },
         created(){

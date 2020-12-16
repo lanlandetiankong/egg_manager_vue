@@ -92,7 +92,7 @@
                 :rowKey="item => item.fid"
                 :columns="tableConf.columns"
                 :dataSource="tableConf.data"
-                :loading="tableConf.loading"
+                :loading="searchConf.loadingFlag"
                 :rowSelection="rowSelection"
                 @change="handleTableChange"
             >
@@ -382,7 +382,6 @@
                         width:220,
                         scopedSlots: { customRender: 'action' }
                     }],
-                    loading: false,
                     pagination: {
                         current:1,
                         pageSize:10,
@@ -482,16 +481,15 @@
             }
         },
         methods: {
-            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+            changeQueryLoading(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
                     loadingFlag = false ;
                 }
                 this.searchConf.loadingFlag = loadingFlag;
-                this.tableConf.loading = loadingFlag;
             },
             dealGetAllUserAccounts() {   //取得用户列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 EmpInfoApi.getAllUserAccounts().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -499,14 +497,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealQueryUserAccounts(queryFieldArr,pagination,sorter) {    //带查询条件 检索用户列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 EmpInfoApi.getAllUserAccounts(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -516,9 +514,9 @@
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealBatchDelUserAccount() {  //批量删除
@@ -757,11 +755,6 @@
                 }   else if(e.key == "grantJob"){  //设置职务
                     _this.dealUserGrantJobsById(record.fid);
                 }
-                //console.log('handleTableActionGroupClick', e);
-                //console.log(record);
-            },
-            handleSearchFormReset() {    //重置 搜索列表 的值
-                this.searchForm.resetFields();
             },
             handleTableChange(pagination, filters, sorter) {    //表格变动-页码跳转/排序/筛选
                 this.tableConf.pagination = pagination ;
@@ -926,9 +919,6 @@
             },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.employeeInfoCreateFormRef.employeeInfoCreateForm;
-            },
-            getFilterOption(input,option){
-                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
             handleUserGrantRoleById(e) {     // 用户分配角色
                 var _this = this;

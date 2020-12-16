@@ -2,59 +2,12 @@
     <div>
         <div>
             <!-- 搜索区域 -->
-            <div v-show="searchConf.showListFlag">
-                <div>
-                    <a-form layout="inline"
-                            :form="searchForm"
-                            @submit="handleSearchFormQuery"
-                    >
-                        <a-row :gutter="6">
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.name')">
-                                    <a-input v-decorator="searchConf.paramConf.name" />
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.type')">
-                                    <a-select showSearch allowClear
-                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                                              style="width: 180px"
-                                              optionFilterProp="children"
-                                              :options="searchConf.binding.types"
-                                              :filterOption="getFilterOption"
-                                              v-decorator="searchConf.paramConf.type"
-                                    >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.description')">
-                                    <a-input v-decorator="searchConf.paramConf.description"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.remark')">
-                                    <a-input v-decorator="searchConf.paramConf.remark"/>
-                                </a-form-item>
-                            </a-col>
-                        </a-row>
-                        <a-row>
-                            <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit" icon="search"
-                                          :loading="searchConf.loadingFlag"
-                                >
-                                    {{$t('langMap.button.actions.query')}}
-                                </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
-                                          @click="handleSearchFormReset">
-                                    {{$t('langMap.button.actions.reset')}}
-                                </a-button>
-                            </a-col>
-                        </a-row>
-                    </a-form>
-                </div>
-                <a-divider/>
-            </div>
+            <query-form-comp
+                :showAble="searchConf.showAble"
+                :loadingFlag="searchConf.loadingFlag"
+                :formItemConf="searchConf.formItemConf"
+                @execQuery="handleSearchFormQuery"
+            />
             <!-- 操作区域 -->
             <div>
                 <a-row
@@ -86,7 +39,7 @@
                             :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
-                            v-model="searchConf.showListFlag"
+                            v-model="searchConf.showAble"
                         ></a-switch>
                     </a-col>
                 </a-row>
@@ -100,7 +53,7 @@
                 :rowKey="item => item.fid"
                 :columns="tableConf.columns"
                 :dataSource="tableConf.data"
-                :loading="tableConf.loading"
+                :loading="searchConf.loadingFlag"
                 :rowSelection="rowSelection"
                 @change="handleTableChange"
             >
@@ -132,7 +85,7 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                :typeEnumArr="searchConf.binding.types"
+                :typeEnumArr="binding.types"
                 @createFormCancel="handleEmployeeJobCreateFormCancel"
                 @createFormSubmit="handleEmployeeJobCreateFormSubmit"
             />
@@ -164,7 +117,9 @@
     import {EmpJobApi} from './EmpJobApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
+    import {FormItemTypeEnum} from "~Components/query/form_enum";
 
+    import QueryFormComp from '~Components/query/QueryFormComp'
     import EmployeeJobCreateFormComp from '~Components/index/user/employee/job/EmployeeJobCreateFormComp'
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
@@ -172,7 +127,7 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     export default {
         name: "EmpJobManagerView",
-        components: { AFormItem, ACol, EmployeeJobCreateFormComp,SimpleDetailDrawerComp},
+        components: {QueryFormComp, AFormItem, ACol, EmployeeJobCreateFormComp,SimpleDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -197,21 +152,40 @@
             };
             return {
                 fieldInfoConf:fieldInfoConfObj,
-                searchConf: {
-                    showListFlag:false,
-                    loadingFlag: false,
-                    defaultColSpan: 8,
-                    paramConf: {
-                        name: ["name", {rules: []}],
-                        type: ["type", {rules: []}],
-                        description: ["description", {rules: []}],
-                        remark: ["remark", {rules: []}]
-                    },
-                    binding:{
-                        types:[]
-                    }
+                binding:{
+                    types:[]
                 },
-                searchForm: this.$form.createForm(this, {name: 'search_form'}),
+                searchConf: {
+                    showAble:false,
+                    loadingFlag: false,
+                    formItemConf:{
+                        name: {
+                            key:'name',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.name'),
+                            decorator:["name", {rules: []}],
+                        },
+                        type: {
+                            key:'type',
+                            formType:FormItemTypeEnum.Select,
+                            label:this.$t('langMap.table.fields.common.type'),
+                            decorator:["type", {rules: []}],
+                            options:[]
+                        },
+                        description: {
+                            key:'description',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.description'),
+                            decorator:["description", {rules: []}],
+                        },
+                        remark: {
+                            key:'remark',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.remark'),
+                            decorator:["remark", {rules: []}],
+                        }
+                    },
+                },
                 tableConf: {
                     data: [],
                     columns: [{
@@ -238,7 +212,6 @@
                         width:220,
                         scopedSlots: { customRender: 'action' }
                     }],
-                    loading: false,
                     pagination: {
                         current:1,
                         pageSize:10,
@@ -293,16 +266,15 @@
             }
         },
         methods: {
-            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+            changeQueryLoading(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
                     loadingFlag = false ;
                 }
                 this.searchConf.loadingFlag = loadingFlag;
-                this.tableConf.loading = loadingFlag;
             },
             dealGetAllDefineJobs() {   //取得职务列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 EmpJobApi.getAllDefineJobs().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -310,14 +282,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealQueryDefineJobs(queryFieldArr,pagination,sorter) {    //带查询条件 检索职务列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 EmpJobApi.getAllDefineJobs(queryFieldArr,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -327,9 +299,9 @@
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealBatchDelDefineJobs() {  //批量删除
@@ -360,7 +332,7 @@
                 UserCommonApis.getAllDefineJobType().then((res) => {
                     if(res && res.success){
                         if(res.enumData){
-                            _this.searchConf.binding.types = res.enumData ;
+                            _this.binding.types = res.enumData ;
                         }
                     }
                 })
@@ -376,29 +348,17 @@
                     return str;
                 }
             },
-            handleSearchFormQuery(e) {   //表格-搜索
-                if (e) {
-                    e.preventDefault();
-                }
-                var _this = this;
-                var paginationTemp = _this.tableConf.pagination ;
-                var sorterTemp = _this.tableConf.sorter ;
-                this.searchForm.validateFields((err, values) => {
-                    if (!err) {
-                        //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                        _this.dealQueryDefineJobs(searchFieldArr,paginationTemp,sorterTemp);
-                    }
-                });
+            handleSearchFormQuery(e,values) {   //表格-搜索
+                var _this = this ;
+                //取得 bean 形式 的查询条件数组
+                var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
+                _this.dealQueryDefineJobs(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleTableActionGroupClick(e,record){  //表格-更多操作：按key区分操作类型
                 var _this = this ;
                 if(e.key == "recordDel"){   //行删除
                     _this.handleDeleteOneById(record.fid);
                 }
-            },
-            handleSearchFormReset() {    //重置 搜索列表 的值
-                this.searchForm.resetFields();
             },
             handleTableChange(pagination, filters, sorter) {    //表格变动-页码跳转/排序/筛选
                 this.tableConf.pagination = pagination ;
@@ -526,9 +486,6 @@
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.employeeJobCreateFormRef.employeeJobCreateForm;
             },
-            getFilterOption(input,option){
-                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
-            },
             handleEmployeeJobDetailDrawerShow(e,record){   //Drawer-职务定义 详情展示
                 if(typeof record != "undefined"){
                     this.drawerConf.detail.employeeJob.dataObj = record ;
@@ -556,6 +513,16 @@
                     }),
                 };
             },
+        },
+        watch:{
+            binding:{
+                handler (val, oval) {
+                    //绑定枚举值变化监听并处理
+                    this.searchConf.formItemConf.type.options = this.binding.types ;
+                },
+                deep: true,
+                immediate:true
+            }
         },
         created(){
             this.dealGetAllDefineJobs();

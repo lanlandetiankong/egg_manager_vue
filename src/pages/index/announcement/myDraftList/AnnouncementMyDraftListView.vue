@@ -1,60 +1,13 @@
 <template>
     <div>
         <div>
-            <!-- 复合搜索-区域 -->
-            <div v-show="searchConf.showListFlag">
-                <div>
-                    <a-form layout="inline"
-                            :form="searchForm"
-                            @submit="handleSearchFormQuery"
-                    >
-                        <a-row :gutter="6">
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.title')">
-                                    <a-input v-decorator="searchConf.paramConf.title"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.keyword')">
-                                    <a-input v-decorator="searchConf.paramConf.keyWord"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.tag')">
-                                    <a-select showSearch allowClear
-                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                                              style="width: 180px"
-                                              optionFilterProp="children"
-                                              :options="searchConf.binding.announcementTagList"
-                                              :filterOption="getAnnouncementTagListFilterOption"
-                                              v-decorator="searchConf.paramConf.tagIds"
-                                    >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.content')">
-                                    <a-input v-decorator="searchConf.paramConf.content"/>
-                                </a-form-item>
-                            </a-col>
-                        </a-row>
-                        <a-row>
-                            <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit" icon="search"
-                                          :loading="searchConf.loadingFlag"
-                                >
-                                    {{$t('langMap.button.actions.query')}}
-                                </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
-                                          @click="handleSearchFormReset">
-                                    {{$t('langMap.button.actions.reset')}}
-                                </a-button>
-                            </a-col>
-                        </a-row>
-                    </a-form>
-                </div>
-                <a-divider/>
-            </div>
+            <!-- 搜索区域 -->
+            <query-form-comp
+                :showAble="searchConf.showAble"
+                :loadingFlag="searchConf.loadingFlag"
+                :formItemConf="searchConf.formItemConf"
+                @execQuery="handleSearchFormQuery"
+            />
             <!-- 操作按钮-区域-->
             <div>
                 <a-row
@@ -86,7 +39,7 @@
                             :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
-                            v-model="searchConf.showListFlag"
+                            v-model="searchConf.showAble"
                         ></a-switch>
                     </a-col>
                 </a-row>
@@ -100,7 +53,7 @@
                     :rowKey="item => item.fid"
                     :columns="tableConf.columns"
                     :dataSource="tableConf.data"
-                    :loading="tableConf.loading"
+                    :loading="searchConf.loadingFlag"
                     :rowSelection="rowSelection"
                     :scroll="tableConf.scroll"
                     @change="handleTableChange"
@@ -159,12 +112,14 @@
     import {AnnouncementMyDraftListApi} from './announcementMyDraftListApi'
     import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
+    import {FormItemTypeEnum} from "~Components/query/form_enum";
 
+    import QueryFormComp from '~Components/query/QueryFormComp'
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
 
     export default {
         name: "AnnouncementMyDraftListView",
-        components:{SimpleDetailDrawerComp},
+        components:{QueryFormComp,SimpleDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -196,21 +151,40 @@
             };
             return {
                 fieldInfoConf:fieldInfoConfObj,
-                searchConf:{
-                    showListFlag:false,
-                    loadingFlag:false,
-                    defaultColSpan: 8,
-                    paramConf: {
-                        title: ["title", {rules: []}],
-                        keyWord: ["keyWord", {rules: []}],
-                        tagIds: ["tagIds", {rules: []}],
-                        content:["content",{rules: []}]
-                    },
-                    binding:{
-                        announcementTagList:[]
-                    }
+                binding:{
+                    announcementTagList:[]
                 },
-                searchForm:this.$form.createForm(this,{name:'search_form'}),
+                searchConf:{
+                    showAble:false,
+                    loadingFlag:false,
+                    formItemConf:{
+                        title: {
+                            key:'title',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.announcement.title'),
+                            decorator:["title", {rules: []}],
+                        },
+                        keyWord: {
+                            key:'keyWord',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.announcement.keyWord'),
+                            decorator:["keyWord", {rules: []}],
+                        },
+                        tagIds: {
+                            key:'tagIds',
+                            formType:FormItemTypeEnum.Select,
+                            label:this.$t('langMap.table.fields.announcement.tagNameOfStr'),
+                            decorator:["tagIds", {rules: []}],
+                            options:[]
+                        },
+                        content:{
+                            key:'content',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.announcement.content'),
+                            decorator:["content", {rules: []}],
+                        }
+                    },
+                },
                 tableConf: {
                     data: [],
                     columns: [{
@@ -249,7 +223,6 @@
                         width: 220,
                         scopedSlots: { customRender: 'action' }
                     }],
-                    loading: false,
                     pagination: {
                         current:1,
                         pageSize:10,
@@ -321,27 +294,23 @@
             }
         },
         methods: {
-            getAnnouncementTagListFilterOption(input,option){
-                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
-            },
-            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+            changeQueryLoading(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
                     loadingFlag = false ;
                 }
                 this.searchConf.loadingFlag = loadingFlag;
-                this.tableConf.loading = loadingFlag;
             },
             dealGetAllAnnouncementTagList(){    //取得所有的 公告标签
                 var _this = this ;
                 AnnouncementMyDraftListApi.getAllAnnouncementTagEnums().then((res) =>{
                     if(res.success){
-                        _this.searchConf.binding.announcementTagList = res.enumData ;
+                        _this.binding.announcementTagList = res.enumData ;
                     }
                 })
             },
             dealGetMyAnnouncementDrafts() {   //取得公告列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 AnnouncementMyDraftListApi.getAllMyCreateAnnouncementDrafts().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -349,14 +318,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealQueryAnnouncementDrafts(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
                 var _this = this;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 AnnouncementMyDraftListApi.getAllMyCreateAnnouncementDrafts(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -366,9 +335,9 @@
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealBatchDelAnnouncementDraft() {  //批量删除
@@ -417,23 +386,11 @@
                     }
                 })
             },
-            handleSearchFormQuery(e) {
+            handleSearchFormQuery(e,values) {
                 var _this = this ;
-                if (e) {
-                    e.preventDefault();
-                }
-                var paginationTemp = _this.tableConf.pagination ;
-                var sorterTemp = _this.tableConf.sorter ;
-                this.searchForm.validateFields((err, values) => {
-                    if (!err) {
-                        //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                        _this.dealQueryAnnouncementDrafts(searchFieldArr,paginationTemp,sorterTemp);
-                    }
-                });
-            },
-            handleSearchFormReset() {    //重置 搜索列表 的值
-                this.searchForm.resetFields();
+                //取得 bean 形式 的查询条件数组
+                var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
+                _this.dealQueryAnnouncementDrafts(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleAnnouncementDraftBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
@@ -557,10 +514,19 @@
                 this.drawerConf.detail.announcementDraft.visible = false ;
             }
         },
+        watch:{
+            binding:{
+                handler (val, oval) {
+                    //绑定枚举值变化监听并处理
+                    this.searchConf.formItemConf.tagIds.options = this.binding.announcementTagList ;
+                },
+                deep: true,
+                immediate:true
+            }
+        },
         created(){
             this.dealGetMyAnnouncementDrafts();
             this.dealGetAllAnnouncementTagList();
-            var currentRoute = this.$route ;
         },
         destroyed(){
             console.log("我的草稿箱-页面销毁 ...")

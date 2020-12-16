@@ -1,73 +1,13 @@
 <template>
     <div>
         <div>
-            <!-- 复合搜索-区域 -->
-            <div v-show="searchConf.showListFlag">
-                <div>
-                    <a-form layout="inline"
-                        :form="searchForm"
-                        @submit="handleSearchFormQuery"
-                    >
-                        <a-row :gutter="6">
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.permission.permissionName')">
-                                    <a-input v-decorator="searchConf.paramConf.name"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.code')">
-                                    <a-input v-decorator="searchConf.paramConf.code"/>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.type')">
-                                    <a-select showSearch allowClear
-                                          :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                                          style="width: 180px"
-                                          optionFilterProp="children"
-                                          :options="searchConf.binding.permission.types"
-                                          :filterOption="getPermissionTypeFilterOption"
-                                          v-decorator="searchConf.paramConf.type"
-                                    >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.startUsingStatus')">
-                                    <a-select showSearch allowClear
-                                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                                              style="width: 180px"
-                                              optionFilterProp="children"
-                                              :options="searchConf.binding.switchEnums"
-                                              :filterOption="getPermissionTypeFilterOption"
-                                              v-decorator="searchConf.paramConf.ensure"
-                                    >
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="searchConf.defaultColSpan">
-                                <a-form-item :label="$t('langMap.table.fields.common.remark')">
-                                    <a-input v-decorator="searchConf.paramConf.remark"/>
-                                </a-form-item>
-                            </a-col>
-                        </a-row>
-                        <a-row>
-                            <a-col :span="24" :style="{ textAlign: 'right' }">
-                                <a-button type="primary" html-type="submit" icon="search"
-                                          :loading="searchConf.loadingFlag"
-                                >
-                                    {{$t('langMap.button.actions.query')}}
-                                </a-button>
-                                <a-button :style="{ marginLeft: '8px' }" icon="close-square"
-                                          @click="handleSearchFormReset">
-                                    {{$t('langMap.button.actions.reset')}}
-                                </a-button>
-                            </a-col>
-                        </a-row>
-                    </a-form>
-                </div>
-                <a-divider/>
-            </div>
+            <!-- 搜索区域 -->
+            <query-form-comp
+                :showAble="searchConf.showAble"
+                :loadingFlag="searchConf.loadingFlag"
+                :formItemConf="searchConf.formItemConf"
+                @execQuery="handleSearchFormQuery"
+            />
             <!-- 操作按钮-区域-->
             <div>
                 <a-row
@@ -107,7 +47,7 @@
                             :unCheckedChildren="$t('langMap.table.config.hiddenQuery')"
                             size="large"
                             :style="{height:'30px'}"
-                            v-model="searchConf.showListFlag"
+                            v-model="searchConf.showAble"
                         ></a-switch>
                     </a-col>
                 </a-row>
@@ -121,7 +61,7 @@
                     :rowKey="item => item.fid"
                     :columns="tableConf.columns"
                     :dataSource="tableConf.data"
-                    :loading="tableConf.loading"
+                    :loading="searchConf.loadingFlag"
                     :rowSelection="rowSelection"
                     @change="handleTableChange"
                 >
@@ -156,9 +96,9 @@
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                :permissionTypes="searchConf.binding.permission.types"
-                :permissonCodePrefixs="searchConf.binding.permission.codePrefixs.list"
-                :permissonCodePrefixDefaultChecks="searchConf.binding.permission.codePrefixs.defaultChecks"
+                :permissionTypes="binding.permissionTypes"
+                :permissonCodePrefixs="binding.codePrefixList"
+                :permissonCodePrefixDefaultChecks="binding.codePrefixDefaultChecks"
                 @createFormCancel="handleDefinePermissionCreateFormCancel"
                 @createFormSubmit="handleDefinePermissionCreateFormSubmit"
             >
@@ -196,12 +136,14 @@
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
     import {BindingCommonApis} from '~Apis/common/CommonApis.js'
     import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
+    import {FormItemTypeEnum} from "~Components/query/form_enum";
 
+    import QueryFormComp from '~Components/query/QueryFormComp'
     import DefinePermissionCreateFormComp from "@/components/index/define/permission/manager/DefinePermissionCreateFormComp";
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     export default {
         name: "PermissionManagerView",
-        components: {DefinePermissionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        components: {QueryFormComp,DefinePermissionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left';
@@ -229,29 +171,50 @@
             };
             return {
                 fieldInfoConf:fieldInfoConfObj,
-                searchConf:{
-                    showListFlag:false,
-                    loadingFlag:false,
-                    defaultColSpan: 8,
-                    paramConf: {
-                        name: ["name", {rules: []}],
-                        code: ["code", {rules: []}],
-                        type: ["type", {rules: []}],
-                        ensure: ["ensure", {rules: []}],
-                        remark:["remark",{rules: []}]
-                    },
-                    binding:{
-                        permission:{
-                            types:[],
-                            codePrefixs:{
-                                list:[],
-                                defaultChecks:[]
-                            }
-                        },
-                        switchEnums:[]
-                    }
+                binding:{
+                    permissionTypes:[],
+                    codePrefixList:[],
+                    codePrefixDefaultChecks:[],
+                    switchEnums:[]
                 },
-                searchForm:this.$form.createForm(this,{name:'search_form'}),
+                searchConf:{
+                    showAble:false,
+                    loadingFlag:false,
+                    formItemConf:{
+                        name:{
+                            key:'name',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.permission.permissionName'),
+                            decorator:["name", {rules: []}],
+                        },
+                        code: {
+                            key:'code',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.code'),
+                            decorator:["code", {rules: []}],
+                        },
+                        type:{
+                            key:'type',
+                            formType:FormItemTypeEnum.Select,
+                            label:this.$t('langMap.table.fields.common.type'),
+                            decorator:["type", {rules: []}],
+                            options:[]
+                        },
+                        ensure:{
+                            key:'ensure',
+                            formType:FormItemTypeEnum.Select,
+                            label:this.$t('langMap.table.fields.common.startUsingStatus'),
+                            decorator:["ensure", {rules: []}],
+                            options:[]
+                        },
+                        remark:{
+                            key:'remark',
+                            formType:FormItemTypeEnum.Input,
+                            label:this.$t('langMap.table.fields.common.remark'),
+                            decorator:["remark", {rules: []}],
+                        }
+                    },
+                },
                 tableConf: {
                     data: [],
                     columns: [{
@@ -283,7 +246,6 @@
                         width:220,
                         scopedSlots: { customRender: 'action' }
                     }],
-                    loading: false,
                     pagination: {
                         current:1,
                         pageSize:10,
@@ -357,15 +319,12 @@
             ])
         },
         methods: {
-            getPermissionTypeFilterOption(input,option){
-                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
-            },
             dealGetPermissionTypeEnumList(){  //取得 用户类型-枚举列表
                 var _this = this ;
                 PermissionCommonApis.getAllPermissionTypes().then((res) => {
                     if(res && res.success){
                         if(res.enumData){
-                            _this.searchConf.binding.permission.types = res.enumData ;
+                            _this.binding.permissionTypes = res.enumData ;
                         }
                     }
                 })
@@ -375,8 +334,8 @@
                 PermissionCommonApis.getAllPermissionCodePrefixs().then((res) => {
                     if(res && res.success){
                         if(res.enumData){
-                            _this.searchConf.binding.permission.codePrefixs.list = res.enumData ;
-                            _this.searchConf.binding.permission.codePrefixs.defaultChecks = res.enumDefaultCheckList ;
+                            _this.binding.codePrefixList = res.enumData ;
+                            _this.binding.codePrefixDefaultChecks = res.enumDefaultCheckList ;
                         }
                     }
                 })
@@ -386,7 +345,7 @@
                 BindingCommonApis.getSwitchEnumList().then((res) => {
                     if(res && res.success){
                         if(res.enumData){
-                            _this.searchConf.binding.switchEnums = res.enumData ;
+                            _this.binding.switchEnums = res.enumData ;
                         }
                     }
                 })
@@ -394,16 +353,15 @@
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
                 return this.$refs.definePermissionCreateFormRef.definePermissionCreateForm;
             },
-            dealChangeTableSearchLoadingState(loadingFlag){   //修改[表格搜索]是否在 加载状态中
+            changeQueryLoading(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
                     loadingFlag = false ;
                 }
                 this.searchConf.loadingFlag = loadingFlag;
-                this.tableConf.loading = loadingFlag;
             },
             dealGetAllDefinePermissions() {   //取得权限列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 PermissionManagerApi.getAllDefinePermissions().then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -411,14 +369,14 @@
                             this.tableConf.pagination.total = res.paginationBean.total ;
                         }
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealQueryDefinePermissions(queryFieldList,pagination,sorter) {    //带查询条件 检索权限列表
                 var _this = this ;
-                _this.dealChangeTableSearchLoadingState(true);
+                _this.changeQueryLoading(true);
                 PermissionManagerApi.getAllDefinePermissions(queryFieldList,pagination,sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
@@ -429,9 +387,9 @@
                         _this.tableCheckIdList = [] ;
                         _this.tableCheckRowList = [] ;
                     }
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 }).catch((e) =>{
-                    _this.dealChangeTableSearchLoadingState(false);
+                    _this.changeQueryLoading(false);
                 })
             },
             dealBatchDelDefinePermission() {  //批量删除
@@ -469,23 +427,11 @@
                     }
                 })
             },
-            handleSearchFormQuery(e) {
+            handleSearchFormQuery(e,values) {
                 var _this = this ;
-                if (e) {
-                    e.preventDefault();
-                }
-                var paginationTemp = _this.tableConf.pagination ;
-                var sorterTemp = _this.tableConf.sorter ;
-                this.searchForm.validateFields((err, values) => {
-                    if (!err) {
-                        //取得 bean 形式 的查询条件数组
-                        var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                        _this.dealQueryDefinePermissions(searchFieldArr,paginationTemp,sorterTemp);
-                    }
-                });
-            },
-            handleSearchFormReset() {    //重置 搜索列表 的值
-                this.searchForm.resetFields();
+                //取得 bean 形式 的查询条件数组
+                var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
+                _this.dealQueryDefinePermissions(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleAddDefinePermissionBtnClick() {     //新增权限按钮-点击
                 var _this = this;
@@ -652,6 +598,17 @@
             },
             handleDefinePermissionDetailDrawerClose(e){ //Drawer-租户定义 详情关闭
                 this.drawerConf.detail.definePermission.visible = false ;
+            }
+        },
+        watch:{
+            binding:{
+                handler (val, oval) {
+                    //绑定枚举值变化监听并处理
+                    this.searchConf.formItemConf.type.options = this.binding.permissionTypes ;
+                    this.searchConf.formItemConf.ensure.options = this.binding.switchEnums ;
+                },
+                deep: true,
+                immediate:true
             }
         },
         created(){
