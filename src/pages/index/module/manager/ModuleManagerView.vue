@@ -122,6 +122,7 @@
     import {ModuleManagerApi} from './moduleManagerApi.js'
     import {ModuleCommonApis} from '~Apis/module/ModuleCommonApis.js'
     import {FormItemTypeEnum} from "~Components/query/form_enum";
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import DefineModuleCreateFormComp from "@/components/index/module/manager/DefineModuleCreateFormComp";
@@ -130,6 +131,7 @@
     export default {
         name: "ModuleManagerView",
         components: {QueryFormComp,DefineModuleCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
             //字段配置(Query/Drawer)
@@ -371,6 +373,7 @@
                 var _this = this ;
                 //取得 bean 形式 的查询条件数组
                 var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
+                debugger;
                 _this.dealQueryDefineModules(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleAddDefineModuleBtnClick() {     //新增模块按钮-点击

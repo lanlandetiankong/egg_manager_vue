@@ -48,7 +48,8 @@ export const EggCommonMixin = {
                     if(queryVal || queryVal == 0){
                         queryFieldArr.push({
                             fieldName:searchFieldObj.fieldName,
-                            value:queryObj[key]
+                            value:queryObj[key],
+                            matching:searchFieldObj.matching
                         });
                     }
                 }
