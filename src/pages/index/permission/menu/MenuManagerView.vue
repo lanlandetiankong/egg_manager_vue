@@ -349,7 +349,7 @@
                         key: 'hrefUrl',
                         width:140
                     },{
-                        title: this.$t('langMap.table.fields.common.sortVal'),
+                        title: this.$t('langMap.table.fields.common.weights'),
                         align:textAlignDefault,
                         dataIndex: 'weights',
                         key: 'weights',

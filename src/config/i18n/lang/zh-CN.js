@@ -78,7 +78,7 @@ export const langMap = {
             operation:'操作',
             detail:'详情',
             description:'描述',
-            sortVal:'排序值',
+            weights:'权重',
             type:'类型'
         },
         config:{
@@ -89,7 +89,6 @@ export const langMap = {
         fields:{
             common:{
                 name:'名称',
-                sortVal:'排序值',
                 superiorName:'上级名称',
                 title:'标题',
                 code:'编码',
@@ -106,7 +105,7 @@ export const langMap = {
                 tag:'标签',
                 tagName:'标签名',
                 lockedStatus:'锁状态',
-                weights:'排序',
+                weights:'权重',
             },
             user:{
                 userAccount:'账号',

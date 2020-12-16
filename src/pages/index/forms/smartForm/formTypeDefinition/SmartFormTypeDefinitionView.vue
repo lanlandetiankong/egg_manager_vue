@@ -175,7 +175,7 @@
                     fieldName:'description', matching:QueryMatchType.like
                 },
                 weights:{
-                    fieldLabel:this.$t('langMap.table.fields.common.sortVal'),
+                    fieldLabel:this.$t('langMap.table.fields.common.weights'),
                     fieldName:'weights',searchAble:false
                 },
                 remark:{
@@ -209,7 +209,7 @@
                         dataIndex: 'description',
                         key: 'description'
                     },{
-                        title: this.$t('langMap.table.fields.common.sortVal'),
+                        title: this.$t('langMap.table.fields.common.weights'),
                         align:textAlignDefault,
                         dataIndex: 'weights',
                         key: 'weights'

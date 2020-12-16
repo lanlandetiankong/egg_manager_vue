@@ -78,7 +78,7 @@ export const langMap = {
             operation:'Operation',
             detail:'Detail',
             description:'Description',
-            sortVal:'Sort',
+            weights:'Weights',
             type:'Type'
         },
         config:{
@@ -89,7 +89,6 @@ export const langMap = {
         fields:{
             common:{
                 name:'Name',
-                sortVal:'Sort',
                 superiorName:'Superior name',
                 title:'Title',
                 code:'Code',

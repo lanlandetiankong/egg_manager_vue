@@ -40,7 +40,7 @@
                 >
                     <a-input v-decorator="formFieldConf.description"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.header.sortVal')"
+                <a-form-item :label="$t('langMap.table.header.weights')"
                              v-bind="formItemLayout"
                 >
                     <a-input-number v-decorator="formFieldConf.weights"/>
