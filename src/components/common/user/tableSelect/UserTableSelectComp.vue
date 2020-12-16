@@ -405,9 +405,9 @@
                     jquery.each(allItemArr,function (idx,val) {
                         if(val){
                             dataSourceArrTemp.push({
-                                key:_this.dealNullStrToEmpty(val.fid),
-                                title:_this.dealNullStrToEmpty(val.name),
-                                description:_this.dealNullStrToEmpty(val.remark),
+                                key:_this.mixin_dealNullStrToEmpty(val.fid),
+                                title:_this.mixin_dealNullStrToEmpty(val.name),
+                                description:_this.mixin_dealNullStrToEmpty(val.remark),
                                 disabled:false
                             })
                         }
@@ -422,26 +422,15 @@
                     jquery.each(allItemArr,function (idx,val) {
                         if(val){
                             dataSourceArrTemp.push({
-                                key:_this.dealNullStrToEmpty(val.fid),
-                                title:_this.dealNullStrToEmpty(val.name),
-                                description:_this.dealNullStrToEmpty(val.remark),
+                                key:_this.mixin_dealNullStrToEmpty(val.fid),
+                                title:_this.mixin_dealNullStrToEmpty(val.name),
+                                description:_this.mixin_dealNullStrToEmpty(val.remark),
                                 disabled:false
                             })
                         }
                     })
                 }
                 _this.dialogGrantJobObj.allDataSource = dataSourceArrTemp ;
-            },
-            dealNullStrToEmpty(str,repStr){ //如果遇到 Undefine或者null，替换为repStr
-                if(typeof str == "undefined" || str == null){
-                    if(typeof repStr != "undefined" && repStr == null){
-                        return repStr ;
-                    }   else {
-                        return "";
-                    }
-                }   else {
-                    return str;
-                }
             },
             handleSearchFormQuery(e,values) {   //表格-搜索
                 var _this = this;

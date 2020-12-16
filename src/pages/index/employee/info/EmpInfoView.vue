@@ -625,9 +625,9 @@
                     jquery.each(allItemArr,function (idx,val) {
                         if(val){
                             dataSourceArrTemp.push({
-                                key:_this.dealNullStrToEmpty(val.fid),
-                                title:_this.dealNullStrToEmpty(val.name),
-                                description:_this.dealNullStrToEmpty(val.remark),
+                                key:_this.mixin_dealNullStrToEmpty(val.fid),
+                                title:_this.mixin_dealNullStrToEmpty(val.name),
+                                description:_this.mixin_dealNullStrToEmpty(val.remark),
                                 disabled:false
                             })
                         }
@@ -642,9 +642,9 @@
                     jquery.each(allItemArr,function (idx,val) {
                         if(val){
                             dataSourceArrTemp.push({
-                                key:_this.dealNullStrToEmpty(val.fid),
-                                title:_this.dealNullStrToEmpty(val.name),
-                                description:_this.dealNullStrToEmpty(val.remark),
+                                key:_this.mixin_dealNullStrToEmpty(val.fid),
+                                title:_this.mixin_dealNullStrToEmpty(val.name),
+                                description:_this.mixin_dealNullStrToEmpty(val.remark),
                                 disabled:false
                             })
                         }
@@ -652,17 +652,7 @@
                 }
                 _this.dialogGrantJobObj.allDataSource = dataSourceArrTemp ;
             },
-            dealNullStrToEmpty(str,repStr){ //如果遇到 Undefine或者null，替换为repStr
-                if(typeof str == "undefined" || str == null){
-                    if(typeof repStr != "undefined" && repStr == null){
-                        return repStr ;
-                    }   else {
-                        return "";
-                    }
-                }   else {
-                    return str;
-                }
-            },
+
             dealUserGrantRolesById(selectRowId){        //授权页面弹窗-封装方法
                 var _this = this ;
                 if(_this.dialogGrantRoleConf.initFlag == false){  //第一次进行分配角色时进行 所有角色 的数据加载

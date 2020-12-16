@@ -320,17 +320,6 @@
                     }
                 })
             },
-            dealNullStrToEmpty(str,repStr){ //如果遇到 Undefine或者null，替换为repStr
-                if(typeof str == "undefined" || str == null){
-                    if(typeof repStr != "undefined" && repStr == null){
-                        return repStr ;
-                    }   else {
-                        return "";
-                    }
-                }   else {
-                    return str;
-                }
-            },
             handleSearchFormQuery(e,values) {   //表格-搜索
                 var _this = this ;
                 //取得 bean 形式 的查询条件数组

@@ -63,6 +63,17 @@ export const EggCommonMixin = {
                 return val ;
             }
         },
+        mixin_dealNullStrToEmpty(str,repStr){ //如果遇到 Undefine或者null，替换为repStr
+            if(typeof str == "undefined" || str == null){
+                if(typeof repStr != "undefined" && repStr == null){
+                    return repStr ;
+                }   else {
+                    return "";
+                }
+            }   else {
+                return str;
+            }
+        },
         mixin_refreshChildViewCaches(self,pageCompName){
             var _this = self;
             var cachedViewMap = this.$store.state.tagsView.cachedViews ;
