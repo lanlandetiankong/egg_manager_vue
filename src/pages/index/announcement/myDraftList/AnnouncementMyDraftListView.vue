@@ -308,7 +308,7 @@
                     }
                 })
             },
-            dealQueryAnnouncementDrafts(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
+            dealQueryGridData(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
                 var _this = this;
                 _this.changeQueryLoading(true);
                 AnnouncementMyDraftListApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
@@ -375,7 +375,7 @@
                 var _this = this ;
                 //取得 bean 形式 的查询条件数组
                 var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                _this.dealQueryAnnouncementDrafts(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
+                _this.dealQueryGridData(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleDraftBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;

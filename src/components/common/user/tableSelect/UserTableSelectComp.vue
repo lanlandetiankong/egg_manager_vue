@@ -294,7 +294,7 @@
                     _this.changeQueryLoading(false);
                 })
             },
-            dealQueryUserAccounts(queryFieldArr,pagination,sorter) {    //带查询条件 检索用户列表
+            dealQueryGridData(queryFieldArr,pagination,sorter) {    //带查询条件 检索用户列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
                 UserTableSelectCompApi.getPageQuery(queryFieldArr,pagination,sorter).then((res) => {
@@ -436,7 +436,7 @@
                 var _this = this;
                 //取得 bean 形式 的查询条件数组
                 var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
-                _this.dealQueryUserAccounts(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
+                _this.dealQueryGridData(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleTableChange(pagination, filters, sorter) {
                 //表格变动-页码跳转/排序/筛选

@@ -291,21 +291,6 @@
                     }
                 })
             },
-            dealQueryAll() {   //取得公告列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                AnnouncementAllListApi.getPageQuery().then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealPageQuery(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
@@ -418,7 +403,7 @@
             }
         },
         created(){
-            this.dealQueryAll();
+            this.dealPageQuery();
             this.dealQueryAllAnnouncementTag();
         },
         destroyed(){

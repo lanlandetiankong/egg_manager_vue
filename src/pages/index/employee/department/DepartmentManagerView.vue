@@ -337,7 +337,7 @@
                 }
                 this.searchConf.loadingFlag = loadingFlag;
             },
-            dealQueryDefineDepartments(queryFieldList,pagination,sorter) {    //带查询条件 检索部门列表
+            dealQueryGridData(queryFieldList,pagination,sorter) {    //带查询条件 检索部门列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
                 DepartmentManagerApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
@@ -381,7 +381,7 @@
                 var _this = this ;
                 //取得 bean 形式 的查询条件数组
                 var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                _this.dealQueryDefineDepartments(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
+                _this.dealQueryGridData(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
             },
             handleCreateByForm() {     //新增部门按钮-点击
                 var _this = this;
