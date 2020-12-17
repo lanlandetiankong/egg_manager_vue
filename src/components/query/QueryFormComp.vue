@@ -3,7 +3,8 @@
         <!-- 复合搜索-区域 -->
         <div v-show="showAble">
             <div>
-                <a-form layout="inline"
+                <a-form ref="searchFormRef"
+                        layout="inline"
                         :form="searchForm"
                         @submit="handleSearchFormSubmit"
                 >
@@ -107,6 +108,9 @@
             }
         },
         methods:{
+            triggerQuery(){ //触发 查询表单的提交，配合mixin使用，请勿随意改方法名
+                this.$refs.searchFormRef.$emit('submit');
+            },
             handleSearchFormReset() {    //重置 搜索列表 的值
                 this.searchForm.resetFields();
             },

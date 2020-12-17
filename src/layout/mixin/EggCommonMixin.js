@@ -14,7 +14,7 @@ export const EggCommonMixin = {
     },
     methods:{
         mixin_handlePermissionDomShow(permCode){    //根据后台传递的[可展示权限]列表进行[权限按钮]展示的控制
-            return  this.userInfoStore_grantedPermissions.includes(permCode) ;
+            return this.userInfoStore_grantedPermissions.includes(permCode) ;
         },
         mixin_handleGetCurMenuConf(){ //取得当前页面的meta
             const metaObj = this.$route.meta;
@@ -104,7 +104,10 @@ export const EggCommonMixin = {
             }   else {
                 _this.cachedChildrenViews = [] ;
             }
-        }
+        },
+        mixin_invokeQuery(self){
+            self.$refs.queryFormComp.triggerQuery();
+        },
     }
 
 
