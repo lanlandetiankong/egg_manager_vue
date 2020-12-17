@@ -319,8 +319,8 @@
                 ModuleManagerApi.getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
+                        if(res.vpage){ //总个数
+                            this.tableConf.pagination.total = res.vpage.total ;
                         }
                         //清空 已勾选
                         _this.tableCheckIdList = [] ;
