@@ -66,25 +66,13 @@
             </div>
             <!-- 弹窗dom-区域 -->
             <div>
-                <a-drawer
-                    :title="drawerConf.detail.announcement.title"
-                    :closeable="drawerConf.detail.announcement.closable"
+                <row-detail-drawer-comp
+                    :drawerConf="drawerConf.detail.announcement.conf"
+                    :dataObj="drawerConf.detail.announcement.dataObj"
                     :visible="drawerConf.detail.announcement.visible"
-                    :placement="drawerConf.detail.announcement.placement"
-                    :mask="drawerConf.detail.announcement.mask"
-                    :maskStyle="drawerConf.detail.announcement.maskStyle"
-                    :wrapStyle="drawerConf.detail.announcement.wrapStyle"
-                    :drawerStyle="drawerConf.detail.announcement.drawerStyle"
-                    :bodyStyle="drawerConf.detail.announcement.bodyStyle"
-                    :maskClosable="drawerConf.detail.announcement.maskClosable"
-                    @close="handleDetailDrawerClose"
-                >
-                    <simple-detail-drawer-comp
-                        :dataObj="drawerConf.detail.announcement.dataObj"
-                        :visible="drawerConf.detail.announcement.visible"
-                        :drawerFieldConf="drawerConf.detail.announcement.drawerFieldConf"
-                    />
-                </a-drawer>
+                    :drawerFieldConf="drawerConf.detail.announcement.drawerFieldConf"
+                    @execClose="handleDetailDrawerClose"
+                />
             </div>
         </div>
     </div>
@@ -96,10 +84,10 @@
     import {FormItemTypeEnum} from "~Components/query/form_enum";
     import QueryFormComp from '~Components/query/QueryFormComp'
     import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
-
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
     export default {
         name: "AnnouncementAllListView",
-        components:{QueryFormComp,SimpleDetailDrawerComp},
+        components:{QueryFormComp,SimpleDetailDrawerComp,RowDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -236,24 +224,10 @@
                 drawerConf:{
                     detail:{
                         announcement:{
-                            title:this.$t('langMap.drawer.title.detailForAnnouncement'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForAnnouncement'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },
@@ -291,23 +265,6 @@
                     }
                 })
             },
-            dealPageQuery(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                AnnouncementAllListApi.getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter).then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                        //清空 已勾选
-                        _this.tableCheckIdList = [] ;
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealBatchDel() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
@@ -331,11 +288,24 @@
                     }
                 })
             },
-            handleSearchFormQuery(e,values) {
+            handleSearchFormQuery(e,values) {    //带查询条件 检索公告列表
                 const _this = this;
                 //取得 bean 形式 的查询条件数组
                 const searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                _this.dealPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
+                _this.changeQueryLoading(true);
+                AnnouncementAllListApi.getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter).then((res) => {
+                    if (res) {
+                        this.tableConf.data = res.gridList;
+                        if(res.paginationBean){ //总个数
+                            this.tableConf.pagination.total = res.paginationBean.total ;
+                        }
+                        //清空 已勾选
+                        _this.tableCheckIdList = [] ;
+                    }
+                    _this.changeQueryLoading(false);
+                }).catch((e) =>{
+                    _this.changeQueryLoading(false);
+                })
             },
             handleBatchDeleteByIds(e) {     // 批量删除
                 var _this = this;
@@ -403,7 +373,7 @@
             }
         },
         created(){
-            this.dealPageQuery();
+            this.handleSearchFormQuery();
             this.dealQueryAllAnnouncementTag();
         },
         destroyed(){
