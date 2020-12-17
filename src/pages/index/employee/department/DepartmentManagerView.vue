@@ -82,25 +82,13 @@
                 @createFormSubmit="handleCreateFormSubmit"
             >
             </define-department-create-form-comp>
-            <a-drawer
-                :title="drawerConf.detail.defineDepartment.title"
-                :closeable="drawerConf.detail.defineDepartment.closable"
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.defineDepartment.conf"
+                :dataObj="drawerConf.detail.defineDepartment.dataObj"
                 :visible="drawerConf.detail.defineDepartment.visible"
-                :placement="drawerConf.detail.defineDepartment.placement"
-                :mask="drawerConf.detail.defineDepartment.mask"
-                :maskStyle="drawerConf.detail.defineDepartment.maskStyle"
-                :wrapStyle="drawerConf.detail.defineDepartment.wrapStyle"
-                :drawerStyle="drawerConf.detail.defineDepartment.drawerStyle"
-                :bodyStyle="drawerConf.detail.defineDepartment.bodyStyle"
-                :maskClosable="drawerConf.detail.defineDepartment.maskClosable"
-                @close="handleDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.defineDepartment.dataObj"
-                    :visible="drawerConf.detail.defineDepartment.visible"
-                    :drawerFieldConf="drawerConf.detail.defineDepartment.drawerFieldConf"
-                />
-            </a-drawer>
+                :drawerFieldConf="drawerConf.detail.defineDepartment.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
         </div>
     </div>
 </template>
@@ -115,10 +103,10 @@
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import DefineDepartmentCreateFormComp from '~Components/index/user/employee/department/DefineDepartmentCreateFormComp';
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
     export default {
         name: "DepartmentManagerView",
-        components: {QueryFormComp,DefineDepartmentCreateFormComp,SimpleDetailDrawerComp,ACol, AFormItem},
+        components: {QueryFormComp,DefineDepartmentCreateFormComp,RowDetailDrawerComp,ACol, AFormItem},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -277,24 +265,10 @@
                 drawerConf:{
                     detail:{
                         defineDepartment:{
-                            title:this.$t('langMap.drawer.title.detailForDefineDepartment'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForDefineDepartment'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },

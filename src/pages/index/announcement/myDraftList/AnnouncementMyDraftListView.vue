@@ -85,25 +85,13 @@
             </div>
             <!-- 弹窗dom-区域 -->
             <div>
-                <a-drawer
-                    :title="drawerConf.detail.announcementDraft.title"
-                    :closeable="drawerConf.detail.announcementDraft.closable"
+                <row-detail-drawer-comp
+                    :drawerConf="drawerConf.detail.announcementDraft.conf"
+                    :dataObj="drawerConf.detail.announcementDraft.dataObj"
                     :visible="drawerConf.detail.announcementDraft.visible"
-                    :placement="drawerConf.detail.announcementDraft.placement"
-                    :mask="drawerConf.detail.announcementDraft.mask"
-                    :maskStyle="drawerConf.detail.announcementDraft.maskStyle"
-                    :wrapStyle="drawerConf.detail.announcementDraft.wrapStyle"
-                    :drawerStyle="drawerConf.detail.announcementDraft.drawerStyle"
-                    :bodyStyle="drawerConf.detail.announcementDraft.bodyStyle"
-                    :maskClosable="drawerConf.detail.announcementDraft.maskClosable"
-                    @close="handleDraftDetailDrawerClose"
-                >
-                    <simple-detail-drawer-comp
-                        :dataObj="drawerConf.detail.announcementDraft.dataObj"
-                        :visible="drawerConf.detail.announcementDraft.visible"
-                        :drawerFieldConf="drawerConf.detail.announcementDraft.drawerFieldConf"
-                    />
-                </a-drawer>
+                    :drawerFieldConf="drawerConf.detail.announcementDraft.drawerFieldConf"
+                    @execClose="handleDetailDrawerClose"
+                />
             </div>
         </div>
     </div>
@@ -115,11 +103,11 @@
     import {FormItemTypeEnum} from "~Components/query/form_enum";
 
     import QueryFormComp from '~Components/query/QueryFormComp'
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
 
     export default {
         name: "AnnouncementMyDraftListView",
-        components:{QueryFormComp,SimpleDetailDrawerComp},
+        components:{QueryFormComp,RowDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -253,24 +241,10 @@
                 drawerConf:{
                     detail:{
                         announcementDraft:{
-                            title:this.$t('langMap.drawer.title.detailForAnnouncementDraft'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForAnnouncementDraft'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },
@@ -491,7 +465,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleDraftDetailDrawerClose(e){ //Drawer-公告草稿 详情关闭
+            handleDetailDrawerClose(e){ //Drawer-公告草稿 详情关闭
                 this.drawerConf.detail.announcementDraft.visible = false ;
             }
         },

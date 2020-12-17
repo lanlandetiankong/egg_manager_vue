@@ -124,25 +124,13 @@
                 @grantMenusFormSubmit="handleRoleGrantMenusFormSubmit"
             >
             </role-grant-menus-form-comp>
-            <a-drawer
-                :title="drawerConf.detail.defineRole.title"
-                :closeable="drawerConf.detail.defineRole.closable"
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.defineRole.conf"
+                :dataObj="drawerConf.detail.defineRole.dataObj"
                 :visible="drawerConf.detail.defineRole.visible"
-                :placement="drawerConf.detail.defineRole.placement"
-                :mask="drawerConf.detail.defineRole.mask"
-                :maskStyle="drawerConf.detail.defineRole.maskStyle"
-                :wrapStyle="drawerConf.detail.defineRole.wrapStyle"
-                :drawerStyle="drawerConf.detail.defineRole.drawerStyle"
-                :bodyStyle="drawerConf.detail.defineRole.bodyStyle"
-                :maskClosable="drawerConf.detail.defineRole.maskClosable"
-                @close="handleDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.defineRole.dataObj"
-                    :visible="drawerConf.detail.defineRole.visible"
-                    :drawerFieldConf="drawerConf.detail.defineRole.drawerFieldConf"
-                />
-            </a-drawer>
+                :drawerFieldConf="drawerConf.detail.defineRole.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
         </div>
     </div>
 </template>
@@ -158,10 +146,10 @@
     import DefineRoleCreateFormComp from '~Components/index/define/permission/role/DefineRoleCreateFormComp';
     import RoleGrantPermissionFormComp from '~Components/index/define/permission/role/RoleGrantPermissionFormComp';
     import RoleGrantMenusFormComp from '~Components/index/define/permission/role/RoleGrantMenusFormComp';
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
     export default {
         name: "PermissionRoleManagerView",
-        components: {QueryFormComp,RoleGrantPermissionFormComp, DefineRoleCreateFormComp,SimpleDetailDrawerComp,RoleGrantMenusFormComp},
+        components: {QueryFormComp,RoleGrantPermissionFormComp, DefineRoleCreateFormComp,RowDetailDrawerComp,RoleGrantMenusFormComp},
         mixins:[EggCommonMixin],
         data(){
             const textAlignDefault = 'left';
@@ -293,24 +281,10 @@
                 drawerConf:{
                     detail:{
                         defineRole:{
-                            title:this.$t('langMap.drawer.title.detailForDefineRole'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForDefineRole'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },

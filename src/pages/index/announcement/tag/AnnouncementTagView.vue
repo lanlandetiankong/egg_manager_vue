@@ -85,25 +85,13 @@
                 @createFormSubmit="handleCreateFormSubmit"
             >
             </announcement-tag-create-form-comp>
-            <a-drawer
-                :title="drawerConf.detail.announcementTag.title"
-                :closeable="drawerConf.detail.announcementTag.closable"
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.announcementTag.conf"
+                :dataObj="drawerConf.detail.announcementTag.dataObj"
                 :visible="drawerConf.detail.announcementTag.visible"
-                :placement="drawerConf.detail.announcementTag.placement"
-                :mask="drawerConf.detail.announcementTag.mask"
-                :maskStyle="drawerConf.detail.announcementTag.maskStyle"
-                :wrapStyle="drawerConf.detail.announcementTag.wrapStyle"
-                :drawerStyle="drawerConf.detail.announcementTag.drawerStyle"
-                :bodyStyle="drawerConf.detail.announcementTag.bodyStyle"
-                :maskClosable="drawerConf.detail.announcementTag.maskClosable"
-                @close="handleDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.announcementTag.dataObj"
-                    :visible="drawerConf.detail.announcementTag.visible"
-                    :drawerFieldConf="drawerConf.detail.announcementTag.drawerFieldConf"
-                />
-            </a-drawer>
+                :drawerFieldConf="drawerConf.detail.announcementTag.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
         </div>
     </div>
 </template>
@@ -115,10 +103,10 @@
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import AnnouncementTagCreateFormComp from "~Components/index/announcement/tag/AnnouncementTagCreateFormComp";
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
     export default {
         name: "AnnouncementTagView",
-        components: {QueryFormComp,AnnouncementTagCreateFormComp,SimpleDetailDrawerComp},
+        components: {QueryFormComp,AnnouncementTagCreateFormComp,RowDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -223,24 +211,10 @@
                 drawerConf:{
                     detail:{
                         announcementTag:{
-                            title:this.$t('langMap.drawer.title.detailForAnnouncementTag'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForAnnouncementTag'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },

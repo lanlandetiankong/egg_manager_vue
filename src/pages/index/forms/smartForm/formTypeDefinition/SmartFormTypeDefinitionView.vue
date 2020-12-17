@@ -91,25 +91,13 @@
                 @createFormSubmit="handleCreateFormDialogSubmit"
             >
             </smart-form-type-definition-create-form-comp>
-            <a-drawer
-                :title="drawerConf.detail.defaultGridItem.title"
-                :closeable="drawerConf.detail.defaultGridItem.closable"
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.defaultGridItem.conf"
+                :dataObj="drawerConf.detail.defaultGridItem.dataObj"
                 :visible="drawerConf.detail.defaultGridItem.visible"
-                :placement="drawerConf.detail.defaultGridItem.placement"
-                :mask="drawerConf.detail.defaultGridItem.mask"
-                :maskStyle="drawerConf.detail.defaultGridItem.maskStyle"
-                :wrapStyle="drawerConf.detail.defaultGridItem.wrapStyle"
-                :drawerStyle="drawerConf.detail.defaultGridItem.drawerStyle"
-                :bodyStyle="drawerConf.detail.defaultGridItem.bodyStyle"
-                :maskClosable="drawerConf.detail.defaultGridItem.maskClosable"
-                @close="handleDefaultDataItemDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.defaultGridItem.dataObj"
-                    :visible="drawerConf.detail.defaultGridItem.visible"
-                    :drawerFieldConf="drawerConf.detail.defaultGridItem.drawerFieldConf"
-                />
-            </a-drawer>
+                :drawerFieldConf="drawerConf.detail.defaultGridItem.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
         </div>
     </div>
 </template>
@@ -124,11 +112,11 @@
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import SmartFormTypeDefinitionCreateFormComp from "@/components/index/forms/smartForm/formTypeDefinition/SmartFormTypeDefinitionCreateFormComp";
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
 
     export default {
         name: "SmartFormTypeDefinitionView",
-        components: {QueryFormComp,SmartFormTypeDefinitionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        components: {QueryFormComp,SmartFormTypeDefinitionCreateFormComp,RowDetailDrawerComp, ACol, AFormItem},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -231,24 +219,10 @@
                 drawerConf:{
                     detail:{
                         defaultGridItem:{
-                            title:this.$t('langMap.drawer.title.detailForDefineFormType'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForDefineFormType'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },
@@ -456,7 +430,7 @@
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleDefaultDataItemDetailDrawerClose(e){ //Drawer-详情关闭
+            handleDetailDrawerClose(e){ //Drawer-详情关闭
                 this.drawerConf.detail.defaultGridItem.visible = false ;
             }
         },

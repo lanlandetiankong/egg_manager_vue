@@ -173,25 +173,13 @@
                 @modalSubmit="handleImportDataModalSubmit"
             >
             </excel-import-data-comp>
-            <a-drawer
-                    :title="drawerConf.detail.employeeInfo.title"
-                    :closeable="drawerConf.detail.employeeInfo.closable"
-                    :visible="drawerConf.detail.employeeInfo.visible"
-                    :placement="drawerConf.detail.employeeInfo.placement"
-                    :mask="drawerConf.detail.employeeInfo.mask"
-                    :maskStyle="drawerConf.detail.employeeInfo.maskStyle"
-                    :wrapStyle="drawerConf.detail.employeeInfo.wrapStyle"
-                    :drawerStyle="drawerConf.detail.employeeInfo.drawerStyle"
-                    :bodyStyle="drawerConf.detail.employeeInfo.bodyStyle"
-                    :maskClosable="drawerConf.detail.employeeInfo.maskClosable"
-                    @close="handleDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.employeeInfo.dataObj"
-                    :visible="drawerConf.detail.employeeInfo.visible"
-                    :drawerFieldConf="drawerConf.detail.employeeInfo.drawerFieldConf"
-                />
-            </a-drawer>
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.employeeInfo.conf"
+                :dataObj="drawerConf.detail.employeeInfo.dataObj"
+                :visible="drawerConf.detail.employeeInfo.visible"
+                :drawerFieldConf="drawerConf.detail.employeeInfo.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
         </div>
     </div>
 </template>
@@ -209,7 +197,7 @@
     import EmployeeInfoCreateFormComp from '~Components/index/user/employee/info/EmployeeInfoCreateFormComp'
     import UserGrantRoleFormComp from '~Components/index/user/employee/info/UserGrantRoleFormComp';
     import UserGrantJobFormComp from '~Components/index/user/employee/info/UserGrantJobFormComp';
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
     import ExcelImportDataComp from '~Components/index/common/excel/ExcelImportDataComp';
 
     import ACol from "ant-design-vue/es/grid/Col";
@@ -219,7 +207,7 @@
     export default {
         name: "EmpInfoView",
         components: {QueryFormComp,
-            SimpleDetailDrawerComp,ExcelImportDataComp,
+            RowDetailDrawerComp,ExcelImportDataComp,
             UserGrantJobFormComp, UserGrantRoleFormComp, AFormItem, ACol, EmployeeInfoCreateFormComp},
         mixins:[EggCommonMixin],
         data() {
@@ -455,24 +443,10 @@
                 drawerConf:{
                     detail:{
                        employeeInfo:{
-                           title:this.$t('langMap.drawer.title.detailForEmployeeInfo'),
-                           closable:true,
+                           conf:{
+                               title:this.$t('langMap.drawer.title.detailForEmployeeInfo'),
+                           },
                            visible:false,
-                           placement:"right",
-                           mask:true,
-                           maskStyle:{
-                               overFlowY:"auto"
-                           },
-                           wrapStyle:{
-                               overFlowY:"auto"
-                           },
-                           drawerStyle:{
-                               overFlowY:"auto"
-                           },
-                           bodyStyle:{
-                               overFlowY:"auto"
-                           },
-                           maskClosable:true,  //点击蒙层是否关闭,
                            dataObj:{},
                            drawerFieldConf:fieldInfoConfObj
                        },

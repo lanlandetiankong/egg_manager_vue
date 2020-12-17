@@ -103,25 +103,13 @@
                 @createFormSubmit="handleCreateFormSubmit"
             >
             </define-permission-create-form-comp>
-            <a-drawer
-                :title="drawerConf.detail.definePermission.title"
-                :closeable="drawerConf.detail.definePermission.closable"
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.definePermission.conf"
+                :dataObj="drawerConf.detail.definePermission.dataObj"
                 :visible="drawerConf.detail.definePermission.visible"
-                :placement="drawerConf.detail.definePermission.placement"
-                :mask="drawerConf.detail.definePermission.mask"
-                :maskStyle="drawerConf.detail.definePermission.maskStyle"
-                :wrapStyle="drawerConf.detail.definePermission.wrapStyle"
-                :drawerStyle="drawerConf.detail.definePermission.drawerStyle"
-                :bodyStyle="drawerConf.detail.definePermission.bodyStyle"
-                :maskClosable="drawerConf.detail.definePermission.maskClosable"
-                @close="handleDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.definePermission.dataObj"
-                    :visible="drawerConf.detail.definePermission.visible"
-                    :drawerFieldConf="drawerConf.detail.definePermission.drawerFieldConf"
-                />
-            </a-drawer>
+                :drawerFieldConf="drawerConf.detail.definePermission.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
         </div>
     </div>
 </template>
@@ -140,10 +128,10 @@
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import DefinePermissionCreateFormComp from "@/components/index/define/permission/manager/DefinePermissionCreateFormComp";
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
     export default {
         name: "PermissionManagerView",
-        components: {QueryFormComp,DefinePermissionCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        components: {QueryFormComp,DefinePermissionCreateFormComp,RowDetailDrawerComp, ACol, AFormItem},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left';
@@ -274,24 +262,10 @@
                 drawerConf:{
                     detail:{
                         definePermission:{
-                            title:this.$t('langMap.drawer.title.detailForDefinePermission'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForDefinePermission'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },

@@ -92,25 +92,13 @@
                 @createFormSubmit="handleCreateFormSubmit"
             >
             </define-module-create-form-comp>
-            <a-drawer
-                :title="drawerConf.detail.defineModule.title"
-                :closeable="drawerConf.detail.defineModule.closable"
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.defineModule.conf"
+                :dataObj="drawerConf.detail.defineModule.dataObj"
                 :visible="drawerConf.detail.defineModule.visible"
-                :placement="drawerConf.detail.defineModule.placement"
-                :mask="drawerConf.detail.defineModule.mask"
-                :maskStyle="drawerConf.detail.defineModule.maskStyle"
-                :wrapStyle="drawerConf.detail.defineModule.wrapStyle"
-                :drawerStyle="drawerConf.detail.defineModule.drawerStyle"
-                :bodyStyle="drawerConf.detail.defineModule.bodyStyle"
-                :maskClosable="drawerConf.detail.defineModule.maskClosable"
-                @close="handleDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.defineModule.dataObj"
-                    :visible="drawerConf.detail.defineModule.visible"
-                    :drawerFieldConf="drawerConf.detail.defineModule.drawerFieldConf"
-                />
-            </a-drawer>
+                :drawerFieldConf="drawerConf.detail.defineModule.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
         </div>
     </div>
 </template>
@@ -126,11 +114,11 @@
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import DefineModuleCreateFormComp from "@/components/index/module/manager/DefineModuleCreateFormComp";
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
 
     export default {
         name: "ModuleManagerView",
-        components: {QueryFormComp,DefineModuleCreateFormComp,SimpleDetailDrawerComp, ACol, AFormItem},
+        components: {QueryFormComp,DefineModuleCreateFormComp,RowDetailDrawerComp, ACol, AFormItem},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -256,24 +244,10 @@
                 drawerConf:{
                     detail:{
                         defineModule:{
-                            title:this.$t('langMap.drawer.title.detailForDefineModule'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForDefineModule'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },

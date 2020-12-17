@@ -103,25 +103,13 @@
                 @createFormSubmit="handleCreateFormSubmit"
             >
             </define-menu-create-form-comp>
-            <a-drawer
-                :title="drawerConf.detail.defineMenu.title"
-                :closeable="drawerConf.detail.defineMenu.closable"
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.defineMenu.conf"
+                :dataObj="drawerConf.detail.defineMenu.dataObj"
                 :visible="drawerConf.detail.defineMenu.visible"
-                :placement="drawerConf.detail.defineMenu.placement"
-                :mask="drawerConf.detail.defineMenu.mask"
-                :maskStyle="drawerConf.detail.defineMenu.maskStyle"
-                :wrapStyle="drawerConf.detail.defineMenu.wrapStyle"
-                :drawerStyle="drawerConf.detail.defineMenu.drawerStyle"
-                :bodyStyle="drawerConf.detail.defineMenu.bodyStyle"
-                :maskClosable="drawerConf.detail.defineMenu.maskClosable"
-                @close="handleDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.defineMenu.dataObj"
-                    :visible="drawerConf.detail.defineMenu.visible"
-                    :drawerFieldConf="drawerConf.detail.defineMenu.drawerFieldConf"
-                />
-            </a-drawer>
+                :drawerFieldConf="drawerConf.detail.defineMenu.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
             <excel-templet-upload-comp
                 v-if="uploadExcelModelconf.visible"
                 :visible="uploadExcelModelconf.visible"
@@ -147,11 +135,11 @@
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import DefineMenuCreateFormComp from "~Components/index/module/manager/DefineMenuCreateFormComp";
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
     import ExcelTempletUploadComp from '~Components/index/common/excel/ExcelTempletUploadComp';
     export default {
         name: "MenuManagerView",
-        components: {QueryFormComp,DefineMenuCreateFormComp,SimpleDetailDrawerComp,ExcelTempletUploadComp, ACol, AFormItem},
+        components: {QueryFormComp,DefineMenuCreateFormComp,RowDetailDrawerComp,ExcelTempletUploadComp, ACol, AFormItem},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left';
@@ -356,24 +344,10 @@
                 drawerConf:{
                     detail:{
                         defineMenu:{
-                            title:this.$t('langMap.drawer.title.detailForDefineMenu'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForDefineMenu'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },

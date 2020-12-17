@@ -83,11 +83,10 @@
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {FormItemTypeEnum} from "~Components/query/form_enum";
     import QueryFormComp from '~Components/query/QueryFormComp'
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
     import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
     export default {
         name: "AnnouncementAllListView",
-        components:{QueryFormComp,SimpleDetailDrawerComp,RowDetailDrawerComp},
+        components:{QueryFormComp,RowDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;

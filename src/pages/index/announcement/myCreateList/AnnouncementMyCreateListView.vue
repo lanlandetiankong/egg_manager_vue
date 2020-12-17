@@ -64,47 +64,13 @@
             </div>
             <!-- 弹窗dom-区域 -->
             <div>
-                <a-drawer
-                    :title="drawerConf.detail.announcement.title"
-                    :closeable="drawerConf.detail.announcement.closable"
+                <row-detail-drawer-comp
+                    :drawerConf="drawerConf.detail.announcement.conf"
+                    :dataObj="drawerConf.detail.announcement.dataObj"
                     :visible="drawerConf.detail.announcement.visible"
-                    :placement="drawerConf.detail.announcement.placement"
-                    :mask="drawerConf.detail.announcement.mask"
-                    :maskStyle="drawerConf.detail.announcement.maskStyle"
-                    :wrapStyle="drawerConf.detail.announcement.wrapStyle"
-                    :drawerStyle="drawerConf.detail.announcement.drawerStyle"
-                    :bodyStyle="drawerConf.detail.announcement.bodyStyle"
-                    :maskClosable="drawerConf.detail.announcement.maskClosable"
-                    @close="handleDetailDrawerClose"
-                >
-                    <simple-detail-drawer-comp
-                        :dataObj="drawerConf.detail.announcement.dataObj"
-                        :visible="drawerConf.detail.announcement.visible"
-                        :drawerFieldConf="drawerConf.detail.announcement.drawerFieldConf"
-                    />
-                </a-drawer>
-            </div>
-            <!-- 弹窗dom-区域 -->
-            <div>
-                <a-drawer
-                    :title="drawerConf.detail.announcement.title"
-                    :closeable="drawerConf.detail.announcement.closable"
-                    :visible="drawerConf.detail.announcement.visible"
-                    :placement="drawerConf.detail.announcement.placement"
-                    :mask="drawerConf.detail.announcement.mask"
-                    :maskStyle="drawerConf.detail.announcement.maskStyle"
-                    :wrapStyle="drawerConf.detail.announcement.wrapStyle"
-                    :drawerStyle="drawerConf.detail.announcement.drawerStyle"
-                    :bodyStyle="drawerConf.detail.announcement.bodyStyle"
-                    :maskClosable="drawerConf.detail.announcement.maskClosable"
-                    @close="handleDetailDrawerClose"
-                >
-                    <simple-detail-drawer-comp
-                        :dataObj="drawerConf.detail.announcement.dataObj"
-                        :visible="drawerConf.detail.announcement.visible"
-                        :drawerFieldConf="drawerConf.detail.announcement.drawerFieldConf"
-                    />
-                </a-drawer>
+                    :drawerFieldConf="drawerConf.detail.announcement.drawerFieldConf"
+                    @execClose="handleDetailDrawerClose"
+                />
             </div>
         </div>
     </div>
@@ -115,11 +81,11 @@
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {FormItemTypeEnum} from "~Components/query/form_enum";
     import QueryFormComp from '~Components/query/QueryFormComp'
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
 
     export default {
         name: "AnnouncementAllListView",
-        components:{QueryFormComp,SimpleDetailDrawerComp},
+        components:{QueryFormComp,RowDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -253,24 +219,10 @@
                 drawerConf:{
                     detail:{
                         announcement:{
-                            title:this.$t('langMap.drawer.title.detailForAnnouncement'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForAnnouncement'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },

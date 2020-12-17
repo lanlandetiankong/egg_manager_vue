@@ -86,25 +86,13 @@
                 @createFormSubmit="handleCreateFormSubmit"
             >
             </define-tenant-create-form-comp>
-            <a-drawer
-                :title="drawerConf.detail.defineTenant.title"
-                :closeable="drawerConf.detail.defineTenant.closable"
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.defineTenant.conf"
+                :dataObj="drawerConf.detail.defineTenant.dataObj"
                 :visible="drawerConf.detail.defineTenant.visible"
-                :placement="drawerConf.detail.defineTenant.placement"
-                :mask="drawerConf.detail.defineTenant.mask"
-                :maskStyle="drawerConf.detail.defineTenant.maskStyle"
-                :wrapStyle="drawerConf.detail.defineTenant.wrapStyle"
-                :drawerStyle="drawerConf.detail.defineTenant.drawerStyle"
-                :bodyStyle="drawerConf.detail.defineTenant.bodyStyle"
-                :maskClosable="drawerConf.detail.defineTenant.maskClosable"
-                @close="handleDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.defineTenant.dataObj"
-                    :visible="drawerConf.detail.defineTenant.visible"
-                    :drawerFieldConf="drawerConf.detail.defineTenant.drawerFieldConf"
-                />
-            </a-drawer>
+                :drawerFieldConf="drawerConf.detail.defineTenant.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
             <tenant-setup-manager-comp
                 :visible="dialog.setupManager.conf.visible"
                 :tenantId="dialog.setupManager.conf.tenantId"
@@ -126,11 +114,11 @@
     import QueryFormComp from '~Components/query/QueryFormComp'
     import DefineTenantCreateFormComp from '~Components/index/organization/tenant/DefineTenantCreateFormComp'
     import TenantSetupManagerComp from '~Components/index/organization/tenant/TenantSetupManagerComp'
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
 
     export default {
         name: "TenantManagerView",
-        components: { QueryFormComp,ACol, AFormItem,DefineTenantCreateFormComp,TenantSetupManagerComp,SimpleDetailDrawerComp},
+        components: { QueryFormComp,ACol, AFormItem,DefineTenantCreateFormComp,TenantSetupManagerComp,RowDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -236,24 +224,10 @@
                 drawerConf:{
                     detail:{
                         defineTenant:{
-                            title:this.$t('langMap.drawer.title.detailForDefineTenant'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForDefineTenant'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },

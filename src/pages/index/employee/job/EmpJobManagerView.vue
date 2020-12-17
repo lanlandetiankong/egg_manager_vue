@@ -89,25 +89,13 @@
                 @createFormCancel="handleCreateFormCancel"
                 @createFormSubmit="handleCreateFormSubmit"
             />
-            <a-drawer
-                :title="drawerConf.detail.employeeJob.title"
-                :closeable="drawerConf.detail.employeeJob.closable"
+            <row-detail-drawer-comp
+                :drawerConf="drawerConf.detail.employeeJob.conf"
+                :dataObj="drawerConf.detail.employeeJob.dataObj"
                 :visible="drawerConf.detail.employeeJob.visible"
-                :placement="drawerConf.detail.employeeJob.placement"
-                :mask="drawerConf.detail.employeeJob.mask"
-                :maskStyle="drawerConf.detail.employeeJob.maskStyle"
-                :wrapStyle="drawerConf.detail.employeeJob.wrapStyle"
-                :drawerStyle="drawerConf.detail.employeeJob.drawerStyle"
-                :bodyStyle="drawerConf.detail.employeeJob.bodyStyle"
-                :maskClosable="drawerConf.detail.employeeJob.maskClosable"
-                @close="handleDetailDrawerClose"
-            >
-                <simple-detail-drawer-comp
-                    :dataObj="drawerConf.detail.employeeJob.dataObj"
-                    :visible="drawerConf.detail.employeeJob.visible"
-                    :drawerFieldConf="drawerConf.detail.employeeJob.drawerFieldConf"
-                />
-            </a-drawer>
+                :drawerFieldConf="drawerConf.detail.employeeJob.drawerFieldConf"
+                @execClose="handleDetailDrawerClose"
+            />
         </div>
     </div>
 </template>
@@ -121,13 +109,13 @@
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import EmployeeJobCreateFormComp from '~Components/index/user/employee/job/EmployeeJobCreateFormComp'
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
 
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
     export default {
         name: "EmpJobManagerView",
-        components: {QueryFormComp, AFormItem, ACol, EmployeeJobCreateFormComp,SimpleDetailDrawerComp},
+        components: {QueryFormComp, AFormItem, ACol, EmployeeJobCreateFormComp,RowDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
@@ -240,24 +228,10 @@
                 drawerConf:{
                     detail:{
                         employeeJob:{
-                            title:this.$t('langMap.drawer.title.detailForDefineJob'),
-                            closable:true,
+                            conf:{
+                                title:this.$t('langMap.drawer.title.detailForDefineJob'),
+                            },
                             visible:false,
-                            placement:"right",
-                            mask:true,
-                            maskStyle:{
-                                overFlowY:"auto"
-                            },
-                            wrapStyle:{
-                                overFlowY:"auto"
-                            },
-                            drawerStyle:{
-                                overFlowY:"auto"
-                            },
-                            bodyStyle:{
-                                overFlowY:"auto"
-                            },
-                            maskClosable:true,  //点击蒙层是否关闭,
                             dataObj:{},
                             drawerFieldConf:fieldInfoConfObj
                         },
