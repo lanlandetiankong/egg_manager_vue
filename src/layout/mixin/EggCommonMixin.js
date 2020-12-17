@@ -105,8 +105,9 @@ export const EggCommonMixin = {
                 _this.cachedChildrenViews = [] ;
             }
         },
-        mixin_invokeQuery(self){
-            self.$refs.queryFormComp.triggerQuery();
+        mixin_invokeQuery(self,refName){
+            refName = (refName) ? refName : 'queryFormComp' ;
+            self.$refs[refName].triggerQuery();
         },
     }
 
