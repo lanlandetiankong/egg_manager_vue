@@ -294,23 +294,6 @@
                     _this.changeQueryLoading(false);
                 })
             },
-            dealQueryGridData(queryFieldArr,pagination,sorter) {    //带查询条件 检索用户列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                UserTableSelectCompApi.getPageQuery(queryFieldArr,pagination,sorter).then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                        //清空 已勾选
-                        _this.tableCheckIdList = [] ;
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealGetSearchFormQueryConf(queryObj){   //取得查询基本配置
                 var _this = this ;
                 var queryFieldArr = [] ;
@@ -432,11 +415,24 @@
                 }
                 _this.dialogGrantJobObj.allDataSource = dataSourceArrTemp ;
             },
-            handleSearchFormQuery(e,values) {   //表格-搜索
+            handleSearchFormQuery(e,values) {   //带查询条件 检索用户列表
                 var _this = this;
                 //取得 bean 形式 的查询条件数组
                 var searchFieldArr = _this.dealGetSearchFormQueryConf(values);
-                _this.dealQueryGridData(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
+                _this.changeQueryLoading(true);
+                UserTableSelectCompApi.getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter).then((res) => {
+                    if (res) {
+                        this.tableConf.data = res.gridList;
+                        if(res.paginationBean){ //总个数
+                            this.tableConf.pagination.total = res.paginationBean.total ;
+                        }
+                        //清空 已勾选
+                        _this.tableCheckIdList = [] ;
+                    }
+                    _this.changeQueryLoading(false);
+                }).catch((e) =>{
+                    _this.changeQueryLoading(false);
+                })
             },
             handleTableChange(pagination, filters, sorter) {
                 //表格变动-页码跳转/排序/筛选

@@ -314,23 +314,6 @@
                     }
                 })
             },
-            dealQueryGridData(queryFieldList,pagination,sorter) {    //带查询条件 检索数据列表
-                var _this = this ;
-                _this.changeQueryLoading(true);
-                SmartFormDefinitionApi.getDataPage(queryFieldList,pagination,sorter).then((res) => {
-                    if (res) {
-                        this.tableConf.data = res.gridList;
-                        if(res.paginationBean){ //总个数
-                            this.tableConf.pagination.total = res.paginationBean.total ;
-                        }
-                        //清空 已勾选
-                        _this.tableCheckIdList = [] ;
-                    }
-                    _this.changeQueryLoading(false);
-                }).catch((e) =>{
-                    _this.changeQueryLoading(false);
-                })
-            },
             dealBatchDeleteByIds() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
@@ -354,11 +337,24 @@
                     }
                 })
             },
-            handleSearchFormQuery(e,values) {
+            handleSearchFormQuery(e,values) {   //带查询条件 检索数据列表
                 var _this = this ;
                 //取得 bean 形式 的查询条件数组
                 var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
-                _this.dealQueryGridData(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter);
+                _this.changeQueryLoading(true);
+                SmartFormDefinitionApi.getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter).then((res) => {
+                    if (res) {
+                        this.tableConf.data = res.gridList;
+                        if(res.paginationBean){ //总个数
+                            this.tableConf.pagination.total = res.paginationBean.total ;
+                        }
+                        //清空 已勾选
+                        _this.tableCheckIdList = [] ;
+                    }
+                    _this.changeQueryLoading(false);
+                }).catch((e) =>{
+                    _this.changeQueryLoading(false);
+                })
             },
             handleCreateByForm() {     //新增按钮-点击
                 var _this = this;

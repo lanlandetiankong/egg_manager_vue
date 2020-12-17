@@ -294,7 +294,7 @@
             dealPageQuery(queryFieldList,pagination,sorter) {    //带查询条件 检索公告列表
                 var _this = this ;
                 _this.changeQueryLoading(true);
-                AnnouncementAllListApi.getPageQuery(queryFieldList,pagination,sorter).then((res) => {
+                AnnouncementAllListApi.getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.paginationBean){ //总个数

@@ -6,7 +6,7 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const SmartFormTypeDefinitionApi = {
-    getDataPage(queryArr,pagination,sorter) {
+    getPageQuery(queryArr,pagination,sorter) {
         var sortObj = {}
         if(sorter){
             sorter.field = sorter.order ;

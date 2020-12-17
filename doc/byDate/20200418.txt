@@ -21,4 +21,9 @@ lockById
 batchEnsureByIds
 
 handleSearchFormQuery
-dealQueryGridData
+
+
+getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter)
+
+
+getPageQuery(queryFieldList,pagination,sorter)
