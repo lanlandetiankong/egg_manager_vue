@@ -6,12 +6,6 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const LoginMainApi = {
-    submitLoginForm(loginForm) {
-        const form = {
-
-        }
-        return axios.post('')
-    },
     doGetAllMenu() {    //取得用户 能访问菜单列表
         return axios.post('/define/defineMenu/user/gainGrantTree').then(res => res.data) ;
     }

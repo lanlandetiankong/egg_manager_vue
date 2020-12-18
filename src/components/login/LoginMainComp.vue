@@ -175,7 +175,6 @@
                 var verifyFlag = this.dealVerifySubmit() ;
                 if(verifyFlag == true){
                     LoginMainCompApi.submitLoginFormByAccount(this.loginForm).then((res) => {
-
                         if(res.success){
                             this.$emit('login-form-submit',e,this.loginForm,res);
                         }
