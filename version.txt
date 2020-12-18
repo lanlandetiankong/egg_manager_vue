@@ -1,1 +1,1 @@
-Current Version : 2.0.5-SNAPSHOT
+Current Version : 2.0.6-SNAPSHOT
