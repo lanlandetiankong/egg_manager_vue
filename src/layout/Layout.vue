@@ -70,7 +70,7 @@
             return {
                 routerDefineObj:{   //路径定义对象,请勿修改！(请保持与外部$router一致)
                     memberLoginPage:"/member/login",
-                    userCenterView:"/index/userZone/center"
+                    userCenterView:"/index/regular/userZone/center"
                 },
                 siderbar:{
                     conf:{

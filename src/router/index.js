@@ -7,12 +7,12 @@ const _import = require('~Router/_import_' + process.env.NODE_ENV)
 //index的基本布局
 import Layout from '@/layout/Layout'
 
-import EmployeeRouter from './main/employee/index'
-import PermissionRouter from './main/permission/index'
-import UserZoneRouter from './main/userZone/index'
-import AnnouncementRouter from './main/announcement/index'
-import FormsRouter from './main/forms/index'
+import EmployeeRouter from './main/em/employee/index'
+import PermissionRouter from './main/em/permission/index'
+import AnnouncementRouter from './main/em/announcement/index'
+import FormsRouter from './main/em/forms/index'
 
+import UserZoneRouter from './main/regular/userZone/index'
 
 //登录、注册
 import MemberRouter from './member/index.js'
@@ -36,7 +36,7 @@ export const constantRouterMap = [
         children:[
             {
                 path:'',
-                component:_import('index/dashboard/DashBoardPage'),
+                component:_import('index/regular/dashboard/DashBoardPage'),
                 name:'dashboard',
                 meta:{
                     title:'首页',icon:"dashboard",keepAliveFlag:true,
@@ -67,7 +67,6 @@ const vueRouter = new VueRouter({
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRouterMap,
     beforeRouteLeave:(to, from, next) =>{
-
         next();
     }
 })

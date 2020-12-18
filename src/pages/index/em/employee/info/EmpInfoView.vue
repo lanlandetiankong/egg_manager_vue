@@ -187,7 +187,7 @@
 <script>
     import jquery from 'jquery';
 
-    import {EmpInfoApi} from './EmpInfoApi'
+    import {EmpInfoApi} from './empInfoApi'
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
     import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'

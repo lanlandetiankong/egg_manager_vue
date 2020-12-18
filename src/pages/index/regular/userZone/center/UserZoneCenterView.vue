@@ -98,7 +98,7 @@
 
 <script>
     import constantParams from '~Config/constantParams' ;
-    import {UserZoneCenterApi} from './UserZoneCenterApi.js'
+    import {UserZoneCenterApi} from './userZoneCenterApi.js'
     import {userTokenFunc} from '~Utils/commonUtil.js'
 
 

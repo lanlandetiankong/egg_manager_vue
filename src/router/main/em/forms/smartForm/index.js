@@ -4,7 +4,7 @@ const parentRouterCompName = "SmartFormPage" ;
 
 const SmartFormRouter = {
     path:'smartForm',
-    component:_import('index/forms/smartForm/SmartFormPage'),
+    component:_import('index/em/forms/smartForm/SmartFormPage'),
     name:'smartForm',
     meta:{
         selfCompName:'SmartFormPage'
@@ -12,7 +12,7 @@ const SmartFormRouter = {
     children:[
         {
             path:'formDefinition',
-            component:_import('index/forms/smartForm/formDefinition/SmartFormDefinitionView'),
+            component:_import('index/em/forms/smartForm/formDefinition/SmartFormDefinitionView'),
             name:'formDefinition',
             meta:{
                 title:'表单定义',icon:"user",keepAliveFlag:true,
@@ -22,7 +22,7 @@ const SmartFormRouter = {
         },
         {
             path:'formTypeDefinition',
-            component:_import('index/forms/smartForm/formTypeDefinition/SmartFormTypeDefinitionView'),
+            component:_import('index/em/forms/smartForm/formTypeDefinition/SmartFormTypeDefinitionView'),
             name:'formTypeDefinition',
             meta:{
                 title:'表单类型',icon:"user",keepAliveFlag:true,

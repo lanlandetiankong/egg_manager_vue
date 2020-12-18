@@ -103,7 +103,7 @@
 
 <script>
     import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
-    import {EmpJobApi} from './EmpJobApi'
+    import {EmpJobApi} from './empJobApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
