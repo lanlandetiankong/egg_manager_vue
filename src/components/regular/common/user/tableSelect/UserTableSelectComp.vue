@@ -44,7 +44,7 @@
     import {UserTableSelectCompApi} from './userTableSelectCompApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
-
+    import {QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import QueryFormComp from '~Components/regular/query/QueryFormComp'
     import SearchFilterBtnComp from '~Components/regular/common/search/SearchFilterBtnComp'
 

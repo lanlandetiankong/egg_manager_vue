@@ -82,7 +82,7 @@ export const EggCommonMixin = {
                 return str;
             }
         },
-        mixin_refreshChildViewCaches(self,pageCompName){
+        mixin_refreshChildViewCaches(self,pageCompName){    //使用在 *Page.vue，用于优化页面组件缓存
             var _this = self;
             var cachedViewMap = this.$store.state.tagsView.cachedViews ;
             if(typeof cachedViewMap != "undefined" && cachedViewMap != null && cachedViewMap.size > 0){
@@ -110,6 +110,15 @@ export const EggCommonMixin = {
             refName = (refName) ? refName : ConstantObj.queryFormCompRef ;
             self.$refs[refName].triggerQuery();
         },
+        mixin_deepClone(obj) {  //对象深复制
+            if(typeof obj == "undefined" || obj == null){
+                return {};
+            }
+            //返回 深复制后的对象
+            var _obj = JSON.stringify(obj),
+                objClone = JSON.parse(_obj);
+            return objClone;
+        }
     }
 
 
