@@ -3,6 +3,7 @@
         <div>
             <!-- 搜索区域 -->
             <query-form-comp
+                :ref="ConstantObj.queryFormCompRef"
                 :showAble="searchConf.showAble"
                 :loadingFlag="searchConf.loadingFlag"
                 :formItemConf="searchConf.formItemConf"
@@ -140,7 +141,7 @@
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {PermissionRoleManagerApi} from './permissionRoleManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
-    import {FormItemTypeEnum} from "~Components/query/form_enum";
+    import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import DefineRoleCreateFormComp from '~Components/index/define/permission/role/DefineRoleCreateFormComp';
@@ -172,6 +173,7 @@
                 }
             };
             return {
+                ConstantObj,
                 fieldInfoConf:fieldInfoConfObj,
                 binding:{
                     roleTypes:[]

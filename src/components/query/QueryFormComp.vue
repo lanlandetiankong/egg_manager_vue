@@ -78,7 +78,7 @@
 </template>
 
 <script>
-    import {FormItemTypeEnum} from './form_enum.js';
+    import {FormItemTypeEnum,ConstantObj} from '~Components/constant_define';
     export default {
         name: "QueryFormComp",
         props:{

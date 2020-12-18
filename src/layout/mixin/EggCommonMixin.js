@@ -1,4 +1,5 @@
 import { mapGetters } from 'vuex' ;
+import {ConstantObj} from "~Components/constant_define";
 
 export const EggCommonMixin = {
     data(){
@@ -106,7 +107,7 @@ export const EggCommonMixin = {
             }
         },
         mixin_invokeQuery(self,refName){
-            refName = (refName) ? refName : 'queryFormComp' ;
+            refName = (refName) ? refName : ConstantObj.queryFormCompRef ;
             self.$refs[refName].triggerQuery();
         },
     }

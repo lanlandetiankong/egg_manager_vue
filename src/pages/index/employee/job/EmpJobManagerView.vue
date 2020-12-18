@@ -3,6 +3,7 @@
         <div>
             <!-- 搜索区域 -->
             <query-form-comp
+                :ref="ConstantObj.queryFormCompRef"
                 :showAble="searchConf.showAble"
                 :loadingFlag="searchConf.loadingFlag"
                 :formItemConf="searchConf.formItemConf"
@@ -105,7 +106,7 @@
     import {EmpJobApi} from './EmpJobApi'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
-    import {FormItemTypeEnum} from "~Components/query/form_enum";
+    import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import EmployeeJobCreateFormComp from '~Components/index/user/employee/job/EmployeeJobCreateFormComp'
@@ -139,6 +140,7 @@
                 }
             };
             return {
+                ConstantObj,
                 fieldInfoConf:fieldInfoConfObj,
                 binding:{
                     types:[]

@@ -6,3 +6,7 @@ export const FormItemTypeEnum = {
     TreeSelect:'TreeSelect'
 
 }
+
+export const ConstantObj = {
+    queryFormCompRef:'queryFormCompRef'
+}

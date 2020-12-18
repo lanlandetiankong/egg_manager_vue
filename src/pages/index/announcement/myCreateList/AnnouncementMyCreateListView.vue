@@ -3,6 +3,7 @@
         <div>
             <!-- 搜索区域 -->
             <query-form-comp
+                :ref="ConstantObj.queryFormCompRef"
                 :showAble="searchConf.showAble"
                 :loadingFlag="searchConf.loadingFlag"
                 :formItemConf="searchConf.formItemConf"
@@ -79,7 +80,7 @@
     import {AnnouncementMyCreateListApi} from './announcementMyCreateListApi'
     import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
-    import {FormItemTypeEnum} from "~Components/query/form_enum";
+    import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
     import QueryFormComp from '~Components/query/QueryFormComp'
     import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
 
@@ -116,6 +117,7 @@
                 }
             };
             return {
+                ConstantObj,
                 fieldInfoConf:fieldInfoConfObj,
                 binding:{
                     announcementTagList:[]

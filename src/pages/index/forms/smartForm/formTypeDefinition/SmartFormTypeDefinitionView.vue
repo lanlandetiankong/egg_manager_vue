@@ -3,6 +3,7 @@
         <div>
             <!-- 搜索区域 -->
             <query-form-comp
+                :ref="ConstantObj.queryFormCompRef"
                 :showAble="searchConf.showAble"
                 :loadingFlag="searchConf.loadingFlag"
                 :formItemConf="searchConf.formItemConf"
@@ -108,7 +109,7 @@
     import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
     import {SmartFormTypeDefinitionApi} from './smartFormTypeDefinitionApi.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
-    import {FormItemTypeEnum} from "~Components/query/form_enum";
+    import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/query/QueryFormComp'
     import SmartFormTypeDefinitionCreateFormComp from "@/components/index/forms/smartForm/formTypeDefinition/SmartFormTypeDefinitionCreateFormComp";
@@ -140,6 +141,7 @@
                 }
             };
             return {
+                ConstantObj,
                 fieldInfoConf:fieldInfoConfObj,
                 searchConf:{
                     showAble:false,
