@@ -86,7 +86,7 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ATextarea from "ant-design-vue/es/input/TextArea";
 
-    import {MenuCreateFormApi} from './moduleManagerCompsApi'
+    import {MenuCreateFormApi} from './menuManagerCompsApi'
 
     export default {
         name: "DefineMenuCreateFormComp",

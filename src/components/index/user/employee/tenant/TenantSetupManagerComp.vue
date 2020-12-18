@@ -25,7 +25,7 @@
     import ATextarea from "ant-design-vue/es/input/TextArea";
     import UserTableSelectComp from "~Components/common/user/tableSelect/UserTableSelectComp.vue";
     export default {
-        name: "DefineTenantCreateFormComp",
+        name: "TenantSetupManagerComp",
         components: {ATextarea, AFormItem,UserTableSelectComp},
         props:{
             visible:Boolean,

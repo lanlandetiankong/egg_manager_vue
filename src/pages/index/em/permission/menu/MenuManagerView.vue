@@ -135,7 +135,7 @@
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/query/QueryFormComp'
-    import DefineMenuCreateFormComp from "~Components/index/module/manager/DefineMenuCreateFormComp";
+    import DefineMenuCreateFormComp from "~Components/index/define/permission/menu/DefineMenuCreateFormComp";
     import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
     import ExcelTempletUploadComp from '~Components/index/common/excel/ExcelTempletUploadComp';
     export default {

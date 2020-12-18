@@ -113,8 +113,8 @@
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/query/QueryFormComp'
-    import DefineTenantCreateFormComp from '~Components/index/organization/tenant/DefineTenantCreateFormComp'
-    import TenantSetupManagerComp from '~Components/index/organization/tenant/TenantSetupManagerComp'
+    import DefineTenantCreateFormComp from '~Components/index/user/employee/tenant/DefineTenantCreateFormComp'
+    import TenantSetupManagerComp from '~Components/index/user/employee/tenant/TenantSetupManagerComp'
     import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
 
     export default {
