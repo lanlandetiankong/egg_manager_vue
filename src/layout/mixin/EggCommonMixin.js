@@ -64,7 +64,7 @@ export const EggCommonMixin = {
                 return val ;
             }
         },
-        mixin_defaultIfNull(val,defval){   //当blank时取默认值
+        mixin_defaultIfNull(val,defval){   //当null时取默认值
             if(typeof val == "undefined" || val == null){
                 return defval ;
             }   else {

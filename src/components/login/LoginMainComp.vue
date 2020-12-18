@@ -86,6 +86,7 @@
                                       icon="login"
                                       type="primary"
                                       html-type="submit"
+                                      :loading="loadingFlag"
                                       :disabled="hasLoginFormError()"
                             >
                                 {{$t('langMap.button.member.login')}}
@@ -110,14 +111,16 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
+    import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
+    import {LoginMainCompApi} from './_LoginMainCompApi'
 
     import Verify from 'vue2-verify'
-    import {LoginMainCompApi} from './_LoginMainCompApi'
     import I18nChangeComp from "~Components/i18n/I18nChangeComp";
 
     export default {
         name: "LoginMainComp",
         components: {I18nChangeComp, ACol, ARow, AFormItem,Verify},
+        mixins:[EggCommonMixin],
         props:{
             othersRouters:{
                 type:Object,
@@ -135,6 +138,7 @@
         },
         data() {
             return {
+                loadingFlag:false,
                 loginForm: {
                     userAccount: 'SuperRoot',
                     password: '123456'
@@ -159,6 +163,9 @@
             }
         },
         methods: {
+            changeLoading(loadingFlag){   //修改[axios]是否在 加载状态中
+                this.loadingFlag = this.mixin_defaultIfNull(loadingFlag,false);
+            },
             dealTriggerVerify(){    //触发 Verify 的验证事件
                 this.$refs.loginVerifyRef.$refs.instance.checkCode() ;
             },
@@ -171,13 +178,18 @@
                 return _this.verifyConf.more.success ;
             },
             handleLoginSubmit(e) {
+                var _this = this ;
                 e.preventDefault(); //拦截form提交的默认事件
                 var verifyFlag = this.dealVerifySubmit() ;
                 if(verifyFlag == true){
+                    _this.changeLoading(true);
                     LoginMainCompApi.submitLoginFormByAccount(this.loginForm).then((res) => {
                         if(res.success){
                             this.$emit('login-form-submit',e,this.loginForm,res);
                         }
+                        _this.changeLoading(false);
+                    }).catch((e) =>{
+                        _this.changeLoading(false);
                     });
                 }
             },
