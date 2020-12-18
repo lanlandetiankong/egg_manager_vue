@@ -7,12 +7,12 @@ import qs from 'qs'
 
 export const PermissionCommonApis = {
     getAllPermissionTypes() {
-        return axios.post('/commonApi/permission/getAllPermissionTypeEnumList').then((res) => res.data) ;
+        return axios.post('/emCtl/commonApi/permission/getAllPermissionTypeEnumList').then((res) => res.data) ;
     },
     getAllRoleTypes() {
-        return axios.post('/commonApi/permission/getAllRoleTypeEnumList').then((res) => res.data) ;
+        return axios.post('/emCtl/commonApi/permission/getAllRoleTypeEnumList').then((res) => res.data) ;
     },
     getAllPermissionCodePrefixs() {
-        return axios.post('/commonApi/permission/getAllPermissionCodePrefixEnumList').then((res) => res.data) ;
+        return axios.post('/emCtl/commonApi/permission/getAllPermissionCodePrefixEnumList').then((res) => res.data) ;
     },
 }

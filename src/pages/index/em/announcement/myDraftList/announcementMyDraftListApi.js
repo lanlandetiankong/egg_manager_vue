@@ -16,7 +16,7 @@ export const AnnouncementMyDraftListApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有公告标签信息
-        return axios.post('/announcementTag/gainEnumSelect',qs.stringify(obj)).then(res => res.data);
+        return axios.post('/emCtl/announcementTag/gainEnumSelect',qs.stringify(obj)).then(res => res.data);
     },
     getPageQuery(queryArr,pagination,sorter) {   //取得 所有公告
         var sortObj = {}
@@ -30,31 +30,31 @@ export const AnnouncementMyDraftListApi = {
             onlySelf:true
         }
         //查询所有公告信息
-        return axios.post('/announcementDraft/queryDtoPage',qs.stringify(obj)).then(res => res.data);
+        return axios.post('/emCtl/announcementDraft/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
     batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
-        return axios.post("/announcementDraft/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/emCtl/announcementDraft/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     deleteById(delId) {  //删除
         var obj = {
             delId:delId
         }
-        return axios.post("/announcementDraft/deleteById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/emCtl/announcementDraft/deleteById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     publishOneById(publishId) {  //草稿转发布
         var obj = {
             draftId:publishId
         }
-        return axios.post("/announcementDraft/publishDraft",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/emCtl/announcementDraft/publishDraft",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     batchPublishByIds(ids) {  //批量发布
         var obj = {
             draftIds:ids
         }
-        return axios.post("/announcementDraft/batchPublishDraft",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/emCtl/announcementDraft/batchPublishDraft",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
 
 }

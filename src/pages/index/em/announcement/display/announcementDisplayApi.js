@@ -10,7 +10,7 @@ export const AnnouncementDisplayApi = {
         var params = {
             announcementId:announcementId
         }
-        return axios.post("/announcement/queryOneById",qs.stringify(params)).then(res => res.data);
+        return axios.post("/emCtl/announcement/queryOneById",qs.stringify(params)).then(res => res.data);
     }
 
 }

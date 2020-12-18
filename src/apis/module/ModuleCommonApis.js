@@ -7,10 +7,10 @@ import qs from 'qs'
 
 export const ModuleCommonApis = {
     getAllModuleTypes() {   //取得 所有 菜单类型 枚举
-        return axios.post('/commonApi/module/getAllModuleTypeEnumList').then((res) => res.data) ;
+        return axios.post('/emCtl/commonApi/module/getAllModuleTypeEnumList').then((res) => res.data) ;
     },
     getAllMenuUrlJumpTypes() {     //取得 所有 菜单 url跳转类型 枚举
-        return axios.post('/commonApi/module/getAllMenuUrlJumpTypeEnumList').then((res) => res.data) ;
+        return axios.post('/emCtl/commonApi/module/getAllMenuUrlJumpTypeEnumList').then((res) => res.data) ;
     }
 
 

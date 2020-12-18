@@ -17,31 +17,31 @@ export const AnnouncementTagApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有公告标签信息
-        return axios.post('/announcementTag/queryDtoPage',qs.stringify(obj)).then(res => res.data);
+        return axios.post('/emCtl/announcementTag/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
     getItemById(announcementTagId){  //根据公告标签id查询公告标签信息
         var params = {
             announcementTagId:announcementTagId
         }
-        return axios.post("/announcementTag/queryOneById",qs.stringify(params)).then(res => res.data) ;
+        return axios.post("/emCtl/announcementTag/queryOneById",qs.stringify(params)).then(res => res.data) ;
     },
     createByForm(formObj) {     //新增公告标签
-        return axios.post("/announcementTag/createByForm",qs.stringify(formObj)).then(res => res.data);;
+        return axios.post("/emCtl/announcementTag/createByForm",qs.stringify(formObj)).then(res => res.data);;
     },
     updateByForm(formObj) {  //更新公告标签
-        return axios.post("/announcementTag/updateByForm",qs.stringify(formObj)).then(res => res.data) ;
+        return axios.post("/emCtl/announcementTag/updateByForm",qs.stringify(formObj)).then(res => res.data) ;
     },
     batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
-        return axios.post("/announcementTag/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/emCtl/announcementTag/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     deleteById(delId) {  //删除
         var obj = {
             delId:delId
         }
-        return axios.post("/announcementTag/deleteById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/emCtl/announcementTag/deleteById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     }
 }
 

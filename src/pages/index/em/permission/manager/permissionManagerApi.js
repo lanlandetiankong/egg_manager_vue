@@ -17,13 +17,13 @@ export const PermissionManagerApi = {
             sortObj:JSON.stringify(sortObj),
         }
         //查询所有权限信息
-        return axios.post('/define/definePermission/queryDtoPage',qs.stringify(obj)).then(res => res.data);
+        return axios.post('/emCtl/define/definePermission/queryDtoPage',qs.stringify(obj)).then(res => res.data);
     },
     getItemById(definePermissionId){  //根据权限id查询权限信息
         var params = {
             definePermissionId:definePermissionId
         }
-        return axios.post("/define/definePermission/queryOneById",qs.stringify(params)).then(res => res.data) ;
+        return axios.post("/emCtl/define/definePermission/queryOneById",qs.stringify(params)).then(res => res.data) ;
     },
     createByForm(formObj) {     //新增权限
         if(formObj){
@@ -31,27 +31,27 @@ export const PermissionManagerApi = {
                 formObj.code = formObj.codePrefix[0] + formObj.code ;
             }
         }
-        return axios.post("/define/definePermission/createByForm",qs.stringify(formObj)).then(res => res.data);;
+        return axios.post("/emCtl/define/definePermission/createByForm",qs.stringify(formObj)).then(res => res.data);;
     },
     updateByForm(formObj) {  //更新权限
-        return axios.post("/define/definePermission/updateByForm",qs.stringify(formObj)).then(res => res.data) ;
+        return axios.post("/emCtl/define/definePermission/updateByForm",qs.stringify(formObj)).then(res => res.data) ;
     },
     batchDeleteByIds(ids) {  //批量删除
         var obj = {
             delIds:ids
         }
-        return axios.post("/define/definePermission/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/emCtl/define/definePermission/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     deleteById(delId) {  //删除
         var obj = {
             delId:delId
         }
-        return axios.post("/define/definePermission/deleteById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/emCtl/define/definePermission/deleteById",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     batchEnsureByIds(ids) {  //批量启用
         var obj = {
             ensureIds:ids
         }
-        return axios.post("/define/definePermission/batchEnsureByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/emCtl/define/definePermission/batchEnsureByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
 }

@@ -7,6 +7,6 @@ import qs from 'qs'
 
 export const BindingCommonApis = {
     getSwitchEnumList() {
-        return axios.post('/commonApi/binding/getSwitchEnumList').then((res) => res.data) ;
+        return axios.post('/emCtl/commonApi/binding/getSwitchEnumList').then((res) => res.data) ;
     }
 }

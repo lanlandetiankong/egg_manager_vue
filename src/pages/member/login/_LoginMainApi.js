@@ -7,6 +7,6 @@ import qs from 'qs'
 
 export const LoginMainApi = {
     doGetAllMenu() {    //取得用户 能访问菜单列表
-        return axios.post('/define/defineMenu/user/gainGrantTree').then(res => res.data) ;
+        return axios.post('/emCtl/define/defineMenu/user/gainGrantTree').then(res => res.data) ;
     }
 }
