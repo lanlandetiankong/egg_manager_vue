@@ -128,16 +128,16 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
-    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
+    import {QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {MenuManagerApi} from './menuManagerApi.js'
     import {ModuleCommonApis} from '~Apis/module/ModuleCommonApis.js'
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
-    import QueryFormComp from '~Components/query/QueryFormComp'
+    import QueryFormComp from '~Components/regular/query/QueryFormComp'
     import DefineMenuCreateFormComp from "~Components/index/define/permission/menu/DefineMenuCreateFormComp";
-    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
-    import ExcelTempletUploadComp from '~Components/index/common/excel/ExcelTempletUploadComp';
+    import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
+    import ExcelTempletUploadComp from '~Components/regular/common/excel/ExcelTempletUploadComp';
     export default {
         name: "MenuManagerView",
         components: {QueryFormComp,DefineMenuCreateFormComp,RowDetailDrawerComp,ExcelTempletUploadComp, ACol, AFormItem},

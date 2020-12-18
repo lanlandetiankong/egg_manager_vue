@@ -78,11 +78,11 @@
 </template>
 <script>
     import {AnnouncementMyCreateListApi} from './announcementMyCreateListApi'
-    import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
+    import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
-    import QueryFormComp from '~Components/query/QueryFormComp'
-    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
+    import QueryFormComp from '~Components/regular/query/QueryFormComp'
+    import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
 
     export default {
         name: "AnnouncementAllListView",

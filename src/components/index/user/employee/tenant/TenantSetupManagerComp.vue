@@ -23,7 +23,7 @@
 <script>
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ATextarea from "ant-design-vue/es/input/TextArea";
-    import UserTableSelectComp from "~Components/common/user/tableSelect/UserTableSelectComp.vue";
+    import UserTableSelectComp from "~Components/regular/common/user/tableSelect/UserTableSelectComp.vue";
     export default {
         name: "TenantSetupManagerComp",
         components: {ATextarea, AFormItem,UserTableSelectComp},

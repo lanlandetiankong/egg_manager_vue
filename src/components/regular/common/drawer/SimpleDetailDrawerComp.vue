@@ -34,7 +34,7 @@
     </div>
 </template>
 <script>
-    import {DrawerFieldTypeEnum,CommonDateFormatTypeEnum} from '~Components/index/common/drawer/drawer_define.js'
+    import {DrawerFieldTypeEnum,CommonDateFormatTypeEnum} from '~Components/regular/common/drawer/drawer_define.js'
 
     import BeeUtil from '~Assets/js/util/bee/BeeUtil.js'
     export default {

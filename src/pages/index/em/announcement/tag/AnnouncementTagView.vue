@@ -99,12 +99,12 @@
 <script>
     import {AnnouncementTagApi} from './announcementTagApi.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
-    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
+    import {QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
-    import QueryFormComp from '~Components/query/QueryFormComp'
+    import QueryFormComp from '~Components/regular/query/QueryFormComp'
     import AnnouncementTagCreateFormComp from "~Components/index/announcement/tag/AnnouncementTagCreateFormComp";
-    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
     export default {
         name: "AnnouncementTagView",
         components: {QueryFormComp,AnnouncementTagCreateFormComp,RowDetailDrawerComp},

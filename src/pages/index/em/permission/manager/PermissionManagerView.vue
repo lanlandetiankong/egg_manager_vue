@@ -124,12 +124,12 @@
     import {PermissionManagerApi} from './permissionManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
     import {BindingCommonApis} from '~Apis/common/CommonApis.js'
-    import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
+    import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
-    import QueryFormComp from '~Components/query/QueryFormComp'
-    import DefinePermissionCreateFormComp from "@/components/index/define/permission/manager/DefinePermissionCreateFormComp";
-    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
+    import QueryFormComp from '~Components/regular/query/QueryFormComp'
+    import DefinePermissionCreateFormComp from "~Components/index/define/permission/manager/DefinePermissionCreateFormComp";
+    import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
     export default {
         name: "PermissionManagerView",
         components: {QueryFormComp,DefinePermissionCreateFormComp,RowDetailDrawerComp, ACol, AFormItem},

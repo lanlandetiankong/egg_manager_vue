@@ -45,8 +45,8 @@
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
-    import QueryFormComp from '~Components/query/QueryFormComp'
-    import SearchFilterBtnComp from '~Components/common/search/SearchFilterBtnComp'
+    import QueryFormComp from '~Components/regular/query/QueryFormComp'
+    import SearchFilterBtnComp from '~Components/regular/common/search/SearchFilterBtnComp'
 
     export default {
         name: 'UserTableSelectComp',

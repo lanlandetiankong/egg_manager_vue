@@ -137,17 +137,17 @@
 </template>
 
 <script>
-    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
+    import {QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {PermissionRoleManagerApi} from './permissionRoleManagerApi.js'
     import {PermissionCommonApis} from '~Apis/permission/PermissionCommonApis.js'
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
-    import QueryFormComp from '~Components/query/QueryFormComp'
+    import QueryFormComp from '~Components/regular/query/QueryFormComp'
     import DefineRoleCreateFormComp from '~Components/index/define/permission/role/DefineRoleCreateFormComp';
     import RoleGrantPermissionFormComp from '~Components/index/define/permission/role/RoleGrantPermissionFormComp';
     import RoleGrantMenusFormComp from '~Components/index/define/permission/role/RoleGrantMenusFormComp';
-    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
     export default {
         name: "PermissionRoleManagerView",
         components: {QueryFormComp,RoleGrantPermissionFormComp, DefineRoleCreateFormComp,RowDetailDrawerComp,RoleGrantMenusFormComp},

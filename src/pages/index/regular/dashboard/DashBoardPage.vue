@@ -24,7 +24,7 @@
 <script>
     import {DashBoardApi} from './dashBoardApi.js'
 
-    import AnnouncementListComp from '~Components/index/dashboard/announcement/AnnouncementListComp'
+    import AnnouncementListComp from '~Components/regular/dashboard/announcement/AnnouncementListComp'
 
     export default {
         name: "DashBoardPage",

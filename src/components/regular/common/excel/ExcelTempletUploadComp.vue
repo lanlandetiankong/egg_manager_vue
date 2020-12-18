@@ -19,13 +19,7 @@
                     @change="handleUploadChange"
                 >
                     <a-button :disabled="fileList.length >= limitSize"> <a-icon type="upload" />
-                        <template v-if="limitSize == limitMinSize">
-                            {{$t('langMap.commons.valueMap.uploader.popover.maximumNumberOfFiles',limitSize)}}
-                        </template>
-                        <template v-else>
-                            {{$t('langMap.commons.valueMap.uploader.popover.rangeSizeOfFiles',limitMinSize,limitSize)}}
-                        </template>
-
+                        {{$t('langMap.commons.valueMap.uploader.popover.maximumNumberOfFiles',limitSize)}}
                     </a-button>
                 </a-upload>
                 <a-popover :title="$t('langMap.commons.valueMap.uploader.popover.prompt')" trigger="hover" placement="leftBottom">
@@ -37,7 +31,6 @@
                         @click="handleUpload"
                         :disabled="fileList.length === 0 || (fileList.length - uploadedFileList.length < 1)"
                         :loading="uploading"
-                        v-show="false"
                         style="margin-top: 16px"
                     >
                         {{uploading ? $t('langMap.commons.valueMap.uploader.status.uploading') : $t('langMap.commons.valueMap.uploader.status.confirmUpload') }}
@@ -49,18 +42,15 @@
 </template>
 <script>
     import BeeUtil from '~Assets/js/util/bee/BeeUtil.js' ;
-    import {jsObjectToFormData} from '~Components/_util/util.js' ;
+    import {jsObjectToFormData} from '~Assets/js/util/baseUtil.js' ;
+    import {CommonExcelCompApi} from './CommonExcelCompApi.js'
 
     export default {
-        name: "ExcelImportDataComp",
+        name: "ExcelTempletUploadComp",
         props:{
             visible:Boolean,
             modalCompTitle:String,
             limitSize:{
-                type:Number,
-                default:1
-            },
-            limitMinSize:{
                 type:Number,
                 default:1
             },
@@ -108,25 +98,36 @@
                 return false;
             },
             handleUpload() {    //文件上传
-                //Nothing
-            },
-            handleUploadChange(e){
-                //Nothing
-                //console.log("change",e);
-            },
-            handleModalSubmit(e){
                 var _this = this ;
                 const { fileList } = this;
-                if(fileList.length < _this.limitMinSize){
-                    _this.$message.warning(_this.$t('langMap.commons.valueMap.uploader.popover.atLeastNumberOfFiles',_this.limitMinSize));
-                    return false ;
-                }
                 var formData = new FormData();
                 fileList.forEach(file => {
                     formData.append('files', file);
                 });
                 formData = jsObjectToFormData(this.uploadConf.processData,formData);
-                this.$emit("modalSubmit",formData,this.uploadConf.processData) ;
+                this.uploading = true;
+                CommonExcelCompApi.uploadExcelModels(formData,this.uploadConf.processData).then((res) => {
+                    if(res.success){
+                        var fileUploaderBeanList = [...res.fileUploaderBeanList] ;
+                        if(typeof fileUploaderBeanList != "undefined" && fileUploaderBeanList != null){
+
+                            fileUploaderBeanList = [...fileUploaderBeanList,..._this.fileList] ;
+                            //确保文件列表是最新的
+                            fileUploaderBeanList = fileUploaderBeanList.filter(file => {
+                                return file instanceof File == false;
+                            });
+                            _this.fileList = fileUploaderBeanList;
+                        }
+                        _this.uploadedFileList = _this.fileList ;
+                    }
+                    this.uploading = false;
+                })
+            },
+            handleUploadChange(e){
+                //console.log("change",e);
+            },
+            handleModalSubmit(e){
+                this.$emit("modalSubmit",e,this.uploadedFileList,this.uploadConf.processData) ;
             }
         },
         watch:{

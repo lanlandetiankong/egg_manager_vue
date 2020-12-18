@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-    import SimpleDetailDrawerComp from '~Components/index/common/drawer/SimpleDetailDrawerComp';
+    import SimpleDetailDrawerComp from '~Components/regular/common/drawer/SimpleDetailDrawerComp';
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     export default {
         name: "RowDetailDrawerComp",

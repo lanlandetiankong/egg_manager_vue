@@ -26,7 +26,7 @@
 <script>
     import {LayoutApi} from '~Layout/_LayoutApi.js' ;
 
-    import SubMenuComp from '~Components/menu/SubMenuComp' ;
+    import SubMenuComp from '~Components/regular/layout/menu/SubMenuComp' ;
     export default {
         name: "SiderBar",
         components: {

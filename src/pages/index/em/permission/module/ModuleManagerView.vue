@@ -107,15 +107,15 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
-    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
+    import {QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import {ModuleManagerApi} from './moduleManagerApi.js'
     import {ModuleCommonApis} from '~Apis/module/ModuleCommonApis.js'
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
-    import QueryFormComp from '~Components/query/QueryFormComp'
+    import QueryFormComp from '~Components/regular/query/QueryFormComp'
     import DefineModuleCreateFormComp from "~Components/index/define/permission/module/DefineModuleCreateFormComp";
-    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
 
     export default {
         name: "ModuleManagerView",

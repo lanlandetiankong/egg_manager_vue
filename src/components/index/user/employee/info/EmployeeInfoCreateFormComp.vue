@@ -79,9 +79,9 @@
     </div>
 </template>
 <script>
-    import {dealNumberToStr} from '~Components/_util/util';
+    import {dealNumberToStr} from '~Assets/js/util/baseUtil';
     import AFormItem from "ant-design-vue/es/form/FormItem";
-    import HeadImgUpload from "~Components/common/img/HeadImgUpload";
+    import HeadImgUpload from "~Components/regular/common/img/HeadImgUpload";
     export default {
         name: "EmployeeInfoCreateFormComp",
         components: {HeadImgUpload, AFormItem},

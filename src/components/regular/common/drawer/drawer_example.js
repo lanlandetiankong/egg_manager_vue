@@ -7,7 +7,7 @@ var employeeInfoDetailKeyMap = new Map();
  *
  */
 const defaultDateFormat = "yyyy-MM-dd hh:mm:ss" ;
-import {DrawerFieldTypeEnum} from '~Components/index/common/drawer/drawer_define.js'
+import {DrawerFieldTypeEnum} from '~Components/regular/common/drawer/drawer_define.js'
 
 export  const DrawerFieldConfExample = {
     undefinedKeyName:"未定义属性",

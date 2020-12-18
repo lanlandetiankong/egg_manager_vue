@@ -107,15 +107,15 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ACol from "ant-design-vue/es/grid/Col";
 
-    import {QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
+    import {QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
     import {TenantManagerApi} from './tenantManagerApi.js'
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
-    import QueryFormComp from '~Components/query/QueryFormComp'
+    import QueryFormComp from '~Components/regular/query/QueryFormComp'
     import DefineTenantCreateFormComp from '~Components/index/user/employee/tenant/DefineTenantCreateFormComp'
     import TenantSetupManagerComp from '~Components/index/user/employee/tenant/TenantSetupManagerComp'
-    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
+    import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
 
     export default {
         name: "TenantManagerView",

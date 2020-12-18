@@ -189,17 +189,17 @@
 
     import {EmpInfoApi} from './empInfoApi'
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
-    import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/index/common/drawer/drawer_define.js'
+    import {DrawerFieldTypeEnum,QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import {UserCommonApis} from '~Apis/user/UserCommonApis.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
-    import QueryFormComp from '~Components/query/QueryFormComp'
+    import QueryFormComp from '~Components/regular/query/QueryFormComp'
 
     import EmployeeInfoCreateFormComp from '~Components/index/user/employee/info/EmployeeInfoCreateFormComp'
     import UserGrantRoleFormComp from '~Components/index/user/employee/info/UserGrantRoleFormComp';
     import UserGrantJobFormComp from '~Components/index/user/employee/info/UserGrantJobFormComp';
-    import RowDetailDrawerComp from '~Components/index/common/drawer/RowDetailDrawerComp';
-    import ExcelImportDataComp from '~Components/index/common/excel/ExcelImportDataComp';
+    import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
+    import ExcelImportDataComp from '~Components/regular/common/excel/ExcelImportDataComp';
 
     import ACol from "ant-design-vue/es/grid/Col";
     import AFormItem from "ant-design-vue/es/form/FormItem";
