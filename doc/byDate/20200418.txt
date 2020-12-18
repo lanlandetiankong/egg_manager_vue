@@ -27,3 +27,10 @@ getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter)
 
 
 getPageQuery(queryFieldList,pagination,sorter)
+
+
+:ref="ConstantObj.queryFormCompRef"
+
+
+
+                ConstantObj,
