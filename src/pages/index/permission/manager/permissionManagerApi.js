@@ -40,7 +40,7 @@ export const PermissionManagerApi = {
         var obj = {
             delIds:ids
         }
-        return axios.post("/define/definePermission/batchDelDefinePermissionByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
+        return axios.post("/define/definePermission/batchDeleteByIds",qs.stringify(obj,{indices: false})).then(res => res.data) ;
     },
     deleteById(delId) {  //删除
         var obj = {
