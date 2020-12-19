@@ -4,12 +4,12 @@
             <a-row>
                 <a-col :span="3">
                     <a-button size="large" icon="inbox"
-                              @click="handleCreateAnnouncementDraft"
+                              @click="handleCreateDraftByForm"
                     >{{$t('langMap.button.actions.saveAsDraft')}}</a-button>
                 </a-col>
                 <a-col :span="3">
                     <a-button size="large" type="primary" icon="check"
-                              @click="handleCreateAnnouncement"
+                              @click="handleCreateByForm"
                     >{{$t('langMap.button.actions.publish')}}</a-button>
                 </a-col>
             </a-row>
@@ -71,7 +71,7 @@
             <quill-editor
                 v-model="formObj.content"
                 class="quillCls"
-                ref="createAnnouncementQuillEditor"
+                ref="quillEditor"
                 :options="quillEditorConfig.quillOption"
                 @change="handleQuillEditorChange">
             </quill-editor>
@@ -257,7 +257,7 @@
                 return formObjTemp ;
             },
             //确认发表博文
-            handleCreateAnnouncement(e){
+            handleCreateByForm(e){
                 var _this = this ;
                 //验证是否未编辑
                 let isCreateAble = this.dealCheckCreateAble() ;
@@ -273,7 +273,7 @@
                             console.log("dealFormValuesMapToObj");
                             console.log(_this.formObj);
                             if(_this.updateForm.flag == true){  //发布 更新后的 公告草稿
-                                AnnouncementCreateApi.addAnnouncementFromDraftByForm(_this.formObj).then((res) =>{
+                                AnnouncementCreateApi.createFromDraft(_this.formObj).then((res) =>{
                                     if(res.success){
                                         _this.$message.success(res.msg) ;
                                         //关闭当前页面
@@ -281,7 +281,7 @@
                                     }
                                 })
                             }   else{   //直接发布
-                                AnnouncementCreateApi.addAnnouncementByForm(_this.formObj).then((res) =>{
+                                AnnouncementCreateApi.createByForm(_this.formObj).then((res) =>{
                                     if(res.success){
                                         _this.$message.success(res.msg) ;
                                         //关闭当前页面
@@ -293,7 +293,7 @@
                     });
                 }
             },
-            handleCreateAnnouncementDraft(){    //存储为草稿
+            handleCreateDraftByForm(){    //存储为草稿
                 var _this = this ;
                 //验证是否未编辑
                 let isCreateAble = this.dealCheckCreateAble() ;
@@ -307,7 +307,7 @@
                         if (!err) {
                             _this.formObj = _this.dealFormValuesMapToObj(values) ;
                             if(_this.updateForm.flag == true) {  //更新公告草稿
-                                AnnouncementCreateApi.updateAnnouncementDraftByForm(_this.formObj).then((res) =>{
+                                AnnouncementCreateApi.updateDraftByForm(_this.formObj).then((res) =>{
                                     if(res.success){
                                         _this.$message.success(res.msg) ;
                                         //关闭当前页面
@@ -315,7 +315,7 @@
                                     }
                                 })
                             }   else {  //添加到 草稿
-                                AnnouncementCreateApi.addAnnouncementDraftByForm(_this.formObj).then((res) =>{
+                                AnnouncementCreateApi.createDraftByForm(_this.formObj).then((res) =>{
                                     if(res.success){
                                         _this.$message.success(res.msg) ;
                                         //关闭当前页面
@@ -339,10 +339,10 @@
                     }
                 })
             },
-            dealRenderAnnouncementDraftToForm(fid){
+            dealRenderDraftToForm(fid){
                 var _this = this ;
                 if(fid){
-                    AnnouncementCreateApi.getAnnouncementDraftById(fid).then((res) =>{
+                    AnnouncementCreateApi.getIDraftItemById(fid).then((res) =>{
                         if(res.success){
                             var resBean = res.bean ;
                             if(resBean){
@@ -390,7 +390,7 @@
                 var action = routeQuery.action ;
                 if(action == "update"){ //表示 该页面处理的是 公告草稿 更新
                     _this.updateForm.flag = true ;
-                    _this.dealRenderAnnouncementDraftToForm(_this.updateForm.fid);
+                    _this.dealRenderDraftToForm(_this.updateForm.fid);
                 }
             }
             this.dealGetAllAnnouncementTagList() ;

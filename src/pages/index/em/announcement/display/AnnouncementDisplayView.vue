@@ -65,7 +65,7 @@
                 _this.announcement.fid = routeQuery.fid ;
             }
             if(_this.announcement.fid){
-                AnnouncementDisplayApi.getAnnouncementById(_this.announcement.fid).then((res) =>{
+                AnnouncementDisplayApi.getItemById(_this.announcement.fid).then((res) =>{
                     if(res.success){
                         _this.announcement.obj = res.bean ;
                     }

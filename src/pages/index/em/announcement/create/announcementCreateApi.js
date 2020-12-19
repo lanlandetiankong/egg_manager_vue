@@ -6,27 +6,27 @@ import qs from 'qs'
 /* 不要使用 // 进行注释！！！！！！！！！！！！！！！！！！！！！！！！   */
 
 export const AnnouncementCreateApi = {
-    addAnnouncementByForm(formObj) {     //发布公告
+    createByForm(formObj) {     //发布公告
         return axios.post("/emCtl/announcement/createByForm",qs.stringify(formObj));
     },
-    addAnnouncementFromDraftByForm(formObj) {     //发布 更新后的公告草稿
+    createFromDraft(formObj) {     //发布 更新后的公告草稿
         if(formObj){
             formObj["createTime"] = undefined;
             formObj["updateTime"] = undefined;
         }
         return axios.post("/emCtl/announcement/createFromDraft",qs.stringify(formObj));
     },
-    addAnnouncementDraftByForm(formObj) {     //提交公告到草稿箱
+    createDraftByForm(formObj) {     //提交公告到草稿箱
         return axios.post("/emCtl/announcementDraft/createByForm",qs.stringify(formObj));
     },
-    updateAnnouncementDraftByForm(formObj) {     //更新公告草稿
+    updateDraftByForm(formObj) {     //更新公告草稿
         if(formObj){
             formObj["createTime"] = undefined;
             formObj["updateTime"] = undefined;
         }
         return axios.post("/emCtl/announcementDraft/updateByForm",qs.stringify(formObj));
     },
-    getAnnouncementDraftById(draftId){  //根据 公告草稿id 取得公告草稿
+    getIDraftItemById(draftId){  //根据 公告草稿id 取得公告草稿
         var params = {
             draftId:draftId
         }
