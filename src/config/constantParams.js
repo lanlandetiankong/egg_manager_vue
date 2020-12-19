@@ -33,6 +33,7 @@ function dealGetDevConstantParams() {
             }
         },
         defalutObj:{    //一些常用的默认值
+            projectTitle:'EggManager',
             avatarUrl:"/static/img/user/panda_egg.jpg"
         }
     }
@@ -57,6 +58,7 @@ function dealGetProdConstantParams() {
             }
         },
         defalutObj:{    //一些常用的默认值
+            projectTitle:'EggManager',
             avatarUrl:"/static/img/user/panda_egg.jpg"
         }
     }
