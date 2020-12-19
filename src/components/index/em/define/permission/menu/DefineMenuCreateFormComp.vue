@@ -58,7 +58,7 @@
                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="menuUrlJumpTypes"
-                              :filterOption="getMenuTypeFilterOption"
+                              :filterOption="getFilterOption"
                               v-decorator="formFieldConf.urlJumpType"
                     >
                     </a-select>
@@ -160,7 +160,7 @@
             }
         },
         methods:{
-            getMenuTypeFilterOption(input,option){
+            getFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
             dealUpdateFormValue(formObj){

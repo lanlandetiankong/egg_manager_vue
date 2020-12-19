@@ -20,7 +20,7 @@
                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="belongTenants"
-                              :filterOption="getBelongTenantFilterOption"
+                              :filterOption="getFilterOption"
                               v-decorator="formFieldConf.belongTenantId"
                     >
                     </a-select>
@@ -181,12 +181,8 @@
                     });
                 }
             },
-            getBelongTenantFilterOption(input,option){
+            getFilterOption(input,option){
                 //[租户]select 搜索过滤
-                return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
-            },
-            getBelongDepartmentFilterOption(input,option){
-                //[部门]select 搜索过滤
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
             dealGetHeadAvatarUrlVal(){  //取得[用户头像上传后的图片object]

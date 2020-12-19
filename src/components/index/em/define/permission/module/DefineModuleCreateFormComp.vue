@@ -46,7 +46,7 @@
                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="moduleTypes"
-                              :filterOption="getModuleTypeFilterOption"
+                              :filterOption="getFilterOption"
                               v-decorator="formFieldConf.typeVal"
                     >
                     </a-select>
@@ -117,7 +117,7 @@
             }
         },
         methods:{
-            getModuleTypeFilterOption(input,option){
+            getFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
             dealUpdateFormValue(formObj){

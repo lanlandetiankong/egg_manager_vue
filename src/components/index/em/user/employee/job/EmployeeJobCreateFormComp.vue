@@ -25,7 +25,7 @@
                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="typeEnumArr"
-                              :filterOption="getTypeFilterOption"
+                              :filterOption="getFilterOption"
                               v-decorator="formFieldConf.type"
                     >
                     </a-select>
@@ -115,7 +115,7 @@
                    });
                }
             },
-            getTypeFilterOption(input,option){
+            getFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             }
         },

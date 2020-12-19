@@ -27,7 +27,7 @@
                                   style="width:160px"
                                   optionFilterProp="children"
                                   :options="permissonCodePrefixs"
-                                  :filterOption="getPermissionTypeFilterOption"
+                                  :filterOption="getFilterOption"
                         >
                         </a-select>
                     </a-input>
@@ -39,7 +39,7 @@
                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="permissionTypes"
-                              :filterOption="getPermissionTypeFilterOption"
+                              :filterOption="getFilterOption"
                               v-decorator="formFieldConf.type"
                     >
                     </a-select>
@@ -109,7 +109,7 @@
             }
         },
         methods:{
-            getPermissionTypeFilterOption(input,option){
+            getFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
             dealUpdateFormValue(formObj){

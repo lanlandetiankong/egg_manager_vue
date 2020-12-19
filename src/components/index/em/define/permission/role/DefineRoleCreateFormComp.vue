@@ -30,7 +30,7 @@
                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                               optionFilterProp="children"
                               :options="roleTypes"
-                              :filterOption="getRoleTypeFilterOption"
+                              :filterOption="getFilterOption"
                               v-decorator="formFieldConf.type"
                     >
                     </a-select>
@@ -93,7 +93,7 @@
             }
         },
         methods:{
-            getRoleTypeFilterOption(input,option){
+            getFilterOption(input,option){
                 return (option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0);
             },
             dealUpdateFormValue(formObj){
