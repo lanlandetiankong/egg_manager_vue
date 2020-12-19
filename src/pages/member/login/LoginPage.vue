@@ -12,8 +12,9 @@
 
 <script>
     import { mapGetters } from 'vuex'
-    import {AsyncRouterUtil} from '~Router/asyncRouterUtil.js';
-    import {LoginMainApi} from './_LoginMainApi.js'
+
+    import {CacheMixin} from '~Layout/mixin/CacheMixin';
+
     import LoginMainComp from '~Components/login/LoginMainComp.vue'
 
     export default {
@@ -21,6 +22,7 @@
         components: {
             LoginMainComp
         },
+        mixins:[CacheMixin],
         data() {
             return {
                 othersRouters:{
@@ -45,55 +47,17 @@
         methods:{
             handleLoginFormSubmit(e,loginForm,submitRes){
                 var _this = this ;
-
                 if(submitRes){
                     if(submitRes.success){ //后台登录验证成功
-                        _this.handleSetUserTokenToCache(submitRes.accountToken);
-                        _this.handleSetAuthorizationToCache(submitRes.authorization);
-                        _this.handleSetRouterUrlsToCache(submitRes.routerUrlSet);
-                        _this.handleSetGrantedPermissionsToCache(submitRes.permissionSet);
-                        _this.handleMenuListToCache();
+                        _this.cacheMixin_handleSetUserTokenToCache(_this,submitRes.accountToken);
+                        _this.cacheMixin_handleSetAuthorizationToCache(_this,submitRes.authorization);
+                        _this.cacheMixin_handleSetRouterUrlsToCache(_this,submitRes.routerUrlSet);
+                        _this.cacheMixin_handleSetGrantedPermissionsToCache(_this,submitRes.permissionSet);
+                        _this.cacheMixin_handleMenuListToCache(_this,false);
                         _this.$router.push("/index");
                     }
                 }
             },
-            handleSetUserTokenToCache(userTokenObj){    //设置 token
-                this.$store.dispatch('doSetUserToken',userTokenObj) ;
-                window.sessionStorage.setItem("userToken",JSON.stringify(userTokenObj));
-                console.log(JSON.stringify(window.sessionStorage.getItem("userToken")));
-            },
-            handleSetAuthorizationToCache(authorization){   //设置 JWT 值
-                this.$store.dispatch('doSetAuthorization',authorization) ;
-                window.sessionStorage.setItem("authorization",authorization);
-            },
-            handleSetRouterUrlsToCache(routerUrls){   //设置 可访问的router路径-Set集合
-                this.$store.dispatch('doSetVisibleRouterUrls',routerUrls) ;
-                window.sessionStorage.setItem("visibleRouterUrls",JSON.stringify(routerUrls));
-            },
-            handleSetGrantedPermissionsToCache(grantedPermissions){   //设置 可使用的 权限code 集合
-                this.$store.dispatch('doSetGrantedPermissions',grantedPermissions) ;
-                window.sessionStorage.setItem("grantedPermissions",JSON.stringify(grantedPermissions));
-            },
-            handleMenuListToCache(){  //将后台的[菜单配置]更新到 VueRouter配置中
-                var _this = this ;
-                LoginMainApi.doGetAllMenu().then(res => {
-
-                    if(res.success){
-                        var menuList = res.gridList;
-                        var urlMap = res.dataMap ;
-                        this.$store.dispatch('doDelAllViews') ; //登录前清空已访问页面的tag缓存
-                        window.sessionStorage.setItem("grantedMenuList",JSON.stringify(menuList));
-                        window.sessionStorage.setItem("grantedMenuUrlMap",JSON.stringify(urlMap));
-                        this.$store.dispatch('doSetGrantedMenuList',menuList) ;
-                        this.$store.dispatch('doSetGrantedMenuUrlMap',urlMap) ;
-                        _this.handleMenuListToRouters(urlMap);
-                    }
-                });
-            },
-            handleMenuListToRouters(grantedMenuUrlMap){      //将后台的[菜单配置]更新到 VueRouter配置中
-                AsyncRouterUtil.dealMenuListToRouters(grantedMenuUrlMap,this);
-            }
-
         }
     }
 </script>

@@ -8,5 +8,8 @@ import qs from 'qs'
 export const LoginMainApi = {
     doGetAllMenu() {    //取得用户 能访问菜单列表
         return axios.post('/emCtl/define/defineMenu/user/gainGrantTree').then(res => res.data) ;
+    },
+    reflushCacheAndGetAllMenu() {    //刷新缓存并取得用户 能访问菜单列表
+        return axios.post('/emCtl/define/defineMenu/user/reflushCacheAndGainGrantTree').then(res => res.data) ;
     }
 }

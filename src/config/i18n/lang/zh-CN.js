@@ -34,7 +34,9 @@ export const langMap = {
             saveAsDraft:'存为草稿',
             goToIndexPage:'回到首页',
             filter:'过滤',
-            switchToNextOne:'下一张'
+            switchToNextOne:'下一张',
+            clearCache:'清理缓存',
+            refreshMenuCache:'刷新菜单缓存',
         },
         member:{
             account:'账号',

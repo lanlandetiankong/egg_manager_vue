@@ -24,7 +24,6 @@
 </template>
 
 <script>
-    import {LayoutApi} from '~Layout/_LayoutApi.js' ;
 
     import SubMenuComp from '~Components/regular/layout/menu/SubMenuComp' ;
     export default {

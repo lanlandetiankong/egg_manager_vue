@@ -4,26 +4,43 @@
             <a-col :span=2>
                 <i18n-change-comp />
             </a-col>
-            <a-col :span=2>
-                <a-row>
+            <a-col :span=3>
+                <template>
                     <a-tag color="blue">
                         {{loginUserName}}
                     </a-tag>
-                </a-row>
-            </a-col>
-            <a-col :span=1 >
-                <a-avatar
-                    :src="loginUserAvatarUrl"
-                    alt="图片加载失败"
-                />
+                    <a-avatar
+                        :src="loginUserAvatarUrl"
+                        alt="图片加载失败"
+                    />
+                </template>
             </a-col>
             <a-col :span=1>
                 <a-dropdown
                     :trigger="['click']"
                     placement="bottomCenter"
+                    :style="{marginBottom:0}"
                 >
-                    <a-icon type="down-circle"
-                            :style="{fontSize:'20px'}"
+                    <a-icon type="rest"
+                            :style="{fontSize:'26px'}"
+                            theme="filled"
+                    />
+                    <a-menu slot="overlay" @click="handleClearCacheClick">
+                        <a-menu-item key="refreshMenuCache">
+                            {{$t('langMap.button.actions.refreshMenuCache')}}
+                        </a-menu-item>
+                    </a-menu>
+                    <a-icon slot="icon" type="rest" />
+                </a-dropdown>
+            </a-col>
+            <a-col :span=1 >
+                <a-dropdown
+                    :trigger="['click']"
+                    placement="bottomCenter"
+                    :style="{marginBottom:0}"
+                >
+                    <a-icon type="setting"
+                            :style="{fontSize:'26px'}"
                             :spin=true
                             theme="filled"
                     />
@@ -79,7 +96,13 @@
             }
         },
         methods:{
-            handleMoreSettingClick(e){  //更多操作点击事件
+            handleClearCacheClick(e){  //清理缓存-点击事件
+                var _this = this ;
+                if(e.key == "refreshMenuCache"){   //退出登录
+                    _this.$emit('refreshMenuCache',e);
+                }
+            },
+            handleMoreSettingClick(e){  //更多操作-点击事件
                 var _this = this ;
                 if(e.key == "user_loginout"){   //退出登录
                     _this.$emit('userLoginOut',e);

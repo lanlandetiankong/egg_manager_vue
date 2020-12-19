@@ -34,7 +34,9 @@ export const langMap = {
             saveAsDraft:'Save as draft',
             goToIndexPage:'Go to index page',
             filter:'Filter',
-            switchToNextOne:'Switch to the next one'
+            switchToNextOne:'Switch to the next one',
+            clearCache:'Clear cache',
+            refreshMenuCache:'Refresh menu cache',
         },
         member:{
             account:'Account',
