@@ -128,7 +128,7 @@
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/regular/query/QueryFormComp'
-    import DefinePermissionCreateFormComp from "~Components/index/define/permission/manager/DefinePermissionCreateFormComp";
+    import DefinePermissionCreateFormComp from "~Components/index/em/define/permission/manager/DefinePermissionCreateFormComp";
     import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
     export default {
         name: "PermissionManagerView",

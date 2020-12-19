@@ -114,7 +114,7 @@
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
 
     import QueryFormComp from '~Components/regular/query/QueryFormComp'
-    import DefineModuleCreateFormComp from "~Components/index/define/permission/module/DefineModuleCreateFormComp";
+    import DefineModuleCreateFormComp from "~Components/index/em/define/permission/module/DefineModuleCreateFormComp";
     import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
 
     export default {

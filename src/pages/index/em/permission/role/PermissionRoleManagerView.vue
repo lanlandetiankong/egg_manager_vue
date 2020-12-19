@@ -144,9 +144,9 @@
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/regular/query/QueryFormComp'
-    import DefineRoleCreateFormComp from '~Components/index/define/permission/role/DefineRoleCreateFormComp';
-    import RoleGrantPermissionFormComp from '~Components/index/define/permission/role/RoleGrantPermissionFormComp';
-    import RoleGrantMenusFormComp from '~Components/index/define/permission/role/RoleGrantMenusFormComp';
+    import DefineRoleCreateFormComp from '~Components/index/em/define/permission/role/DefineRoleCreateFormComp';
+    import RoleGrantPermissionFormComp from '~Components/index/em/define/permission/role/RoleGrantPermissionFormComp';
+    import RoleGrantMenusFormComp from '~Components/index/em/define/permission/role/RoleGrantMenusFormComp';
     import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
     export default {
         name: "PermissionRoleManagerView",

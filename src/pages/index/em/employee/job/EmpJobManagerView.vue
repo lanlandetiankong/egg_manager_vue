@@ -109,7 +109,7 @@
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/regular/query/QueryFormComp'
-    import EmployeeJobCreateFormComp from '~Components/index/user/employee/job/EmployeeJobCreateFormComp'
+    import EmployeeJobCreateFormComp from '~Components/index/em/user/employee/job/EmployeeJobCreateFormComp'
     import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
 
     import ACol from "ant-design-vue/es/grid/Col";

@@ -195,9 +195,9 @@
 
     import QueryFormComp from '~Components/regular/query/QueryFormComp'
 
-    import EmployeeInfoCreateFormComp from '~Components/index/user/employee/info/EmployeeInfoCreateFormComp'
-    import UserGrantRoleFormComp from '~Components/index/user/employee/info/UserGrantRoleFormComp';
-    import UserGrantJobFormComp from '~Components/index/user/employee/info/UserGrantJobFormComp';
+    import EmployeeInfoCreateFormComp from '~Components/index/em/user/employee/info/EmployeeInfoCreateFormComp'
+    import UserGrantRoleFormComp from '~Components/index/em/user/employee/info/UserGrantRoleFormComp';
+    import UserGrantJobFormComp from '~Components/index/em/user/employee/info/UserGrantJobFormComp';
     import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
     import ExcelImportDataComp from '~Components/regular/common/excel/ExcelImportDataComp';
 

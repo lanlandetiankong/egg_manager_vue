@@ -103,7 +103,7 @@
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/regular/query/QueryFormComp'
-    import DefineDepartmentCreateFormComp from '~Components/index/user/employee/department/DefineDepartmentCreateFormComp';
+    import DefineDepartmentCreateFormComp from '~Components/index/em/user/employee/department/DefineDepartmentCreateFormComp';
     import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
     export default {
         name: "DepartmentManagerView",

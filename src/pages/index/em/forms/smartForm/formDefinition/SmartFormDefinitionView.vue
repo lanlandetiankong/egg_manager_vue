@@ -113,7 +113,7 @@
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/regular/query/QueryFormComp'
-    import SmartFormDefinitionCreateFormComp from "~Components/index/forms/smartForm/formDefinition/SmartFormDefinitionCreateFormComp";
+    import SmartFormDefinitionCreateFormComp from "~Components/index/em/forms/smartForm/formDefinition/SmartFormDefinitionCreateFormComp";
     import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
 
     export default {
