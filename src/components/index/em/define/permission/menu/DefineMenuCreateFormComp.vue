@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="vertical"
-                :form="defineMenuCreateForm"
+                :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.common.superiorName')">
                     <a-tree-select
@@ -148,7 +148,7 @@
                     hrefUrl:["hrefUrl",{rules:paramsRules.hrefUrl}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
-                defineMenuCreateForm:{},
+                createForm:{},
                 formValObj:{},
                 treeSelectConf:{
                     pid:{
@@ -166,8 +166,8 @@
             dealUpdateFormValue(formObj){
                 var _this = this ;
                 _this.formValObj = _this.formObj ;
-               if(typeof _this.defineMenuCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.defineMenuCreateForm.updateFields({
+               if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                   _this.createForm.updateFields({
                        menuName: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.menuName,
@@ -230,8 +230,8 @@
         },
         created(){
             var _this = this ;
-            _this.defineMenuCreateForm = this.$form.createForm(_this,{
-                name:'DefineMenuCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {     //表单字段发生修改
                     if(changedFields){
                         var formValObjTemp = _this.formValObj ;

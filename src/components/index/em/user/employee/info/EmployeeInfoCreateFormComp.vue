@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="vertical"
-                :form="employeeInfoCreateForm"
+                :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.tenant.belongTenant')"
                              v-bind="formItemLayout"
@@ -135,7 +135,7 @@
                     belongDepartmentId: ["belongDepartmentId", {rules: paramsRules.belongDepartmentId}],
                     locked: ["locked", {rules: paramsRules.locked}]
                 },
-                employeeInfoCreateForm:{},
+                createForm:{},
                 treeSelectConf:{
                     belongDepartmentId:{
                         treeDefaultExpandAll:false,
@@ -148,8 +148,8 @@
         methods:{
             dealUpdateFormValue(formObj){
                 var _this = this ;
-                if(typeof _this.employeeInfoCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                    _this.employeeInfoCreateForm.updateFields({
+                if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                    _this.createForm.updateFields({
                         account: _this.$form.createFormField({
                             ...formObj,
                             value: formObj.account,
@@ -219,8 +219,8 @@
         },
         created(){
             var _this = this ;
-            _this.employeeInfoCreateForm = this.$form.createForm(_this,{
-                name:'EmployeeInfoCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {
                     //console.log(changedFields);
                     this.$emit('change', changedFields);

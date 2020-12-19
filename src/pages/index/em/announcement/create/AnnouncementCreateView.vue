@@ -28,7 +28,7 @@
 
             <a-form
                 layout="inline"
-                :form="announcementCreateForm"
+                :form="createForm"
             >
                 <a-row :type="formLayout.row.type">
                     <a-col :span="formLayout.defaultColSpan">
@@ -131,7 +131,7 @@
                     defaultColSpan: 8,
                     dblColSpan:12,
                 },
-                announcementCreateForm:{},
+                createForm:{},
                 formFieldConf:{
                     keyWord:["keyWord",{rules:paramsRules.keyWord}],
                     publishDepartment:["publishDepartment",{rules:paramsRules.publishDepartment}],
@@ -197,8 +197,8 @@
                 var _this = this ;
                 console.log("dealUpdateFormValue");
                 console.log(formObj);
-                if(typeof _this.announcementCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                    _this.announcementCreateForm.updateFields({
+                if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                    _this.createForm.updateFields({
                         keyWord: _this.$form.createFormField({
                             ...formObj,
                             value: formObj.keyWord,
@@ -267,7 +267,7 @@
                 }   else {
                     //取得请求的参数：标题&内容、用户信息
                     var formObjTemp = _this.formObj ;
-                    this.announcementCreateForm.validateFields((err, values) => {
+                    this.createForm.validateFields((err, values) => {
                         if (!err) {
                             _this.formObj = _this.dealFormValuesMapToObj(values) ;
                             console.log("dealFormValuesMapToObj");
@@ -303,7 +303,7 @@
                 }   else {
                     //取得请求的参数：标题&内容、用户信息
                     var formObjTemp = _this.formObj ;
-                    this.announcementCreateForm.validateFields((err, values) => {
+                    this.createForm.validateFields((err, values) => {
                         if (!err) {
                             _this.formObj = _this.dealFormValuesMapToObj(values) ;
                             if(_this.updateForm.flag == true) {  //更新公告草稿
@@ -357,8 +357,8 @@
         },
         created(){
             var _this = this ;
-            _this.announcementCreateForm = this.$form.createForm(_this,{
-                name:'AnnouncementCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {
                     //console.log(changedFields);
                     this.$emit('change', changedFields);

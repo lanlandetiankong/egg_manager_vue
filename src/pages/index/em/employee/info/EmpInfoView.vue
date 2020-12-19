@@ -859,7 +859,7 @@
                 }
             },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
-                return this.$refs.employeeInfoCreateFormRef.employeeInfoCreateForm;
+                return this.$refs.employeeInfoCreateFormRef.createForm;
             },
             handleUserGrantRoleById(e) {     // 用户分配角色
                 var _this = this;

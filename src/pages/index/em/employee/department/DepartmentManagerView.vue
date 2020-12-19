@@ -295,7 +295,7 @@
         },
         methods: {
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
-                return this.$refs.defineDepartmentCreateFormRef.defineDepartmentCreateForm;
+                return this.$refs.defineDepartmentCreateFormRef.createForm;
             },
             dealGetPidTreeData(){  //取得 部门定义-树形数据
                 var _this = this ;

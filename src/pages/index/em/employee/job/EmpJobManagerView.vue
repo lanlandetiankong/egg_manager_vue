@@ -428,7 +428,7 @@
                 }
             },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
-                return this.$refs.employeeJobCreateFormRef.employeeJobCreateForm;
+                return this.$refs.employeeJobCreateFormRef.createForm;
             },
             handleDetailDrawerShow(e,record){   //Drawer-职务定义 详情展示
                 if(typeof record != "undefined"){

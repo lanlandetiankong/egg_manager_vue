@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="vertical"
-                :form="defineModuleCreateForm"
+                :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.module.moduleName')"
                      v-bind="formItemLayout"
@@ -112,7 +112,7 @@
                     typeVal:["typeVal",{rules:paramsRules.typeVal}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
-                defineModuleCreateForm:{},
+                createForm:{},
                 formValObj:{}
             }
         },
@@ -123,8 +123,8 @@
             dealUpdateFormValue(formObj){
                 var _this = this ;
                 _this.formValObj = _this.formObj ;
-               if(typeof _this.defineModuleCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.defineModuleCreateForm.updateFields({
+               if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                   _this.createForm.updateFields({
                        name: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.name,
@@ -160,8 +160,8 @@
         },
         created(){
             var _this = this ;
-            _this.defineModuleCreateForm = this.$form.createForm(_this,{
-                name:'DefineModuleCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {     //表单字段发生修改
                     if(changedFields){
                         var formValObjTemp = _this.formValObj ;

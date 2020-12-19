@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="vertical"
-                :form="announcementTagCreateForm"
+                :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.common.tagName')"
                      v-bind="formItemLayout"
@@ -78,14 +78,14 @@
                     weights:["weights",{rules:paramsRules.weights}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
-                announcementTagCreateForm:{}
+                createForm:{}
             }
         },
         methods:{
             dealUpdateFormValue(formObj){
                 var _this = this ;
-               if(typeof _this.announcementTagCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.announcementTagCreateForm.updateFields({
+               if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                   _this.createForm.updateFields({
                        name: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.name,
@@ -117,8 +117,8 @@
         },
         created(){
             var _this = this ;
-            _this.announcementTagCreateForm = this.$form.createForm(_this,{
-                name:'AnnouncementTagCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {
                     //console.log(changedFields);
                     this.$emit('change', changedFields);

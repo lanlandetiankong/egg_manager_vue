@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="vertical"
-                :form="definePermissionCreateForm"
+                :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.permission.permissionName')"
                      v-bind="formItemLayout"
@@ -105,7 +105,7 @@
                     type:["type",{rules:paramsRules.type}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
-                definePermissionCreateForm:{}
+                createForm:{}
             }
         },
         methods:{
@@ -114,8 +114,8 @@
             },
             dealUpdateFormValue(formObj){
                 var _this = this ;
-               if(typeof _this.definePermissionCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.definePermissionCreateForm.updateFields({
+               if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                   _this.createForm.updateFields({
                        name: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.name,
@@ -143,8 +143,8 @@
         },
         created(){
             var _this = this ;
-            _this.definePermissionCreateForm = this.$form.createForm(_this,{
-                name:'DefinePermissionCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {
                     //console.log(changedFields);
                     this.$emit('change', changedFields);

@@ -348,7 +348,7 @@
                 _this.dialogGrantPermissionObj.allDataSource = dataSourceArrTemp ;
             },
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
-                return this.$refs.defineRoleCreateFormRef.defineRoleCreateForm;
+                return this.$refs.defineRoleCreateFormRef.createForm;
             },
             dealBatchDeleteByIds() {  //批量删除
                 var _this = this;

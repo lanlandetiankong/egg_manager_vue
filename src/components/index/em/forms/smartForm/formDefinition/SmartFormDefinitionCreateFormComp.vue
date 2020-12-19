@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="horizontal"
-                :form="smartFormDefinitionCreateForm"
+                :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.form.formName')"
                      v-bind="formItemLayout"
@@ -61,7 +61,7 @@
     import {SmartFormDefinitionCreateFormApi} from './smartFormDefinitionCompsApi'
 
     export default {
-        name: "formTypeList",
+        name: "SmartFormDefinitionCreateFormComp",
         components: {ATextarea, AFormItem},
         props:{
             visible:Boolean,
@@ -109,7 +109,7 @@
                     weights:["weights",{rules:paramsRules.weights}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
-                smartFormDefinitionCreateForm:{},
+                createForm:{},
                 formValObj:{},
                 treeSelectConf:{
                     pid:{
@@ -127,8 +127,8 @@
             dealUpdateFormValue(formObj){
                 var _this = this ;
                 _this.formValObj = _this.formObj ;
-               if(typeof _this.smartFormDefinitionCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.smartFormDefinitionCreateForm.updateFields({
+               if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                   _this.createForm.updateFields({
                        name: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.name,
@@ -165,8 +165,8 @@
         },
         created(){
             var _this = this ;
-            _this.smartFormDefinitionCreateForm = this.$form.createForm(_this,{
-                name:'SmartFormDefinitionCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {     //表单字段发生修改
                     if(changedFields){
                         var formValObjTemp = _this.formValObj ;

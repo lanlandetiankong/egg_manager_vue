@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="vertical"
-                :form="smartFormTypeDefinitionCreateForm"
+                :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.common.name')"
                      v-bind="formItemLayout"
@@ -84,7 +84,7 @@
                     weights:["weights",{rules:paramsRules.weights}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
-                smartFormTypeDefinitionCreateForm:{},
+                createForm:{},
                 formValObj:{},
                 treeSelectConf:{
                     pid:{
@@ -99,8 +99,8 @@
             dealUpdateFormValue(formObj){
                 var _this = this ;
                 _this.formValObj = _this.formObj ;
-               if(typeof _this.smartFormTypeDefinitionCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.smartFormTypeDefinitionCreateForm.updateFields({
+               if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                   _this.createForm.updateFields({
                        name: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.name,
@@ -129,8 +129,8 @@
         },
         created(){
             var _this = this ;
-            _this.smartFormTypeDefinitionCreateForm = this.$form.createForm(_this,{
-                name:'SmartFormTypeDefinitionCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {     //表单字段发生修改
                     if(changedFields){
                         var formValObjTemp = _this.formValObj ;

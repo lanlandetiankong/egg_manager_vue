@@ -274,7 +274,7 @@
         },
         methods: {
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
-                return this.$refs.smartFormDefinitionCreateFormCompRef.smartFormDefinitionCreateForm;
+                return this.$refs.smartFormDefinitionCreateFormCompRef.createForm;
             },
             changeQueryLoading(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){

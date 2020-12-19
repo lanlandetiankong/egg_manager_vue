@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="vertical"
-                :form="employeeJobCreateForm"
+                :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.job.jobName')"
                     v-bind="formItemLayout"
@@ -88,14 +88,14 @@
                     description:["description",{rules:paramsRules.description}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
-                employeeJobCreateForm:{}
+                createForm:{}
             }
         },
         methods:{
             dealUpdateFormValue(formObj){
                 var _this = this ;
-               if(typeof _this.employeeJobCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.employeeJobCreateForm.updateFields({
+               if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                   _this.createForm.updateFields({
                        name: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.name,
@@ -130,8 +130,8 @@
         },
         created(){
             var _this = this ;
-            _this.employeeJobCreateForm = this.$form.createForm(_this,{
-                name:'EmployeeJobCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {
                     //console.log(changedFields);
                     this.$emit('change', changedFields);

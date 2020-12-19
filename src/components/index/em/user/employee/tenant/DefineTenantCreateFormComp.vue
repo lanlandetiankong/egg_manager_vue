@@ -11,7 +11,7 @@
         >
             <a-form
                 layout="vertical"
-                :form="defineTenantCreateForm"
+                :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.common.name')"
                      v-bind="formItemLayout"
@@ -71,14 +71,14 @@
                     code:["code",{rules:paramsRules.code}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
-                defineTenantCreateForm:{}
+                createForm:{}
             }
         },
         methods:{
             dealUpdateFormValue(formObj){
                 var _this = this ;
-               if(typeof _this.defineTenantCreateForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.defineTenantCreateForm.updateFields({
+               if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                   _this.createForm.updateFields({
                        name: _this.$form.createFormField({
                            ...formObj,
                            value: formObj.name,
@@ -106,8 +106,8 @@
         },
         created(){
             var _this = this ;
-            _this.defineTenantCreateForm = this.$form.createForm(_this,{
-                name:'DefineTenantCreateForm',
+            _this.createForm = this.$form.createForm(_this,{
+                name:'createForm',
                 onFieldsChange: (_, changedFields) => {
                     //console.log(changedFields);
                     this.$emit('change', changedFields);
