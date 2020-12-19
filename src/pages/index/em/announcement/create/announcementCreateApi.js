@@ -7,30 +7,30 @@ import qs from 'qs'
 
 export const AnnouncementCreateApi = {
     createByForm(formObj) {     //发布公告
-        return axios.post("/emCtl/announcement/createByForm",qs.stringify(formObj));
+        return axios.post("/emCtl/announcement/createByForm",qs.stringify(formObj)).then(res => res.data);
     },
     createFromDraft(formObj) {     //发布 更新后的公告草稿
         if(formObj){
             formObj["createTime"] = undefined;
             formObj["updateTime"] = undefined;
         }
-        return axios.post("/emCtl/announcement/createFromDraft",qs.stringify(formObj));
+        return axios.post("/emCtl/announcement/createFromDraft",qs.stringify(formObj)).then(res => res.data);
     },
     createDraftByForm(formObj) {     //提交公告到草稿箱
-        return axios.post("/emCtl/announcementDraft/createByForm",qs.stringify(formObj));
+        return axios.post("/emCtl/announcementDraft/createByForm",qs.stringify(formObj)).then(res => res.data);
     },
     updateDraftByForm(formObj) {     //更新公告草稿
         if(formObj){
             formObj["createTime"] = undefined;
             formObj["updateTime"] = undefined;
         }
-        return axios.post("/emCtl/announcementDraft/updateByForm",qs.stringify(formObj));
+        return axios.post("/emCtl/announcementDraft/updateByForm",qs.stringify(formObj)).then(res => res.data);
     },
     getIDraftItemById(draftId){  //根据 公告草稿id 取得公告草稿
         var params = {
             draftId:draftId
         }
-        return axios.post("/emCtl/announcementDraft/queryOneById",qs.stringify(params));
+        return axios.post("/emCtl/announcementDraft/queryOneById",qs.stringify(params)).then(res => res.data);
     },
     getAllAnnouncementTagEnums() {  //取得 公告标签 列表
         const sortObj = {     //固定 order字段 排序
