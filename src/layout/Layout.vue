@@ -15,16 +15,17 @@
             </a-layout-sider>
             <a-layout>
                 <a-layout-header
-                    style="background: #fff; padding: 0;"
+                    style="background: #fff; padding: 0;height:50px;line-height:50px;margin-top: 0px;margin-bottom: 0px;"
                 >
                     <navbar
                         :userInfo="navbarConf.userInfo"
                         @userLoginOut="handleUserLoginOut"
                         @goToUserCenter="handleGoToUserCenter"
+                        @refreshMenuCache="handleRefreshMenuCache"
                     />
                 </a-layout-header>
                 <a-layout-content
-                    :style="{ margin: '10px 0' }"
+                    :style="{ margin: '0px 0' }"
                 >
                     <tags-view
                         :tagsArray="tagViewOpendArray"
@@ -34,7 +35,7 @@
                         @tag-item-others-close="doTagItemOthersClose"
                         @tag-item-all-close="doTagItemAllClose"
                         @toggle-current-tag="doToggleCurrentTag"
-                        :style="{paddingBottom:'10px'}"
+                        :style="{paddingBottom:'0px'}"
                     >
                     </tags-view>
                     <app-main
@@ -48,12 +49,11 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import ResizeMixin from './mixin/ResizeHandler';
+    import {CacheMixin} from './mixin/CacheMixin';
 
     import { Navbar, Sidebar, AppMain, TagsView,BaseFooter } from './components'
     import ALayoutSider from "ant-design-vue/es/layout/Sider";
-
-    import ResizeMixin from './mixin/ResizeHandler';
-
 
     export default {
         name: "Layout",
@@ -65,7 +65,7 @@
             TagsView,
             BaseFooter
         },
-        mixins: [ResizeMixin],
+        mixins: [ResizeMixin,CacheMixin],
         data() {
             return {
                 routerDefineObj:{   //路径定义对象,请勿修改！(请保持与外部$router一致)
@@ -159,15 +159,6 @@
             dealMenuClick(obj) {
                 console.log("dealMenuClick",obj);
             },
-            dealTabsChange(activeKey) {
-
-            },
-            dealTabsEdit(targetKey, action) {
-
-            },
-            dealTabsClick(activeKey) {
-
-            },
             dealVerifyUserToken(){
                 var userTokenTemp = window.sessionStorage.getItem("userToken");
                 if(typeof userTokenTemp == "undefined" || userTokenTemp == null){
@@ -184,6 +175,9 @@
             },
             handleGoToUserCenter(){ //子组件命令-跳转到用户中心
                 this.$router.push(this.routerDefineObj.userCenterView);
+            },
+            handleRefreshMenuCache(e){    //子组件命令-清理菜单缓存
+                this.cacheMixin_handleMenuListToCache(this,true);
             }
         },
         created(){
