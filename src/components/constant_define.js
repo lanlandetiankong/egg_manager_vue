@@ -10,3 +10,16 @@ export const FormItemTypeEnum = {
 export const ConstantObj = {
     queryFormCompRef:'queryFormCompRef'
 }
+
+export const FormBaseConfObj = {
+    formItemLayout: {
+        labelCol: {
+            xs: { span: 24 },
+            sm: { span: 4 },
+        },
+        wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 20 },
+        },
+    },
+}

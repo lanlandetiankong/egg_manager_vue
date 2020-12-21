@@ -26,12 +26,12 @@
                     </a-tree-select>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.menu.menuName')"
-                     v-bind="formItemLayout"
+                     v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.menuName"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.menu.iconName')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <span>
                         <a target="_blank" href="https://www.antdv.com/components/icon-cn/">{{$t('langMap.commons.forms.tips.lookUpIcon')}}</a>
@@ -42,17 +42,17 @@
                     <a-input v-decorator="formFieldConf.iconName"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.label')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.label"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.header.weights')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.weights"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.menu.urlJumpType')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-select showSearch allowClear
                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
@@ -64,17 +64,17 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.menu.routerUrl')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.routerUrl"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.menu.hrefUrl')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.hrefUrl"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.remark')"
-                     v-bind="formItemLayout"
+                     v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>
                 </a-form-item>
@@ -83,6 +83,8 @@
     </div>
 </template>
 <script>
+    import {FormBaseConfObj} from "~Components/constant_define";
+
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ATextarea from "ant-design-vue/es/input/TextArea";
 
@@ -127,16 +129,7 @@
                 ]
             };
             return {
-                formItemLayout: {
-                    labelCol: {
-                        xs: { span: 24 },
-                        sm: { span: 4 },
-                    },
-                    wrapperCol: {
-                        xs: { span: 24 },
-                        sm: { span: 20 },
-                    },
-                },
+                FormBaseConfObj,
                 formFieldConf:{
                     menuName:["menuName",{rules:paramsRules.menuName}],
                     iconName:["iconName",{rules:paramsRules.iconName}],

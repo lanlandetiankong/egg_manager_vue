@@ -14,7 +14,7 @@
                 :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.em.tenant.belongTenant')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-select showSearch allowClear
                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
@@ -26,7 +26,7 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.department.belongDepartment')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-tree-select
                         :placeholder="$t('langMap.commons.forms.chooseDepartment')"
@@ -40,22 +40,22 @@
                     </a-tree-select>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.user.userAccount')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.account"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.user.userName')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.userName"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.user.email')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.email"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.user.avatarUrl')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <head-img-upload
                         v-if="visible"
@@ -65,7 +65,7 @@
                     </head-img-upload>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.lockStatus')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-radio-group buttonStyle="solid"
                                    v-decorator="formFieldConf.locked"
@@ -79,6 +79,8 @@
     </div>
 </template>
 <script>
+    import {FormBaseConfObj} from "~Components/constant_define";
+
     import {dealNumberToStr} from '~Assets/js/util/baseUtil';
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import HeadImgUpload from "~Components/regular/common/img/HeadImgUpload";
@@ -116,16 +118,7 @@
                 ]
             };
             return {
-                formItemLayout: {
-                    labelCol: {
-                        xs: { span: 24 },
-                        sm: { span: 4 },
-                    },
-                    wrapperCol: {
-                        xs: { span: 24 },
-                        sm: { span: 20 },
-                    },
-                },
+                FormBaseConfObj,
                 formFieldConf:{
                     account: ["account", {rules:paramsRules.account}],
                     userName: ["userName", {rules: paramsRules.userName}],

@@ -26,27 +26,27 @@
                     </a-tree-select>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.name')"
-                     v-bind="formItemLayout"
+                     v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.code')"
-                     v-bind="formItemLayout"
+                     v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.code"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table..fields.common.Val')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input-number v-decorator="formFieldConf.weights"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.description')"
-                             v-bind="formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.description"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.remark')"
-                     v-bind="formItemLayout"
+                     v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>
                 </a-form-item>
@@ -55,6 +55,8 @@
     </div>
 </template>
 <script>
+    import {FormBaseConfObj} from "~Components/constant_define";
+
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ATextarea from "ant-design-vue/es/input/TextArea";
 
@@ -90,16 +92,7 @@
                 ]
             };
             return {
-                formItemLayout: {
-                    labelCol: {
-                        xs: { span: 24 },
-                        sm: { span: 4 },
-                    },
-                    wrapperCol: {
-                        xs: { span: 24 },
-                        sm: { span: 20 },
-                    },
-                },
+                FormBaseConfObj,
                 formFieldConf:{
                     pid:["pid",{rules:paramsRules.pid}],
                     name:["name",{rules:paramsRules.name}],

@@ -14,12 +14,12 @@
                 :form="createForm"
             >
                 <a-form-item :label="$t('langMap.table.fields.em.permission.permissionName')"
-                     v-bind="formItemLayout"
+                     v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.code')"
-                     v-bind="formItemLayout"
+                     v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.code" :readonly="formObj.ensure == 1">
                         <a-select slot="addonBefore"
@@ -33,7 +33,7 @@
                     </a-input>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.type')"
-                     v-bind="formItemLayout"
+                     v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-select showSearch allowClear
                               :placeholder="$t('langMap.commons.forms.pleaseChoose')"
@@ -45,7 +45,7 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.remark')"
-                     v-bind="formItemLayout"
+                     v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>
                 </a-form-item>
@@ -54,6 +54,8 @@
     </div>
 </template>
 <script>
+    import {FormBaseConfObj} from "~Components/constant_define";
+
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ATextarea from "ant-design-vue/es/input/TextArea";
     export default {
@@ -89,16 +91,7 @@
                 ]
             };
             return {
-                formItemLayout: {
-                    labelCol: {
-                        xs: { span: 24 },
-                        sm: { span: 4 },
-                    },
-                    wrapperCol: {
-                        xs: { span: 24 },
-                        sm: { span: 20 },
-                    },
-                },
+                FormBaseConfObj,
                 formFieldConf:{
                     name:["name",{rules:paramsRules.name}],
                     code:["code",{rules:paramsRules.code}],
