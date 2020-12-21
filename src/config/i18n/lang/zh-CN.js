@@ -67,20 +67,29 @@ export const langMap = {
         actions:{
             detail:'详情'
         },
-        title:{
-            detailForEmployeeInfo:'用户定义详情',
-            detailForAnnouncement:'公告信息详情',
-            detailForAnnouncementTag:'公告标签详情',
-            detailForAnnouncementDraft:'公告草稿详情',
-            detailForDefineMenu:'菜单定义详情',
-            detailForDefineDepartment:'部门定义详情',
-            detailForDefineModule:'模块定义详情',
-            detailForDefineRole:'角色定义详情',
-            detailForDefineJob:'职务详情',
-            detailForDefinePermission:'权限定义详情',
-            detailForDefineTenant:'租户信息详情',
-            detailForDefineForm:'表单定义详情',
-            detailForDefineFormType:'表单类型定义详情',
+        em:{
+            title:{
+                detailForEmployeeInfo:'用户定义详情',
+                detailForAnnouncement:'公告信息详情',
+                detailForAnnouncementTag:'公告标签详情',
+                detailForAnnouncementDraft:'公告草稿详情',
+                detailForDefineMenu:'菜单定义详情',
+                detailForDefineDepartment:'部门定义详情',
+                detailForDefineModule:'模块定义详情',
+                detailForDefineRole:'角色定义详情',
+                detailForDefineJob:'职务详情',
+                detailForDefinePermission:'权限定义详情',
+                detailForDefineTenant:'租户信息详情',
+                detailForDefineForm:'表单定义详情',
+                detailForDefineFormType:'表单类型定义详情',
+            }
+        },
+        obl:{
+            title:{
+                detailForOblArticleCategory:'文章类别详情',
+                detailForOblArticleTag:'文章标签详情',
+                detailForArticleCollectCategory:'文章收藏类别详情',
+            }
         }
     },
     table:{
@@ -177,6 +186,28 @@ export const langMap = {
                 announcementTag:{
                     tagName:'标签名',
                     description:'描述'
+                }
+            },
+            obl:{
+                articleCategory:{
+                    name:'名称',
+                    iconName:'图标',
+                    parentName:'上级名称'
+                },
+                articleTag:{
+                    name:'名称'
+                },
+                articleCollectCategory:{
+                    name:'名称',
+                    iconName:'图标',
+                    parentName:'上级名称'
+                },
+                userAccount:{
+                    account:'账号',
+                    userName:'用户名',
+                    avatarUrl:'头像',
+                    email:'邮箱',
+                    userType:'用户类型',
                 }
             }
         }

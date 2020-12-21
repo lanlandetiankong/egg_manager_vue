@@ -265,7 +265,7 @@
                     detail:{
                         definePermission:{
                             conf:{
-                                title:this.$t('langMap.drawer.title.detailForDefinePermission'),
+                                title:this.$t('langMap.drawer.em.title.detailForDefinePermission'),
                             },
                             visible:false,
                             dataObj:{},
@@ -436,7 +436,7 @@
                                 _this.dealBatchDeleteByIds();
                             },
                             onCancel() {
-                                _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                                _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                             }
                         })
                     }   else {
@@ -458,7 +458,7 @@
                             _this.dealBatchEnusreDefinePermission();
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelStartUsing'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelStartUsing'));
                         }
                     })
                 }
@@ -526,7 +526,7 @@
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                         }
                     })
                 } else {

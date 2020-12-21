@@ -244,7 +244,7 @@
                     detail:{
                         announcementDraft:{
                             conf:{
-                                title:this.$t('langMap.drawer.title.detailForAnnouncementDraft'),
+                                title:this.$t('langMap.drawer.em.title.detailForAnnouncementDraft'),
                             },
                             visible:false,
                             dataObj:{},
@@ -363,7 +363,7 @@
                             _this.dealBatchDeleteByIds();
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                         }
                     })
                 }
@@ -379,7 +379,7 @@
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                         }
                     })
                 } else {
@@ -400,7 +400,7 @@
                             _this.dealBatchPublishAnnouncementDraft();
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelPublish'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelPublish'));
                         }
                     })
                 }
@@ -416,7 +416,7 @@
                             _this.dealPublishOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelPublish'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelPublish'));
                         }
                     })
                 } else {

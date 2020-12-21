@@ -226,7 +226,7 @@
                     detail:{
                         announcement:{
                             conf:{
-                                title:this.$t('langMap.drawer.title.detailForAnnouncement'),
+                                title:this.$t('langMap.drawer.em.title.detailForAnnouncement'),
                             },
                             visible:false,
                             dataObj:{},
@@ -322,7 +322,7 @@
                             _this.dealBatchDel();
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                         }
                     })
                 }
@@ -338,7 +338,7 @@
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                         }
                     })
                 } else {

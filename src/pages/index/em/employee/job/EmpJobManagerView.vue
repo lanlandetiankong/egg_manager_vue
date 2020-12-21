@@ -231,7 +231,7 @@
                     detail:{
                         employeeJob:{
                             conf:{
-                                title:this.$t('langMap.drawer.title.detailForDefineJob'),
+                                title:this.$t('langMap.drawer.em.title.detailForDefineJob'),
                             },
                             visible:false,
                             dataObj:{},
@@ -404,7 +404,7 @@
                             _this.dealBatchDeleteByIds();
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                         }
                     })
                 }
@@ -420,7 +420,7 @@
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                         }
                     })
                 } else {

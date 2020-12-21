@@ -10,43 +10,49 @@
             @ok="() => { $emit('createFormSubmit')}"
         >
             <a-form
-                layout="horizontal"
+                layout="vertical"
                 :form="createForm"
             >
-                <a-form-item :label="$t('langMap.table.fields.em.form.formName')"
-                     v-bind="FormBaseConfObj.formItemLayout"
+                <a-form-item :label="$t('langMap.table.fields.common.superiorName')">
+                    <a-tree-select
+                        :placeholder="$t('langMap.button.placeholder.filterSuperiors')"
+                        showSearch allowClear
+                        :treeNodeFilterProp="treeSelectConf.pid.treeNodeFilterProp"
+                        :treeDefaultExpandAll="treeSelectConf.pid.treeDefaultExpandAll"
+                        v-decorator="formFieldConf.pid"
+                        :treeData="treeSelectConf.pid.selftTreeData"
+                        @change="handleParentTreeOfSearchChange"
+                    >
+                    </a-tree-select>
+                </a-form-item>
+                <a-form-item :label="$t('langMap.table.fields.obl.articleCategory.name')"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.em.form.formTitle')"
+                <a-form-item :label="$t('langMap.table.fields.obl.articleCategory.iconName')"
                              v-bind="FormBaseConfObj.formItemLayout"
                 >
-                    <a-input v-decorator="formFieldConf.title"/>
+                    <span>
+                        <a target="_blank" href="https://www.antdv.com/components/icon-cn/">{{$t('langMap.commons.forms.tips.lookUpIcon')}}</a>
+                        <span v-show="typeof formValObj.iconName != 'undefined' && formValObj.iconName.length > 0">
+                            ( {{$t('langMap.commons.forms.tips.selectedIcon')}} :&nbsp;&nbsp; <a-icon :type="formValObj.iconName"/> &nbsp;&nbsp;)
+                        </span>
+                    </span>
+                    <a-input v-decorator="formFieldConf.iconName"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.common.type')"
+                <a-form-item :label="$t('langMap.table.fields.common.weights')"
                              v-bind="FormBaseConfObj.formItemLayout"
                 >
-                    <a-select showSearch allowClear
-                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                              optionFilterProp="children"
-                              :options="formTypeList"
-                              :filterOption="getFilterOption"
-                              v-decorator="formFieldConf.formTypeId"
-                    >
-                    </a-select>
+                    <a-input v-decorator="formFieldConf.weights"/>
                 </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.description')"
                              v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.description"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.common.weights')"
-                             v-bind="FormBaseConfObj.formItemLayout"
-                >
-                    <a-input-number v-decorator="formFieldConf.weights"/>
-                </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.common.remark')"
-                     v-bind="FormBaseConfObj.formItemLayout"
+                             v-bind="FormBaseConfObj.formItemLayout"
                 >
                     <a-textarea v-decorator="formFieldConf.remark"/>
                 </a-form-item>
@@ -60,33 +66,30 @@
     import AFormItem from "ant-design-vue/es/form/FormItem";
     import ATextarea from "ant-design-vue/es/input/TextArea";
 
-    import {SmartFormDefinitionCreateFormApi} from './smartFormDefinitionCompsApi'
+    import {OblArticleCategoryCreateFormCompApi} from './oblArticleCategoryCreateFormCompApi'
 
     export default {
-        name: "SmartFormDefinitionCreateFormComp",
+        name: "OblArticleCategoryCreateFormComp",
         components: {ATextarea, AFormItem},
         props:{
             visible:Boolean,
             actionType:String,
             formObj:Object,
-            formTypeList:Array
+            parentSelectTrees:Array
         },
         data(){
             var paramsRules ={
                 name:[
-                    {required:true,message:'请填写表单名称!'}
+                    {required:true,message:'请填写名称!'}
                 ],
-                title:[
-                    {required:true,message:'请填写标题!'}
+                iconName:[
+                    {required:true,message:'请填写图标名!'}
                 ],
-                formTypeId:[
-                    {required:true,message:'请选择表单类型!'}
+                pid:[
+                    {required:false,message:'请选择上级!'}
                 ],
                 description:[
-                    {required:true,message:'请填写描述!'}
-                ],
-                weights:[
-                    {required:true,message:'请填写排序值!'}
+                    {required:false,message:'请填写描述!'}
                 ],
                 remark:[
                     {required:false,message:'请填写备注!'}
@@ -96,10 +99,10 @@
                 FormBaseConfObj,
                 formFieldConf:{
                     name:["name",{rules:paramsRules.name}],
-                    title:["title",{rules:paramsRules.title}],
-                    formTypeId:["formTypeId",{rules:paramsRules.formTypeId}],
-                    description:["description",{rules:paramsRules.description}],
+                    iconName:["iconName",{rules:paramsRules.iconName}],
+                    pid:["pid",{rules:paramsRules.pid}],
                     weights:["weights",{rules:paramsRules.weights}],
+                    description:["description",{rules:paramsRules.description}],
                     remark:["remark",{rules:paramsRules.remark}]
                 },
                 createForm:{},
@@ -120,36 +123,50 @@
             dealUpdateFormValue(formObj){
                 var _this = this ;
                 _this.formValObj = _this.formObj ;
-               if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
-                   _this.createForm.updateFields({
-                       name: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.name,
-                       }),
-                       title: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.title,
-                       }),
-                       formTypeId: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.formTypeId,
-                       }),
-                       description: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.description,
-                       }),
-                       weights: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.weights,
-                       }),
-                       remark: _this.$form.createFormField({
-                           ...formObj,
-                           value: formObj.remark,
-                       })
-                   });
-               }
-            }
-
+                if(typeof _this.createForm.updateFields != "undefined"){ //避免未初始化form的时候就调用了updatefield
+                    _this.createForm.updateFields({
+                        name: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.name,
+                        }),
+                        iconName: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.iconName,
+                        }),
+                        pid: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.pid,
+                        }),
+                        weights: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.weights,
+                        }),
+                        description: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.description,
+                        }),
+                        remark: _this.$form.createFormField({
+                            ...formObj,
+                            value: formObj.remark,
+                        })
+                    });
+                }
+            },
+            handleParentTreeOfSearchChange(value){  //[上级文章类别] SelectTree cchange事件
+                console.log("handleParentTreeOfSearchChange",value);
+            },
+            handleCreateActionInit(){   //弹窗展示为[创建-操作]的初始化
+                var _this = this ;
+                _this.treeSelectConf.pid.selftTreeData = _this.parentSelectTrees ;
+            },
+            handleUpdateActionInit(){   //弹窗展示为[更新-操作]的初始化
+                var _this = this ;
+                OblArticleCategoryCreateFormCompApi.getTreeFilterChildrens(_this.formObj.fid).then((res) => { //更新 上级文章类别 树
+                    if(res && res.success){
+                        _this.treeSelectConf.pid.selftTreeData  = res.gridList ;
+                    }
+                })
+            },
         },
         computed:{
             modalCompTitle() {
@@ -180,28 +197,28 @@
                     this.$emit('change', changedFields);
                 },
                 mapPropsToFields:() =>{
-                    //console.log(_this.formObj);
                     return {
                         name: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.name
                         }),
-                        title: this.$form.createFormField({
+                        iconName: this.$form.createFormField({
                             ..._this.formObj,
-                            value: _this.formObj.title
+                            value: _this.formObj.iconName
                         }),
-                        formTypeId: this.$form.createFormField({
+                        pid: this.$form.createFormField({
                             ..._this.formObj,
-                            value: _this.formObj.formTypeId
-                        }),
-                        description: this.$form.createFormField({
-                            ..._this.formObj,
-                            value: _this.formObj.description
+                            value: _this.formObj.pid
                         }),
                         weights: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.weights
                         }),
+                        description: this.$form.createFormField({
+                            ..._this.formObj,
+                            value: _this.formObj.description
+                        }),
+
                         remark: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.remark
@@ -210,12 +227,9 @@
                 }
             });
         },
-        mounted(){
-        },
         watch:{
             formObj: {
                 handler (val, oval) {
-
                     var _this = this ;
                     _this.dealUpdateFormValue(val);
                 },
@@ -224,13 +238,12 @@
             },
             visible:{
                 handler(val,oval){  //隐藏与展示弹窗时监听
-
                     var _this = this ;
                     if(val === true){
                         if("create" == _this.actionType){   //打开=>创建
-
+                            _this.handleCreateActionInit();
                         }   else if("update" == _this.actionType){  //打开=>更新
-
+                            _this.handleUpdateActionInit();
                         }
                     }   else {  //弹窗关闭
                         //console.log("弹窗展示状态变更:关闭");

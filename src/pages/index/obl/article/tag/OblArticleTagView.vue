@@ -58,6 +58,11 @@
                     :rowSelection="rowSelection"
                     @change="handleTableChange"
                 >
+                    <span slot="typeStr" slot-scope="record">
+                        <a-tag color="blue" :key="record.typeStr">
+                            {{record.typeStr}}
+                        </a-tag>
+                    </span>
                     <template slot="action" slot-scope="text,record">
                         <span>
                             <a @click="handleDetailDrawerShow($event,record)">
@@ -72,70 +77,53 @@
         </div>
         <!-- 弹窗dom-区域 -->
         <div>
-            <define-department-create-form-comp
-                v-if="dialogFormConf.initFlag"
-                ref="defineDepartmentCreateFormRef"
+            <obl-article-tag-create-form-comp
+                ref="createFormRef"
                 :visible="dialogFormConf.visible"
                 :formObj="dialogFormObj"
                 :actionType="dialogFormConf.actionType"
-                :parentSelectTrees="binding.pidList"
                 @createFormCancel="handleCreateFormCancel"
                 @createFormSubmit="handleCreateFormSubmit"
             >
-            </define-department-create-form-comp>
+            </obl-article-tag-create-form-comp>
             <row-detail-drawer-comp
-                :drawerConf="drawerConf.detail.defineDepartment.conf"
-                :dataObj="drawerConf.detail.defineDepartment.dataObj"
-                :visible="drawerConf.detail.defineDepartment.visible"
-                :drawerFieldConf="drawerConf.detail.defineDepartment.drawerFieldConf"
+                :drawerConf="drawerConf.detail.articleTag.conf"
+                :dataObj="drawerConf.detail.articleTag.dataObj"
+                :visible="drawerConf.detail.articleTag.visible"
+                :drawerFieldConf="drawerConf.detail.articleTag.drawerFieldConf"
                 @execClose="handleDetailDrawerClose"
             />
         </div>
     </div>
 </template>
 <script>
-    import AFormItem from "ant-design-vue/es/form/FormItem";
-    import ACol from "ant-design-vue/es/grid/Col";
-
-    import {QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
-    import {DepartmentManagerApi} from './departmentManagerApi.js'
+    import {OblArticleTagApi} from './OblArticleTagApi.js'
     import {EggCommonMixin} from '~Layout/mixin/EggCommonMixin';
+    import {QueryMatchType} from '~Components/regular/common/drawer/drawer_define.js'
     import {FormItemTypeEnum,ConstantObj} from "~Components/constant_define";
 
     import QueryFormComp from '~Components/regular/query/QueryFormComp'
-    import DefineDepartmentCreateFormComp from '~Components/index/em/user/employee/department/DefineDepartmentCreateFormComp';
+    import OblArticleTagCreateFormComp from "~Components/index/obl/article/tag/OblArticleTagCreateFormComp";
     import RowDetailDrawerComp from '~Components/regular/common/drawer/RowDetailDrawerComp';
     export default {
-        name: "DepartmentManagerView",
-        components: {QueryFormComp,DefineDepartmentCreateFormComp,RowDetailDrawerComp,ACol, AFormItem},
+        name: "OblArticleTagView",
+        components: {QueryFormComp,OblArticleTagCreateFormComp,RowDetailDrawerComp},
         mixins:[EggCommonMixin],
         data() {
             const textAlignDefault = 'left' ;
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 name:{
-                    fieldLabel:this.$t('langMap.table.fields.em.department.departmentName'),
+                    fieldLabel:this.$t('langMap.table.fields.obl.articleTag.name'),
                     fieldName:'name', matching:QueryMatchType.like,
-                },
-                pid:{
-                    fieldName:'pid', matching:QueryMatchType.equals, drawerAble:false
-                },
-                parentDepartmentName:{
-                    fieldLabel:this.$t('langMap.table.fields.em.department.parentDepartmentName'),
-                    fieldName:'parentDepartmentName',searchAble:false,
-                    isNeedSplit:true,fieldKeySplitArr:['parentDepartment','name']
-                },
-                code:{
-                    fieldLabel:this.$t('langMap.table.fields.common.code'),
-                    fieldName:'code', matching:QueryMatchType.like,
-                },
-                level:{
-                    fieldLabel:this.$t('langMap.table.fields.common.level'),
-                    fieldName:'level', matching:QueryMatchType.equals,value:0
                 },
                 description:{
                     fieldLabel:this.$t('langMap.table.fields.common.description'),
                     fieldName:'description', matching:QueryMatchType.like,
+                },
+                weights:{
+                    fieldLabel:this.$t('langMap.table.fields.common.weights'),
+                    fieldName:'weights', matching:QueryMatchType.equals,
                 },
                 remark:{
                     fieldLabel:this.$t('langMap.table.fields.common.remark'),
@@ -146,40 +134,19 @@
                 ConstantObj,
                 fieldInfoConf:fieldInfoConfObj,
                 binding:{
-                    pidList:[]
+
                 },
                 searchConf:{
                     showAble:false,
                     loadingFlag:false,
                     formItemConf:{
-                        pid: {
-                            key:'pid',
-                            formType:FormItemTypeEnum.TreeSelect,
-                            label:this.$t('langMap.table.fields.common.superiorName'),
-                            decorator:["pid", {rules: []}],
-                            treeDefaultExpandAll:false,
-                            treeNodeFilterProp:"title",
-                            treeData:[]
-                        },
-                        name: {
+                        name:{
                             key:'name',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.common.name'),
+                            label:this.$t('langMap.table.fields.common.tagName'),
                             decorator:["name", {rules: []}],
                         },
-                        code: {
-                            key:'code',
-                            formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.common.code'),
-                            decorator:["code", {rules: []}],
-                        },
-                        level: {
-                            key:'level',
-                            formType:FormItemTypeEnum.InputNumber,
-                            label:this.$t('langMap.table.fields.common.level'),
-                            decorator:["level", {rules: []}],
-                        },
-                        description: {
+                        description:{
                             key:'description',
                             formType:FormItemTypeEnum.Input,
                             label:this.$t('langMap.table.fields.common.description'),
@@ -189,43 +156,27 @@
                             key:'remark',
                             formType:FormItemTypeEnum.Input,
                             label:this.$t('langMap.table.fields.common.remark'),
-                            decorator:["remark", {rules: []}],
+                            decorator:["title", {rules: []}],
                         }
-                    }
+                    },
                 },
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.em.department.departmentName'),
+                        title: this.$t('langMap.table.fields.obl.articleTag.name'),
                         align:textAlignDefault,
                         dataIndex: 'name',
-                        key: 'name',
+                        key: 'name'
                     }, {
-                        title: this.$t('langMap.table.fields.em.department.parentDepartmentName'),
-                        align:textAlignDefault,
-                        dataIndex: 'parentDepartment.name',
-                        key: 'parentDepartment.name',
-                        width:100,
-                    },{
-                        title: this.$t('langMap.table.fields.common.code'),
-                        align:textAlignDefault,
-                        dataIndex: 'code',
-                        key: 'code',
-                    },{
-                        title: this.$t('langMap.table.fields.common.level'),
-                        align:textAlignDefault,
-                        dataIndex: 'level',
-                        key: 'level',
-                    },{
-                        title: this.$t('langMap.table.fields.common.weights'),
-                        align:textAlignDefault,
-                        dataIndex: 'weights',
-                        key: 'weights',
-                    },{
                         title: this.$t('langMap.table.fields.common.description'),
                         align:textAlignDefault,
                         dataIndex: 'description',
                         key: 'description',
+                    }, {
+                        title: this.$t('langMap.table.fields.common.weights'),
+                        align:textAlignDefault,
+                        dataIndex: 'weights',
+                        key: 'weights'
                     },{
                         title:this.$t('langMap.table.header.operation'),
                         align:textAlignDefault,
@@ -251,24 +202,19 @@
                 },
                 tableCheckIdList: [],
                 dialogFormConf: {
-                    initFlag:false,
                     visible: false,
                     actionType: "create"
                 },
                 dialogFormObj: {
                     name: '',
-                    code: '',
-                    level:0,
-                    weights:0,
-                    description:'',
-                    pid:'',
-                    type: ''
+                    description: '',
+                    weights:0
                 },
                 drawerConf:{
                     detail:{
-                        defineDepartment:{
+                        articleTag:{
                             conf:{
-                                title:this.$t('langMap.drawer.em.title.detailForDefineDepartment'),
+                                title:this.$t('langMap.drawer.obl.title.detailForOblArticleTag'),
                             },
                             visible:false,
                             dataObj:{},
@@ -295,17 +241,7 @@
         },
         methods: {
             dealGetDialogRefFormObj() {    //返回 弹窗表单 的form对象
-                return this.$refs.defineDepartmentCreateFormRef.createForm;
-            },
-            dealGetPidTreeData(){  //取得 部门定义-树形数据
-                var _this = this ;
-                DepartmentManagerApi.getAllDefineDepartmentTree().then((res) => {
-                    if(res && res.success){
-                        if(res.gridList){
-                            _this.binding.pidList = res.gridList ;
-                        }
-                    }
-                })
+                return this.$refs.createFormRef.createForm;
             },
             changeQueryLoading(loadingFlag){   //修改[表格搜索]是否在 加载状态中
                 if(typeof loadingFlag == "undefined" || loadingFlag == null){
@@ -316,7 +252,7 @@
             dealBatchDeleteByIds() {  //批量删除
                 var _this = this;
                 var delIds = _this.tableCheckIdList;
-                DepartmentManagerApi.batchDeleteByIds(delIds).then((res) => {
+                OblArticleTagApi.batchDeleteByIds(delIds).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
@@ -327,7 +263,7 @@
             },
             dealDelOneRowById(delId) {   //根据id 删除
                 var _this = this;
-                DepartmentManagerApi.deleteById(delId).then((res) => {
+                OblArticleTagApi.deleteById(delId).then((res) => {
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
@@ -336,12 +272,12 @@
                     }
                 })
             },
-            handleSearchFormQuery(e) {  //带查询条件 检索部门列表
+            handleSearchFormQuery(e,values) {   //带查询条件 检索列表
                 var _this = this ;
                 //取得 bean 形式 的查询条件数组
                 var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
                 _this.changeQueryLoading(true);
-                DepartmentManagerApi.getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter).then((res) => {
+                OblArticleTagApi.getPageQuery(searchFieldArr,_this.tableConf.pagination,_this.tableConf.sorter).then((res) => {
                     if (res) {
                         this.tableConf.data = res.gridList;
                         if(res.vpage){ //总个数
@@ -355,17 +291,13 @@
                     _this.changeQueryLoading(false);
                 })
             },
-            handleCreateByForm() {     //新增部门按钮-点击
+            handleCreateByForm() {     //新增按钮-点击
                 var _this = this;
-                _this.dialogFormConf.initFlag = true ;  //弹窗初始化
                 _this.dialogFormConf.visible = true;   //显示弹窗
                 _this.dialogFormConf.actionType = "create";
-                _this.dialogFormObj = {
-                    level:0,
-                    weights:0,
-                };
+                _this.dialogFormObj = {};
             },
-            handleUpdateByForm() {  //更新部门按钮-点击
+            handleUpdateByForm() {  //更新按钮-点击
                 var _this = this;
                 if (_this.tableCheckIdList.length < 1) {
                     this.$message.warning(this.$t('langMap.message.warning.pleaseSelectTheOnlyRowOfDataForUpdate'));
@@ -374,10 +306,9 @@
                 } else {
                     var selectRowId = _this.tableCheckIdList[0];
                     if (selectRowId) {
-                        DepartmentManagerApi.getItemById(selectRowId).then((res) => {
+                        OblArticleTagApi.getItemById(selectRowId).then((res) => {
                             var selectUserBean = res.bean;
                             if (selectUserBean) {
-                                _this.dialogFormConf.initFlag = true ;  //弹窗初始化
                                 _this.dialogFormConf.visible = true;   //显示弹窗
                                 _this.dialogFormConf.actionType = "update";
                                 _this.dialogFormObj = selectUserBean;
@@ -408,11 +339,11 @@
                     })
                 }
             },
-            handleCreateFormCancel(e) {  // 创建/更新 部门定义表单->取消
+            handleCreateFormCancel(e) {  // 创建/更新->取消
                 var _this = this;
                 _this.dialogFormConf.visible = false;
             },
-            handleCreateFormSubmit(e) {   // 创建/更新 部门表单->提交
+            handleCreateFormSubmit(e) {   // 创建/更新->提交
                 var _this = this;
                 const dialogFormObj = _this.dealGetDialogRefFormObj();
                 dialogFormObj.validateFields((err, values) => {
@@ -421,7 +352,7 @@
                     }
                     var closeDialogFlag = true;
                     if (_this.dialogFormConf.actionType == "create") {        //新建-提交
-                        DepartmentManagerApi.createByForm(values).then((res) => {
+                        OblArticleTagApi.createByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -439,7 +370,7 @@
                         })
                     } else if (_this.dialogFormConf.actionType == "update") {   //更新-提交
                         values['fid'] = _this.dialogFormObj.fid;   //提交时，回填fid值
-                        DepartmentManagerApi.updateByForm(values).then((res) => {
+                        OblArticleTagApi.updateByForm(values).then((res) => {
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
@@ -484,41 +415,27 @@
                 this.tableConf.sorter = sorter ;
                 this.handleSearchFormQuery();
             },
-            handleParentTreeOfSearchChange(value){  //[上级部门] SelectTree cchange事件
-                console.log("handleParentTreeOfSearchChange",value);
-            },
-            handleDetailDrawerShow(e,record){   //Drawer-部门定义 详情展示
+            handleDetailDrawerShow(e,record){   //Drawer 详情展示
                 if(typeof record != "undefined"){
-                    this.drawerConf.detail.defineDepartment.dataObj = record ;
-                    this.drawerConf.detail.defineDepartment.visible = true ;
+                    this.drawerConf.detail.articleTag.dataObj = record ;
+                    this.drawerConf.detail.articleTag.visible = true ;
                 }   else {
                     this.$message.error(this.$t('langMap.message.warning.openInvalidRowDetails'));
                 }
             },
-            handleDetailDrawerClose(e){ //Drawer-部门定义 详情关闭
-                this.drawerConf.detail.defineDepartment.visible = false ;
+            handleDetailDrawerClose(e){ //Drawer 详情关闭
+                this.drawerConf.detail.articleTag.visible = false ;
             }
         },
-        watch:{
-            binding:{
-                handler (val, oval) {
-                    //绑定枚举值变化监听并处理
-                    this.searchConf.formItemConf.pid.treeData = this.binding.pidList ;
-                },
-                deep: true,
-                immediate:true
-            }
-        },
+        watch:{},
         created(){
             this.handleSearchFormQuery();
-            this.dealGetPidTreeData();
         },
         destroyed(){
-            console.log("部门管理-页面销毁 ...")
+            console.log("文章类别-页面销毁 ...")
         }
     }
 </script>
-
-<style scoped>
+<style>
 
 </style>

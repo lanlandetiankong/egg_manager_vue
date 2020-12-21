@@ -67,20 +67,29 @@ export const langMap = {
         actions:{
             detail:'Detail'
         },
-        title:{
-            detailForEmployeeInfo:'Detail for employee info',
-            detailForAnnouncement:'Detail for announcement',
-            detailForAnnouncementTag:'Detail for announcement tag',
-            detailForAnnouncementDraft:'Detail for announcement draft',
-            detailForDefineMenu:'Detail for define menu',
-            detailForDefineDepartment:'Detail for define department',
-            detailForDefineModule:'Detail for define module',
-            detailForDefineRole:'Detail for define role',
-            detailForDefineJob:'Detail for define job',
-            detailForDefinePermission:'Detail for define permission',
-            detailForDefineTenant:'Detail for define tenant ',
-            detailForDefineForm:'Detail for define form ',
-            detailForDefineFormType:'Detail for define form type',
+        em:{
+            title:{
+                detailForEmployeeInfo:'Detail for employee account',
+                detailForAnnouncement:'Detail for announcement',
+                detailForAnnouncementTag:'Detail for announcement tag',
+                detailForAnnouncementDraft:'Detail for announcement draft',
+                detailForDefineMenu:'Detail for define menu',
+                detailForDefineDepartment:'Detail for define department',
+                detailForDefineModule:'Detail for define module',
+                detailForDefineRole:'Detail for define role',
+                detailForDefineJob:'Detail for define job',
+                detailForDefinePermission:'Detail for define permission',
+                detailForDefineTenant:'Detail for define tenant ',
+                detailForDefineForm:'Detail for define form ',
+                detailForDefineFormType:'Detail for define form type',
+            }
+        },
+        obl:{
+            title:{
+                detailForOblArticleCategory:'Detail for article category',
+                detailForOblArticleTag:'Detail for article tag',
+                detailForArticleCollectCategory:'Detail for article collect category',
+            }
         }
     },
     table:{
@@ -177,6 +186,28 @@ export const langMap = {
                 announcementTag:{
                     tagName:'Tag Name',
                     description:'Description'
+                }
+            },
+            obl:{
+                articleCategory:{
+                    name:'Name',
+                    iconName:'Icon name',
+                    parentName:'Parent name'
+                },
+                articleTag:{
+                    name:'Name'
+                },
+                articleCollectCategory:{
+                    name:'Name',
+                    iconName:'Icon name',
+                    parentName:'Parent name'
+                },
+                userAccount:{
+                    account:'User account',
+                    userName:'User name',
+                    avatarUrl:'Avatar',
+                    email:'Email',
+                    userType:'User type',
                 }
             }
         },

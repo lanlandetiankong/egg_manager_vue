@@ -347,7 +347,7 @@
                     detail:{
                         defineMenu:{
                             conf:{
-                                title:this.$t('langMap.drawer.title.detailForDefineMenu'),
+                                title:this.$t('langMap.drawer.em.title.detailForDefineMenu'),
                             },
                             visible:false,
                             dataObj:{},
@@ -520,7 +520,7 @@
                             _this.dealBatchDeleteByIds();
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                         }
                     })
                 }
@@ -617,7 +617,7 @@
                             _this.dealDelOneRowById(delId);
                         },
                         onCancel() {
-                            _this.$message.info(_this.$t('langMap.message.info.actionOfCancelDelete'));
+                            _this.$message.info(_this.$t('langMap.message.account.actionOfCancelDelete'));
                         }
                     })
                 } else {
