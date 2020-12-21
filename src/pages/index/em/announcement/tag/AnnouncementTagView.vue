@@ -114,11 +114,11 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 name:{
-                    fieldLabel:this.$t('langMap.table.fields.announcementTag.tagName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.announcementTag.tagName'),
                     fieldName:'name', matching:QueryMatchType.like,
                 },
                 description:{
-                    fieldLabel:this.$t('langMap.table.fields.announcementTag.description'),
+                    fieldLabel:this.$t('langMap.table.fields.em.announcementTag.description'),
                     fieldName:'description', matching:QueryMatchType.like,
                 },
                 weights:{
@@ -163,12 +163,12 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.announcementTag.tagName'),
+                        title: this.$t('langMap.table.fields.em.announcementTag.tagName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name'
                     }, {
-                        title: this.$t('langMap.table.fields.announcementTag.description'),
+                        title: this.$t('langMap.table.fields.em.announcementTag.description'),
                         align:textAlignDefault,
                         dataIndex: 'description',
                         key: 'description',

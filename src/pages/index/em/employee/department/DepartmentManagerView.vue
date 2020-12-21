@@ -114,14 +114,14 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 name:{
-                    fieldLabel:this.$t('langMap.table.fields.department.departmentName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.department.departmentName'),
                     fieldName:'name', matching:QueryMatchType.like,
                 },
                 pid:{
                     fieldName:'pid', matching:QueryMatchType.equals, drawerAble:false
                 },
                 parentDepartmentName:{
-                    fieldLabel:this.$t('langMap.table.fields.department.parentDepartmentName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.department.parentDepartmentName'),
                     fieldName:'parentDepartmentName',searchAble:false,
                     isNeedSplit:true,fieldKeySplitArr:['parentDepartment','name']
                 },
@@ -196,12 +196,12 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.department.departmentName'),
+                        title: this.$t('langMap.table.fields.em.department.departmentName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name',
                     }, {
-                        title: this.$t('langMap.table.fields.department.parentDepartmentName'),
+                        title: this.$t('langMap.table.fields.em.department.parentDepartmentName'),
                         align:textAlignDefault,
                         dataIndex: 'parentDepartment.name',
                         key: 'parentDepartment.name',

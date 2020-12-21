@@ -139,7 +139,7 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 name:{
-                    fieldLabel:this.$t('langMap.table.fields.permission.permissionName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.permission.permissionName'),
                     fieldName:'name',matching:QueryMatchType.like,type:DrawerFieldTypeEnum.String
                 },
                 code:{
@@ -174,7 +174,7 @@
                         name:{
                             key:'name',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.permission.permissionName'),
+                            label:this.$t('langMap.table.fields.em.permission.permissionName'),
                             decorator:["name", {rules: []}],
                         },
                         code: {

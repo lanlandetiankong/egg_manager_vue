@@ -216,30 +216,30 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 account:{
-                    fieldLabel:this.$t('langMap.table.fields.user.userAccount'),
+                    fieldLabel:this.$t('langMap.table.fields.em.user.userAccount'),
                     fieldName:'account', matching:QueryMatchType.like,
                 },
                 userName:{
-                    fieldLabel:this.$t('langMap.table.fields.user.userName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.user.userName'),
                     fieldName:'userName', matching:QueryMatchType.like,
                 },
                 belongTenantName:{
-                    fieldLabel:this.$t('langMap.table.fields.tenant.belongTenant'),
+                    fieldLabel:this.$t('langMap.table.fields.em.tenant.belongTenant'),
                 },
                 belongDepartmentName:{
-                    fieldLabel:this.$t('langMap.table.fields.department.belongDepartment'),
+                    fieldLabel:this.$t('langMap.table.fields.em.department.belongDepartment'),
                     isNeedSplit:true,fieldKeySplitArr:['belongDepartment','name'],
                 },
                 email:{
-                    fieldLabel:this.$t('langMap.table.fields.user.email'),
+                    fieldLabel:this.$t('langMap.table.fields.em.user.email'),
                     fieldName:'email', matching:QueryMatchType.like,
                 },
                 userType:{
-                    fieldLabel:this.$t('langMap.table.fields.user.userType'),
+                    fieldLabel:this.$t('langMap.table.fields.em.user.userType'),
                     fieldName:'userType', matching:QueryMatchType.equals,drawerAble:false
                 },
                 userTypeStr:{
-                    fieldLabel:this.$t('langMap.table.fields.user.userType'),
+                    fieldLabel:this.$t('langMap.table.fields.em.user.userType'),
                     searchAble:false
                 },
                 belongTenantId:{
@@ -268,14 +268,14 @@
                         belongTenantId:{
                             key:'belongTenantId',
                             formType:FormItemTypeEnum.Select,
-                            label:this.$t('langMap.table.fields.tenant.belongTenant'),
+                            label:this.$t('langMap.table.fields.em.tenant.belongTenant'),
                             decorator:["belongTenantId", {rules: []}],
                             options:[]
                         },
                         belongDepartmentId:{
                             key:'belongDepartmentId',
                             formType:FormItemTypeEnum.TreeSelect,
-                            label:this.$t('langMap.table.fields.department.belongDepartment'),
+                            label:this.$t('langMap.table.fields.em.department.belongDepartment'),
                             decorator:["belongDepartmentId", {rules: []}],
                             treeDefaultExpandAll:false,
                             treeNodeFilterProp:"title",
@@ -284,19 +284,19 @@
                         account:{
                             key:'account',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.user.userAccount'),
+                            label:this.$t('langMap.table.fields.em.user.userAccount'),
                             decorator:["account", {rules: []}],
                         },
                         userName:{
                             key:'userName',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.user.userName'),
+                            label:this.$t('langMap.table.fields.em.user.userName'),
                             decorator:["userName", {rules: []}],
                         },
                         email:{
                             key:'email',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.user.email'),
+                            label:this.$t('langMap.table.fields.em.user.email'),
                             decorator:["email", {rules: []}],
                         },
                         userType:{
@@ -324,32 +324,32 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.user.userAccount'),
+                        title: this.$t('langMap.table.fields.em.user.userAccount'),
                         align:textAlignDefault,
                         dataIndex: 'account',
                         key: 'account',
                         sorter:true,
                         scopedSlots: { customRender: 'account' },
                     },  {
-                        title: this.$t('langMap.table.fields.user.userName'),
+                        title: this.$t('langMap.table.fields.em.user.userName'),
                         align:textAlignDefault,
                         dataIndex: 'userName',
                         sorter:true,
                         key: 'userName',
                     }, {
-                        title: this.$t('langMap.table.fields.tenant.belongTenant'),
+                        title: this.$t('langMap.table.fields.em.tenant.belongTenant'),
                         align:textAlignDefault,
                         dataIndex: 'belongTenant.name',
                         sorter:true,
                         key: 'belongTenant.name',
                     },  {
-                        title: this.$t('langMap.table.fields.department.belongDepartment'),
+                        title: this.$t('langMap.table.fields.em.department.belongDepartment'),
                         align:textAlignDefault,
                         dataIndex: 'belongDepartment.name',
                         sorter:true,
                         key: 'belongDepartment.name',
                     }, {
-                        title: this.$t('langMap.table.fields.user.email'),
+                        title: this.$t('langMap.table.fields.em.user.email'),
                         align:textAlignDefault,
                         dataIndex: 'email',
                         key: 'email',
@@ -359,7 +359,7 @@
                         key: 'userTypeStr',
                         scopedSlots: { customRender: 'userTypeStr' },
                     },{
-                        title: this.$t('langMap.table.fields.user.locked'),
+                        title: this.$t('langMap.table.fields.em.user.locked'),
                         align:textAlignDefault,
                         key: 'locked',
                         scopedSlots: { customRender: 'locked' },

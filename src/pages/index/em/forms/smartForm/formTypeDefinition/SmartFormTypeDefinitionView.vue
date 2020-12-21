@@ -124,7 +124,7 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 name:{
-                    fieldLabel:this.$t('langMap.table.fields.formType.formTypeName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.formType.formTypeName'),
                     fieldName:'name', matching:QueryMatchType.like
                 },
                 description:{
@@ -150,7 +150,7 @@
                         name:{
                             key:'name',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.formType.formTypeName'),
+                            label:this.$t('langMap.table.fields.em.formType.formTypeName'),
                             decorator:["name", {rules: []}],
                         },
                         description:{
@@ -170,7 +170,7 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.formType.formTypeName'),
+                        title: this.$t('langMap.table.fields.em.formType.formTypeName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name'

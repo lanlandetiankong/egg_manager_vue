@@ -93,22 +93,22 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 title:{
-                    fieldLabel:this.$t('langMap.table.fields.announcement.title'),
+                    fieldLabel:this.$t('langMap.table.fields.em.announcement.title'),
                     fieldName:'title', matching:QueryMatchType.like,
                 },
                 keyWord:{
-                    fieldLabel:this.$t('langMap.table.fields.announcement.keyWord'),
+                    fieldLabel:this.$t('langMap.table.fields.em.announcement.keyWord'),
                     fieldName:'keyWord', matching:QueryMatchType.like,
                 },
                 tagIds:{
                     fieldName:'tagIds', matching:QueryMatchType.like,drawerAble:false,
                 },
                 tagNameOfStr:{
-                    fieldLabel:this.$t('langMap.table.fields.announcement.tagNameOfStr'),
+                    fieldLabel:this.$t('langMap.table.fields.em.announcement.tagNameOfStr'),
                     fieldName:'tagNameOfStr',searchAble:false,
                 },
                 content:{
-                    fieldLabel:this.$t('langMap.table.fields.announcement.content'),
+                    fieldLabel:this.$t('langMap.table.fields.em.announcement.content'),
                     fieldName:'content', matching:QueryMatchType.like,type:DrawerFieldTypeEnum.HtmlDom
                 },
                 remark:{
@@ -129,26 +129,26 @@
                         title: {
                             key:'title',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.announcement.title'),
+                            label:this.$t('langMap.table.fields.em.announcement.title'),
                             decorator:["title", {rules: []}],
                         },
                         keyWord: {
                             key:'keyWord',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.announcement.keyWord'),
+                            label:this.$t('langMap.table.fields.em.announcement.keyWord'),
                             decorator:["keyWord", {rules: []}],
                         },
                         tagIds: {
                             key:'tagIds',
                             formType:FormItemTypeEnum.Select,
-                            label:this.$t('langMap.table.fields.announcement.tagNameOfStr'),
+                            label:this.$t('langMap.table.fields.em.announcement.tagNameOfStr'),
                             decorator:["tagIds", {rules: []}],
                             options:[]
                         },
                         content:{
                             key:'content',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.announcement.content'),
+                            label:this.$t('langMap.table.fields.em.announcement.content'),
                             decorator:["content", {rules: []}],
                         }
                     }
@@ -156,31 +156,31 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.announcement.title'),
+                        title: this.$t('langMap.table.fields.em.announcement.title'),
                         align:textAlignDefault,
                         dataIndex: 'title',
                         key: 'title',
                         width:100,
                     }, {
-                        title: this.$t('langMap.table.fields.announcement.keyWord'),
+                        title: this.$t('langMap.table.fields.em.announcement.keyWord'),
                         align:textAlignDefault,
                         dataIndex: 'keyWord',
                         key: 'keyWord',
                         width:100,
                     },{
-                        title: this.$t('langMap.table.fields.announcement.tagNameOfStr'),
+                        title: this.$t('langMap.table.fields.em.announcement.tagNameOfStr'),
                         align:textAlignDefault,
                         key: 'tagNames',
                         width:150,
                         scopedSlots: { customRender: 'tagNamesRender' },
                     }, {
-                        title: this.$t('langMap.table.fields.announcement.content'),
+                        title: this.$t('langMap.table.fields.em.announcement.content'),
                         align:textAlignDefault,
                         dataIndex: 'shortContent',
                         width:300,
                         key: 'shortContent',
                     },  {
-                        title: this.$t('langMap.table.fields.department.publishDepartment'),
+                        title: this.$t('langMap.table.fields.em.department.publishDepartment'),
                         align:textAlignDefault,
                         dataIndex: 'publishDepartment',
                         width:100,

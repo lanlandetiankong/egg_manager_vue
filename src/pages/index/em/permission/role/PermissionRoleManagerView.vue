@@ -156,7 +156,7 @@
             const textAlignDefault = 'left';
             const fieldInfoConfObj = {
                 name:{
-                    fieldLabel:this.$t('langMap.table.fields.permission.permissionName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.permission.permissionName'),
                     fieldName:'name', matching:QueryMatchType.like
                 },
                 code:{
@@ -185,7 +185,7 @@
                         name:{
                             key:'name',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.permission.permissionName'),
+                            label:this.$t('langMap.table.fields.em.permission.permissionName'),
                             decorator:["name", {rules: []}],
                         },
                         code:{
@@ -212,7 +212,7 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.permission.permissionName'),
+                        title: this.$t('langMap.table.fields.em.permission.permissionName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name'

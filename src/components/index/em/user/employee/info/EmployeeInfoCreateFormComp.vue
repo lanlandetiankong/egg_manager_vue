@@ -13,7 +13,7 @@
                 layout="vertical"
                 :form="createForm"
             >
-                <a-form-item :label="$t('langMap.table.fields.tenant.belongTenant')"
+                <a-form-item :label="$t('langMap.table.fields.em.tenant.belongTenant')"
                              v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear
@@ -25,7 +25,7 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.department.belongDepartment')"
+                <a-form-item :label="$t('langMap.table.fields.em.department.belongDepartment')"
                              v-bind="formItemLayout"
                 >
                     <a-tree-select
@@ -39,22 +39,22 @@
                     >
                     </a-tree-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.user.userAccount')"
+                <a-form-item :label="$t('langMap.table.fields.em.user.userAccount')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.account"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.user.userName')"
+                <a-form-item :label="$t('langMap.table.fields.em.user.userName')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.userName"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.user.email')"
+                <a-form-item :label="$t('langMap.table.fields.em.user.email')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.email"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.user.avatarUrl')"
+                <a-form-item :label="$t('langMap.table.fields.em.user.avatarUrl')"
                              v-bind="formItemLayout"
                 >
                     <head-img-upload

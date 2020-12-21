@@ -123,7 +123,7 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 name:{
-                    fieldLabel:this.$t('langMap.table.fields.job.jobName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.job.jobName'),
                     fieldName:'name', matching:QueryMatchType.like,
                 },
                 type:{
@@ -179,7 +179,7 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.job.jobName'),
+                        title: this.$t('langMap.table.fields.em.job.jobName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name',

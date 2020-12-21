@@ -126,7 +126,7 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 name:{
-                    fieldLabel:this.$t('langMap.table.fields.module.moduleName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.module.moduleName'),
                     fieldName:'name',matching:QueryMatchType.like,
                 },
                 code:{
@@ -134,7 +134,7 @@
                     fieldName:'code',matching:QueryMatchType.like
                 },
                 iconVal:{
-                    fieldLabel:this.$t('langMap.table.fields.module.iconName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.module.iconName'),
                     searchAble:false, fieldName:'iconVal',matching:QueryMatchType.like
                 },
                 type:{
@@ -159,7 +159,7 @@
                         name:{
                             key:'name',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.module.moduleName'),
+                            label:this.$t('langMap.table.fields.em.module.moduleName'),
                             decorator:["name", {rules: []}],
                         },
                         code:{
@@ -186,7 +186,7 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.module.moduleName'),
+                        title: this.$t('langMap.table.fields.em.module.moduleName'),
                         align:textAlignDefault,
                         dataIndex: 'name',
                         key: 'name'
@@ -196,7 +196,7 @@
                         dataIndex: 'code',
                         key: 'code'
                     }, {
-                        title: this.$t('langMap.table.fields.module.iconName'),
+                        title: this.$t('langMap.table.fields.em.module.iconName'),
                         align:textAlignDefault,
                         dataIndex: 'iconVal',
                         key: 'iconVal',

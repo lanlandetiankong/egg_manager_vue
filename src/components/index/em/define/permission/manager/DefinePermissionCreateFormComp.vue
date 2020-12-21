@@ -13,7 +13,7 @@
                 layout="vertical"
                 :form="createForm"
             >
-                <a-form-item :label="$t('langMap.table.fields.permission.permissionName')"
+                <a-form-item :label="$t('langMap.table.fields.em.permission.permissionName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>

@@ -25,12 +25,12 @@
                     >
                     </a-tree-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.menu.menuName')"
+                <a-form-item :label="$t('langMap.table.fields.em.menu.menuName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.menuName"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.menu.iconName')"
+                <a-form-item :label="$t('langMap.table.fields.em.menu.iconName')"
                              v-bind="formItemLayout"
                 >
                     <span>
@@ -51,7 +51,7 @@
                 >
                     <a-input v-decorator="formFieldConf.weights"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.menu.urlJumpType')"
+                <a-form-item :label="$t('langMap.table.fields.em.menu.urlJumpType')"
                              v-bind="formItemLayout"
                 >
                     <a-select showSearch allowClear
@@ -63,12 +63,12 @@
                     >
                     </a-select>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.menu.routerUrl')"
+                <a-form-item :label="$t('langMap.table.fields.em.menu.routerUrl')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.routerUrl"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.menu.hrefUrl')"
+                <a-form-item :label="$t('langMap.table.fields.em.menu.hrefUrl')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.hrefUrl"/>

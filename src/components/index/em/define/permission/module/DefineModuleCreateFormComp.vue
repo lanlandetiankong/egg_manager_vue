@@ -13,7 +13,7 @@
                 layout="vertical"
                 :form="createForm"
             >
-                <a-form-item :label="$t('langMap.table.fields.module.moduleName')"
+                <a-form-item :label="$t('langMap.table.fields.em.module.moduleName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
@@ -23,7 +23,7 @@
                 >
                     <a-input v-decorator="formFieldConf.code"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.menu.iconName')"
+                <a-form-item :label="$t('langMap.table.fields.em.menu.iconName')"
                              v-bind="formItemLayout"
                 >
                     <span>

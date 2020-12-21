@@ -37,7 +37,7 @@
                         </a-form-item>
                     </a-col>
                     <a-col :span="formLayout.defaultColSpan">
-                        <a-form-item :label="$t('langMap.table.fields.department.publishDepartment')">
+                        <a-form-item :label="$t('langMap.table.fields.em.department.publishDepartment')">
                             <a-select showSearch allowClear
                                       :placeholder="$t('langMap.commons.forms.pleaseChoose')"
                                       style="width: 180px"

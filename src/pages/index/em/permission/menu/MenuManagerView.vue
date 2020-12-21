@@ -147,14 +147,14 @@
             //字段配置(Query/Drawer)
             const fieldInfoConfObj = {
                 menuName:{
-                    fieldLabel:this.$t('langMap.table.fields.menu.menuName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.menu.menuName'),
                     fieldName:'menuName',matching:QueryMatchType.like
                 },
                 pid:{
                     fieldName:'pid',matching:QueryMatchType.equals,drawerAble:false
                 },
                 parentMenuName:{
-                    fieldLabel:this.$t('langMap.table.fields.menu.parentMenuName'),
+                    fieldLabel:this.$t('langMap.table.fields.em.menu.parentMenuName'),
                     fieldName:'parentMenuName',searchAble:false,
                     fieldKeySplitArr:['parentMenu','menuName'],isNeedSplit:true
                 },
@@ -163,15 +163,15 @@
                     fieldName:'label',matching:QueryMatchType.like
                 },
                 routerUrl:{
-                    fieldLabel:this.$t('langMap.table.fields.menu.routerUrl'),
+                    fieldLabel:this.$t('langMap.table.fields.em.menu.routerUrl'),
                     fieldName:'routerUrl',matching:QueryMatchType.like
                 },
                 hrefUrl:{
-                    fieldLabel:this.$t('langMap.table.fields.menu.hrefUrl'),
+                    fieldLabel:this.$t('langMap.table.fields.em.menu.hrefUrl'),
                     fieldName:'name',matching:QueryMatchType.like
                 },
                 urlJumpType:{
-                    fieldLabel:this.$t('langMap.table.fields.menu.urlJumpType'),
+                    fieldLabel:this.$t('langMap.table.fields.em.menu.urlJumpType'),
                     fieldName:'urlJumpType',matching:QueryMatchType.like
                 },
                 remark:{
@@ -193,13 +193,13 @@
                         menuName:{
                             key:'menuName',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.menu.menuName'),
+                            label:this.$t('langMap.table.fields.em.menu.menuName'),
                             decorator:["menuName", {rules: []}],
                         },
                         pid:{
                             key:'pid',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.menu.parentMenuName'),
+                            label:this.$t('langMap.table.fields.em.menu.parentMenuName'),
                             decorator:["pid", {rules: []}],
                             treeDefaultExpandAll:false,
                             treeNodeFilterProp:"title",
@@ -214,19 +214,19 @@
                         routerUrl:{
                             key:'routerUrl',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.menu.routerUrl'),
+                            label:this.$t('langMap.table.fields.em.menu.routerUrl'),
                             decorator:["routerUrl", {rules: []}],
                         },
                         hrefUrl:{
                             key:'hrefUrl',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.menu.hrefUrl'),
+                            label:this.$t('langMap.table.fields.em.menu.hrefUrl'),
                             decorator:["hrefUrl", {rules: []}],
                         },
                         urlJumpType:{
                             key:'urlJumpType',
                             formType:FormItemTypeEnum.Input,
-                            label:this.$t('langMap.table.fields.menu.urlJumpType'),
+                            label:this.$t('langMap.table.fields.em.menu.urlJumpType'),
                             decorator:["urlJumpType", {rules: []}],
                             options:[]
                         },
@@ -241,19 +241,19 @@
                 tableConf: {
                     data: [],
                     columns: [{
-                        title: this.$t('langMap.table.fields.menu.menuName'),
+                        title: this.$t('langMap.table.fields.em.menu.menuName'),
                         align:textAlignDefault,
                         dataIndex: 'menuName',
                         key: 'menuName',
                         width:100,
                     },{
-                        title: this.$t('langMap.table.fields.menu.parentMenuName'),
+                        title: this.$t('langMap.table.fields.em.menu.parentMenuName'),
                         align:textAlignDefault,
                         dataIndex: 'parentMenu.menuName',
                         key: 'parentMenu.menuName',
                         width:100,
                     },{
-                        title: this.$t('langMap.table.fields.menu.iconName'),
+                        title: this.$t('langMap.table.fields.em.menu.iconName'),
                         align:textAlignDefault,
                         dataIndex: 'iconName',
                         key: 'iconName',
@@ -274,7 +274,7 @@
                         key: 'level',
                         width:70
                     },{
-                        title:this.$t('langMap.table.fields.menu.urlJumpType'),
+                        title:this.$t('langMap.table.fields.em.menu.urlJumpType'),
                         align:textAlignDefault,
                         dataIndex: 'urlJumpTypeStr',
                         key: 'urlJumpTypeStr',
@@ -283,13 +283,13 @@
                             customRender:'urlJumpTypeStrRender'
                         }
                     },{
-                        title: this.$t('langMap.table.fields.menu.routerUrl'),
+                        title: this.$t('langMap.table.fields.em.menu.routerUrl'),
                         align:textAlignDefault,
                         dataIndex: 'routerUrl',
                         key: 'routerUrl',
                         width:140
                     },{
-                        title: this.$t('langMap.table.fields.menu.hrefUrl'),
+                        title: this.$t('langMap.table.fields.em.menu.hrefUrl'),
                         align:textAlignDefault,
                         dataIndex: 'hrefUrl',
                         key: 'hrefUrl',

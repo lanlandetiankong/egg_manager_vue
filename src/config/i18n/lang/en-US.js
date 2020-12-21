@@ -121,61 +121,63 @@ export const langMap = {
                 lockedStatus:'Lock Status',
                 weights:'Weights',
             },
-            user:{
-                userAccount:'User account',
-                userName:'Nick name',
-                avatarUrl:'Avatar',
-                email:'Email',
-                userType:'User type',
-            },
-            module:{
-                iconName:'Icon Value',
-                moduleName:'Module name',
-            },
-            menu:{
-                menuName:'Menu name',
-                parentMenuName:'Parent menu name',
-                urlJumpType:'Url jump type',
-                routerUrl:'Router url',
-                hrefUrl:'Href url',
-                iconName:'Icon name',
-            },
-            job:{
-                jobName:'Job name',
-            },
-            department:{
-                departmentName:'Department name',
-                parentDepartmentName:' Parent department name',
-                belongDepartment:'Belong department',
-                publishDepartment:'Publish department',
-            },
-            tenant:{
-                tenantName:'Tenant Name',
-                belongTenant:'Belong tenant',
-            },
-            role:{
-                roleName:'Role name',
-            },
-            permission:{
-                permissionName:'Permission name'
-            },
-            form:{
-                formName:'Form name',
-                formTitle:'Form title',
-            },
-            formType:{
-                formTypeName:'Form type name',
-            },
-            announcement:{
-                title:'Title',
-                keyWord:'key word',
-                tagNameOfStr:'Tag Name',
-                content:'Content',
-                publishDepartment:'Publishing department'
-            },
-            announcementTag:{
-                tagName:'Tag Name',
-                description:'Description'
+            em:{
+                user:{
+                    userAccount:'User account',
+                    userName:'Nick name',
+                    avatarUrl:'Avatar',
+                    email:'Email',
+                    userType:'User type',
+                },
+                module:{
+                    iconName:'Icon Value',
+                    moduleName:'Module name',
+                },
+                menu:{
+                    menuName:'Menu name',
+                    parentMenuName:'Parent menu name',
+                    urlJumpType:'Url jump type',
+                    routerUrl:'Router url',
+                    hrefUrl:'Href url',
+                    iconName:'Icon name',
+                },
+                job:{
+                    jobName:'Job name',
+                },
+                department:{
+                    departmentName:'Department name',
+                    parentDepartmentName:' Parent department name',
+                    belongDepartment:'Belong department',
+                    publishDepartment:'Publish department',
+                },
+                tenant:{
+                    tenantName:'Tenant Name',
+                    belongTenant:'Belong tenant',
+                },
+                role:{
+                    roleName:'Role name',
+                },
+                permission:{
+                    permissionName:'Permission name'
+                },
+                form:{
+                    formName:'Form name',
+                    formTitle:'Form title',
+                },
+                formType:{
+                    formTypeName:'Form type name',
+                },
+                announcement:{
+                    title:'Title',
+                    keyWord:'key word',
+                    tagNameOfStr:'Tag Name',
+                    content:'Content',
+                    publishDepartment:'Publishing department'
+                },
+                announcementTag:{
+                    tagName:'Tag Name',
+                    description:'Description'
+                }
             }
         },
     },

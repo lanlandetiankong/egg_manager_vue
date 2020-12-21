@@ -13,12 +13,12 @@
                 layout="horizontal"
                 :form="createForm"
             >
-                <a-form-item :label="$t('langMap.table.fields.form.formName')"
+                <a-form-item :label="$t('langMap.table.fields.em.form.formName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
                 </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.form.formTitle')"
+                <a-form-item :label="$t('langMap.table.fields.em.form.formTitle')"
                              v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.title"/>

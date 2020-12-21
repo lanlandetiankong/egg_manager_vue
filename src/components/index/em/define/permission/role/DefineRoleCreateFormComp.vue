@@ -13,7 +13,7 @@
                 layout="vertical"
                 :form="createForm"
             >
-                <a-form-item :label="$t('langMap.table.fields.role.roleName')"
+                <a-form-item :label="$t('langMap.table.fields.em.role.roleName')"
                      v-bind="formItemLayout"
                 >
                     <a-input v-decorator="formFieldConf.name"/>
