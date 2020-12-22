@@ -1,3 +1,5 @@
+import store from '@/store' ;
+
 function getVueI18n() {
     var vuei18nTmp = window.vuei18n;
     //如果已有缓存的i18n，直接返回
@@ -44,12 +46,20 @@ function getI18nLocale() {
     return (window.sessionStorage.getItem("i18nLocale")) ? window.sessionStorage.getItem("i18nLocale") : 'zh-CN'
 }
 
+function checkEqualsLocale(locale){
+    if(!locale){
+        return false ;
+    }
+    return window.sessionStorage.getItem("i18nLocale") == locale ;
+}
+
 export const i18nUtil =  {
     reflushCache(localVal){
         window.sessionStorage.setItem("i18nLocale",localVal);
         if(window.$cookies){
             window.$cookies.set("i18nLocale", localVal);
         }
+        store.dispatch('doSetI18nLocale',localVal) ;
     },
     getKey(key){
         if(!key){
@@ -62,4 +72,7 @@ export const i18nUtil =  {
     getKeyFormat(key,params){
         return stringFormat(i18nUtil.getKey(key),params) ;
     },
+    equalsLocale(localeVal){
+        return checkEqualsLocale(localeVal);
+    }
 }

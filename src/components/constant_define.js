@@ -23,3 +23,8 @@ export const FormBaseConfObj = {
         },
     },
 }
+
+export const SupportI18nLocale = {
+    zhCn:'zh-CN',
+    enUs:'en-US'
+}

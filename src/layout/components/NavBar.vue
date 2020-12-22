@@ -106,11 +106,10 @@
                 }
             },
             matchedArr(){
-                debugger;
                 let arr = [],nameTemp = [];
                 this.$route.matched.filter((item,index,self) => {
                     let metaFlag = (item && item.meta) ;
-                    let title = (metaFlag && item.meta.title) ? item.meta.title : 'xxx' ;
+                    let title = (metaFlag && item.meta.title) ? item.meta.title : '' ;
                     let iconVal = (metaFlag && item.meta.icon) ? item.meta.icon : null ;
                     const obj = {
                         title:title,

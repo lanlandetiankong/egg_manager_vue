@@ -1,18 +1,28 @@
 <template>
     <div id="app" ref="appRootPage">
-        <router-view/>
+        <a-config-provider :locale="antvLocale">
+            <router-view/>
+        </a-config-provider>
     </div>
 </template>
 
 <script>
+    import {SupportI18nLocale} from '~Components/constant_define';
+    import {i18nUtil} from "~Config/i18n/i18nUtil";
     import $ from 'jquery';
     import { mapGetters } from 'vuex' ;
     import {AsyncRouterUtil} from '~Router/asyncRouterUtil.js';
+    import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN';
+    import moment from 'moment';
+    import 'moment/locale/zh-cn';
+
+    moment.locale('zh-cn');
 
     export default {
         name: 'App',
         data() {
             return {
+                antvLocale:zh_CN,
                 clientHeight: '',
                 constantKey: {
                     userToken: 'userToken'
@@ -22,7 +32,8 @@
         computed:{
             ...mapGetters([
                 'routingStore_grantedMenuList',
-                'routingStore_grantedMenuUrlMap'
+                'routingStore_grantedMenuUrlMap',
+                'i18nStore_locale'
             ])
         },
         methods: {
@@ -94,6 +105,13 @@
         watch: {
             clientHeight: function () {
                 this.changeFixed(this.clientHeight);
+            },
+            i18nStore_locale:function(old,newd){
+                if(i18nUtil.equalsLocale(SupportI18nLocale.zhCn)){
+                    this.antvLocale = zh_CN ;
+                }   else {
+                    this.antvLocale = null ;
+                }
             }
         },
         mounted () {

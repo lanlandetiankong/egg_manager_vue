@@ -1,8 +1,8 @@
 <template>
-    <a-button v-if="langLocale==='zh-CN'" @click="langChangeToZh">
+    <a-button v-if="langLocale==='zh-CN'" @click="langChange">
         English
     </a-button>
-    <a-button  v-else @click="langChangeToZh">
+    <a-button  v-else @click="langChange">
         中文
     </a-button>
 </template>
@@ -22,7 +22,7 @@
             }
         },
         methods:{
-            langChangeToZh(){
+            langChange(){
                 let lang = this.$i18n.locale === 'zh-CN' ? 'en-US' : 'zh-CN'
                 this.$i18n.locale = lang ;
                 i18nUtil.reflushCache(this.$i18n.locale);
