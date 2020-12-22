@@ -56,6 +56,16 @@
                 </a-dropdown>
             </a-col>
         </a-row>
+        <a-row>
+            <a-breadcrumb :routes="matchedArr">
+                <template slot="itemRender" slot-scope="{route, params, routes, paths}">
+                    <template v-if="route.icon">
+                        <a-icon :type="route.icon" />
+                    </template>
+                    {{route.title}}
+                </template>
+            </a-breadcrumb>
+        </a-row>
     </div>
 </template>
 
@@ -71,7 +81,8 @@
             userInfo:Object
         },
         data() {
-            return {}
+            return {
+            }
         },
         computed:{
             loginUserName(){
@@ -93,7 +104,31 @@
                         return urlPrefix+avatarUrl ;
                     }
                 }
+            },
+            matchedArr(){
+                debugger;
+                let arr = [],nameTemp = [];
+                this.$route.matched.filter((item,index,self) => {
+                    let metaFlag = (item && item.meta) ;
+                    let title = (metaFlag && item.meta.title) ? item.meta.title : 'xxx' ;
+                    let iconVal = (metaFlag && item.meta.icon) ? item.meta.icon : null ;
+                    const obj = {
+                        title:title,
+                        icon:iconVal
+                    };
+                    arr.push(obj);
+                });
+                arr.filter((item,index,self) => {
+                    if(nameTemp.includes(item.title)){
+                        return false ;
+                    }   else {
+                        nameTemp.push(item.title);
+                        return true ;
+                    }
+                });
+                return arr;
             }
+
         },
         methods:{
             handleClearCacheClick(e){  //清理缓存-点击事件

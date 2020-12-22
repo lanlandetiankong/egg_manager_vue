@@ -34,6 +34,11 @@ export const constantRouterMap = [
         path:'/index',
         component:Layout,
         redirect:'main',
+        name:'Index',
+        meta:{
+            title:'Index',
+            icon:'home'
+        },
         children:[
             {
                 path:'',
