@@ -12,7 +12,7 @@ const EmployeeRouter = {
     children:[
         {
             path:'info',
-            component:_import('index/em/employee/account/EmpInfoView'),
+            component:_import('index/em/employee/info/EmpInfoView'),
             name:'employeeInfo',
             meta:{
                 title:'用户信息',icon:"user",keepAliveFlag:true,
