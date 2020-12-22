@@ -34,3 +34,22 @@ getPageQuery(queryFieldList,pagination,sorter)
 
 
                 ConstantObj,
+
+
+i18nUtil.getKeyFormat('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.announcementTag.tagName')
+
+
+i18nUtil.getKeyFormat('langMap.commons.forms.pleaseFillOut','langMap.table.fields.obl.articleTag.name')
+
+
+var _this = this ;
+import {i18nUtil} from "~Config/i18n/i18nUtil";
+备注
+this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')
+this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.type')
+
+
+this.$t('langMap.commons.forms.pleaseFillOut','')
+请选择
+this.$t('langMap.commons.forms.pleaseSelect','')
+

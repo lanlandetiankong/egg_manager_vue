@@ -220,7 +220,10 @@ export const langMap = {
             tips:{
                 lookUpIcon:'点击查看可选图标',
                 selectedIcon:'已选图标'
-            }
+            },
+            pleaseFillOut:'请填写{0}',
+            pleaseSelect:'请勾选{0}',
+            fillInValid:'请填写有效的{0}'
         },
         enums:{
             lockStatus:{

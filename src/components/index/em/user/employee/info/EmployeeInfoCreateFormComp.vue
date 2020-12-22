@@ -97,24 +97,24 @@
         data(){
             var paramsRules ={
                 account:[
-                    {required:true,message:'请填写账号!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.user.userAccount')}
                 ],
                 userName:[
-                    {required:true,message:'请填写昵称!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.user.userName')}
                 ],
                 email:[
-                    {required:false,message:'请填写邮箱!'},
-                    {type: 'email',message: '请填写有效的邮箱!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.user.email')},
+                    {type: 'email',message:this.$t('langMap.commons.forms.fillInValid','langMap.table.fields.em.user.email')}
                 ],
                 avatarUrl:[],
                 belongTenantId:[
-                    {required:true,message:'请选择所属租户!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.em.tenant.belongTenant')}
                 ],
                 belongDepartmentId:[
-                    {required:true,message:'请选择所属部门!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.em.department.belongDepartment')}
                 ],
                 locked:[
-                    {required:true,message:'请选择是否锁定!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.lockStatus')}
                 ]
             };
             return {

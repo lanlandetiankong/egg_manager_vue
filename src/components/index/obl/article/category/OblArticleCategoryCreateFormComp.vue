@@ -80,19 +80,19 @@
         data(){
             var paramsRules ={
                 name:[
-                    {required:true,message:'请填写名称!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.obl.articleCategory.name')}
                 ],
                 iconName:[
-                    {required:true,message:'请填写图标名!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.obl.articleCategory.iconName')}
                 ],
                 pid:[
-                    {required:false,message:'请选择上级!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.superiorName')}
                 ],
                 description:[
-                    {required:false,message:'请填写描述!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.description')}
                 ],
                 remark:[
-                    {required:false,message:'请填写备注!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
                 ]
             };
             return {

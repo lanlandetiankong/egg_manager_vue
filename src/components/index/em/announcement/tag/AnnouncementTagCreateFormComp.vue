@@ -53,14 +53,14 @@
         data(){
             var paramsRules ={
                 name:[
-                    {required:true,message:'请填写标签名!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.announcementTag.tagName')}
                 ],
                 description:[],
                 weights:[
-                    {required:true,message:'请填写排序!'},
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.weights')},
                 ],
                 remark:[
-                    {required:false,message:'请填写备注!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
                 ]
             };
             return {

@@ -61,16 +61,16 @@
         data(){
             var paramsRules ={
                 name:[
-                    {required:true,message:'请填写职务名!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.job.jobName')}
                 ],
                 type:[
-                    {required:true,message:'请选择类型!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.type')}
                 ],
                 description:[
-                    {required:false,message:'请填写描述!'},
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.description')},
                 ],
                 remark:[
-                    {required:false,message:'请填写备注!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
                 ]
             };
             return {

@@ -104,28 +104,28 @@
         data(){
             var paramsRules ={
                 menuName:[
-                    {required:true,message:'请填写菜单名!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.menu.menuName')}
                 ],
                 iconName:[
-                    {required:true,message:'请填写图标名!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.menu.iconName')}
                 ],
                 pid:[
-                    {required:false,message:'请选择上级菜单!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.superiorName')}
                 ],
                 label:[
-                    {required:false,message:'请填写标识!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.label')}
                 ],
                 urlJumpType:[
-                    {required:true,message:'请选择Url跳转类型!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.em.menu.urlJumpType')}
                 ],
                 routerUrl:[
-                    {required:false,message:'请填写路由Url!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.menu.routerUrl')}
                 ],
                 hrefUrl:[
-                    {required:false,message:'请填写外部Url!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.menu.hrefUrl')}
                 ],
                 remark:[
-                    {required:false,message:'请填写备注!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
                 ]
             };
             return {

@@ -78,16 +78,16 @@
         data(){
             var paramsRules ={
                 name:[
-                    {required:true,message:'请填写权限名!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.permission.permissionName')}
                 ],
                 code:[
-                    {required:true,message:'请填写编码!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.code')}
                 ],
                 type:[
-                    {required:true,message:'请选择类型!'},
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.type')},
                 ],
                 remark:[
-                    {required:false,message:'请填写备注!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
                 ]
             };
             return {

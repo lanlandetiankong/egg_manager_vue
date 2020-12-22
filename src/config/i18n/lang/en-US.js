@@ -220,7 +220,10 @@ export const langMap = {
             tips:{
                 lookUpIcon:'Click to view optional icons',
                 selectedIcon:'Selected icon'
-            }
+            },
+            pleaseFillOut:'Please fill out {0}',
+            pleaseSelect:'Please tick {0}',
+            fillInValid:'Please fill in valid{0}'
         },
         enums:{
             lockStatus:{

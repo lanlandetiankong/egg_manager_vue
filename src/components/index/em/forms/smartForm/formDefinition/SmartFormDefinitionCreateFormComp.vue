@@ -74,22 +74,22 @@
         data(){
             var paramsRules ={
                 name:[
-                    {required:true,message:'请填写表单名称!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.form.formName')}
                 ],
                 title:[
-                    {required:true,message:'请填写标题!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.form.formTitle')}
                 ],
                 formTypeId:[
-                    {required:true,message:'请选择表单类型!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.type')}
                 ],
                 description:[
-                    {required:true,message:'请填写描述!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.description')}
                 ],
                 weights:[
-                    {required:true,message:'请填写排序值!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.weights')}
                 ],
                 remark:[
-                    {required:false,message:'请填写备注!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
                 ]
             };
             return {

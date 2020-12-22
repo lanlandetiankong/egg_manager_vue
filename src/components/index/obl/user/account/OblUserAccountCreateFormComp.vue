@@ -13,32 +13,6 @@
                 layout="vertical"
                 :form="createForm"
             >
-                <a-form-item :label="$t('langMap.table.fields.em.tenant.belongTenant')"
-                             v-bind="FormBaseConfObj.formItemLayout"
-                >
-                    <a-select showSearch allowClear
-                              :placeholder="$t('langMap.commons.forms.pleaseChoose')"
-                              optionFilterProp="children"
-                              :options="belongTenants"
-                              :filterOption="getFilterOption"
-                              v-decorator="formFieldConf.belongTenantId"
-                    >
-                    </a-select>
-                </a-form-item>
-                <a-form-item :label="$t('langMap.table.fields.em.department.belongDepartment')"
-                             v-bind="FormBaseConfObj.formItemLayout"
-                >
-                    <a-tree-select
-                        :placeholder="$t('langMap.commons.forms.chooseDepartment')"
-                        showSearch allowClear
-                        v-decorator="formFieldConf.belongDepartmentId"
-                        :treeNodeFilterProp="treeSelectConf.belongDepartmentId.treeNodeFilterProp"
-                        :treeDefaultExpandAll="treeSelectConf.belongDepartmentId.treeDefaultExpandAll"
-                        :treeData="treeSelectConf.belongDepartmentId.selftTreeData"
-                        @change="handleBelongDepartmentOfSearchChange"
-                    >
-                    </a-tree-select>
-                </a-form-item>
                 <a-form-item :label="$t('langMap.table.fields.em.user.userAccount')"
                              v-bind="FormBaseConfObj.formItemLayout"
                 >
@@ -91,30 +65,22 @@
             visible:Boolean,
             actionType:String,
             formObj:Object,
-            belongTenants:Array,
-            belongDepartmentTrees:Array
         },
         data(){
             var paramsRules ={
                 account:[
-                    {required:true,message:'请填写账号!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.obl.userAccount.account')}
                 ],
                 userName:[
-                    {required:true,message:'请填写昵称!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.obl.userAccount.userName')}
                 ],
                 email:[
-                    {required:false,message:'请填写邮箱!'},
-                    {type: 'email',message: '请填写有效的邮箱!'}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.obl.userAccount.email')},
+                    {type: 'email',message:this.$t('langMap.commons.forms.fillInValid','langMap.table.fields.obl.userAccount.email')}
                 ],
                 avatarUrl:[],
-                belongTenantId:[
-                    {required:true,message:'请选择所属租户!'}
-                ],
-                belongDepartmentId:[
-                    {required:true,message:'请选择所属部门!'}
-                ],
                 locked:[
-                    {required:true,message:'请选择是否锁定!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.lockedStatus')}
                 ]
             };
             return {
@@ -124,18 +90,9 @@
                     userName: ["userName", {rules: paramsRules.userName}],
                     email: ["email", {rules: paramsRules.email}],
                     avatarUrl: ["avatarUrl", {rules: paramsRules.avatarUrl}],
-                    belongTenantId: ["belongTenantId", {rules: paramsRules.belongTenantId}],
-                    belongDepartmentId: ["belongDepartmentId", {rules: paramsRules.belongDepartmentId}],
                     locked: ["locked", {rules: paramsRules.locked}]
                 },
                 createForm:{},
-                treeSelectConf:{
-                    belongDepartmentId:{
-                        treeDefaultExpandAll:false,
-                        treeNodeFilterProp:"title",
-                        selftTreeData:[]
-                    }
-                }
             }
         },
         methods:{
@@ -159,14 +116,6 @@
                             ...formObj,
                             value: formObj.avatarUrl,
                         }),
-                        belongTenantId: _this.$form.createFormField({
-                            ...formObj,
-                            value: formObj.belongTenantId,
-                        }),
-                        belongDepartmentId: _this.$form.createFormField({
-                            ...formObj,
-                            value: formObj.belongDepartmentId,
-                        }),
                         locked: _this.$form.createFormField({
                             ...formObj,
                             value: dealNumberToStr(formObj.locked),
@@ -185,16 +134,9 @@
                 var _this = this ;
                 _this.$emit('createFormSubmit',e,_this.dealGetHeadAvatarUrlVal());
             },
-            handleBelongDepartmentOfSearchChange(value){  //[所属部门] SelectTree cchange事件
-                console.log("handleBelongDepartmentOfSearchChange",value);
-            },
             handleCreateActionInit(){   //弹窗展示为[创建-操作]的初始化
-                var _this = this ;
-                _this.treeSelectConf.belongDepartmentId.selftTreeData = _this.belongDepartmentTrees ;
             },
             handleUpdateActionInit(){   //弹窗展示为[更新-操作]的初始化
-                var _this = this ;
-                _this.treeSelectConf.belongDepartmentId.selftTreeData = _this.belongDepartmentTrees ;
             },
         },
         computed:{
@@ -232,14 +174,6 @@
                         avatarUrl: this.$form.createFormField({
                             ..._this.formObj,
                             value: _this.formObj.avatarUrl
-                        }),
-                        belongTenantId: this.$form.createFormField({
-                            ..._this.formObj,
-                            value: _this.formObj.belongTenantId
-                        }),
-                        belongDepartmentId: this.$form.createFormField({
-                            ..._this.formObj,
-                            value: _this.formObj.belongDepartmentId
                         }),
                         locked: this.$form.createFormField({
                             ..._this.formObj,

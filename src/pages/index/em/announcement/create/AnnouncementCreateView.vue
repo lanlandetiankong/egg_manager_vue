@@ -108,13 +108,13 @@
 
             var paramsRules ={
                 keyWord:[
-                    {required:true,message:'请填写关键字!'}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.keyword')}
                 ],
                 publishDepartment:[
-                    {required:false,message:'请选择发布部门!'},
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.em.department.publishDepartment')},
                 ],
                 tagIds:[
-                    {required:true,message:'请选择标签!'},
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.tag')},
                     {type:'array'}
                 ]
             };

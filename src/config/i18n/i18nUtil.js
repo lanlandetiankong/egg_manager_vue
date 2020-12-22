@@ -23,6 +23,23 @@ function getVueI18n() {
     }
 }
 
+/**
+ * 对 str 进行格式化
+ * @param str 要格式化的字符串
+ * @param params 填充的值(数组)
+ * @returns {*}
+ */
+function stringFormat(str,params) {
+    if (params.length == 0){
+        return str;
+    }
+    for (var i = 0; i < params.length; i++) {
+        var re = new RegExp('\\{' + (i) + '\\}', 'gm');
+        str = str.replace(re, i18nUtil.getKey(params[i]));
+    }
+    return str;
+}
+
 function getI18nLocale() {
     return (window.sessionStorage.getItem("i18nLocale")) ? window.sessionStorage.getItem("i18nLocale") : 'zh-CN'
 }
@@ -41,5 +58,8 @@ export const i18nUtil =  {
         const i18n = getVueI18n();
         i18n.locale = getI18nLocale();
         return i18n.tc(key);
-    }
+    },
+    getKeyFormat(key,params){
+        return stringFormat(i18nUtil.getKey(key),params) ;
+    },
 }
