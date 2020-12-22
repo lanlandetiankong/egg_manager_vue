@@ -113,7 +113,8 @@
                     let iconVal = (metaFlag && item.meta.icon) ? item.meta.icon : null ;
                     const obj = {
                         title:title,
-                        icon:iconVal
+                        icon:iconVal,
+                        path:item.path
                     };
                     arr.push(obj);
                 });
