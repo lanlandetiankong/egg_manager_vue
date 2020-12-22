@@ -263,6 +263,7 @@ export const langMap = {
             }
         },
         dashBoard:{
+            universal:'Universal',
             announcementList:'Announcement list',
             articleList:'Article list',
         }

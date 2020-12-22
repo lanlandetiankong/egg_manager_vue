@@ -6,6 +6,10 @@
             :style="{ height: '300px'}"
             @change="handleTabChange"
         >
+            <a-tab-pane :tab="layoutConf.tab.conf.universal.title"
+                        :key="layoutConf.tab.conf.universal.key">
+                <universal-show-comp />
+            </a-tab-pane>
             <a-tab-pane :tab="layoutConf.tab.conf.announcementList.title"
                         :key="layoutConf.tab.conf.announcementList.key">
                 <announcement-list-comp
@@ -24,17 +28,23 @@
 <script>
     import {DashBoardApi} from './dashBoardApi.js'
 
+    import UniversalShowComp from '~Components/regular/dashboard/UniversalShowComp'
     import AnnouncementListComp from '~Components/regular/dashboard/announcement/AnnouncementListComp'
 
     export default {
         name: "DashBoardPage",
-        components: {AnnouncementListComp},
+        components: {UniversalShowComp,UniversalShowComp, AnnouncementListComp},
         data(){
             return {
                 layoutConf:{
                     tab:{
                         mode: 'left',
                         conf:{
+                            universal:{
+                                title: this.$t('langMap.commons.dashBoard.universal'),
+                                key: 'universal',
+                                initFlag:false
+                            },
                             announcementList:{
                                 title: this.$t('langMap.commons.dashBoard.announcementList'),
                                 key: 'announcementList',
@@ -46,7 +56,7 @@
                                 initFlag:false
                             }
                         },
-                        defaultActiveKey:"announcementList"
+                        defaultActiveKey:"universal"
                     }
                 },
                 tabConf:{

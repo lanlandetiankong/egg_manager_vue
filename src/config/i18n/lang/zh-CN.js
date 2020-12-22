@@ -263,6 +263,7 @@ export const langMap = {
             }
         },
         dashBoard:{
+            universal:'常规',
             announcementList:'公告列表',
             articleList:'文章列表',
         }
