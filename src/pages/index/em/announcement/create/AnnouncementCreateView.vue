@@ -108,13 +108,13 @@
 
             var paramsRules ={
                 keyWord:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.keyword')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.keyword')])}
                 ],
                 publishDepartment:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.em.department.publishDepartment')},
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseSelect',[this.$t('langMap.table.fields.em.department.publishDepartment')])},
                 ],
                 tagIds:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.tag')},
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect',[this.$t('langMap.table.fields.common.tag')])},
                     {type:'array'}
                 ]
             };

@@ -20,10 +20,10 @@
                 >
                     <a-button :disabled="fileList.length >= limitSize"> <a-icon type="upload" />
                         <template v-if="limitSize == limitMinSize">
-                            {{$t('langMap.commons.valueMap.uploader.popover.maximumNumberOfFiles',limitSize)}}
+                            {{$t('langMap.commons.valueMap.uploader.popover.maximumNumberOfFiles',[limitSize])}}
                         </template>
                         <template v-else>
-                            {{$t('langMap.commons.valueMap.uploader.popover.rangeSizeOfFiles',limitMinSize,limitSize)}}
+                            {{$t('langMap.commons.valueMap.uploader.popover.rangeSizeOfFiles',[limitMinSize,limitSize])}}
                         </template>
 
                     </a-button>
@@ -118,7 +118,7 @@
                 var _this = this ;
                 const { fileList } = this;
                 if(fileList.length < _this.limitMinSize){
-                    _this.$message.warning(_this.$t('langMap.commons.valueMap.uploader.popover.atLeastNumberOfFiles',_this.limitMinSize));
+                    _this.$message.warning(_this.$t('langMap.commons.valueMap.uploader.popover.atLeastNumberOfFiles',[_this.limitMinSize]));
                     return false ;
                 }
                 var formData = new FormData();

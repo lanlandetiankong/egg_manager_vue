@@ -611,7 +611,7 @@
                 var _this = this;
                 if (delId) {
                     _this.$confirm({
-                        content: _this.$t('langMap.message.confirm.isConfirmLockWhatSelectedRow'),
+                        content: _this.$t('langMap.message.confirm.isConfirmLockWhatSelectedRow',[1]),
                         okText: _this.$t('langMap.button.actions.confirm'),
                         cancelText: _this.$t('langMap.button.actions.cancel'),
                         onOk() {

@@ -19,7 +19,7 @@
                     @change="handleUploadChange"
                 >
                     <a-button :disabled="fileList.length >= limitSize"> <a-icon type="upload" />
-                        {{$t('langMap.commons.valueMap.uploader.popover.maximumNumberOfFiles',limitSize)}}
+                        {{$t('langMap.commons.valueMap.uploader.popover.maximumNumberOfFiles',[limitSize])}}
                     </a-button>
                 </a-upload>
                 <a-popover :title="$t('langMap.commons.valueMap.uploader.popover.prompt')" trigger="hover" placement="leftBottom">

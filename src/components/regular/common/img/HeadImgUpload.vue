@@ -76,7 +76,7 @@
                 const isLt2M = file.size / this.largeSizeComp ;
                 if(isJPG || isPng){
                     if (!isLt2M) {
-                        this.$message.error(this.$t('langMap.commons.valueMap.uploader.popover.message.image.limitSize',2));
+                        this.$message.error(this.$t('langMap.commons.valueMap.uploader.popover.message.image.limitSize',[2]));
                     }
                 }   else {
                     this.$message.error(this.$t('langMap.commons.valueMap.uploader.popover.message.image.onlySupportJpg'));
