@@ -104,28 +104,28 @@
         data(){
             var paramsRules ={
                 menuName:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.menu.menuName')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.em.menu.menuName')])}
                 ],
                 iconName:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.menu.iconName')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.em.menu.iconName')])}
                 ],
                 pid:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.superiorName')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseSelect',[this.$t('langMap.table.fields.common.superiorName')])}
                 ],
                 label:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.label')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.label')])}
                 ],
                 urlJumpType:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.em.menu.urlJumpType')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect',[this.$t('langMap.table.fields.em.menu.urlJumpType')])}
                 ],
                 routerUrl:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.menu.routerUrl')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.em.menu.routerUrl')])}
                 ],
                 hrefUrl:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.menu.hrefUrl')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.em.menu.hrefUrl')])}
                 ],
                 remark:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.remark')])}
                 ]
             };
             return {

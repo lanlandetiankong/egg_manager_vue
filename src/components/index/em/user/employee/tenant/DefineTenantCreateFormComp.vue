@@ -48,13 +48,13 @@
         data(){
             var paramsRules ={
                 name:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.name')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.name')])}
                 ],
                 code:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.code')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.code')])}
                 ],
                 remark:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.remark')])}
                 ]
             };
             return {

@@ -73,22 +73,22 @@
         data(){
             var paramsRules ={
                 pid:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.superiorName')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseSelect',[this.$t('langMap.table.fields.common.superiorName')])}
                 ],
                 name:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.name')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.name')])}
                 ],
                 code:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.code')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.code')])}
                 ],
                 weights:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.weights')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.weights')])}
                 ],
                 description:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.description')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.description')])}
                 ],
                 remark:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.remark')])}
                 ]
             };
             return {

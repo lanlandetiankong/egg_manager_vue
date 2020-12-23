@@ -61,16 +61,16 @@
         data(){
             var paramsRules ={
                 name:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.role.roleName')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.em.role.roleName')])}
                 ],
                 code:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.code')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.code')])}
                 ],
                 type:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.type')},
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.type')])},
                 ],
                 remark:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.common.remark')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.remark')])}
                 ]
 
             };

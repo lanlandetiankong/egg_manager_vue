@@ -97,24 +97,24 @@
         data(){
             var paramsRules ={
                 account:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.user.userAccount')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.em.user.userAccount')])}
                 ],
                 userName:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.user.userName')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.em.user.userName')])}
                 ],
                 email:[
-                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut','langMap.table.fields.em.user.email')},
-                    {type: 'email',message:this.$t('langMap.commons.forms.fillInValid','langMap.table.fields.em.user.email')}
+                    {required:false,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.em.user.email')])},
+                    {type: 'email',message:this.$t('langMap.commons.forms.fillInValid',[this.$t('langMap.table.fields.em.user.email')])}
                 ],
                 avatarUrl:[],
                 belongTenantId:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.em.tenant.belongTenant')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect',[this.$t('langMap.table.fields.em.tenant.belongTenant')])}
                 ],
                 belongDepartmentId:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.em.department.belongDepartment')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect',[this.$t('langMap.table.fields.em.department.belongDepartment')])}
                 ],
                 locked:[
-                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect','langMap.table.fields.common.lockStatus')}
+                    {required:true,message:this.$t('langMap.commons.forms.pleaseSelect',[this.$t('langMap.table.fields.common.lockStatus')])}
                 ]
             };
             return {
