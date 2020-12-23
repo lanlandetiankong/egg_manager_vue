@@ -11,7 +11,7 @@
                     </a-tag>
                     <a-avatar
                         :src="loginUserAvatarUrl"
-                        alt="图片加载失败"
+                        :alt="$t('langMap.commons.valueMap.uploader.popover.altInfo')"
                     />
                 </template>
             </a-col>
@@ -85,7 +85,7 @@
                     var userTokenObj = JSON.parse(userTokenCache);
                     return userTokenObj.userName ;
                 }   else {
-                    return "未知用户";
+                    return this.$t('langMap.message.error.unknowUser');
                 }
             },
             loginUserAvatarUrl(){   //取得登录用户的头像

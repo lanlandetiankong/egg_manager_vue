@@ -97,10 +97,9 @@
 </template>
 
 <script>
+    import {TokenUtil} from '~Router/routeSecurityUtil';
     import constantParams from '~Config/constantParams' ;
     import {UserZoneCenterApi} from './userZoneCenterApi.js'
-    import {userTokenFunc} from '~Utils/commonUtil.js'
-
 
     export default {
         name: "UserZoneCenterView",
@@ -200,7 +199,7 @@
         },
         methods:{
             dealGetAllUserRoles(){      //查询当前登录用户的所有角色
-                var userTokenObj = userTokenFunc.getUserTokenFromSessionStorage(true);
+                var userTokenObj = TokenUtil.getUserToken();
                 if(userTokenObj){
                     UserZoneCenterApi.getAllRoleByUserAccountId(userTokenObj.userAccountId).then((res) => {
                         if (res) {
@@ -210,7 +209,7 @@
                 }
             },
             dealGetAllUserPermissions(){    //查询当前登录用户的所有权限
-                var userTokenObj = userTokenFunc.getUserTokenFromSessionStorage(true);
+                var userTokenObj = TokenUtil.getUserToken();
                 if(userTokenObj){
                     UserZoneCenterApi.getAllPermissionByUserAccountId(userTokenObj.userAccountId).then((res) => {
                         if (res) {
@@ -220,7 +219,7 @@
                 }
             },
             dealGetAllUserJobs(){    //查询当前登录用户的所有职务
-                var userTokenObj = userTokenFunc.getUserTokenFromSessionStorage(true);
+                var userTokenObj = TokenUtil.getUserToken();
                 if(userTokenObj){
                     UserZoneCenterApi.getAllJobByUserAccountId(userTokenObj.userAccountId).then((res) => {
                         if (res) {

@@ -155,7 +155,7 @@
                 },
                 quillEditorConfig:{
                     quillOption:{
-                        placeholder:'请输入通知内容',
+                        placeholder:this.$t('langMap.commons.quill.announcement.placeholder'),
                         debug:'warn',
                         readOnly:false,
                         imageDrop: true,
@@ -262,7 +262,7 @@
                 //验证是否未编辑
                 let isCreateAble = this.dealCheckCreateAble() ;
                 if(isCreateAble == false){
-                    _this.$message.warning("公告标题或内容为空,请输入有效公告标题或内容后重试！")
+                    _this.$message.warning(_this.$t('langMap.commons.forms.pleaseFillOutTwo',[_this.$t('langMap.table.fields.em.announcement.title'),_this.$t('langMap.table.fields.em.announcement.content')]));
                     return false ;
                 }   else {
                     //取得请求的参数：标题&内容、用户信息
@@ -298,7 +298,7 @@
                 //验证是否未编辑
                 let isCreateAble = this.dealCheckCreateAble() ;
                 if(isCreateAble == false){
-                    _this.$message.warning("公告标题或内容为空,请输入有效公告标题或内容后重试！")
+                    _this.$message.warning(_this.$t('langMap.commons.forms.pleaseFillOutTwo',[_this.$t('langMap.table.fields.em.announcement.title'),_this.$t('langMap.table.fields.em.announcement.content')]));
                     return false ;
                 }   else {
                     //取得请求的参数：标题&内容、用户信息

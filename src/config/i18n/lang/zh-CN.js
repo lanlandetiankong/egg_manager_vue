@@ -67,6 +67,9 @@ export const langMap = {
         actions:{
             detail:'详情'
         },
+        common:{
+            undefinedEnumKeyValue:"预期之外的枚举值"
+        },
         em:{
             title:{
                 detailForEmployeeInfo:'用户定义详情',
@@ -213,6 +216,11 @@ export const langMap = {
         }
     },
     commons:{
+        quill:{
+            announcement:{
+                placeholder:'请输入通知内容'
+            }
+        },
         forms:{
             pleaseChoose:'请选择',
             chooseDepartment:'选择部门',
@@ -223,7 +231,8 @@ export const langMap = {
             },
             pleaseFillOut:'请填写{0}',
             pleaseSelect:'请勾选{0}',
-            fillInValid:'请填写有效的{0}'
+            fillInValid:'请填写有效的{0}',
+            pleaseFillOutTwo:'{0}或{1}不能为空'
         },
         enums:{
             lockStatus:{
@@ -247,6 +256,7 @@ export const langMap = {
                     uploading:'上传中...',
                     confirmUpload:'确认上传'
                 },
+                altInfo:'图片加载失败',
                 atLeastNumberOfFiles:'请至少选择{0}个文件后提交！',
                 maximumNumberOfFiles:'选择最多{0}个Excel文件',
                 rangeSizeOfFiles:' 请选择{0}至{1}个Excel文件',
@@ -291,6 +301,7 @@ export const langMap = {
             unknownExportCommand:'未知导出命令！',
             currentPageDoesNotSupportExportOperations:'当前页面不支持导出操作！',
             pageNotFound:'页面未找到！',
+            unknowUser:'未知用户'
         },
         confirm:{
             isConfirmDeleteSelectedRow:'是否确认删除所选数据？',
@@ -320,7 +331,8 @@ export const langMap = {
                 grantFailed:'获取授权失败,请重新登录!',
                 accessDenied:'拒绝访问',
                 resourceNotFound:'请求错误,未找到该资源',
-                serverDistracted:'服务器开小差了'
+                serverDistracted:'服务器开小差了',
+                sessionExpired:'会话信息已过期，请重新登录！'
             }
         }
     }

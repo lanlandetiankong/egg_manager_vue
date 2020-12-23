@@ -1,5 +1,6 @@
 import router from '@/router/index';
-import {message} from 'ant-design-vue'
+import {message} from 'ant-design-vue';
+import {i18nUtil} from "~Config/i18n/i18nUtil";
 /**
  * routeSecurityUtil 路由安全工具
  */
@@ -41,7 +42,7 @@ function jumpToLoginPage() {
  */
 function verifySessionValid() {
     if(isTokenValid() == false){
-        message.error("用户未登录，将为您跳转到登录页面！");
+        message.error(i18nUtil.getKey('langMap.http.notify.description.sessionExpired'));
         jumpToLoginPage();
     }
     return true ;
@@ -57,6 +58,14 @@ function isTokenValid() {
     }   else {
         return true ;
     }
+}
+
+function getUserToken() {
+    if(verifySessionValid() == true){
+        const userTokenCache = window.sessionStorage.getItem("userToken");
+        return JSON.parse(userTokenCache);
+    }
+    return null ;
 }
 
 
@@ -79,6 +88,9 @@ export const TokenUtil = {
             return false ;
         }
         return true ;
+    },
+    getUserToken(){
+        return getUserToken();
     }
 }
 export const RouteObjConst = RoutePageConst;

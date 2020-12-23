@@ -67,6 +67,9 @@ export const langMap = {
         actions:{
             detail:'Detail'
         },
+        common:{
+            undefinedEnumKeyValue:"Unexpected enumeration value"
+        },
         em:{
             title:{
                 detailForEmployeeInfo:'Detail for employee account',
@@ -213,6 +216,11 @@ export const langMap = {
         },
     },
     commons:{
+        quill:{
+            announcement:{
+                placeholder:'Please enter announcement content'
+            }
+        },
         forms:{
             pleaseChoose:'Please choose',
             chooseDepartment:'Choose department',
@@ -223,7 +231,8 @@ export const langMap = {
             },
             pleaseFillOut:'Please fill out {0}',
             pleaseSelect:'Please tick {0}',
-            fillInValid:'Please fill in valid{0}'
+            fillInValid:'Please fill in valid{0}',
+            pleaseFillOutTwo:'{0} or {1} cannot be empty'
         },
         enums:{
             lockStatus:{
@@ -247,6 +256,7 @@ export const langMap = {
                     uploading:'Uploading...',
                     confirmUpload:'Confirm upload'
                 },
+                altInfo:'Image failed to load',
                 atLeastNumberOfFiles:'Please select at least {0} files and submit!',
                 maximumNumberOfFiles:'Select up to {0} Excel file',
                 rangeSizeOfFiles:' Select up to {0}-{1} Excel files',
@@ -291,6 +301,7 @@ export const langMap = {
             unknownExportCommand:'Unknown export command!',
             currentPageDoesNotSupportExportOperations:'Current page does not support export operations!',
             pageNotFound:'Page not found!',
+            unknowUser:'Unknown user'
         },
         confirm:{
             isConfirmDeleteSelectedRow:'Are you confirm delete selected row？',
@@ -320,7 +331,8 @@ export const langMap = {
                 grantFailed:'Authorization failed. Please login again!',
                 accessDenied:'Access denied',
                 resourceNotFound:'Request error,the resource was not found',
-                serverDistracted:'The server is out of order'
+                serverDistracted:'The server is out of order',
+                sessionExpired:'The session information has expired, please log in again!'
             }
         }
     }

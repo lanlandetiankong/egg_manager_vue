@@ -11,7 +11,7 @@
             :headers="uploadConf.headers"
             @change="handleUploadChange"
         >
-            <img v-if="uploadConf.headImgRealUri" :src="uploadConf.headImgRealUri" alt="头像" :style="uploadConf.imgDomStyle"/>
+            <img v-if="uploadConf.headImgRealUri" :src="uploadConf.headImgRealUri" :alt="$t('langMap.table.fields.em.user.avatarUrl')" :style="uploadConf.imgDomStyle"/>
             <div v-else>
                 <a-icon :type="uploadConf.loading ? 'loading' : 'plus'" />
                 <div class="ant-upload-text">上传</div>

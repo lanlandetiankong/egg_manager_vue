@@ -47,7 +47,7 @@
         data() {
             return {
                 msgConf:{
-                    undefinedEnum:DrawerFieldTypeEnum.undefinedEnumKeyValue
+                    undefinedEnum:this.$t('langMap.drawer.common.undefinedEnumKeyValue')
                 },
             };
         },

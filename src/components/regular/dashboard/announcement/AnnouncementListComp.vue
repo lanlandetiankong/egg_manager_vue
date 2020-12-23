@@ -42,7 +42,7 @@
                 },
                 listConf:{
                     locale:{
-                        emptyText:"暂无可展示的公告"
+                        emptyText:this.$t('langMap.table.config.emptyData')
                     }
                 }
             };
