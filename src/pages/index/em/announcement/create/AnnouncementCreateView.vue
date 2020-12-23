@@ -68,44 +68,22 @@
                 </a-row>
             </a-form>
             <a-divider />
-            <quill-editor
-                v-model="formObj.content"
-                class="quillCls"
-                ref="quillEditor"
-                :options="quillEditorConfig.quillOption"
-                @change="handleQuillEditorChange">
-            </quill-editor>
+            <base-quill-editor
+                @textChange="handleContentChange"
+            />
         </div>
     </div>
 </template>
 <script>
     import {AnnouncementCreateApi} from './announcementCreateApi'
 
-    //使用 扩展模块
-    import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
-    import ImageResize from 'quill-image-resize-module'
-    Quill.register('modules/ImageExtend', ImageExtend);
-    Quill.register('modules/ImageResize', ImageResize);
-
-    import baseUrl from '~Config/axios/baseUrl.js'
-
+    import BaseQuillEditor from '~Components/regular/common/quill/BaseQuillEditor';
     import ATextarea from "ant-design-vue/es/input/TextArea";
     export default {
         name: "AnnouncementCreateView",
-        components: {ATextarea},
+        components: {ATextarea,BaseQuillEditor},
         data(){
             var _this = this ;
-            //上传图片的路径
-            var uploadFieleUrl = "/commonApi/file/imgUpload/headImgUpload" ;
-            //quill 富文本框 的默认配置
-            var quillToolBarConf = this.$quillToolbarConfig.quillToolbarOptions;
-            quillToolBarConf['container'] = container ;
-            quillToolBarConf['handlers'] = {
-                'image': function () {
-                    QuillWatch.emit(this.quill.id)
-                }
-            };
-
             var paramsRules ={
                 keyWord:[
                     {required:true,message:this.$t('langMap.commons.forms.pleaseFillOut',[this.$t('langMap.table.fields.common.keyword')])}
@@ -152,37 +130,6 @@
                         isSubmitLoading:false,
                         isCancelLoading:false
                     }
-                },
-                quillEditorConfig:{
-                    quillOption:{
-                        placeholder:this.$t('langMap.commons.quill.announcement.placeholder'),
-                        debug:'warn',
-                        readOnly:false,
-                        imageDrop: true,
-                        modules:{
-                            toolbar: {
-                                container:this.$quillToolbarConfig.quillToolbarOptions,
-                                handlers: {
-                                    'image': function () {  // 劫持原来的图片点击按钮事件
-                                        QuillWatch.emit(this.quill.id)
-                                    }
-                                }
-                            },
-                            history: this.$quillToolbarConfig.quillHistoryOptions,
-                            ImageExtend: {
-                                loading: true,
-                                name: 'file',
-                                size:2,
-                                action: baseUrl+uploadFieleUrl,
-                                response: _this.dealQuillImgExtendResponse,
-                                headers:(xhr) => {
-                                },
-                                change:_this.dealQuillImgExtendChange
-                            },
-                            ImageResize:{},
-                        },
-                        scrollingContainer:'y'
-                    }
                 }
             }
         },
@@ -222,18 +169,8 @@
                     }
                 })
             },
-            //富文本内容发生更改事件监听
-            handleQuillEditorChange(e) {
-                //console.log("handleQuillEditorChange => ",e.text) ;
-            },
-            dealQuillImgExtendResponse(res){    //quill 图片上传回调
-                if(res.success){
-                    var fileResBean = res.fileResBean ;
-                    return fileResBean.filePrefix + fileResBean.fileUri
-                }   else {
-                    this.$message.error(res.msg) ;
-                }
-
+            handleContentChange(text) {//同步富文本框的内容
+                this.formObj.content = text ;
             },
             dealQuillImgExtendChange(xhr, formData){
                 //console.log(xhr,formData);
@@ -414,7 +351,5 @@
     }
 </script>
 <style scoped>
-    .quillCls {
-        height:300px;
-    }
+
 </style>
