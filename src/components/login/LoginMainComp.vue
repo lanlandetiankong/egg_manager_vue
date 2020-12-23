@@ -115,7 +115,7 @@
     import {LoginMainCompApi} from './_LoginMainCompApi'
 
     import Verify from 'vue2-verify'
-    import I18nChangeComp from "~Components/i18n/I18nChangeComp";
+    import I18nChangeComp from "~Components/regular/i18n/I18nChangeComp";
 
     export default {
         name: "LoginMainComp",

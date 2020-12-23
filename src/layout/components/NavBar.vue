@@ -73,7 +73,7 @@
     import constantParams from '~Config/constantParams' ;
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
-    import I18nChangeComp from '~Components/i18n/I18nChangeComp.vue'
+    import I18nChangeComp from '~Components/regular/i18n/I18nChangeComp.vue'
     export default {
         name: "NavBar",
         components: {I18nChangeComp, ARow, ACol},

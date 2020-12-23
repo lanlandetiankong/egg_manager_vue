@@ -1,10 +1,12 @@
 <template>
-    <a-button v-if="langLocale==='zh-CN'" @click="langChange">
-        English
-    </a-button>
-    <a-button  v-else @click="langChange">
-        中文
-    </a-button>
+    <div>
+        <a-button v-if="langLocale==='zh-CN'" @click="langChange">
+            English
+        </a-button>
+        <a-button  v-else @click="langChange">
+            中文
+        </a-button>
+    </div>
 </template>
 <!-- i18n 切换语言 组件 -->
 <script>
