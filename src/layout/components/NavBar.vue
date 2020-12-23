@@ -57,14 +57,7 @@
             </a-col>
         </a-row>
         <a-row>
-            <a-breadcrumb :routes="matchedArr">
-                <template slot="itemRender" slot-scope="{route, params, routes, paths}">
-                    <template v-if="route.icon">
-                        <a-icon :type="route.icon" />
-                    </template>
-                    {{route.title}}
-                </template>
-            </a-breadcrumb>
+            <egg-breadcrumb />
         </a-row>
     </div>
 </template>
@@ -74,9 +67,10 @@
     import ACol from "ant-design-vue/es/grid/Col";
     import ARow from "ant-design-vue/es/grid/Row";
     import I18nChangeComp from '~Components/regular/i18n/I18nChangeComp.vue'
+    import EggBreadcrumb from '~Components/regular/common/breadcrumb/EggBreadcrumb.vue'
     export default {
         name: "NavBar",
-        components: {I18nChangeComp, ARow, ACol},
+        components: {I18nChangeComp, ARow, ACol,EggBreadcrumb},
         props: {
             userInfo:Object
         },
@@ -104,29 +98,6 @@
                         return urlPrefix+avatarUrl ;
                     }
                 }
-            },
-            matchedArr(){
-                let arr = [],nameTemp = [];
-                this.$route.matched.filter((item,index,self) => {
-                    let metaFlag = (item && item.meta) ;
-                    let title = (metaFlag && item.meta.title) ? item.meta.title : '' ;
-                    let iconVal = (metaFlag && item.meta.icon) ? item.meta.icon : null ;
-                    const obj = {
-                        title:title,
-                        icon:iconVal,
-                        path:item.path
-                    };
-                    arr.push(obj);
-                });
-                arr.filter((item,index,self) => {
-                    if(nameTemp.includes(item.title)){
-                        return false ;
-                    }   else {
-                        nameTemp.push(item.title);
-                        return true ;
-                    }
-                });
-                return arr;
             }
 
         },
