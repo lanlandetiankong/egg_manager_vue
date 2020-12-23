@@ -1,8 +1,10 @@
 import axios from 'axios'
-import router from '@/router/index'
 import baseURL from './baseUrl'
 import {message, Spin,notification} from 'ant-design-vue'
 import {i18nUtil} from "~Config/i18n/i18nUtil";
+import {TokenUtil} from '~Router/routeSecurityUtil';
+
+
 const http = {};
 
 //基础访问url
@@ -233,7 +235,7 @@ http.post = function (url, data, options) {
                             let tempErrorActionType = respData.errorActionType;
                             if(tempErrorActionType){     //如果发生异常时，后端明确指明有操作要求
                                 if("AuthenticationExpired" == tempErrorActionType){  //请求明确要求需要重新登录
-                                    jumpToLoginPage(router);
+                                    TokenUtil.loginOut();
                                 }
                             }
                             resolve(response);
@@ -251,14 +253,4 @@ http.post = function (url, data, options) {
 }
 
 
-function jumpToLoginPage(router) {
-    window.sessionStorage.removeItem("userToken");
-
-    if("/member/login" == router.app._route.fullPath){
-        //当前已经是登录界面
-    }   else {
-        //跳转到登录界面
-        router.push("/member/login");
-    }
-}
 export default http

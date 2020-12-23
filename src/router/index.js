@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {message,Modal} from 'ant-design-vue';
 import constantParams from '~Config/constantParams';
-
+import {TokenUtil,RouteObjConst} from '~Router/routeSecurityUtil';
 const _import = require('~Router/_import_' + process.env.NODE_ENV)
 
 //index的基本布局
@@ -80,7 +80,11 @@ const vueRouter = new VueRouter({
 vueRouter.beforeEach((to,from,next) => {
     var _this = this ;
     var passFlag = true ;
-
+    //判断token等信息，决定路由是否可以放行
+    let carryOnFlag = TokenUtil.isRouteCarryOn(to,from);
+    if(carryOnFlag == false){
+        next(RouteObjConst.login);
+    }
     if(to && from){
         const toPath = to.fullPath ;
         if(defaultPassRouterUrls.indexOf(toPath) == -1){    //要访问的路径不在 [默认放行路径] ?

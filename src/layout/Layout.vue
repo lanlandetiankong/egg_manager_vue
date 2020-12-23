@@ -47,6 +47,7 @@
 </template>
 
 <script>
+    import {TokenUtil} from '~Router/routeSecurityUtil';
     import { mapGetters } from 'vuex'
     import ResizeMixin from './mixin/ResizeHandler';
     import {CacheMixin} from './mixin/CacheMixin';
@@ -68,7 +69,6 @@
         data() {
             return {
                 routerDefineObj:{   //路径定义对象,请勿修改！(请保持与外部$router一致)
-                    memberLoginPage:"/member/login",
                     userCenterView:"/index/regular/userZone/center"
                 },
                 sideBar:{
@@ -156,21 +156,10 @@
                 this.$router.push("/");
             },
             dealMenuClick(obj) {
-                console.log("dealMenuClick",obj);
-            },
-            dealVerifyUserToken(){
-                var userTokenTemp = window.sessionStorage.getItem("userToken");
-                if(typeof userTokenTemp == "undefined" || userTokenTemp == null){
-                    this.$message.error("用户未登录，将为您跳转到登录页面！");
-                    this.handleUserLoginOut();
-                }   else {
-                    return userTokenTemp ;
-                }
+                //console.log("dealMenuClick",obj);
             },
             handleUserLoginOut(e){     //子组件命令-退出登录
-                window.sessionStorage.removeItem("userToken");
-                //跳转到登录界面
-                this.$router.push(this.routerDefineObj.memberLoginPage);
+                TokenUtil.loginOut();
             },
             handleGoToUserCenter(){ //子组件命令-跳转到用户中心
                 this.$router.push(this.routerDefineObj.userCenterView);
@@ -180,10 +169,7 @@
             }
         },
         created(){
-            var userLoginFlag = this.dealVerifyUserToken();
-            if(typeof userLoginFlag != "undefined" && userLoginFlag != null){
-                //当用户登录后
-            }
+            TokenUtil.handleVerifyToken();
         }
     }
 </script>
