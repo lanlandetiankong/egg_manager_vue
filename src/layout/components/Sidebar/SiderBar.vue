@@ -47,7 +47,7 @@
         },
         methods: {
             dealMenuClick(obj) {
-                this.$emit('siderbar-menu-open',obj.item,obj.key,obj.keyPath);
+                this.$emit('sideBar-menu-open',obj.item,obj.key,obj.keyPath);
             },
             dealGotoIndex(){
                 var _currentRoute = this.$route;

@@ -3,22 +3,21 @@
         <a-layout id="index-layout-root">
             <a-layout-sider
                 collapsible
-                v-model="siderbar.conf.collapsed"
+                v-model="sideBar.conf.collapsed"
             >
-                <sidebar
+                <sider-bar
                     class="sidebar-container"
                     :menuList="routingStore_grantedMenuList"
-                    :siderCollapsed="siderbar.conf.collapsed"
-                    @siderbar-menu-open="doSiderbarMenuOpenView"
-                >
-                </sidebar>
+                    :siderCollapsed="sideBar.conf.collapsed"
+                    @sideBar-menu-open="doSiderbarMenuOpenView"
+                />
             </a-layout-sider>
             <a-layout>
                 <a-layout-header
                     style="background: #fff; padding: 0;height:70px;line-height:50px;margin-top: 0px;margin-bottom: 0px;"
                 >
-                    <navbar
-                        :userInfo="navbarConf.userInfo"
+                    <nav-bar
+                        :userInfo="navBarConf.userInfo"
                         @userLoginOut="handleUserLoginOut"
                         @goToUserCenter="handleGoToUserCenter"
                         @refreshMenuCache="handleRefreshMenuCache"
@@ -52,15 +51,15 @@
     import ResizeMixin from './mixin/ResizeHandler';
     import {CacheMixin} from './mixin/CacheMixin';
 
-    import { Navbar, Sidebar, AppMain, TagsView,BaseFooter } from './components'
+    import { NavBar, SiderBar, AppMain, TagsView,BaseFooter } from './components'
     import ALayoutSider from "ant-design-vue/es/layout/Sider";
 
     export default {
         name: "Layout",
         components: {
             ALayoutSider,
-            Navbar,
-            Sidebar,
+            NavBar,
+            SiderBar,
             AppMain,
             TagsView,
             BaseFooter
@@ -72,7 +71,7 @@
                     memberLoginPage:"/member/login",
                     userCenterView:"/index/regular/userZone/center"
                 },
-                siderbar:{
+                sideBar:{
                     conf:{
                         collapsed: false,
                     },
@@ -81,7 +80,7 @@
                     tagsArray:[],
                     selectedTag:{}
                 },
-                navbarConf:{
+                navBarConf:{
                     userInfo:{
                         imgSrc: '~UserImgPath/panda-egg.jpg'
                     }
