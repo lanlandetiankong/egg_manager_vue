@@ -1,8 +1,15 @@
 <template>
-    <div id="app" ref="appRootPage">
-        <a-config-provider :locale="antvLocale">
-            <router-view/>
-        </a-config-provider>
+    <div id="rootDiv">
+        <a-spin id="rootSpin" size="large"
+                wrapperClassName="spinCls"
+                :spinning="globalStore_ajaxLoading"
+        >
+            <div id="app" ref="appRootPage">
+                <a-config-provider :locale="antvLocale">
+                    <router-view/>
+                </a-config-provider>
+            </div>
+        </a-spin>
     </div>
 </template>
 
@@ -33,7 +40,8 @@
             ...mapGetters([
                 'routingStore_grantedMenuList',
                 'routingStore_grantedMenuUrlMap',
-                'i18nStore_locale'
+                'i18nStore_locale',
+                'globalStore_ajaxLoading',
             ])
         },
         methods: {
@@ -135,7 +143,13 @@
     }
 </script>
 <style>
-    html, body ,#app {
+    html, body ,#rootDiv,#app,#rootSpin {
+        height: 100%;
+    }
+    .spinCls {
+        height: 100%;
+    }
+    .ant-spin-container{
         height: 100%;
     }
 </style>

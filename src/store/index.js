@@ -5,6 +5,7 @@ import tagsView from './modules/tags/tagsView.js'
 import routingStore from './modules/routing/routingStore.js'
 import userInfoStore from './modules/user/userInfoStore.js'
 import i18nLocaleStore from './modules/i18n/i18nStore.js'
+import globalStore from './modules/global/globalStore.js'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
         tagsView,
         routingStore,
         userInfoStore,
-        i18nLocaleStore
+        i18nLocaleStore,
+        globalStore
     },
     getters
 })

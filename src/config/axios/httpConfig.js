@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store' ;
 import baseURL from './baseUrl'
 import {message, Spin,notification} from 'ant-design-vue'
 import {i18nUtil} from "~Config/i18n/i18nUtil";
@@ -82,7 +83,7 @@ instance.interceptors.request.use(
             console.log("employee is loginout");
         }
         config.headers['authorization'] = cfgAuthorization;
-        //刷新并设置当前语言到cookie
+        store.dispatch('doSetAjaxLoading',true) ;
         return config ;
     },
     error => {
@@ -139,9 +140,11 @@ instance.interceptors.response.use(
                             });
                         }
                 }
+                store.dispatch('doSetAjaxLoading',false) ;
                 return Promise.reject(error.response);
             }
         }   else {
+            store.dispatch('doSetAjaxLoading',false) ;
             notification.error({
                 message:i18nUtil.getKey('langMap.http.notify.message.error'),
                 description:i18nUtil.getKey('langMap.http.notify.description.serverDistracted')
@@ -152,17 +155,10 @@ instance.interceptors.response.use(
 
 
 http.get = function (url, options) {
-    let loadingInstance;
-    if (!options || options.isShowLoading !== false) {
-        //loadingInstance = Spin.prototype ;
-    }
     return new Promise((resolve, reject) => {
         instance
             .get(url, options)
             .then(response => {
-                if (!options || options.isShowLoading !== false) {
-                    //loadingInstance.close();
-                }
                 if (response.code === 1) {
                     resolve(response.data)
                 } else {
@@ -186,20 +182,16 @@ http.get = function (url, options) {
 }
 
 http.post = function (url, data, options) {
-    let loadingInstance
-    if (!options || options.isShowLoading !== false) {
-        //loadingInstance = Spin.service({fullscreen: true});
-    }
     return new Promise((resolve, reject) => {
         instance
             .post(url, data, options)
             .then((response) => {
+                store.dispatch('doSetAjaxLoading',false) ;
                 if(typeof response == "undefined"){
                     reject(response) ;
                     return false ;
                 }
                 const respData = response.data ;
-                //loadingInstance.close();
                 //对返回结果的预先处理
                 if (respData) {
                     if(respData instanceof Blob){   //判断是否是Blob文件流
@@ -244,7 +236,7 @@ http.post = function (url, data, options) {
                 }
             })
             .catch(e => {
-                //loadingInstance.close();
+                store.dispatch('doSetAjaxLoading',false) ;
                 console.log(e);
                 reject(e);
             })
