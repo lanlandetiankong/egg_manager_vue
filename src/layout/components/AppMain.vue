@@ -1,8 +1,8 @@
 <template>
-    <div class="app_main">
+    <div class="app_main" ref="appMain">
         <transition name="fade" mode="out-in">
             <keep-alive :include="cachedBasePages">
-                <router-view style="min-height: 100%;"></router-view>
+                <router-view :style="styleConf"></router-view>
             </keep-alive>
         </transition>
     </div>
@@ -13,7 +13,10 @@
         name: 'AppMain',
         data(){
             return {
-                cachedBasePages : []
+                cachedBasePages : [],
+                styleConf:{
+                    height:500
+                }
             }
         },
         computed:{
@@ -75,6 +78,15 @@
         },
         created(){
             this.doBasePageCachesRefresh();
+        },
+        mounted(){
+            this.$nextTick(()=>{ // 页面渲染完成后的回调
+                const heightVal = this.$refs.appMain.offsetHeight ;
+                this.$store.dispatch('doSetStyleOfAppMain',{
+                    height:heightVal
+                }) ;
+                this.styleConf = this.$store.getters.styleStore_appMain;
+            })
         }
     }
 </script>

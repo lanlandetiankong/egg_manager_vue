@@ -3,8 +3,8 @@ const globalStore = {
         ajaxLoading:false,
     },
     actions:{
-        doSetAjaxLoading({commit},localeVal){
-            commit('SET_AJAX_LOADING',localeVal);
+        doSetAjaxLoading({commit},flag){
+            commit('SET_AJAX_LOADING',flag);
         },
     },
     mutations:{

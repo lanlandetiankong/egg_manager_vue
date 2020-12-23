@@ -3,7 +3,6 @@
         <a-tabs
             :defaultActiveKey="layoutConf.tab.defaultActiveKey"
             :tabPosition="layoutConf.tab.mode"
-            :style="{ height: '300px'}"
             @change="handleTabChange"
         >
             <a-tab-pane :tab="layoutConf.tab.conf.universal.title"
@@ -27,7 +26,7 @@
 
 <script>
     import {DashBoardApi} from './dashBoardApi.js'
-
+    import { mapGetters } from 'vuex';
     import UniversalShowComp from '~Components/regular/dashboard/UniversalShowComp'
     import AnnouncementListComp from '~Components/regular/dashboard/announcement/AnnouncementListComp'
 
@@ -66,6 +65,11 @@
                     }
                 }
             }
+        },
+        computed:{
+            ...mapGetters([
+                'styleStore_appMain'
+            ])
         },
         methods:{
             dealGetTabItem(tabKey){     //根据tab的key 取得tab对应的项
