@@ -20,9 +20,12 @@ import VueCookies from 'vue-cookies'
 
 //富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
-
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
+
+//markdown编辑器
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 
 //---------------------------------------------------------------------------->>>>>>css
@@ -40,6 +43,7 @@ Vue.use(VueScroll,VueScrollConf)
 Vue.use(VueQuillEditor)
 Vue.use(VueI18n)
 Vue.use(VueCookies)
+Vue.use(mavonEditor);
 
 const i18n = new VueI18n({
     locale: 'zh-CN',    // 语言标识
