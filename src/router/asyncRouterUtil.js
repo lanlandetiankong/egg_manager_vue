@@ -53,23 +53,25 @@ function verifyProcessEnvIsDev() {
 
 export const AsyncRouterUtil = {
     dealMenuListToRouters (urlMap,_this) {  //将后台的[菜单配置]更新到 VueRouter配置中
-        var routersArrTemp = _this.$router.options.routes;
-        var routerUrlMap = new Map();   //将VueRouter根据url为key,对应Router为Value映射为map
-        if (routersArrTemp && routersArrTemp.length > 0) {
-            for (var idx in routersArrTemp) {
-                var routerItem = routersArrTemp[idx];
-                dealRecursiveMenuChildrenToMap(_this,routerUrlMap, routerItem);
+        if(_this.$router){
+            var routersArrTemp = _this.$router.options.routes;
+            var routerUrlMap = new Map();   //将VueRouter根据url为key,对应Router为Value映射为map
+            if (routersArrTemp && routersArrTemp.length > 0) {
+                for (var idx in routersArrTemp) {
+                    var routerItem = routersArrTemp[idx];
+                    dealRecursiveMenuChildrenToMap(_this,routerUrlMap, routerItem);
+                }
             }
-        }
-        for (var urlKey in urlMap) {  //遍历[可访问url]Map
-            var grantMenuUrlFlag = routerUrlMap.has(urlKey);
-            if (grantMenuUrlFlag == true) {   //如果定义的路由有对应的后台相关配置
-                var urlConf = urlMap[urlKey];
-                var routerItem = routerUrlMap.get(urlKey);
-                dealSetMenuConfToRouter(routerItem, urlConf); //根据后台配置修改路由的相关配置
+            for (var urlKey in urlMap) {  //遍历[可访问url]Map
+                var grantMenuUrlFlag = routerUrlMap.has(urlKey);
+                if (grantMenuUrlFlag == true) {   //如果定义的路由有对应的后台相关配置
+                    var urlConf = urlMap[urlKey];
+                    var routerItem = routerUrlMap.get(urlKey);
+                    dealSetMenuConfToRouter(routerItem, urlConf); //根据后台配置修改路由的相关配置
+                }
             }
+            //console.log(routerUrlMap);
         }
-        //console.log(routerUrlMap);
     },
     verifyProcessEnvIsProd:verifyProcessEnvIsProd,
     verifyProcessEnvIsTest:verifyProcessEnvIsTest,

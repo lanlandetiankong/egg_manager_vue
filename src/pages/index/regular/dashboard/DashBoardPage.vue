@@ -32,7 +32,7 @@
 
     export default {
         name: "DashBoardPage",
-        components: {UniversalShowComp,UniversalShowComp, AnnouncementListComp},
+        components: {UniversalShowComp,AnnouncementListComp},
         data(){
             return {
                 layoutConf:{
