@@ -439,7 +439,7 @@
                 this.tableConf.pagination = pagination ;
                 this.tableConf.filters = filters ;
                 this.tableConf.sorter = sorter ;
-                this.handleSearchFormQuery();
+                this.mixin_invokeQuery(this);
             }
         },
         computed: {

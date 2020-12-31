@@ -320,7 +320,7 @@
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
-                            _this.handleSearchFormQuery(); //表格重新搜索
+                            _this.mixin_invokeQuery(_this); //表格重新搜索
                         }
                     }
                 })
@@ -331,12 +331,12 @@
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
-                            _this.handleSearchFormQuery(); //表格重新搜索
+                            _this.mixin_invokeQuery(_this); //表格重新搜索
                         }
                     }
                 })
             },
-            handleSearchFormQuery(e) {  //带查询条件 检索部门列表
+            handleSearchFormQuery(e,values) {  //带查询条件 检索部门列表
                 var _this = this ;
                 //取得 bean 形式 的查询条件数组
                 var searchFieldArr = _this.mixin_dealGetSearchFormQueryConf(_this.fieldInfoConf,values);
@@ -425,7 +425,7 @@
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
-                                    _this.handleSearchFormQuery(); //表格重新搜索
+                                    _this.mixin_invokeQuery(_this); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;
                                 }
@@ -443,7 +443,7 @@
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
-                                    _this.handleSearchFormQuery(); //表格重新搜索
+                                    _this.mixin_invokeQuery(_this); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;
                                 }
@@ -482,7 +482,7 @@
                 this.tableConf.pagination = pagination ;
                 this.tableConf.filters = filters ;
                 this.tableConf.sorter = sorter ;
-                this.handleSearchFormQuery();
+                this.mixin_invokeQuery(this);
             },
             handleParentTreeOfSearchChange(value){  //[上级部门] SelectTree cchange事件
                 console.log("handleParentTreeOfSearchChange",value);
@@ -510,8 +510,10 @@
             }
         },
         created(){
-            this.handleSearchFormQuery();
             this.dealGetPidTreeData();
+        },
+        mounted() {
+            this.mixin_invokeQuery(this);
         },
         destroyed(){
             console.log("部门管理-页面销毁 ...")

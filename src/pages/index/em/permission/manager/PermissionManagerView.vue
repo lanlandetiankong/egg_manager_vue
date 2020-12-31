@@ -562,13 +562,13 @@
                 immediate:true
             }
         },
-        mounted() {
-            this.mixin_invokeQuery(this);
-        },
         created(){
             this.dealGetPermissionTypeEnumList();
             this.dealGetPermissionCodePrefixEnumList();
             this.dealGetBindingSwitchEnumList();
+        },
+        mounted() {
+            this.mixin_invokeQuery(this);
         },
         destroyed(){
             console.log("权限管理-页面销毁 ...")

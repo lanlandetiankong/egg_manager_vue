@@ -269,7 +269,7 @@
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
-                            _this.handleSearchFormQuery(); //表格重新搜索
+                            _this.mixin_invokeQuery(_this); //表格重新搜索
                         }
                     }
                 })
@@ -280,7 +280,7 @@
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
-                            _this.handleSearchFormQuery(); //表格重新搜索
+                            _this.mixin_invokeQuery(_this); //表格重新搜索
                         }
                     }
                 })
@@ -345,7 +345,7 @@
                 this.tableConf.pagination = pagination ;
                 this.tableConf.filters = filters ;
                 this.tableConf.sorter = sorter ;
-                this.handleSearchFormQuery();
+                this.mixin_invokeQuery(this);
             },
             handleDetailDrawerShow(e,record){   //Drawer-公告 详情展示
                 if(typeof record != "undefined"){
@@ -370,9 +370,11 @@
             }
         },
         created(){
-            this.handleSearchFormQuery();
             this.dealGetAllAnnouncementTagList();
             var currentRoute = this.$route ;
+        },
+        mounted() {
+            this.mixin_invokeQuery(this);
         },
         destroyed(){
             console.log("我创建的公告列表-页面销毁 ...")

@@ -255,7 +255,7 @@
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             this.$message.success(res.msg);
-                            _this.handleSearchFormQuery(); //表格重新搜索
+                            _this.mixin_invokeQuery(_this); //表格重新搜索
                         }
                     }
                 })
@@ -266,7 +266,7 @@
                     if (res) {
                         if (res.success) {  //已经有对错误进行预处理
                             _this.$message.success(res.msg);
-                            _this.handleSearchFormQuery(); //表格重新搜索
+                            _this.mixin_invokeQuery(_this); //表格重新搜索
                         }
                     }
                 })
@@ -308,7 +308,7 @@
                 this.tableConf.pagination = pagination ;
                 this.tableConf.filters = filters ;
                 this.tableConf.sorter = sorter ;
-                this.handleSearchFormQuery();
+                this.mixin_invokeQuery(this);
             },
             handleCreateByForm() {     //新增职务按钮-点击
                 var _this = this;
@@ -356,7 +356,7 @@
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
-                                    _this.handleSearchFormQuery(); //表格重新搜索
+                                    _this.mixin_invokeQuery(_this); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;
                                 }
@@ -374,7 +374,7 @@
                             if (res) {
                                 if (res.success) {  //异常已经有预处理了
                                     this.$message.success(res.msg);
-                                    _this.handleSearchFormQuery(); //表格重新搜索
+                                    _this.mixin_invokeQuery(_this); //表格重新搜索
                                 } else {
                                     closeDialogFlag = false;
                                 }
@@ -469,8 +469,10 @@
             }
         },
         created(){
-            this.handleSearchFormQuery();
             this.dealGetDefineJobTypeEnumList();
+        },
+        mounted() {
+            this.mixin_invokeQuery(this);
         },
         destroyed(){
             console.log("职务管理-页面销毁 ...")
