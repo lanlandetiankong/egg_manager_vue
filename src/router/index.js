@@ -11,7 +11,6 @@ import Layout from '@/layout/Layout'
 import EmployeeRouter from './main/em/employee/index'
 import PermissionRouter from './main/em/permission/index'
 import AnnouncementRouter from './main/em/announcement/index'
-import FormsRouter from './main/em/forms/index'
 
 import UserZoneRouter from './main/regular/userZone/index'
 
@@ -55,7 +54,6 @@ export const constantRouterMap = [
             PermissionRouter,
             UserZoneRouter,
             AnnouncementRouter,
-            FormsRouter
         ]
     },
     MemberRouter,
