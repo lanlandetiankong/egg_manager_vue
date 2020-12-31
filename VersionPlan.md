@@ -24,3 +24,5 @@
 #### 2.0.7-SNAPSHOT
 1. 去除 smartForm相关
 2. 被动触发查询没携带查询条件的bug修复
+
+#### 2.0.7-SNAPSHOT
